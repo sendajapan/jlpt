@@ -130,7 +130,7 @@
 
         {{-- Page content --}}
         <main class="flex-1 overflow-y-auto dot-grid">
-            <div class="animate-page p-5">
+            <div class="animate-page p-5 max-w-screen-xl mx-auto w-full">
 
                 {{-- Flash messages --}}
                 @if (session('success'))
