@@ -9,8 +9,8 @@ use App\Models\Category;
 use App\Services\CategoryService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use Mckenziearts\Notify\Exceptions\InvalidNotificationException;
 
 class CategoryController extends Controller
 {
@@ -19,6 +19,7 @@ class CategoryController extends Controller
     public function index(Request $request): View
     {
         $categories = $this->service->getAll($request->input('search'));
+
         return view('admin.categories.index', compact('categories'));
     }
 
@@ -27,15 +28,20 @@ class CategoryController extends Controller
         return view('admin.categories.create');
     }
 
+    /**
+     * @throws InvalidNotificationException
+     */
     public function store(StoreCategoryRequest $request): RedirectResponse
     {
         $data = $request->validated();
-        $data['icon_path']  = $this->storeFile($request, 'icon_path',  'categories/icons');
+        $data['icon_path'] = $this->storeFile($request, 'icon_path', 'categories/icons');
         $data['audio_path'] = $this->storeFile($request, 'audio_path', 'categories/audio');
 
         $this->service->create($data);
-        return redirect()->route('admin.categories.index')
-            ->with('success', 'Category created successfully.');
+
+        notify()->success()->title('Category created successfully.')->send();
+
+        return redirect()->route('admin.categories.index');
     }
 
     public function edit(Category $category): View
@@ -46,24 +52,28 @@ class CategoryController extends Controller
     public function update(UpdateCategoryRequest $request, Category $category): RedirectResponse
     {
         $data = $request->validated();
-
-        if ($request->hasFile('icon_path')) {
-            $this->deleteFile($category->icon_path);
-            $data['icon_path'] = $this->storeFile($request, 'icon_path', 'categories/icons');
-        } else {
-            unset($data['icon_path']);
-        }
-
-        if ($request->hasFile('audio_path')) {
-            $this->deleteFile($category->audio_path);
-            $data['audio_path'] = $this->storeFile($request, 'audio_path', 'categories/audio');
-        } else {
-            unset($data['audio_path']);
-        }
+        $data['icon_path'] = $this->replaceFile($request, 'icon_path', 'categories/icons', $category->icon_path);
+        $data['audio_path'] = $this->replaceFile($request, 'audio_path', 'categories/audio', $category->audio_path);
 
         $this->service->update($category, $data);
-        return redirect()->route('admin.categories.index')
-            ->with('success', 'Category updated successfully.');
+
+        notify()->success()->title('Category updated successfully.')->send();
+
+        return redirect()->route('admin.categories.index');
+    }
+
+    /**
+     * @throws InvalidNotificationException
+     */
+    public function updateIcon(Request $request, Category $category): RedirectResponse
+    {
+        $request->validate(['icon_path' => ['required', 'image', 'max:2048']]);
+        $this->deleteFile($category->icon_path);
+        $category->update(['icon_path' => $request->file('icon_path')->store('categories/icons', 'public')]);
+
+        notify()->success()->title('Icon updated.')->send();
+
+        return back();
     }
 
     public function destroy(Category $category): RedirectResponse
@@ -71,18 +81,9 @@ class CategoryController extends Controller
         $this->deleteFile($category->icon_path);
         $this->deleteFile($category->audio_path);
         $this->service->delete($category);
-        return redirect()->route('admin.categories.index')
-            ->with('success', 'Category deleted successfully.');
-    }
 
-    private function storeFile(Request $request, string $field, string $folder): ?string
-    {
-        if (!$request->hasFile($field)) return null;
-        return $request->file($field)->store($folder, 'public');
-    }
+        notify()->success()->title('Category deleted.')->send();
 
-    private function deleteFile(?string $path): void
-    {
-        if ($path) Storage::disk('public')->delete($path);
+        return redirect()->route('admin.categories.index');
     }
 }

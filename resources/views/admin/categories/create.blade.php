@@ -104,16 +104,11 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                     <label class="block text-xs font-medium text-zinc-700 mb-1.5">Icon Image</label>
-                    <input
-                        type="file"
-                        name="icon_path"
-                        accept="image/*"
-                        class="block w-full text-xs text-zinc-500 file:mr-3 file:h-7 file:px-3 file:rounded file:border-0 file:text-xs file:font-medium file:bg-zinc-100 file:text-zinc-700 hover:file:bg-zinc-200 transition-colors cursor-pointer"
-                    >
-                    <p class="mt-1 text-[10px] text-zinc-400">JPG, PNG, SVG, WebP</p>
-                    @error('icon_path')
-                        <p class="mt-1 text-[10px] text-red-500">{{ $message }}</p>
-                    @enderror
+                    <x-image-preview name="icon_path">
+                        @error('icon_path')
+                            <p class="mt-1 text-[10px] text-red-500">{{ $message }}</p>
+                        @enderror
+                    </x-image-preview>
                 </div>
 
                 <div>

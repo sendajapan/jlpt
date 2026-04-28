@@ -9,7 +9,6 @@ use App\Models\Subcategory;
 use App\Services\SubcategoryService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class SubcategoryController extends Controller
@@ -19,53 +18,59 @@ class SubcategoryController extends Controller
     public function index(Request $request): View
     {
         $subcategories = $this->service->getAll($request->input('search'));
+
         return view('admin.subcategories.index', compact('subcategories'));
     }
 
     public function create(): View
     {
         $categories = $this->service->getAllCategories();
+
         return view('admin.subcategories.create', compact('categories'));
     }
 
     public function store(StoreSubcategoryRequest $request): RedirectResponse
     {
         $data = $request->validated();
-        $data['icon_path']  = $this->storeFile($request, 'icon_path',  'subcategories/icons');
+        $data['icon_path'] = $this->storeFile($request, 'icon_path', 'subcategories/icons');
         $data['audio_path'] = $this->storeFile($request, 'audio_path', 'subcategories/audio');
 
         $this->service->create($data);
-        return redirect()->route('admin.subcategories.index')
-            ->with('success', 'Subcategory created successfully.');
+
+        notify()->success()->title('Subcategory created successfully.')->send();
+
+        return redirect()->route('admin.subcategories.index');
     }
 
     public function edit(Subcategory $subcategory): View
     {
         $categories = $this->service->getAllCategories();
+
         return view('admin.subcategories.edit', compact('subcategory', 'categories'));
     }
 
     public function update(UpdateSubcategoryRequest $request, Subcategory $subcategory): RedirectResponse
     {
         $data = $request->validated();
-
-        if ($request->hasFile('icon_path')) {
-            $this->deleteFile($subcategory->icon_path);
-            $data['icon_path'] = $this->storeFile($request, 'icon_path', 'subcategories/icons');
-        } else {
-            unset($data['icon_path']);
-        }
-
-        if ($request->hasFile('audio_path')) {
-            $this->deleteFile($subcategory->audio_path);
-            $data['audio_path'] = $this->storeFile($request, 'audio_path', 'subcategories/audio');
-        } else {
-            unset($data['audio_path']);
-        }
+        $data['icon_path'] = $this->replaceFile($request, 'icon_path', 'subcategories/icons', $subcategory->icon_path);
+        $data['audio_path'] = $this->replaceFile($request, 'audio_path', 'subcategories/audio', $subcategory->audio_path);
 
         $this->service->update($subcategory, $data);
-        return redirect()->route('admin.subcategories.index')
-            ->with('success', 'Subcategory updated successfully.');
+
+        notify()->success()->title('Subcategory updated successfully.')->send();
+
+        return redirect()->route('admin.subcategories.index');
+    }
+
+    public function updateIcon(Request $request, Subcategory $subcategory): RedirectResponse
+    {
+        $request->validate(['icon_path' => ['required', 'image', 'max:2048']]);
+        $this->deleteFile($subcategory->icon_path);
+        $subcategory->update(['icon_path' => $request->file('icon_path')->store('subcategories/icons', 'public')]);
+
+        notify()->success()->title('Icon updated.')->send();
+
+        return back();
     }
 
     public function destroy(Subcategory $subcategory): RedirectResponse
@@ -73,18 +78,9 @@ class SubcategoryController extends Controller
         $this->deleteFile($subcategory->icon_path);
         $this->deleteFile($subcategory->audio_path);
         $this->service->delete($subcategory);
-        return redirect()->route('admin.subcategories.index')
-            ->with('success', 'Subcategory deleted successfully.');
-    }
 
-    private function storeFile(Request $request, string $field, string $folder): ?string
-    {
-        if (!$request->hasFile($field)) return null;
-        return $request->file($field)->store($folder, 'public');
-    }
+        notify()->success()->title('Subcategory deleted.')->send();
 
-    private function deleteFile(?string $path): void
-    {
-        if ($path) Storage::disk('public')->delete($path);
+        return redirect()->route('admin.subcategories.index');
     }
 }

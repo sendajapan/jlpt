@@ -132,25 +132,6 @@
         <main class="flex-1 overflow-y-auto dot-grid">
             <div class="animate-page p-5 max-w-screen-xl mx-auto w-full">
 
-                {{-- Flash messages --}}
-                @if (session('success'))
-                    <div class="mb-4 flex items-center gap-2.5 px-4 py-2.5 rounded-lg border-l-[3px] border-emerald-500 bg-white shadow-sm border border-zinc-200 text-xs font-medium text-zinc-700">
-                        <svg class="w-3.5 h-3.5 text-emerald-500 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                        </svg>
-                        {{ session('success') }}
-                    </div>
-                @endif
-
-                @if (session('error'))
-                    <div class="mb-4 flex items-center gap-2.5 px-4 py-2.5 rounded-lg border-l-[3px] border-red-500 bg-white shadow-sm border border-zinc-200 text-xs font-medium text-zinc-700">
-                        <svg class="w-3.5 h-3.5 text-red-500 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                        </svg>
-                        {{ session('error') }}
-                    </div>
-                @endif
-
                 @yield('content')
 
             </div>
@@ -159,6 +140,9 @@
     </div>
 
 </div>
+
+
+<x-notify::notify />
 
 </body>
 </html>

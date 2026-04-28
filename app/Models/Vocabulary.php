@@ -10,18 +10,25 @@ class Vocabulary extends Model
     protected $fillable = [
         'subcategory_id',
         'word_jp',
+        'audio_jp',
+        'sentence_jp',
+        'sentence_audio_jp',
         'word_romaji',
-        'meaning_en',
-        'audio_path',
+        'sentence_romaji',
+        'word_en',
+        'audio_en',
+        'sentence_en',
+        'sentence_audio_en',
         'image_path',
-        'example_sentence_jp',
-        'example_sentence_en',
-        'jlpt_level',
         'sort_order',
+        'is_premium',
+        'is_approved',
     ];
 
     protected $casts = [
-        'sort_order' => 'integer',
+        'sort_order'  => 'integer',
+        'is_premium'  => 'boolean',
+        'is_approved' => 'boolean',
     ];
 
     public function subcategory(): BelongsTo

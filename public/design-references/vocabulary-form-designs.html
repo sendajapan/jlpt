@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vocabulary Form — 3 Design Options</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body { font-family: 'Inter', ui-sans-serif, system-ui, sans-serif; }
+  .sr-only { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+</style>
+</head>
+<body class="bg-zinc-100 py-12 px-4">
+
+<div class="max-w-5xl mx-auto mb-12 text-center">
+  <p class="text-[10px] font-semibold uppercase tracking-[0.2em] text-zinc-400 mb-2">Vocabulary Form</p>
+  <h1 class="text-2xl font-bold text-zinc-900">3 Layout Options</h1>
+  <p class="text-sm text-zinc-500 mt-1">English / Japanese / Romaji — word + audio + sentence each. Romaji sentence shares JP audio. Reply A, B, or C.</p>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     OPTION A — Ruled Sections
+     Stacked sections with floating labeled dividers.
+     Metadata in a tinted footer band.
+     ═══════════════════════════════════════════════════════════ -->
+<div class="max-w-2xl mx-auto mb-16">
+  <div class="mb-3 flex items-center gap-3">
+    <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-zinc-900 text-white text-[10px] font-bold">A</span>
+    <span class="text-xs font-semibold text-zinc-700 uppercase tracking-wider">Option A — Ruled Sections</span>
+  </div>
+
+  <div class="bg-white rounded-lg border border-zinc-200 overflow-hidden shadow-sm">
+    <div class="flex items-center justify-between px-5 py-3 border-b border-zinc-100">
+      <span class="text-sm font-semibold text-zinc-900">New Vocabulary Entry</span>
+    </div>
+
+    <div class="px-5 pt-4">
+
+      <!-- Subcategory -->
+      <div class="mb-5">
+        <label class="block text-xs font-medium text-zinc-700 mb-1.5">Subcategory <span class="text-red-400">*</span></label>
+        <select class="flex h-8 w-full rounded-md border border-zinc-200 bg-white px-3 text-xs text-zinc-900 focus:outline-none focus:ring-2 focus:ring-zinc-900">
+          <option>— Select subcategory —</option>
+          <option>Greetings › Basic</option>
+        </select>
+      </div>
+
+      <!-- ── EN divider ── -->
+      <div class="relative my-4">
+        <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-zinc-200"></div></div>
+        <div class="relative flex justify-start">
+          <span class="flex items-center gap-1.5 bg-white pr-3 text-[10px] font-bold uppercase tracking-widest text-blue-600">
+            <span class="w-4 h-4 rounded-sm bg-blue-600 text-white text-[9px] flex items-center justify-center">EN</span>
+            English
+          </span>
+        </div>
+      </div>
+      <div class="grid grid-cols-2 gap-3 mb-3">
+        <div>
+          <label class="block text-[10px] font-medium text-zinc-500 mb-1">Meaning <span class="text-red-400">*</span></label>
+          <input type="text" placeholder="e.g. dog" class="flex h-8 w-full rounded-md border border-zinc-200 bg-white px-3 text-xs placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900">
+        </div>
+        <div>
+          <label class="block text-[10px] font-medium text-zinc-500 mb-1">Word Audio</label>
+          <label class="flex h-8 w-full items-center gap-2 rounded-md border border-dashed border-zinc-200 bg-zinc-50 px-2.5 cursor-pointer hover:border-blue-300 hover:bg-blue-50/30 transition-colors group">
+            <svg class="w-3 h-3 text-zinc-400 group-hover:text-blue-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
+            <span class="text-[10px] text-zinc-400 group-hover:text-blue-500">Upload audio…</span>
+            <input type="file" accept="audio/*" class="sr-only">
+          </label>
+        </div>
+      </div>
+      <div class="grid grid-cols-2 gap-3 mb-5">
+        <div>
+          <label class="block text-[10px] font-medium text-zinc-500 mb-1">Sentence</label>
+          <input type="text" placeholder="e.g. The dog is cute." class="flex h-8 w-full rounded-md border border-zinc-200 bg-white px-3 text-xs placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900">
+        </div>
+        <div>
+          <label class="block text-[10px] font-medium text-zinc-500 mb-1">Sentence Audio</label>
+          <label class="flex h-8 w-full items-center gap-2 rounded-md border border-dashed border-zinc-200 bg-zinc-50 px-2.5 cursor-pointer hover:border-blue-300 hover:bg-blue-50/30 transition-colors group">
+            <svg class="w-3 h-3 text-zinc-400 group-hover:text-blue-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
+            <span class="text-[10px] text-zinc-400 group-hover:text-blue-500">Upload audio…</span>
+            <input type="file" accept="audio/*" class="sr-only">
+          </label>
+        </div>
+      </div>
+
+      <!-- ── JP divider ── -->
+      <div class="relative my-4">
+        <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-zinc-200"></div></div>
+        <div class="relative flex justify-start">
+          <span class="flex items-center gap-1.5 bg-white pr-3 text-[10px] font-bold uppercase tracking-widest text-red-600">
+            <span class="w-4 h-4 rounded-sm bg-red-600 text-white text-[9px] flex items-center justify-center">JP</span>
+            Japanese
+          </span>
+        </div>
+      </div>
+      <div class="grid grid-cols-2 gap-3 mb-3">
+        <div>
+          <label class="block text-[10px] font-medium text-zinc-500 mb-1">Word (JP) <span class="text-red-400">*</span></label>
+          <input type="text" placeholder="e.g. 犬" class="flex h-8 w-full rounded-md border border-zinc-200 bg-white px-3 text-xs placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900">
+        </div>
+        <div>
+          <label class="block text-[10px] font-medium text-zinc-500 mb-1">Word Audio</label>
+          <label class="flex h-8 w-full items-center gap-2 rounded-md border border-dashed border-zinc-200 bg-zinc-50 px-2.5 cursor-pointer hover:border-red-300 hover:bg-red-50/30 transition-colors group">
+            <svg class="w-3 h-3 text-zinc-400 group-hover:text-red-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
+            <span class="text-[10px] text-zinc-400 group-hover:text-red-500">Upload audio…</span>
+            <input type="file" accept="audio/*" class="sr-only">
+          </label>
+        </div>
+      </div>
+      <div class="grid grid-cols-2 gap-3 mb-5">
+        <div>
+          <label class="block text-[10px] font-medium text-zinc-500 mb-1">Sentence</label>
+          <input type="text" placeholder="e.g. 犬はかわいいです。" class="flex h-8 w-full rounded-md border border-zinc-200 bg-white px-3 text-xs placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900">
+        </div>
+        <div>
+          <label class="flex items-center gap-1.5 text-[10px] font-medium text-zinc-500 mb-1">
+            Sentence Audio
+            <span class="text-[8px] text-zinc-400 bg-zinc-100 px-1 py-0.5 rounded">shared with Romaji</span>
+          </label>
+          <label class="flex h-8 w-full items-center gap-2 rounded-md border border-dashed border-zinc-200 bg-zinc-50 px-2.5 cursor-pointer hover:border-red-300 hover:bg-red-50/30 transition-colors group">
+            <svg class="w-3 h-3 text-zinc-400 group-hover:text-red-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
+            <span class="text-[10px] text-zinc-400 group-hover:text-red-500">Upload audio…</span>
+            <input type="file" accept="audio/*" class="sr-only">
+          </label>
+        </div>
+      </div>
+
+      <!-- ── RM divider ── -->
+      <div class="relative my-4">
+        <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-zinc-200"></div></div>
+        <div class="relative flex justify-start">
+          <span class="flex items-center gap-1.5 bg-white pr-3 text-[10px] font-bold uppercase tracking-widest text-emerald-600">
+            <span class="w-4 h-4 rounded-sm bg-emerald-600 text-white text-[9px] flex items-center justify-center">RM</span>
+            Romaji
+          </span>
+        </div>
+      </div>
+      <div class="grid grid-cols-2 gap-3 mb-3">
+        <div>
+          <label class="block text-[10px] font-medium text-zinc-500 mb-1">Romaji <span class="text-red-400">*</span></label>
+          <input type="text" placeholder="e.g. inu" class="flex h-8 w-full rounded-md border border-zinc-200 bg-white px-3 text-xs placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900">
+        </div>
+        <div>
+          <label class="block text-[10px] font-medium text-zinc-500 mb-1">Word Audio</label>
+          <label class="flex h-8 w-full items-center gap-2 rounded-md border border-dashed border-zinc-200 bg-zinc-50 px-2.5 cursor-pointer hover:border-emerald-300 hover:bg-emerald-50/30 transition-colors group">
+            <svg class="w-3 h-3 text-zinc-400 group-hover:text-emerald-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
+            <span class="text-[10px] text-zinc-400 group-hover:text-emerald-500">Upload audio…</span>
+            <input type="file" accept="audio/*" class="sr-only">
+          </label>
+        </div>
+      </div>
+      <div class="grid grid-cols-2 gap-3 pb-5">
+        <div>
+          <label class="block text-[10px] font-medium text-zinc-500 mb-1">Sentence</label>
+          <input type="text" placeholder="e.g. Inu wa kawaii desu." class="flex h-8 w-full rounded-md border border-zinc-200 bg-white px-3 text-xs placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900">
+        </div>
+        <div>
+          <label class="block text-[10px] font-medium text-zinc-500 mb-1">Sentence Audio</label>
+          <div class="flex h-8 w-full items-center gap-2 rounded-md border border-zinc-100 bg-zinc-50 px-2.5">
+            <svg class="w-3 h-3 text-zinc-300 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"/></svg>
+            <span class="text-[10px] text-zinc-400 italic">Uses Japanese sentence audio</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Metadata footer -->
+    <div class="border-t border-zinc-100 bg-zinc-50/60 px-5 py-4 space-y-3">
+      <p class="text-[9px] font-semibold uppercase tracking-[0.15em] text-zinc-400">Metadata</p>
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="block text-[10px] font-medium text-zinc-500 mb-1">Sort Order</label>
+          <input type="number" value="99" class="flex h-8 w-full rounded-md border border-zinc-200 bg-white px-3 text-xs focus:outline-none focus:ring-2 focus:ring-zinc-900">
+        </div>
+        <div>
+          <label class="block text-[10px] font-medium text-zinc-500 mb-1">Image (256×256)</label>
+          <label class="flex h-8 w-full items-center gap-2 rounded-md border border-dashed border-zinc-200 bg-white px-2.5 cursor-pointer hover:border-zinc-400 transition-colors">
+            <svg class="w-3 h-3 text-zinc-400 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159M3.75 19.5h16.5"/></svg>
+            <span class="text-[10px] text-zinc-400">Choose…</span>
+            <input type="file" accept="image/*" class="sr-only">
+          </label>
+        </div>
+      </div>
+      <div class="flex items-center gap-5">
+        <label class="flex items-center gap-2 cursor-pointer">
+          <input type="checkbox" class="w-3.5 h-3.5 rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900">
+          <span class="text-xs font-medium text-zinc-700">Premium</span>
+        </label>
+        <label class="flex items-center gap-2 cursor-pointer">
+          <input type="checkbox" checked class="w-3.5 h-3.5 rounded border-zinc-300 text-emerald-600 focus:ring-emerald-600">
+          <span class="text-xs font-medium text-zinc-700">Approved</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-2 px-5 py-3.5 border-t border-zinc-100">
+      <button class="inline-flex h-8 items-center px-3 rounded-md bg-zinc-900 text-white text-xs font-medium hover:bg-zinc-700 transition-colors">Create Entry</button>
+      <button class="text-xs text-zinc-400 hover:text-zinc-700 px-3 py-1.5 rounded hover:bg-zinc-100 transition-colors">Cancel</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     OPTION B — Three Columns
+     All three language sections side by side as equal columns,
+     each with a colored top accent. Shared fields below.
+     ═══════════════════════════════════════════════════════════ -->
+<div class="max-w-4xl mx-auto mb-16">
+  <div class="mb-3 flex items-center gap-3">
+    <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-zinc-900 text-white text-[10px] font-bold">B</span>
+    <span class="text-xs font-semibold text-zinc-700 uppercase tracking-wider">Option B — Three Columns</span>
+  </div>
+
+  <div class="bg-white rounded-lg border border-zinc-200 overflow-hidden shadow-sm">
+    <div class="flex items-center justify-between px-5 py-3 border-b border-zinc-100">
+      <span class="text-sm font-semibold text-zinc-900">New Vocabulary Entry</span>
+    </div>
+
+    <!-- Subcategory full-width -->
+    <div class="px-5 pt-4 pb-3 border-b border-zinc-100">
+      <label class="block text-xs font-medium text-zinc-700 mb-1.5">Subcategory <span class="text-red-400">*</span></label>
+      <select class="flex h-8 w-full rounded-md border border-zinc-200 bg-white px-3 text-xs text-zinc-900 focus:outline-none focus:ring-2 focus:ring-zinc-900">
+        <option>— Select subcategory —</option>
+        <option>Greetings › Basic</option>
+      </select>
+    </div>
+
+    <!-- Three columns -->
+    <div class="grid grid-cols-3 divide-x divide-zinc-100">
+
+      <!-- English -->
+      <div>
+        <div class="h-0.5 bg-blue-500"></div>
+        <div class="px-4 pt-3 pb-4 space-y-2.5">
+          <div class="flex items-center gap-1.5 mb-3">
+            <span class="w-5 h-5 rounded bg-blue-50 text-blue-600 text-[9px] font-bold border border-blue-100 flex items-center justify-center">EN</span>
+            <span class="text-[10px] font-semibold uppercase tracking-widest text-zinc-500">English</span>
+          </div>
+          <div>
+            <label class="block text-[10px] font-medium text-zinc-500 mb-1">Meaning <span class="text-red-400">*</span></label>
+            <input type="text" placeholder="e.g. dog" class="flex h-8 w-full rounded-md border border-zinc-200 bg-white px-2.5 text-xs placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900">
+          </div>
+          <div>
+            <label class="block text-[10px] font-medium text-zinc-500 mb-1">Word Audio</label>
+            <label class="flex h-8 w-full items-center gap-1.5 rounded-md border border-dashed border-zinc-200 bg-zinc-50 px-2.5 cursor-pointer hover:border-blue-300 hover:bg-blue-50/30 transition-colors group">
+              <svg class="w-3 h-3 text-zinc-400 group-hover:text-blue-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
+              <span class="text-[9px] text-zinc-400 group-hover:text-blue-500">Upload…</span>
+              <input type="file" accept="audio/*" class="sr-only">
+            </label>
+          </div>
+          <div class="pt-1 border-t border-zinc-100">
+            <label class="block text-[10px] font-medium text-zinc-500 mb-1">Sentence</label>
+            <input type="text" placeholder="e.g. The dog is cute." class="flex h-8 w-full rounded-md border border-zinc-200 bg-white px-2.5 text-xs placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900">
+          </div>
+          <div>
+            <label class="block text-[10px] font-medium text-zinc-500 mb-1">Sentence Audio</label>
+            <label class="flex h-8 w-full items-center gap-1.5 rounded-md border border-dashed border-zinc-200 bg-zinc-50 px-2.5 cursor-pointer hover:border-blue-300 hover:bg-blue-50/30 transition-colors group">
+              <svg class="w-3 h-3 text-zinc-400 group-hover:text-blue-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
+              <span class="text-[9px] text-zinc-400 group-hover:text-blue-500">Upload…</span>
+              <input type="file" accept="audio/*" class="sr-only">
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Japanese -->
+      <div>
+        <div class="h-0.5 bg-red-500"></div>
+        <div class="px-4 pt-3 pb-4 space-y-2.5">
+          <div class="flex items-center gap-1.5 mb-3">
+            <span class="w-5 h-5 rounded bg-red-50 text-red-600 text-[9px] font-bold border border-red-100 flex items-center justify-center">JP</span>
+            <span class="text-[10px] font-semibold uppercase tracking-widest text-zinc-500">Japanese</span>
+          </div>
+          <div>
+            <label class="block text-[10px] font-medium text-zinc-500 mb-1">Word (JP) <span class="text-red-400">*</span></label>
+            <input type="text" placeholder="e.g. 犬" class="flex h-8 w-full rounded-md border border-zinc-200 bg-white px-2.5 text-xs placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900">
+          </div>
+          <div>
+            <label class="block text-[10px] font-medium text-zinc-500 mb-1">Word Audio</label>
+            <label class="flex h-8 w-full items-center gap-1.5 rounded-md border border-dashed border-zinc-200 bg-zinc-50 px-2.5 cursor-pointer hover:border-red-300 hover:bg-red-50/30 transition-colors group">
+              <svg class="w-3 h-3 text-zinc-400 group-hover:text-red-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
+              <span class="text-[9px] text-zinc-400 group-hover:text-red-500">Upload…</span>
+              <input type="file" accept="audio/*" class="sr-only">
+            </label>
+          </div>
+          <div class="pt-1 border-t border-zinc-100">
+            <label class="block text-[10px] font-medium text-zinc-500 mb-1">Sentence</label>
+            <input type="text" placeholder="e.g. 犬はかわいい。" class="flex h-8 w-full rounded-md border border-zinc-200 bg-white px-2.5 text-xs placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900">
+          </div>
+          <div>
+            <label class="flex items-center gap-1 text-[10px] font-medium text-zinc-500 mb-1">
+              Sentence Audio
+              <span class="text-[8px] text-zinc-400 bg-zinc-100 px-1 rounded">shared</span>
+            </label>
+            <label class="flex h-8 w-full items-center gap-1.5 rounded-md border border-dashed border-zinc-200 bg-zinc-50 px-2.5 cursor-pointer hover:border-red-300 hover:bg-red-50/30 transition-colors group">
+              <svg class="w-3 h-3 text-zinc-400 group-hover:text-red-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
+              <span class="text-[9px] text-zinc-400 group-hover:text-red-500">Upload…</span>
+              <input type="file" accept="audio/*" class="sr-only">
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Romaji -->
+      <div>
+        <div class="h-0.5 bg-emerald-500"></div>
+        <div class="px-4 pt-3 pb-4 space-y-2.5">
+          <div class="flex items-center gap-1.5 mb-3">
+            <span class="w-5 h-5 rounded bg-emerald-50 text-emerald-600 text-[9px] font-bold border border-emerald-100 flex items-center justify-center">RM</span>
+            <span class="text-[10px] font-semibold uppercase tracking-widest text-zinc-500">Romaji</span>
+          </div>
+          <div>
+            <label class="block text-[10px] font-medium text-zinc-500 mb-1">Romaji <span class="text-red-400">*</span></label>
+            <input type="text" placeholder="e.g. inu" class="flex h-8 w-full rounded-md border border-zinc-200 bg-white px-2.5 text-xs placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900">
+          </div>
+          <div>
+            <label class="block text-[10px] font-medium text-zinc-500 mb-1">Word Audio</label>
+            <label class="flex h-8 w-full items-center gap-1.5 rounded-md border border-dashed border-zinc-200 bg-zinc-50 px-2.5 cursor-pointer hover:border-emerald-300 hover:bg-emerald-50/30 transition-colors group">
+              <svg class="w-3 h-3 text-zinc-400 group-hover:text-emerald-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
+              <span class="text-[9px] text-zinc-400 group-hover:text-emerald-500">Upload…</span>
+              <input type="file" accept="audio/*" class="sr-only">
+            </label>
+          </div>
+          <div class="pt-1 border-t border-zinc-100">
+            <label class="block text-[10px] font-medium text-zinc-500 mb-1">Sentence</label>
+            <input type="text" placeholder="e.g. Inu wa kawaii desu." class="flex h-8 w-full rounded-md border border-zinc-200 bg-white px-2.5 text-xs placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900">
+          </div>
+          <div>
+            <label class="block text-[10px] font-medium text-zinc-500 mb-1">Sentence Audio</label>
+            <div class="flex h-8 w-full items-center gap-1.5 rounded-md border border-zinc-100 bg-zinc-50 px-2.5">
+              <svg class="w-3 h-3 text-zinc-300 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"/></svg>
+              <span class="text-[9px] text-zinc-400 italic">Uses JP audio</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Shared metadata -->
+    <div class="border-t border-zinc-100 px-5 py-3.5">
+      <div class="flex items-end gap-4 flex-wrap">
+        <div class="w-32">
+          <label class="block text-[10px] font-medium text-zinc-500 mb-1">Sort Order</label>
+          <input type="number" value="99" class="flex h-8 w-full rounded-md border border-zinc-200 bg-white px-3 text-xs focus:outline-none focus:ring-2 focus:ring-zinc-900">
+        </div>
+        <div class="flex-1 min-w-[160px]">
+          <label class="block text-[10px] font-medium text-zinc-500 mb-1">Image (256×256)</label>
+          <label class="flex h-8 w-full items-center gap-2 rounded-md border border-dashed border-zinc-200 bg-zinc-50 px-2.5 cursor-pointer hover:border-zinc-400 transition-colors">
+            <svg class="w-3 h-3 text-zinc-400 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159M3.75 19.5h16.5"/></svg>
+            <span class="text-[10px] text-zinc-400">Choose image…</span>
+            <input type="file" accept="image/*" class="sr-only">
+          </label>
+        </div>
+        <div class="flex items-center gap-5 h-8">
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" class="w-3.5 h-3.5 rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900">
+            <span class="text-xs font-medium text-zinc-700">Premium</span>
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" checked class="w-3.5 h-3.5 rounded border-zinc-300 text-emerald-600 focus:ring-emerald-600">
+            <span class="text-xs font-medium text-zinc-700">Approved</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-2 px-5 py-3.5 border-t border-zinc-100 bg-zinc-50/50">
+      <button class="inline-flex h-8 items-center px-3 rounded-md bg-zinc-900 text-white text-xs font-medium hover:bg-zinc-700 transition-colors">Create Entry</button>
+      <button class="text-xs text-zinc-400 hover:text-zinc-700 px-3 py-1.5 rounded hover:bg-zinc-100 transition-colors">Cancel</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     OPTION C — Side Panel
+     Language sections on the left with colored left-border tabs.
+     Image + metadata pinned to the right panel.
+     ═══════════════════════════════════════════════════════════ -->
+<div class="max-w-5xl mx-auto mb-16">
+  <div class="mb-3 flex items-center gap-3">
+    <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-zinc-900 text-white text-[10px] font-bold">C</span>
+    <span class="text-xs font-semibold text-zinc-700 uppercase tracking-wider">Option C — Side Panel</span>
+  </div>
+
+  <div class="bg-white rounded-lg border border-zinc-200 overflow-hidden shadow-sm">
+    <div class="flex items-center justify-between px-5 py-3 border-b border-zinc-100">
+      <span class="text-sm font-semibold text-zinc-900">New Vocabulary Entry</span>
+    </div>
+
+    <div class="flex divide-x divide-zinc-100">
+
+      <!-- Left: language sections -->
+      <div class="flex-1 min-w-0 px-5 py-4 space-y-5">
+
+        <div>
+          <label class="block text-xs font-medium text-zinc-700 mb-1.5">Subcategory <span class="text-red-400">*</span></label>
+          <select class="flex h-8 w-full rounded-md border border-zinc-200 bg-white px-3 text-xs text-zinc-900 focus:outline-none focus:ring-2 focus:ring-zinc-900">
+            <option>— Select subcategory —</option>
+            <option>Greetings › Basic</option>
+          </select>
+        </div>
+
+        <!-- English -->
+        <div class="pl-3 border-l-2 border-blue-500">
+          <span class="text-[9px] font-bold uppercase tracking-[0.18em] text-blue-500 block mb-2.5">English</span>
+          <div class="grid grid-cols-2 gap-3 mb-2.5">
+            <div>
+              <label class="block text-[10px] font-medium text-zinc-500 mb-1">Meaning <span class="text-red-400">*</span></label>
+              <input type="text" placeholder="e.g. dog" class="flex h-8 w-full rounded-md border border-zinc-200 bg-white px-3 text-xs placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900">
+            </div>
+            <div>
+              <label class="block text-[10px] font-medium text-zinc-500 mb-1">Word Audio</label>
+              <label class="flex h-8 w-full items-center gap-2 rounded-md border border-dashed border-zinc-200 bg-zinc-50 px-2.5 cursor-pointer hover:border-blue-300 hover:bg-blue-50/30 transition-colors group">
+                <svg class="w-3 h-3 text-zinc-400 group-hover:text-blue-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
+                <span class="text-[10px] text-zinc-400 group-hover:text-blue-500">Upload…</span>
+                <input type="file" accept="audio/*" class="sr-only">
+              </label>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-[10px] font-medium text-zinc-500 mb-1">Sentence</label>
+              <input type="text" placeholder="e.g. The dog is cute." class="flex h-8 w-full rounded-md border border-zinc-200 bg-white px-3 text-xs placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900">
+            </div>
+            <div>
+              <label class="block text-[10px] font-medium text-zinc-500 mb-1">Sentence Audio</label>
+              <label class="flex h-8 w-full items-center gap-2 rounded-md border border-dashed border-zinc-200 bg-zinc-50 px-2.5 cursor-pointer hover:border-blue-300 hover:bg-blue-50/30 transition-colors group">
+                <svg class="w-3 h-3 text-zinc-400 group-hover:text-blue-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
+                <span class="text-[10px] text-zinc-400 group-hover:text-blue-500">Upload…</span>
+                <input type="file" accept="audio/*" class="sr-only">
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Japanese -->
+        <div class="pl-3 border-l-2 border-red-500">
+          <span class="text-[9px] font-bold uppercase tracking-[0.18em] text-red-500 block mb-2.5">Japanese</span>
+          <div class="grid grid-cols-2 gap-3 mb-2.5">
+            <div>
+              <label class="block text-[10px] font-medium text-zinc-500 mb-1">Word (JP) <span class="text-red-400">*</span></label>
+              <input type="text" placeholder="e.g. 犬" class="flex h-8 w-full rounded-md border border-zinc-200 bg-white px-3 text-xs placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900">
+            </div>
+            <div>
+              <label class="block text-[10px] font-medium text-zinc-500 mb-1">Word Audio</label>
+              <label class="flex h-8 w-full items-center gap-2 rounded-md border border-dashed border-zinc-200 bg-zinc-50 px-2.5 cursor-pointer hover:border-red-300 hover:bg-red-50/30 transition-colors group">
+                <svg class="w-3 h-3 text-zinc-400 group-hover:text-red-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
+                <span class="text-[10px] text-zinc-400 group-hover:text-red-500">Upload…</span>
+                <input type="file" accept="audio/*" class="sr-only">
+              </label>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-[10px] font-medium text-zinc-500 mb-1">Sentence</label>
+              <input type="text" placeholder="e.g. 犬はかわいいです。" class="flex h-8 w-full rounded-md border border-zinc-200 bg-white px-3 text-xs placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900">
+            </div>
+            <div>
+              <label class="flex items-center gap-1.5 text-[10px] font-medium text-zinc-500 mb-1">
+                Sentence Audio
+                <span class="text-[8px] text-zinc-400 bg-zinc-100 px-1 py-0.5 rounded">shared with Romaji</span>
+              </label>
+              <label class="flex h-8 w-full items-center gap-2 rounded-md border border-dashed border-zinc-200 bg-zinc-50 px-2.5 cursor-pointer hover:border-red-300 hover:bg-red-50/30 transition-colors group">
+                <svg class="w-3 h-3 text-zinc-400 group-hover:text-red-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
+                <span class="text-[10px] text-zinc-400 group-hover:text-red-500">Upload…</span>
+                <input type="file" accept="audio/*" class="sr-only">
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Romaji -->
+        <div class="pl-3 border-l-2 border-emerald-500">
+          <span class="text-[9px] font-bold uppercase tracking-[0.18em] text-emerald-500 block mb-2.5">Romaji</span>
+          <div class="grid grid-cols-2 gap-3 mb-2.5">
+            <div>
+              <label class="block text-[10px] font-medium text-zinc-500 mb-1">Romaji <span class="text-red-400">*</span></label>
+              <input type="text" placeholder="e.g. inu" class="flex h-8 w-full rounded-md border border-zinc-200 bg-white px-3 text-xs placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900">
+            </div>
+            <div>
+              <label class="block text-[10px] font-medium text-zinc-500 mb-1">Word Audio</label>
+              <label class="flex h-8 w-full items-center gap-2 rounded-md border border-dashed border-zinc-200 bg-zinc-50 px-2.5 cursor-pointer hover:border-emerald-300 hover:bg-emerald-50/30 transition-colors group">
+                <svg class="w-3 h-3 text-zinc-400 group-hover:text-emerald-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
+                <span class="text-[10px] text-zinc-400 group-hover:text-emerald-500">Upload…</span>
+                <input type="file" accept="audio/*" class="sr-only">
+              </label>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-[10px] font-medium text-zinc-500 mb-1">Sentence</label>
+              <input type="text" placeholder="e.g. Inu wa kawaii desu." class="flex h-8 w-full rounded-md border border-zinc-200 bg-white px-3 text-xs placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900">
+            </div>
+            <div>
+              <label class="block text-[10px] font-medium text-zinc-500 mb-1">Sentence Audio</label>
+              <div class="flex h-8 w-full items-center gap-2 rounded-md border border-zinc-100 bg-zinc-50 px-2.5">
+                <svg class="w-3 h-3 text-zinc-300 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"/></svg>
+                <span class="text-[10px] text-zinc-400 italic">Uses Japanese sentence audio</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right: image + metadata -->
+      <div class="w-56 shrink-0 px-4 py-4 bg-zinc-50/40 flex flex-col gap-4">
+
+        <div>
+          <label class="block text-[10px] font-medium text-zinc-500 mb-1.5">Image</label>
+          <label class="cursor-pointer block">
+            <div class="w-full aspect-square rounded-lg border-2 border-dashed border-zinc-200 bg-white flex items-center justify-center hover:border-zinc-400 transition-colors group">
+              <div class="text-center">
+                <svg class="w-6 h-6 text-zinc-300 group-hover:text-zinc-400 mx-auto" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3.75 19.5h16.5M3.75 4.5h16.5a.75.75 0 01.75.75v13.5a.75.75 0 01-.75.75H3.75a.75.75 0 01-.75-.75V5.25a.75.75 0 01.75-.75z"/>
+                </svg>
+                <p class="text-[9px] text-zinc-400 mt-1.5 group-hover:text-zinc-500">256 × 256</p>
+              </div>
+            </div>
+            <input type="file" accept="image/*" class="sr-only">
+          </label>
+        </div>
+
+        <div>
+          <label class="block text-[10px] font-medium text-zinc-500 mb-1">Sort Order</label>
+          <input type="number" value="99" class="flex h-8 w-full rounded-md border border-zinc-200 bg-white px-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-zinc-900">
+        </div>
+
+        <div class="mt-auto pt-3 border-t border-zinc-100 space-y-2.5">
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" class="w-3.5 h-3.5 rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900">
+            <span class="text-xs font-medium text-zinc-700">Premium</span>
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" checked class="w-3.5 h-3.5 rounded border-zinc-300 text-emerald-600 focus:ring-emerald-600">
+            <span class="text-xs font-medium text-zinc-700">Approved</span>
+          </label>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="flex items-center gap-2 px-5 py-3.5 border-t border-zinc-100 bg-zinc-50/50">
+      <button class="inline-flex h-8 items-center px-3 rounded-md bg-zinc-900 text-white text-xs font-medium hover:bg-zinc-700 transition-colors">Create Entry</button>
+      <button class="text-xs text-zinc-400 hover:text-zinc-700 px-3 py-1.5 rounded hover:bg-zinc-100 transition-colors">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<p class="text-center text-[10px] text-zinc-400 pb-8">Reply A, B, or C to implement.</p>
+
+</body>
+</html>

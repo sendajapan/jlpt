@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vocabulary Table — Collapsible with 3 Expand Designs</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body { font-family: 'Inter', ui-sans-serif, system-ui, sans-serif; }
+  .toggle-row { cursor: pointer; transition: all 0.2s; }
+  .toggle-row:hover { background-color: rgba(59, 130, 246, 0.05); }
+  .toggle-row.expanded { background-color: rgba(59, 130, 246, 0.08); }
+
+  /* Simple down arrow */
+  .arrow-down {
+    width: 18px;
+    height: 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+  }
+  .arrow-down::after {
+    content: '';
+    width: 5px;
+    height: 5px;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(45deg);
+    display: block;
+  }
+  .toggle-row.expanded .arrow-down::after {
+    transform: rotate(225deg);
+  }
+
+  /* Play button icon */
+  .play-icon {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+  }
+
+  .tab-btn.active {
+    border-bottom-width: 3px !important;
+  }
+</style>
+</head>
+<body class="bg-zinc-100 py-12 px-4">
+
+<div class="max-w-7xl mx-auto mb-16 text-center">
+  <p class="text-[10px] font-semibold uppercase tracking-[0.2em] text-zinc-400 mb-2">Vocabulary Index Table</p>
+  <h1 class="text-2xl font-bold text-zinc-900 mb-2">Collapsible Rows + 3 Expand Designs</h1>
+  <p class="text-sm text-zinc-500">Color-coded by language. Choose expand design: A (Grid) • B (Stacked) • C (Tabs)</p>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     DESIGN A — 3-Column Grid Layout
+     ═══════════════════════════════════════════════════════════ -->
+<div class="max-w-7xl mx-auto mb-20">
+  <div class="mb-4 flex items-center gap-3">
+    <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-blue-600 text-white text-xs font-bold">A</span>
+    <div>
+      <h2 class="text-sm font-bold text-zinc-900">Design A: Three-Column Grid</h2>
+      <p class="text-[10px] text-zinc-500">Color-coded columns: Blue (EN) • Red (JP) • Emerald (RM)</p>
+    </div>
+  </div>
+
+  <div class="bg-white rounded-lg border border-zinc-200 overflow-hidden shadow-sm">
+    <div class="flex items-center justify-between px-5 py-3 border-b border-zinc-100">
+      <span class="text-sm font-semibold text-zinc-900">All Vocabulary</span>
+      <span class="text-[10px] text-zinc-400">42 total</span>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="min-w-full text-sm">
+        <thead>
+          <tr class="border-b border-zinc-100 bg-zinc-50/50">
+            <th class="w-10 px-3 py-2 text-center text-[10px] font-semibold uppercase tracking-wider text-zinc-400 border-r border-zinc-100">S/N</th>
+            <th class="w-10 px-2 py-2 text-center text-[10px] font-semibold uppercase tracking-wider text-zinc-400 border-r border-zinc-100">Img</th>
+            <th class="px-4 py-2 text-left text-[10px] font-semibold uppercase tracking-wider text-zinc-400">Word (EN / JP / RM)</th>
+            <th class="px-4 py-2 text-left text-[10px] font-semibold uppercase tracking-wider text-zinc-400">Category</th>
+            <th class="px-4 py-2 text-center text-[10px] font-semibold uppercase tracking-wider text-zinc-400">Approved</th>
+            <th class="px-4 py-2 text-center text-[10px] font-semibold uppercase tracking-wider text-zinc-400 border-l border-zinc-100">Action</th>
+            <th class="w-8 px-2 py-2 text-center"></th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-zinc-100">
+          <tr class="toggle-row" data-row="a1">
+            <td class="w-10 px-3 py-3 text-center text-xs text-zinc-400 border-r border-zinc-100">1</td>
+            <td class="w-10 px-2 py-3 text-center border-r border-zinc-100"><div class="w-6 h-6 mx-auto rounded text-sm flex items-center justify-center bg-zinc-100">🐕</div></td>
+            <td class="px-4 py-3 text-xs font-medium text-zinc-900">dog / 犬 / inu</td>
+            <td class="px-4 py-3 text-xs text-zinc-600">Animals › Pets</td>
+            <td class="px-4 py-3 text-center">
+              <button class="relative inline-flex h-5 w-8 items-center rounded-full bg-emerald-200" role="switch"><span class="inline-block h-4 w-4 rounded-full bg-white shadow translate-x-3.5"></span></button>
+            </td>
+            <td class="px-4 py-3 text-center border-l border-zinc-100"><a href="#" class="text-xs text-zinc-400 hover:text-zinc-900 font-medium">Edit</a></td>
+            <td class="w-8 px-2 py-3 text-center"><span class="arrow-down text-zinc-400"></span></td>
+          </tr>
+          <tr class="row-expanded-a1 hidden bg-blue-50/20 border-b-2 border-blue-100">
+            <td colspan="7" class="px-6 py-5">
+              <div class="grid grid-cols-3 gap-8">
+                <!-- ENGLISH -->
+                <div class="space-y-3">
+                  <div class="flex items-center gap-2">
+                    <span class="w-4 h-4 rounded-sm bg-blue-600 text-white text-[8px] flex items-center justify-center font-bold">EN</span>
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-blue-600">English</span>
+                  </div>
+                  <div>
+                    <p class="text-[10px] font-medium text-zinc-700 mb-1.5">Word Audio</p>
+                    <button class="inline-flex h-8 items-center gap-1.5 px-3 rounded-md border border-blue-300 bg-white hover:bg-blue-50 text-xs font-medium text-blue-600 transition-colors">
+                      <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
+                      Play
+                    </button>
+                  </div>
+                  <div>
+                    <p class="text-[10px] font-medium text-zinc-700 mb-1.5">Sentence</p>
+                    <p class="text-zinc-700 text-[10px] mb-1.5">The dog is cute and friendly.</p>
+                    <button class="inline-flex h-8 items-center gap-1.5 px-3 rounded-md border border-blue-300 bg-white hover:bg-blue-50 text-xs font-medium text-blue-600 transition-colors">
+                      <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
+                      Play
+                    </button>
+                  </div>
+                </div>
+                <!-- JAPANESE -->
+                <div class="space-y-3">
+                  <div class="flex items-center gap-2">
+                    <span class="w-4 h-4 rounded-sm bg-red-600 text-white text-[8px] flex items-center justify-center font-bold">JP</span>
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-red-600">Japanese</span>
+                  </div>
+                  <div>
+                    <p class="text-[10px] font-medium text-zinc-700 mb-1">Word Audio</p>
+                    <span class="text-[9px] text-zinc-400">(shared with Romaji)</span>
+                    <button class="inline-flex items-center gap-2 h-8 items-center gap-1.5 px-3 rounded-md border border-red-300 bg-white hover:bg-red-50 text-xs font-medium text-red-600 transition-colors mt-1.5">
+                      <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
+                      Play
+                    </button>
+                  </div>
+                  <div>
+                    <p class="text-[10px] font-medium text-zinc-700 mb-1">Sentence</p>
+                    <span class="text-[9px] text-zinc-400">(shared with Romaji)</span>
+                    <p class="text-zinc-700 text-[10px] mt-1 mb-1.5">犬はかわいくて親友です。</p>
+                    <button class="inline-flex h-8 items-center gap-1.5 px-3 rounded-md border border-red-300 bg-white hover:bg-red-50 text-xs font-medium text-red-600 transition-colors">
+                      <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
+                      Play
+                    </button>
+                  </div>
+                </div>
+                <!-- ROMAJI -->
+                <div class="space-y-3">
+                  <div class="flex items-center gap-2">
+                    <span class="w-4 h-4 rounded-sm bg-emerald-600 text-white text-[8px] flex items-center justify-center font-bold">RM</span>
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-600">Romaji</span>
+                  </div>
+                  <div>
+                    <p class="text-[10px] font-medium text-zinc-700 mb-1.5">Word</p>
+                    <p class="text-zinc-700 text-[10px]">inu</p>
+                  </div>
+                  <div>
+                    <p class="text-[10px] font-medium text-zinc-700 mb-1.5">Sentence</p>
+                    <p class="text-zinc-700 text-[10px]">Inu wa kawaii kute shinyuu desu.</p>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     DESIGN B — Stacked Sections with Left Border
+     ═══════════════════════════════════════════════════════════ -->
+<div class="max-w-7xl mx-auto mb-20">
+  <div class="mb-4 flex items-center gap-3">
+    <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-green-600 text-white text-xs font-bold">B</span>
+    <div>
+      <h2 class="text-sm font-bold text-zinc-900">Design B: Stacked Sections</h2>
+      <p class="text-[10px] text-zinc-500">Full-width sections with colored left border</p>
+    </div>
+  </div>
+
+  <div class="bg-white rounded-lg border border-zinc-200 overflow-hidden shadow-sm">
+    <div class="flex items-center justify-between px-5 py-3 border-b border-zinc-100">
+      <span class="text-sm font-semibold text-zinc-900">All Vocabulary</span>
+      <span class="text-[10px] text-zinc-400">42 total</span>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="min-w-full text-sm">
+        <thead>
+          <tr class="border-b border-zinc-100 bg-zinc-50/50">
+            <th class="w-10 px-3 py-2 text-center text-[10px] font-semibold uppercase tracking-wider text-zinc-400 border-r border-zinc-100">S/N</th>
+            <th class="w-10 px-2 py-2 text-center text-[10px] font-semibold uppercase tracking-wider text-zinc-400 border-r border-zinc-100">Img</th>
+            <th class="px-4 py-2 text-left text-[10px] font-semibold uppercase tracking-wider text-zinc-400">Word (EN / JP / RM)</th>
+            <th class="px-4 py-2 text-left text-[10px] font-semibold uppercase tracking-wider text-zinc-400">Category</th>
+            <th class="px-4 py-2 text-center text-[10px] font-semibold uppercase tracking-wider text-zinc-400">Approved</th>
+            <th class="px-4 py-2 text-center text-[10px] font-semibold uppercase tracking-wider text-zinc-400 border-l border-zinc-100">Action</th>
+            <th class="w-8 px-2 py-2 text-center"></th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-zinc-100">
+          <tr class="toggle-row" data-row="b1">
+            <td class="w-10 px-3 py-3 text-center text-xs text-zinc-400 border-r border-zinc-100">1</td>
+            <td class="w-10 px-2 py-3 text-center border-r border-zinc-100"><div class="w-6 h-6 mx-auto rounded text-sm flex items-center justify-center bg-zinc-100">🐕</div></td>
+            <td class="px-4 py-3 text-xs font-medium text-zinc-900">dog / 犬 / inu</td>
+            <td class="px-4 py-3 text-xs text-zinc-600">Animals › Pets</td>
+            <td class="px-4 py-3 text-center">
+              <button class="relative inline-flex h-5 w-8 items-center rounded-full bg-emerald-200" role="switch"><span class="inline-block h-4 w-4 rounded-full bg-white shadow translate-x-3.5"></span></button>
+            </td>
+            <td class="px-4 py-3 text-center border-l border-zinc-100"><a href="#" class="text-xs text-zinc-400 hover:text-zinc-900 font-medium">Edit</a></td>
+            <td class="w-8 px-2 py-3 text-center"><span class="arrow-down text-zinc-400"></span></td>
+          </tr>
+          <tr class="row-expanded-b1 hidden bg-zinc-50/40 border-b-2 border-zinc-100">
+            <td colspan="7" class="px-6 py-5">
+              <div class="space-y-4">
+                <!-- ENGLISH -->
+                <div class="border-l-3 border-blue-600 pl-4">
+                  <div class="flex items-center gap-2 mb-3">
+                    <span class="w-4 h-4 rounded-sm bg-blue-600 text-white text-[8px] flex items-center justify-center font-bold">EN</span>
+                    <span class="text-[10px] font-bold uppercase tracking-widest text-blue-600">English</span>
+                  </div>
+                  <div class="grid grid-cols-2 gap-4">
+                    <div>
+                      <p class="text-[10px] font-medium text-zinc-700 mb-1.5">Word Audio</p>
+                      <button class="inline-flex items-center gap-2 h-8 items-center gap-1.5 px-3 rounded-md border border-blue-300 bg-white hover:bg-blue-50 text-xs font-medium text-blue-600 transition-colors">
+                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
+                        Play
+                      </button>
+                    </div>
+                    <div>
+                      <p class="text-[10px] font-medium text-zinc-700 mb-1.5">Sentence</p>
+                      <p class="text-zinc-700 text-[10px] mb-1.5">The dog is cute and friendly.</p>
+                      <button class="inline-flex items-center gap-2 h-8 items-center gap-1.5 px-3 rounded-md border border-blue-300 bg-white hover:bg-blue-50 text-xs font-medium text-blue-600 transition-colors">
+                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
+                        Play
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <!-- JAPANESE -->
+                <div class="border-l-3 border-red-600 pl-4">
+                  <div class="flex items-center gap-2 mb-3">
+                    <span class="w-4 h-4 rounded-sm bg-red-600 text-white text-[8px] flex items-center justify-center font-bold">JP</span>
+                    <span class="text-[10px] font-bold uppercase tracking-widest text-red-600">Japanese</span>
+                  </div>
+                  <div class="grid grid-cols-2 gap-4">
+                    <div>
+                      <p class="text-[10px] font-medium text-zinc-700 mb-1">Word Audio</p>
+                      <span class="text-[8px] text-zinc-400">shared with Romaji</span>
+                      <button class="inline-flex items-center gap-2 h-8 items-center gap-1.5 px-3 rounded-md border border-red-300 bg-white hover:bg-red-50 text-xs font-medium text-red-600 transition-colors mt-1.5 block">
+                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
+                        Play
+                      </button>
+                    </div>
+                    <div>
+                      <p class="text-[10px] font-medium text-zinc-700 mb-1">Sentence</p>
+                      <span class="text-[8px] text-zinc-400">shared with Romaji</span>
+                      <p class="text-zinc-700 text-[10px] mt-1 mb-1.5">犬はかわいくて親友です。</p>
+                      <button class="inline-flex h-8 items-center gap-1.5 px-3 rounded-md border border-red-300 bg-white hover:bg-red-50 text-xs font-medium text-red-600 transition-colors">
+                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
+                        Play
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <!-- ROMAJI -->
+                <div class="border-l-3 border-emerald-600 pl-4">
+                  <div class="flex items-center gap-2 mb-3">
+                    <span class="w-4 h-4 rounded-sm bg-emerald-600 text-white text-[8px] flex items-center justify-center font-bold">RM</span>
+                    <span class="text-[10px] font-bold uppercase tracking-widest text-emerald-600">Romaji</span>
+                  </div>
+                  <div class="grid grid-cols-2 gap-4">
+                    <div>
+                      <p class="text-[10px] font-medium text-zinc-700 mb-1.5">Word</p>
+                      <p class="text-zinc-700 text-[10px]">inu</p>
+                    </div>
+                    <div>
+                      <p class="text-[10px] font-medium text-zinc-700 mb-1.5">Sentence</p>
+                      <p class="text-zinc-700 text-[10px]">Inu wa kawaii kute shinyuu desu.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     DESIGN C — Tabbed Interface
+     ═══════════════════════════════════════════════════════════ -->
+<div class="max-w-7xl mx-auto mb-16">
+  <div class="mb-4 flex items-center gap-3">
+    <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-purple-600 text-white text-xs font-bold">C</span>
+    <div>
+      <h2 class="text-sm font-bold text-zinc-900">Design C: Tabbed Interface</h2>
+      <p class="text-[10px] text-zinc-500">Click tabs to switch between languages</p>
+    </div>
+  </div>
+
+  <div class="bg-white rounded-lg border border-zinc-200 overflow-hidden shadow-sm">
+    <div class="flex items-center justify-between px-5 py-3 border-b border-zinc-100">
+      <span class="text-sm font-semibold text-zinc-900">All Vocabulary</span>
+      <span class="text-[10px] text-zinc-400">42 total</span>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="min-w-full text-sm">
+        <thead>
+          <tr class="border-b border-zinc-100 bg-zinc-50/50">
+            <th class="w-10 px-3 py-2 text-center text-[10px] font-semibold uppercase tracking-wider text-zinc-400 border-r border-zinc-100">S/N</th>
+            <th class="w-10 px-2 py-2 text-center text-[10px] font-semibold uppercase tracking-wider text-zinc-400 border-r border-zinc-100">Img</th>
+            <th class="px-4 py-2 text-left text-[10px] font-semibold uppercase tracking-wider text-zinc-400">Word (EN / JP / RM)</th>
+            <th class="px-4 py-2 text-left text-[10px] font-semibold uppercase tracking-wider text-zinc-400">Category</th>
+            <th class="px-4 py-2 text-center text-[10px] font-semibold uppercase tracking-wider text-zinc-400">Approved</th>
+            <th class="px-4 py-2 text-center text-[10px] font-semibold uppercase tracking-wider text-zinc-400 border-l border-zinc-100">Action</th>
+            <th class="w-8 px-2 py-2 text-center"></th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-zinc-100">
+          <tr class="toggle-row" data-row="c1">
+            <td class="w-10 px-3 py-3 text-center text-xs text-zinc-400 border-r border-zinc-100">1</td>
+            <td class="w-10 px-2 py-3 text-center border-r border-zinc-100"><div class="w-6 h-6 mx-auto rounded text-sm flex items-center justify-center bg-zinc-100">🐕</div></td>
+            <td class="px-4 py-3 text-xs font-medium text-zinc-900">dog / 犬 / inu</td>
+            <td class="px-4 py-3 text-xs text-zinc-600">Animals › Pets</td>
+            <td class="px-4 py-3 text-center">
+              <button class="relative inline-flex h-5 w-8 items-center rounded-full bg-emerald-200" role="switch"><span class="inline-block h-4 w-4 rounded-full bg-white shadow translate-x-3.5"></span></button>
+            </td>
+            <td class="px-4 py-3 text-center border-l border-zinc-100"><a href="#" class="text-xs text-zinc-400 hover:text-zinc-900 font-medium">Edit</a></td>
+            <td class="w-8 px-2 py-3 text-center"><span class="arrow-down text-zinc-400"></span></td>
+          </tr>
+          <tr class="row-expanded-c1 hidden bg-zinc-50/40 border-b-2 border-zinc-100">
+            <td colspan="7" class="px-6 py-5">
+              <div>
+                <div class="flex gap-1 mb-4 border-b border-zinc-200">
+                  <button class="tab-btn active px-4 py-2.5 text-[10px] font-semibold text-blue-700 border-b-3 border-blue-500" data-tab="en-c1">English</button>
+                  <button class="tab-btn px-4 py-2.5 text-[10px] font-semibold text-zinc-500 border-b-3 border-transparent hover:text-zinc-700" data-tab="jp-c1">Japanese</button>
+                  <button class="tab-btn px-4 py-2.5 text-[10px] font-semibold text-zinc-500 border-b-3 border-transparent hover:text-zinc-700" data-tab="rm-c1">Romaji</button>
+                </div>
+                <div id="en-c1" class="tab-content">
+                  <div class="grid grid-cols-2 gap-6">
+                    <div>
+                      <p class="text-[10px] font-medium text-zinc-700 mb-2">Word Audio</p>
+                      <button class="inline-flex items-center gap-2 h-8 items-center gap-1.5 px-3 rounded-md border border-blue-300 bg-white hover:bg-blue-50 text-xs font-medium text-blue-600 transition-colors">
+                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
+                        Play
+                      </button>
+                    </div>
+                    <div>
+                      <p class="text-[10px] font-medium text-zinc-700 mb-2">Sentence</p>
+                      <p class="text-zinc-700 text-[10px] mb-2">The dog is cute and friendly.</p>
+                      <button class="inline-flex items-center gap-2 h-8 items-center gap-1.5 px-3 rounded-md border border-blue-300 bg-white hover:bg-blue-50 text-xs font-medium text-blue-600 transition-colors">
+                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
+                        Play
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div id="jp-c1" class="tab-content hidden">
+                  <div class="grid grid-cols-2 gap-6">
+                    <div>
+                      <p class="text-[10px] font-medium text-zinc-700 mb-1">Word Audio</p>
+                      <p class="text-[8px] text-zinc-400 mb-1.5">shared with Romaji</p>
+                      <button class="inline-flex h-8 items-center gap-1.5 px-3 rounded-md border border-red-300 bg-white hover:bg-red-50 text-xs font-medium text-red-600 transition-colors">
+                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
+                        Play
+                      </button>
+                    </div>
+                    <div>
+                      <p class="text-[10px] font-medium text-zinc-700 mb-1">Sentence</p>
+                      <p class="text-[8px] text-zinc-400 mb-1.5">shared with Romaji</p>
+                      <p class="text-zinc-700 text-[10px] mb-2">犬はかわいくて親友です。</p>
+                      <button class="inline-flex h-8 items-center gap-1.5 px-3 rounded-md border border-red-300 bg-white hover:bg-red-50 text-xs font-medium text-red-600 transition-colors">
+                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
+                        Play
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div id="rm-c1" class="tab-content hidden">
+                  <div class="grid grid-cols-2 gap-6">
+                    <div>
+                      <p class="text-[10px] font-medium text-zinc-700 mb-1.5">Word</p>
+                      <p class="text-zinc-700 text-[10px]">inu</p>
+                    </div>
+                    <div>
+                      <p class="text-[10px] font-medium text-zinc-700 mb-1.5">Sentence</p>
+                      <p class="text-zinc-700 text-[10px]">Inu wa kawaii kute shinyuu desu.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<p class="text-center text-[10px] text-zinc-400 mt-16 pb-8">Reply <strong>A</strong>, <strong>B</strong>, or <strong>C</strong> to implement.</p>
+
+<script>
+  // Toggle expand rows
+  document.querySelectorAll('.toggle-row').forEach(row => {
+    row.addEventListener('click', function(e) {
+      if (e.target.closest('button, a')) return;
+      const rowId = this.dataset.row;
+      const expandedRow = document.querySelector(`.row-expanded-${rowId}`);
+      this.classList.toggle('expanded');
+      expandedRow.classList.toggle('hidden');
+    });
+  });
+
+  // Tab functionality
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      const tabId = this.dataset.tab;
+      const parent = this.closest('div').querySelector('[id]')?.parentElement || this.closest('div');
+
+      // Remove active from all tabs
+      parent.querySelectorAll('.tab-btn').forEach(b => {
+        b.classList.remove('active', 'text-blue-700', 'border-b-blue-500');
+        b.classList.add('text-zinc-500', 'border-b-transparent');
+      });
+
+      // Add active to clicked tab
+      this.classList.add('active', 'text-blue-700', 'border-b-blue-500');
+      this.classList.remove('text-zinc-500', 'border-b-transparent');
+
+      // Hide all tab contents
+      parent.querySelectorAll('.tab-content').forEach(content => content.classList.add('hidden'));
+
+      // Show selected tab content
+      const selectedTab = parent.querySelector(`#${tabId}`);
+      if (selectedTab) selectedTab.classList.remove('hidden');
+    });
+  });
+</script>
+
+</body>
+</html>
