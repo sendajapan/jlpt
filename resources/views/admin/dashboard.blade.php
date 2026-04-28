@@ -17,7 +17,7 @@
         <div>
             <p class="text-[10px] font-semibold uppercase tracking-wider text-zinc-400">Categories</p>
             <p class="mt-1 text-2xl font-bold text-zinc-900 tabular-nums">{{ $categoryCount }}</p>
-            <p class="mt-1 text-[10px] text-zinc-400 group-hover:text-blue-600 transition-colors">View all 竊・/p>
+            <p class="mt-1 text-[10px] text-zinc-400 group-hover:text-blue-600 transition-colors">View all 竊・</p>
         </div>
         <div class="w-9 h-9 rounded-lg bg-blue-50 border border-blue-100 flex items-center justify-center flex-shrink-0">
             <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24">
@@ -31,7 +31,7 @@
         <div>
             <p class="text-[10px] font-semibold uppercase tracking-wider text-zinc-400">Subcategories</p>
             <p class="mt-1 text-2xl font-bold text-zinc-900 tabular-nums">{{ $subcategoryCount }}</p>
-            <p class="mt-1 text-[10px] text-zinc-400 group-hover:text-violet-600 transition-colors">View all 竊・/p>
+            <p class="mt-1 text-[10px] text-zinc-400 group-hover:text-violet-600 transition-colors">View all 竊・</p>
         </div>
         <div class="w-9 h-9 rounded-lg bg-violet-50 border border-violet-100 flex items-center justify-center flex-shrink-0">
             <svg class="w-4 h-4 text-violet-600" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24">
@@ -45,7 +45,7 @@
         <div>
             <p class="text-[10px] font-semibold uppercase tracking-wider text-zinc-400">Vocabulary</p>
             <p class="mt-1 text-2xl font-bold text-zinc-900 tabular-nums">{{ $vocabularyCount }}</p>
-            <p class="mt-1 text-[10px] text-zinc-400 group-hover:text-emerald-600 transition-colors">View all 竊・/p>
+            <p class="mt-1 text-[10px] text-zinc-400 group-hover:text-emerald-600 transition-colors">View all 竊・</p>
         </div>
         <div class="w-9 h-9 rounded-lg bg-emerald-50 border border-emerald-100 flex items-center justify-center flex-shrink-0">
             <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24">

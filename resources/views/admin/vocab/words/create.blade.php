@@ -41,7 +41,7 @@
                     <div class="grid grid-cols-2 gap-3 mb-2.5">
                         <div>
                             <label class="block text-[10px] font-medium text-zinc-500 mb-1">Word <span class="text-red-400">*</span></label>
-                            <input type="text" name="word_en" value="{{ old('word_en') }}" placeholder="e.g. dog"
+                            <input type="text" name="word_en" value="{{ old('word_en') }}" placeholder="e.g. red"
                                    class="{{ $errors->has('word_en') ? 'flex h-8 w-full rounded-md border border-red-400 bg-white px-3 text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-0 transition-shadow duration-150' : 'flex h-8 w-full rounded-md border border-zinc-200 bg-white px-3 text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:ring-offset-0 transition-shadow duration-150' }}">
                             @error('word_en') <p class="mt-1 text-[10px] text-red-500">{{ $message }}</p> @enderror
                         </div>
@@ -58,7 +58,7 @@
                     <div class="grid grid-cols-2 gap-3">
                         <div>
                             <label class="block text-[10px] font-medium text-zinc-500 mb-1">Sentence</label>
-                            <textarea name="sentence_en" rows="2" placeholder="e.g. The dog is playing in the garden."
+                            <textarea name="sentence_en" rows="2" placeholder="e.g. The apple is red."
                                       class="{{ $errors->has('sentence_en') ? 'flex w-full rounded-md border border-red-400 bg-white px-3 py-2 text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-0 transition-shadow duration-150 resize-none' : 'flex w-full rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:ring-offset-0 transition-shadow duration-150 resize-none' }}">{{ old('sentence_en') }}</textarea>
                             @error('sentence_en') <p class="mt-1 text-[10px] text-red-500">{{ $message }}</p> @enderror
                         </div>
@@ -79,7 +79,7 @@
                     <div class="grid grid-cols-2 gap-3 mb-2.5">
                         <div>
                             <label class="block text-[10px] font-medium text-zinc-500 mb-1">Word <span class="text-red-400">*</span></label>
-                            <input type="text" name="word_jp" value="{{ old('word_jp') }}" placeholder="e.g. 迥ｬ"
+                            <input type="text" name="word_jp" value="{{ old('word_jp') }}" placeholder="e.g. あか"
                                    class="{{ $errors->has('word_jp') ? 'flex h-8 w-full rounded-md border border-red-400 bg-white px-3 text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-0 transition-shadow duration-150' : 'flex h-8 w-full rounded-md border border-zinc-200 bg-white px-3 text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:ring-offset-0 transition-shadow duration-150' }}">
                             @error('word_jp') <p class="mt-1 text-[10px] text-red-500">{{ $message }}</p> @enderror
                         </div>
@@ -99,7 +99,7 @@
                     <div class="grid grid-cols-2 gap-3">
                         <div>
                             <label class="block text-[10px] font-medium text-zinc-500 mb-1">Sentence</label>
-                            <textarea name="sentence_jp" rows="2" placeholder="e.g. 迥ｬ縺ｯ蠎ｭ縺ｧ驕翫ｓ縺ｧ縺・∪縺吶・
+                            <textarea name="sentence_jp" rows="2" placeholder="e.g. りんご は あか です."
                                       class="{{ $errors->has('sentence_jp') ? 'flex w-full rounded-md border border-red-400 bg-white px-3 py-2 text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-0 transition-shadow duration-150 resize-none' : 'flex w-full rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:ring-offset-0 transition-shadow duration-150 resize-none' }}">{{ old('sentence_jp') }}</textarea>
                             @error('sentence_jp') <p class="mt-1 text-[10px] text-red-500">{{ $message }}</p> @enderror
                         </div>
@@ -123,7 +123,7 @@
                     <div class="grid grid-cols-2 gap-3 mb-2.5">
                         <div>
                             <label class="block text-[10px] font-medium text-zinc-500 mb-1">Word <span class="text-red-400">*</span></label>
-                            <input type="text" name="word_romaji" value="{{ old('word_romaji') }}" placeholder="e.g. inu"
+                            <input type="text" name="word_romaji" value="{{ old('word_romaji') }}" placeholder="e.g. aka"
                                    class="{{ $errors->has('word_romaji') ? 'flex h-8 w-full rounded-md border border-red-400 bg-white px-3 text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-0 transition-shadow duration-150' : 'flex h-8 w-full rounded-md border border-zinc-200 bg-white px-3 text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:ring-offset-0 transition-shadow duration-150' }}">
                             @error('word_romaji') <p class="mt-1 text-[10px] text-red-500">{{ $message }}</p> @enderror
                         </div>
@@ -138,7 +138,7 @@
                     <div class="grid grid-cols-2 gap-3">
                         <div>
                             <label class="block text-[10px] font-medium text-zinc-500 mb-1">Sentence</label>
-                            <textarea name="sentence_romaji" rows="2" placeholder="e.g. Inu wa niwa de asonde imasu."
+                            <textarea name="sentence_romaji" rows="2" placeholder="e.g. Ringo wa aka desu."
                                       class="{{ $errors->has('sentence_romaji') ? 'flex w-full rounded-md border border-red-400 bg-white px-3 py-2 text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-0 transition-shadow duration-150 resize-none' : 'flex w-full rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:ring-offset-0 transition-shadow duration-150 resize-none' }}">{{ old('sentence_romaji') }}</textarea>
                             @error('sentence_romaji') <p class="mt-1 text-[10px] text-red-500">{{ $message }}</p> @enderror
                         </div>
