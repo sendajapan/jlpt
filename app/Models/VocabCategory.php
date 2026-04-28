@@ -5,16 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-/**
- * @property mixed $icon_path
- */
-class Category extends Model
+class VocabCategory extends Model
 {
+    protected $table = 'vocab_categories';
+
     protected $fillable = [
         'name_en',
         'name_jp',
         'name_romaji',
         'icon_path',
+        'icon_thumbnail_path',
         'audio_path',
         'sort_order',
         'is_premium',
@@ -27,6 +27,6 @@ class Category extends Model
 
     public function subcategories(): HasMany
     {
-        return $this->hasMany(Subcategory::class);
+        return $this->hasMany(VocabSubcategory::class, 'vocab_category_id');
     }
 }

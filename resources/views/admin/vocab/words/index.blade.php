@@ -17,7 +17,7 @@
         <h1 class="text-sm font-semibold text-zinc-900">Vocabulary</h1>
         <p class="text-xs text-zinc-500 mt-0.5">Manage all vocabulary entries</p>
     </div>
-    <a href="{{ route('admin.vocabularies.create') }}"
+    <a href="{{ route('admin.vocab.words.create') }}"
        class="inline-flex items-center gap-1.5 h-8 px-3 rounded-md bg-zinc-900 text-white text-xs font-medium hover:bg-zinc-700 active:scale-[0.98] transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:ring-offset-1">
         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
@@ -32,7 +32,7 @@
         <span class="text-[10px] text-zinc-400">{{ $vocabularies->total() }} total</span>
     </div>
 
-    <form method="GET" action="{{ route('admin.vocabularies.index') }}">
+    <form method="GET" action="{{ route('admin.vocab.words.index') }}">
         <div class="border-b border-zinc-100">
             <div class="flex items-center gap-2 px-4 py-2.5 bg-white">
                 <svg class="w-3.5 h-3.5 text-zinc-400 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -60,7 +60,7 @@
                     <option value="0" {{ request('is_approved') === '0' ? 'selected' : '' }}>Not Approved</option>
                 </select>
                 <button type="submit" class="inline-flex items-center h-7 px-3 rounded bg-zinc-900 text-white text-xs font-medium hover:bg-zinc-700 transition-colors">Filter</button>
-                <a href="{{ route('admin.vocabularies.index') }}" class="inline-flex items-center h-7 px-3 rounded border border-zinc-200 bg-white text-xs text-zinc-500 hover:text-zinc-800 hover:bg-zinc-50 transition-colors">Reset</a>
+                <a href="{{ route('admin.vocab.words.index') }}" class="inline-flex items-center h-7 px-3 rounded border border-zinc-200 bg-white text-xs text-zinc-500 hover:text-zinc-800 hover:bg-zinc-50 transition-colors">Reset</a>
             </div>
         </div>
     </form>
@@ -90,7 +90,7 @@
                             {{ ($vocabularies->currentPage() - 1) * $vocabularies->perPage() + $loop->iteration }}
                         </td>
                         <td class="w-10 px-2 py-3 text-center border-r border-zinc-100">
-                            <form method="POST" action="{{ route('admin.vocabularies.update-image', $vocab) }}" enctype="multipart/form-data">
+                            <form method="POST" action="{{ route('admin.vocab.words.update-image', $vocab) }}" enctype="multipart/form-data">
                                 @csrf
                                 @method('PATCH')
                                 <label class="cursor-pointer block group">
@@ -114,7 +114,7 @@
                         <td class="px-4 py-3 text-xs text-zinc-600">{{ $vocab->subcategory->name_en ?? '—' }}</td>
                         <td class="px-4 py-3 text-xs text-zinc-500 text-center">{{ $vocab->sort_order }}</td>
                         <td class="px-4 py-3 text-center">
-                            <form method="POST" action="{{ route('admin.vocabularies.toggle-approved', $vocab) }}" onclick="event.stopPropagation()">
+                            <form method="POST" action="{{ route('admin.vocab.words.toggle-approved', $vocab) }}" onclick="event.stopPropagation()">
                                 @csrf
                                 @method('PATCH')
                                 <button type="submit" class="relative inline-flex h-5 w-8 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:ring-offset-1 {{ $vocab->is_approved ? 'bg-zinc-900' : 'bg-white border border-zinc-300' }}" role="switch" aria-checked="{{ $vocab->is_approved ? 'true' : 'false' }}">
@@ -124,11 +124,11 @@
                         </td>
                         <td class="px-4 py-3 text-center border-l border-zinc-100">
                             <div class="inline-flex items-center justify-center gap-1">
-                                <a href="{{ route('admin.vocabularies.edit', $vocab) }}"
+                                <a href="{{ route('admin.vocab.words.edit', $vocab) }}"
                                    class="inline-flex items-center h-7 px-2 rounded text-xs font-medium text-zinc-400 hover:text-zinc-900 hover:bg-zinc-100 transition-colors duration-150">
                                     Edit
                                 </a>
-                                <form method="POST" action="{{ route('admin.vocabularies.destroy', $vocab) }}" onsubmit="return confirm('Delete this vocabulary entry?')">
+                                <form method="POST" action="{{ route('admin.vocab.words.destroy', $vocab) }}" onsubmit="return confirm('Delete this vocabulary entry?')">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="inline-flex items-center h-7 px-2 rounded text-xs font-medium text-red-400 hover:text-red-600 hover:bg-red-50 transition-colors duration-150">
@@ -273,7 +273,7 @@
                     <tr>
                         <td colspan="11" class="px-4 py-10 text-center">
                             <p class="text-xs text-zinc-400">No entries found.</p>
-                            <a href="{{ route('admin.vocabularies.create') }}" class="mt-1 inline-flex text-xs text-zinc-900 underline underline-offset-2">Create the first one</a>
+                            <a href="{{ route('admin.vocab.words.create') }}" class="mt-1 inline-flex text-xs text-zinc-900 underline underline-offset-2">Create the first one</a>
                         </td>
                     </tr>
                 @endforelse

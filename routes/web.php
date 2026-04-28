@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\SubcategoryController;
+use App\Http\Controllers\Admin\VocabCategoryController;
+use App\Http\Controllers\Admin\VocabSubcategoryController;
 use App\Http\Controllers\Admin\VocabularyController;
 use Illuminate\Support\Facades\Route;
 
@@ -12,13 +12,22 @@ Route::redirect('/', '/admin/dashboard');
 
 Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::resource('categories', CategoryController::class)->except(['show']);
-    Route::patch('categories/{category}/icon', [CategoryController::class, 'updateIcon'])->name('categories.update-icon');
 
-    Route::resource('subcategories', SubcategoryController::class)->except(['show']);
-    Route::patch('subcategories/{subcategory}/icon', [SubcategoryController::class, 'updateIcon'])->name('subcategories.update-icon');
+    Route::prefix('vocab')->name('vocab.')->group(function () {
+        Route::resource('categories', VocabCategoryController::class)
+            ->except(['show'])
+            ->parameters(['categories' => 'vocabCategory']);
+        Route::patch('categories/{vocabCategory}/icon', [VocabCategoryController::class, 'updateIcon'])->name('categories.update-icon');
 
-    Route::resource('vocabularies', VocabularyController::class)->except(['show']);
-    Route::patch('vocabularies/{vocabulary}/image', [VocabularyController::class, 'updateImage'])->name('vocabularies.update-image');
-    Route::patch('vocabularies/{vocabulary}/toggle-approved', [VocabularyController::class, 'toggleApproved'])->name('vocabularies.toggle-approved');
+        Route::resource('subcategories', VocabSubcategoryController::class)
+            ->except(['show'])
+            ->parameters(['subcategories' => 'vocabSubcategory']);
+        Route::patch('subcategories/{vocabSubcategory}/icon', [VocabSubcategoryController::class, 'updateIcon'])->name('subcategories.update-icon');
+
+        Route::resource('words', VocabularyController::class)
+            ->except(['show'])
+            ->parameters(['words' => 'vocabulary']);
+        Route::patch('words/{vocabulary}/image', [VocabularyController::class, 'updateImage'])->name('words.update-image');
+        Route::patch('words/{vocabulary}/toggle-approved', [VocabularyController::class, 'toggleApproved'])->name('words.toggle-approved');
+    });
 });

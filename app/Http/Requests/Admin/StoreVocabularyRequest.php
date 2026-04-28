@@ -14,7 +14,7 @@ class StoreVocabularyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'subcategory_id'    => ['required', 'integer', 'exists:subcategories,id'],
+            'vocab_subcategory_id' => ['required', 'integer', 'exists:vocab_subcategories,id'],
             'word_jp'           => ['required', 'string', 'max:255'],
             'audio_jp'          => ['nullable', 'file', 'mimes:mp3,wav,ogg,aac,m4a', 'max:20480'],
             'sentence_jp'       => ['nullable', 'string'],

@@ -2,14 +2,14 @@
 
 namespace App\Services;
 
-use App\Models\Category;
+use App\Models\VocabCategory;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-class CategoryService
+class VocabCategoryService
 {
     public function getAll(?string $search = null, int $perPage = 15): LengthAwarePaginator
     {
-        return Category::query()
+        return VocabCategory::query()
             ->when($search, fn ($q) => $q->where('name_en', 'like', "%{$search}%")
                 ->orWhere('name_jp', 'like', "%{$search}%"))
             ->orderBy('sort_order')
@@ -18,19 +18,19 @@ class CategoryService
             ->withQueryString();
     }
 
-    public function create(array $data): Category
+    public function create(array $data): VocabCategory
     {
-        return Category::create($data);
+        return VocabCategory::create($data);
     }
 
-    public function update(Category $category, array $data): Category
+    public function update(VocabCategory $vocabCategory, array $data): VocabCategory
     {
-        $category->update($data);
-        return $category;
+        $vocabCategory->update($data);
+        return $vocabCategory;
     }
 
-    public function delete(Category $category): void
+    public function delete(VocabCategory $vocabCategory): void
     {
-        $category->delete();
+        $vocabCategory->delete();
     }
 }

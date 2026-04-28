@@ -9,7 +9,7 @@
         <h1 class="text-sm font-semibold text-zinc-900">Categories</h1>
         <p class="text-xs text-zinc-500 mt-0.5">Manage all JLPT categories</p>
     </div>
-    <a href="{{ route('admin.categories.create') }}" class="inline-flex items-center gap-1.5 h-8 px-3 rounded-md bg-zinc-900 text-white text-xs font-medium hover:bg-zinc-700 active:scale-[0.98] transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:ring-offset-1">
+    <a href="{{ route('admin.vocab.categories.create') }}" class="inline-flex items-center gap-1.5 h-8 px-3 rounded-md bg-zinc-900 text-white text-xs font-medium hover:bg-zinc-700 active:scale-[0.98] transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:ring-offset-1">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
         </svg>
@@ -23,7 +23,7 @@
         <span class="text-[10px] text-zinc-400">{{ $categories->total() }} {{ Str::plural('category', $categories->total()) }} total</span>
     </div>
 
-    <form method="GET" action="{{ route('admin.categories.index') }}">
+    <form method="GET" action="{{ route('admin.vocab.categories.index') }}">
         <div class="flex items-center gap-2 px-4 py-2.5 border-b border-zinc-100 bg-zinc-50/30">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-zinc-400 shrink-0" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
@@ -31,7 +31,7 @@
             <input type="text" name="search" value="{{ request('search') }}" placeholder="Search categories..."
                    class="flex-1 bg-transparent text-xs text-zinc-700 placeholder:text-zinc-400 focus:outline-none h-6">
             @if(request('search'))
-                <a href="{{ route('admin.categories.index') }}" class="text-xs text-zinc-400 hover:text-zinc-600 transition-colors shrink-0">Clear</a>
+                <a href="{{ route('admin.vocab.categories.index') }}" class="text-xs text-zinc-400 hover:text-zinc-600 transition-colors shrink-0">Clear</a>
             @endif
         </div>
     </form>
@@ -57,7 +57,7 @@
                             {{ ($categories->currentPage() - 1) * $categories->perPage() + $loop->iteration }}
                         </td>
                         <td class="w-12 px-2 py-2 text-center border-r border-zinc-100">
-                            <form method="POST" action="{{ route('admin.categories.update-icon', $category) }}" enctype="multipart/form-data">
+                            <form method="POST" action="{{ route('admin.vocab.categories.update-icon', $category) }}" enctype="multipart/form-data">
                                 @csrf
                                 @method('PATCH')
                                 <label class="cursor-pointer block group">
@@ -87,11 +87,11 @@
                         </td>
                         <td class="px-4 py-2.5 text-center border-l border-zinc-100">
                             <div class="flex items-center justify-center gap-0.5">
-                                <a href="{{ route('admin.categories.edit', $category) }}"
+                                <a href="{{ route('admin.vocab.categories.edit', $category) }}"
                                    class="inline-flex items-center h-7 px-2 rounded text-xs font-medium text-zinc-400 hover:text-zinc-900 hover:bg-zinc-100 transition-colors duration-150">
                                     Edit
                                 </a>
-                                <form method="POST" action="{{ route('admin.categories.destroy', $category) }}"
+                                <form method="POST" action="{{ route('admin.vocab.categories.destroy', $category) }}"
                                       onsubmit="return confirm('Delete this category? This action cannot be undone.')">
                                     @csrf
                                     @method('DELETE')
@@ -107,7 +107,7 @@
                     <tr>
                         <td colspan="8" class="px-4 py-10 text-center">
                             <p class="text-xs text-zinc-400">No categories found.</p>
-                            <a href="{{ route('admin.categories.create') }}" class="mt-1 inline-flex text-xs text-zinc-900 underline underline-offset-2">Create the first one</a>
+                            <a href="{{ route('admin.vocab.categories.create') }}" class="mt-1 inline-flex text-xs text-zinc-900 underline underline-offset-2">Create the first one</a>
                         </td>
                     </tr>
                 @endforelse

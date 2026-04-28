@@ -6,14 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Subcategory extends Model
+class VocabSubcategory extends Model
 {
+    protected $table = 'vocab_subcategories';
+
     protected $fillable = [
-        'category_id',
+        'vocab_category_id',
         'name_en',
         'name_jp',
         'name_romaji',
         'icon_path',
+        'icon_thumbnail_path',
         'audio_path',
         'sort_order',
         'is_premium',
@@ -26,11 +29,11 @@ class Subcategory extends Model
 
     public function category(): BelongsTo
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(VocabCategory::class, 'vocab_category_id');
     }
 
     public function vocabularies(): HasMany
     {
-        return $this->hasMany(Vocabulary::class);
+        return $this->hasMany(Vocabulary::class, 'vocab_subcategory_id');
     }
 }

@@ -22,55 +22,55 @@ class VocabularyController extends Controller
         $categories = $this->service->getAllCategories();
         $subcategories = $this->service->getAllSubcategories();
 
-        return view('admin.vocabularies.index', compact('vocabularies', 'categories', 'subcategories'));
+        return view('admin.vocab.words.index', compact('vocabularies', 'categories', 'subcategories'));
     }
 
     public function create(): View
     {
         $subcategories = $this->service->getAllSubcategories();
 
-        return view('admin.vocabularies.create', compact('subcategories'));
+        return view('admin.vocab.words.create', compact('subcategories'));
     }
 
     public function store(StoreVocabularyRequest $request): RedirectResponse
     {
         $data = $request->validated();
-        $data['audio_jp']              = $this->storeFile($request, 'audio_jp', 'vocabularies/audio');
-        $data['audio_en']              = $this->storeFile($request, 'audio_en', 'vocabularies/audio');
-        $data['sentence_audio_jp']     = $this->storeFile($request, 'sentence_audio_jp', 'vocabularies/audio');
-        $data['sentence_audio_en']     = $this->storeFile($request, 'sentence_audio_en', 'vocabularies/audio');
-        $data['image_path']            = $this->storeFile($request, 'image_path', 'vocabularies/images');
-        $data['image_thumbnail_path']  = $this->storeThumbnail($request->file('image_path'), 'vocabularies/thumbnails');
+        $data['audio_jp']              = $this->storeFile($request, 'audio_jp', 'vocab/words/audio');
+        $data['audio_en']              = $this->storeFile($request, 'audio_en', 'vocab/words/audio');
+        $data['sentence_audio_jp']     = $this->storeFile($request, 'sentence_audio_jp', 'vocab/words/audio');
+        $data['sentence_audio_en']     = $this->storeFile($request, 'sentence_audio_en', 'vocab/words/audio');
+        $data['image_path']            = $this->storeImage($request, 'image_path', 'vocab/words/images');
+        $data['image_thumbnail_path']  = $this->storeThumbnail($request->file('image_path'), 'vocab/words/thumbnails');
 
         $this->service->create($data);
 
         notify()->success()->title('Vocabulary entry created successfully.')->send();
 
-        return redirect()->route('admin.vocabularies.index');
+        return redirect()->route('admin.vocab.words.index');
     }
 
     public function edit(Vocabulary $vocabulary): View
     {
         $subcategories = $this->service->getAllSubcategories();
 
-        return view('admin.vocabularies.edit', compact('vocabulary', 'subcategories'));
+        return view('admin.vocab.words.edit', compact('vocabulary', 'subcategories'));
     }
 
     public function update(UpdateVocabularyRequest $request, Vocabulary $vocabulary): RedirectResponse
     {
         $data = $request->validated();
-        $data['audio_jp']              = $this->replaceFile($request, 'audio_jp', 'vocabularies/audio', $vocabulary->audio_jp);
-        $data['audio_en']              = $this->replaceFile($request, 'audio_en', 'vocabularies/audio', $vocabulary->audio_en);
-        $data['sentence_audio_jp']     = $this->replaceFile($request, 'sentence_audio_jp', 'vocabularies/audio', $vocabulary->sentence_audio_jp);
-        $data['sentence_audio_en']     = $this->replaceFile($request, 'sentence_audio_en', 'vocabularies/audio', $vocabulary->sentence_audio_en);
-        $data['image_path']            = $this->replaceFile($request, 'image_path', 'vocabularies/images', $vocabulary->image_path);
-        $data['image_thumbnail_path']  = $this->replaceThumbnail($request->file('image_path'), 'vocabularies/thumbnails', $vocabulary->image_thumbnail_path);
+        $data['audio_jp']              = $this->replaceFile($request, 'audio_jp', 'vocab/words/audio', $vocabulary->audio_jp);
+        $data['audio_en']              = $this->replaceFile($request, 'audio_en', 'vocab/words/audio', $vocabulary->audio_en);
+        $data['sentence_audio_jp']     = $this->replaceFile($request, 'sentence_audio_jp', 'vocab/words/audio', $vocabulary->sentence_audio_jp);
+        $data['sentence_audio_en']     = $this->replaceFile($request, 'sentence_audio_en', 'vocab/words/audio', $vocabulary->sentence_audio_en);
+        $data['image_path']            = $this->replaceImage($request, 'image_path', 'vocab/words/images', $vocabulary->image_path);
+        $data['image_thumbnail_path']  = $this->replaceThumbnail($request->file('image_path'), 'vocab/words/thumbnails', $vocabulary->image_thumbnail_path);
 
         $this->service->update($vocabulary, $data);
 
         notify()->success()->title('Vocabulary entry updated successfully.')->send();
 
-        return redirect()->route('admin.vocabularies.index');
+        return redirect()->route('admin.vocab.words.index');
     }
 
     public function toggleApproved(Vocabulary $vocabulary): RedirectResponse
@@ -86,8 +86,8 @@ class VocabularyController extends Controller
         $this->deleteFile($vocabulary->image_path);
         $this->deleteFile($vocabulary->image_thumbnail_path);
         $vocabulary->update([
-            'image_path'           => $request->file('image_path')->store('vocabularies/images', 'public'),
-            'image_thumbnail_path' => $this->storeThumbnail($request->file('image_path'), 'vocabularies/thumbnails'),
+            'image_path'           => $this->saveImageFile($request->file('image_path'), 'vocab/words/images'),
+            'image_thumbnail_path' => $this->storeThumbnail($request->file('image_path'), 'vocab/words/thumbnails'),
         ]);
 
         notify()->success()->title('Image updated.')->send();
@@ -107,6 +107,6 @@ class VocabularyController extends Controller
 
         notify()->success()->title('Vocabulary entry deleted.')->send();
 
-        return redirect()->route('admin.vocabularies.index');
+        return redirect()->route('admin.vocab.words.index');
     }
 }

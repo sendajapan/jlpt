@@ -9,7 +9,7 @@
         <h1 class="text-sm font-semibold text-zinc-900">Subcategories</h1>
         <p class="text-xs text-zinc-500 mt-0.5">Manage subcategories grouped by category</p>
     </div>
-    <a href="{{ route('admin.subcategories.create') }}"
+    <a href="{{ route('admin.vocab.subcategories.create') }}"
        class="inline-flex items-center gap-1.5 h-8 px-3 rounded-md bg-zinc-900 text-white text-xs font-medium hover:bg-zinc-700 active:scale-[0.98] transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:ring-offset-1">
         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
@@ -24,7 +24,7 @@
         <span class="text-[10px] text-zinc-400">{{ $subcategories->total() }} total</span>
     </div>
 
-    <form method="GET" action="{{ route('admin.subcategories.index') }}">
+    <form method="GET" action="{{ route('admin.vocab.subcategories.index') }}">
         <div class="flex items-center gap-2 px-4 py-2.5 border-b border-zinc-100 bg-zinc-50/30">
             <svg class="w-3.5 h-3.5 text-zinc-400 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
@@ -32,7 +32,7 @@
             <input type="text" name="search" value="{{ request('search') }}" placeholder="Search subcategories..."
                    class="flex-1 bg-transparent text-xs text-zinc-700 placeholder:text-zinc-400 focus:outline-none h-6">
             @if(request('search'))
-                <a href="{{ route('admin.subcategories.index') }}" class="text-[10px] text-zinc-400 hover:text-zinc-700 transition-colors">Clear</a>
+                <a href="{{ route('admin.vocab.subcategories.index') }}" class="text-[10px] text-zinc-400 hover:text-zinc-700 transition-colors">Clear</a>
             @endif
         </div>
     </form>
@@ -59,7 +59,7 @@
                             {{ ($subcategories->currentPage() - 1) * $subcategories->perPage() + $loop->iteration }}
                         </td>
                         <td class="w-12 px-2 py-2 text-center border-r border-zinc-100">
-                            <form method="POST" action="{{ route('admin.subcategories.update-icon', $subcategory) }}" enctype="multipart/form-data">
+                            <form method="POST" action="{{ route('admin.vocab.subcategories.update-icon', $subcategory) }}" enctype="multipart/form-data">
                                 @csrf
                                 @method('PATCH')
                                 <label class="cursor-pointer block group">
@@ -90,11 +90,11 @@
                         </td>
                         <td class="px-4 py-2.5 text-center border-l border-zinc-100">
                             <div class="flex items-center justify-center gap-0.5">
-                                <a href="{{ route('admin.subcategories.edit', $subcategory) }}"
+                                <a href="{{ route('admin.vocab.subcategories.edit', $subcategory) }}"
                                    class="inline-flex items-center h-7 px-2 rounded text-xs font-medium text-zinc-400 hover:text-zinc-900 hover:bg-zinc-100 transition-colors duration-150">
                                     Edit
                                 </a>
-                                <form method="POST" action="{{ route('admin.subcategories.destroy', $subcategory) }}"
+                                <form method="POST" action="{{ route('admin.vocab.subcategories.destroy', $subcategory) }}"
                                       onsubmit="return confirm('Delete this subcategory? All associated vocabulary will also be deleted.')">
                                     @csrf
                                     @method('DELETE')
@@ -110,7 +110,7 @@
                     <tr>
                         <td colspan="9" class="px-4 py-10 text-center">
                             <p class="text-xs text-zinc-400">No entries found.</p>
-                            <a href="{{ route('admin.subcategories.create') }}" class="mt-1 inline-flex text-xs text-zinc-900 underline underline-offset-2">Create the first one</a>
+                            <a href="{{ route('admin.vocab.subcategories.create') }}" class="mt-1 inline-flex text-xs text-zinc-900 underline underline-offset-2">Create the first one</a>
                         </td>
                     </tr>
                 @endforelse

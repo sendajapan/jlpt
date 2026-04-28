@@ -4,7 +4,7 @@ namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateSubcategoryRequest extends FormRequest
+class StoreVocabCategoryRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -14,7 +14,6 @@ class UpdateSubcategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'category_id' => ['required', 'integer', 'exists:categories,id'],
             'name_en'     => ['required', 'string', 'max:255'],
             'name_jp'     => ['required', 'string', 'max:255'],
             'name_romaji' => ['nullable', 'string', 'max:255'],

@@ -7,8 +7,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Vocabulary extends Model
 {
+    protected $table = 'vocab_words';
+
     protected $fillable = [
-        'subcategory_id',
+        'vocab_subcategory_id',
         'word_jp',
         'audio_jp',
         'sentence_jp',
@@ -34,6 +36,6 @@ class Vocabulary extends Model
 
     public function subcategory(): BelongsTo
     {
-        return $this->belongsTo(Subcategory::class);
+        return $this->belongsTo(VocabSubcategory::class, 'vocab_subcategory_id');
     }
 }

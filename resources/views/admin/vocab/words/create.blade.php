@@ -1,9 +1,9 @@
-@extends('admin.layouts.app')
+﻿@extends('admin.layouts.app')
 @section('title', 'New Vocabulary Entry')
 
 @section('content')
 
-<a href="{{ route('admin.vocabularies.index') }}" class="inline-flex items-center gap-1.5 text-xs text-zinc-500 hover:text-zinc-800 transition-colors mb-4">
+<a href="{{ route('admin.vocab.words.index') }}" class="inline-flex items-center gap-1.5 text-xs text-zinc-500 hover:text-zinc-800 transition-colors mb-4">
     <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
     </svg>
@@ -16,7 +16,7 @@
         <span class="text-sm font-semibold text-zinc-900">New Vocabulary Entry</span>
     </div>
 
-    <form method="POST" action="{{ route('admin.vocabularies.store') }}" enctype="multipart/form-data">
+    <form method="POST" action="{{ route('admin.vocab.words.store') }}" enctype="multipart/form-data">
         @csrf
 
         <div class="flex divide-x divide-zinc-100">
@@ -25,11 +25,11 @@
 
                 <div>
                     <label class="block text-xs font-medium text-zinc-700 mb-1.5">Subcategory <span class="text-red-500">*</span></label>
-                    <select name="subcategory_id" class="{{ $errors->has('subcategory_id') ? 'flex h-8 w-full rounded-md border border-red-400 bg-white px-3 text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-0 transition-shadow duration-150' : 'flex h-8 w-full rounded-md border border-zinc-200 bg-white px-3 text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:ring-offset-0 transition-shadow duration-150' }}">
-                        <option value="">— Select subcategory —</option>
+                    <select name="vocab_subcategory_id" class="{{ $errors->has('subcategory_id') ? 'flex h-8 w-full rounded-md border border-red-400 bg-white px-3 text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-0 transition-shadow duration-150' : 'flex h-8 w-full rounded-md border border-zinc-200 bg-white px-3 text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:ring-offset-0 transition-shadow duration-150' }}">
+                        <option value="">窶・Select subcategory 窶・/option>
                         @foreach ($subcategories as $sub)
-                            <option value="{{ $sub->id }}" {{ old('subcategory_id') == $sub->id ? 'selected' : '' }}>
-                                {{ $sub->category->name_en ?? '' }} › {{ $sub->name_en }}
+                            <option value="{{ $sub->id }}" {{ old('vocab_subcategory_id') == $sub->id ? 'selected' : '' }}>
+                                {{ $sub->category->name_en ?? '' }} 窶ｺ {{ $sub->name_en }}
                             </option>
                         @endforeach
                     </select>
@@ -79,7 +79,7 @@
                     <div class="grid grid-cols-2 gap-3 mb-2.5">
                         <div>
                             <label class="block text-[10px] font-medium text-zinc-500 mb-1">Word <span class="text-red-400">*</span></label>
-                            <input type="text" name="word_jp" value="{{ old('word_jp') }}" placeholder="e.g. 犬"
+                            <input type="text" name="word_jp" value="{{ old('word_jp') }}" placeholder="e.g. 迥ｬ"
                                    class="{{ $errors->has('word_jp') ? 'flex h-8 w-full rounded-md border border-red-400 bg-white px-3 text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-0 transition-shadow duration-150' : 'flex h-8 w-full rounded-md border border-zinc-200 bg-white px-3 text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:ring-offset-0 transition-shadow duration-150' }}">
                             @error('word_jp') <p class="mt-1 text-[10px] text-red-500">{{ $message }}</p> @enderror
                         </div>
@@ -99,7 +99,7 @@
                     <div class="grid grid-cols-2 gap-3">
                         <div>
                             <label class="block text-[10px] font-medium text-zinc-500 mb-1">Sentence</label>
-                            <textarea name="sentence_jp" rows="2" placeholder="e.g. 犬は庭で遊んでいます。"
+                            <textarea name="sentence_jp" rows="2" placeholder="e.g. 迥ｬ縺ｯ蠎ｭ縺ｧ驕翫ｓ縺ｧ縺・∪縺吶・
                                       class="{{ $errors->has('sentence_jp') ? 'flex w-full rounded-md border border-red-400 bg-white px-3 py-2 text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-0 transition-shadow duration-150 resize-none' : 'flex w-full rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:ring-offset-0 transition-shadow duration-150 resize-none' }}">{{ old('sentence_jp') }}</textarea>
                             @error('sentence_jp') <p class="mt-1 text-[10px] text-red-500">{{ $message }}</p> @enderror
                         </div>
@@ -199,7 +199,7 @@
                     class="inline-flex items-center gap-1.5 h-8 px-3 rounded-md bg-zinc-900 text-white text-xs font-medium hover:bg-zinc-700 active:scale-[0.98] transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:ring-offset-1">
                 Create Entry
             </button>
-            <a href="{{ route('admin.vocabularies.index') }}"
+            <a href="{{ route('admin.vocab.words.index') }}"
                class="text-xs text-zinc-400 hover:text-zinc-700 px-3 py-1.5 rounded hover:bg-zinc-100 transition-colors duration-150">
                 Cancel
             </a>
@@ -209,3 +209,4 @@
 </div>
 
 @endsection
+

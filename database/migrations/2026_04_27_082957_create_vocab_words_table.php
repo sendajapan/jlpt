@@ -8,9 +8,9 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('vocabularies', function (Blueprint $table) {
+        Schema::create('vocab_words', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('subcategory_id')->constrained('subcategories')->cascadeOnDelete();
+            $table->foreignId('vocab_subcategory_id')->constrained('vocab_subcategories')->cascadeOnDelete();
             $table->string('word_jp');
             $table->string('audio_jp')->nullable();
             $table->text('sentence_jp')->nullable();
@@ -32,6 +32,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('vocabularies');
+        Schema::dropIfExists('vocab_words');
     }
 };

@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Models\Category;
-use App\Models\Subcategory;
+use App\Models\VocabCategory;
+use App\Models\VocabSubcategory;
 use App\Models\Vocabulary;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -17,8 +17,8 @@ class VocabularyService
             ->when($filters['search'] ?? null, fn ($q, $s) => $q->where('word_jp', 'like', "%{$s}%")
                 ->orWhere('word_romaji', 'like', "%{$s}%")
                 ->orWhere('word_en', 'like', "%{$s}%"))
-            ->when($filters['subcategory_id'] ?? null, fn ($q, $v) => $q->where('subcategory_id', $v))
-            ->when($filters['category_id'] ?? null, fn ($q, $v) => $q->whereHas('subcategory', fn ($s) => $s->where('category_id', $v)))
+            ->when($filters['subcategory_id'] ?? null, fn ($q, $v) => $q->where('vocab_subcategory_id', $v))
+            ->when($filters['category_id'] ?? null, fn ($q, $v) => $q->whereHas('subcategory', fn ($s) => $s->where('vocab_category_id', $v)))
             ->when(isset($filters['is_approved']) && $filters['is_approved'] !== '', fn ($q) => $q->where('is_approved', $filters['is_approved']))
             ->orderBy('sort_order')
             ->orderBy('word_jp')
@@ -28,12 +28,12 @@ class VocabularyService
 
     public function getAllCategories(): Collection
     {
-        return Category::orderBy('name_en')->get();
+        return VocabCategory::orderBy('name_en')->get();
     }
 
     public function getAllSubcategories(): Collection
     {
-        return Subcategory::with('category')->orderBy('name_en')->get();
+        return VocabSubcategory::with('category')->orderBy('name_en')->get();
     }
 
     public function create(array $data): Vocabulary
