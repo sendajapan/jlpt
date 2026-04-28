@@ -29,7 +29,7 @@
                 <div>
                     <label class="block text-xs font-medium text-zinc-700 mb-1.5">Subcategory <span class="text-red-500">*</span></label>
                     <select name="vocab_subcategory_id" class="{{ $errors->has('subcategory_id') ? 'flex h-8 w-full rounded-md border border-red-400 bg-white px-3 text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-0 transition-shadow duration-150' : 'flex h-8 w-full rounded-md border border-zinc-200 bg-white px-3 text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:ring-offset-0 transition-shadow duration-150' }}">
-                        <option value="">窶・Select subcategory 窶・/option>
+                        <option value="">Select subcategory</option>
                         @foreach ($subcategories as $sub)
                             <option value="{{ $sub->id }}" {{ old('vocab_subcategory_id', $vocabulary->vocab_subcategory_id) == $sub->id ? 'selected' : '' }}>
                                 {{ $sub->category->name_en ?? '' }} 窶ｺ {{ $sub->name_en }}

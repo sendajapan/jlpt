@@ -32,7 +32,7 @@
                 <label class="block text-xs font-medium text-zinc-700 mb-1.5">Category <span class="text-red-500">*</span></label>
                 <select name="vocab_category_id"
                         class="{{ $errors->has('category_id') ? 'flex h-8 w-full rounded-md border border-red-400 bg-white px-3 text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-0 transition-shadow duration-150' : 'flex h-8 w-full rounded-md border border-zinc-200 bg-white px-3 text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:ring-offset-0 transition-shadow duration-150' }}">
-                    <option value="">窶・Select category 窶・/option>
+                    <option value="">Select category</option>
                     @foreach ($categories as $cat)
                         <option value="{{ $cat->id }}" {{ old('vocab_category_id', $subcategory->vocab_category_id ?? '') == $cat->id ? 'selected' : '' }}>
                             {{ $cat->name_en }}
