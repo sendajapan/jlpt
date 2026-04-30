@@ -40,6 +40,7 @@
         <table class="min-w-full">
             <thead>
                 <tr class="border-b border-zinc-100 bg-zinc-50/50">
+                    <th class="w-8 px-2 py-2 text-center border-r border-zinc-100"></th>
                     <th class="w-10 px-3 py-2 text-center text-[10px] font-semibold uppercase tracking-wider text-zinc-400 border-r border-zinc-100">S/N</th>
                     <th class="w-12 px-2 py-2 text-center text-[10px] font-semibold uppercase tracking-wider text-zinc-400 border-r border-zinc-100">Icon</th>
                     <th class="px-4 py-2 text-left text-[10px] font-semibold uppercase tracking-wider text-zinc-400">Name</th>
@@ -50,10 +51,27 @@
                     <th class="px-4 py-2 text-center text-[10px] font-semibold uppercase tracking-wider text-zinc-400 border-l border-zinc-100">Action</th>
                 </tr>
             </thead>
-            <tbody class="divide-y divide-zinc-100">
+            <tbody
+                id="sortable-tbody"
+                data-reorder-url="{{ route('admin.vocab.categories.reorder') }}"
+                data-page-offset="{{ ($categories->currentPage() - 1) * $categories->perPage() }}"
+                class="divide-y divide-zinc-100"
+            >
                 @forelse($categories as $category)
-                    <tr class="hover:bg-zinc-50/30 transition-colors duration-100">
-                        <td class="w-10 px-3 py-2.5 text-center text-xs text-zinc-400 border-r border-zinc-100">
+                    <tr data-id="{{ $category->id }}" class="hover:bg-zinc-50/30 transition-colors duration-100">
+                        <td class="w-8 px-2 py-2.5 text-center border-r border-zinc-100">
+                            <span class="drag-handle inline-flex items-center justify-center cursor-grab active:cursor-grabbing text-zinc-300 hover:text-zinc-500 transition-colors duration-100">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 16 16" fill="currentColor">
+                                    <circle cx="5.5" cy="3.5" r="1.25"/>
+                                    <circle cx="10.5" cy="3.5" r="1.25"/>
+                                    <circle cx="5.5" cy="8" r="1.25"/>
+                                    <circle cx="10.5" cy="8" r="1.25"/>
+                                    <circle cx="5.5" cy="12.5" r="1.25"/>
+                                    <circle cx="10.5" cy="12.5" r="1.25"/>
+                                </svg>
+                            </span>
+                        </td>
+                        <td class="w-10 px-3 py-2.5 text-center text-xs text-zinc-400 border-r border-zinc-100 sn-cell">
                             {{ ($categories->currentPage() - 1) * $categories->perPage() + $loop->iteration }}
                         </td>
                         <td class="w-12 px-2 py-2 text-center border-r border-zinc-100">
@@ -77,7 +95,7 @@
                         <td class="px-4 py-2.5 text-xs font-medium text-zinc-900">{{ $category->name_en }}</td>
                         <td class="px-4 py-2.5 text-xs text-zinc-600">{{ $category->name_jp }}</td>
                         <td class="px-4 py-2.5 text-xs text-zinc-600">{{ $category->name_romaji ?? '—' }}</td>
-                        <td class="px-4 py-2.5 text-xs text-zinc-600">{{ $category->sort_order }}</td>
+                        <td class="px-4 py-2.5 text-xs text-zinc-600 sort-cell">{{ $category->sort_order }}</td>
                         <td class="px-4 py-2.5 text-xs text-zinc-600">
                             @if($category->is_premium)
                                 <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wide bg-amber-50 text-amber-700 border border-amber-200/80">Premium</span>
@@ -105,7 +123,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="8" class="px-4 py-10 text-center">
+                        <td colspan="9" class="px-4 py-10 text-center">
                             <p class="text-xs text-zinc-400">No categories found.</p>
                             <a href="{{ route('admin.vocab.categories.create') }}" class="mt-1 inline-flex text-xs text-zinc-900 underline underline-offset-2">Create the first one</a>
                         </td>
@@ -122,4 +140,68 @@
     @endif
 </div>
 
+<div id="reorder-toast" class="fixed bottom-5 right-5 hidden px-3 py-2 rounded-lg text-xs font-medium shadow-lg z-50 transition-opacity duration-300"></div>
+
 @endsection
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
+<script>
+(function () {
+    const tbody = document.getElementById('sortable-tbody');
+    if (!tbody) return;
+
+    const reorderUrl = tbody.dataset.reorderUrl;
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+
+    new Sortable(tbody, {
+        handle: '.drag-handle',
+        animation: 150,
+        ghostClass: 'opacity-40',
+        chosenClass: 'bg-blue-50',
+        onEnd: function () {
+            const rows    = Array.from(tbody.querySelectorAll('tr[data-id]'));
+            const offset  = parseInt(tbody.dataset.pageOffset, 10);
+            const ids     = rows.map(r => r.dataset.id);
+
+            rows.forEach(function (row, i) {
+                const snCell   = row.querySelector('.sn-cell');
+                const sortCell = row.querySelector('.sort-cell');
+                const newOrder = offset + i + 1;
+                if (snCell)   snCell.textContent   = newOrder;
+                if (sortCell) sortCell.textContent = newOrder;
+            });
+
+            fetch(reorderUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken,
+                },
+                body: JSON.stringify({ ids: ids, offset: offset }),
+            })
+            .then(function (res) { return res.json(); })
+            .then(function (data) {
+                if (data.ok) showToast('Order saved', 'success');
+                else         showToast('Failed to save order', 'error');
+            })
+            .catch(function () {
+                showToast('Failed to save order', 'error');
+            });
+        },
+    });
+
+    function showToast(message, type) {
+        const toast = document.getElementById('reorder-toast');
+        const base  = 'fixed bottom-5 right-5 px-3 py-2 rounded-lg text-xs font-medium shadow-lg z-50 transition-opacity duration-300';
+        const color = type === 'success' ? 'bg-zinc-900 text-white' : 'bg-red-600 text-white';
+        toast.className  = base + ' ' + color;
+        toast.textContent = message;
+        toast.style.opacity = '1';
+
+        setTimeout(function () { toast.style.opacity = '0'; }, 1800);
+        setTimeout(function () { toast.className = 'fixed bottom-5 right-5 hidden'; }, 2100);
+    }
+})();
+</script>
+@endpush

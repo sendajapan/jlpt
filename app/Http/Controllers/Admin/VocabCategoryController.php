@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\StoreVocabCategoryRequest;
 use App\Http\Requests\Admin\UpdateVocabCategoryRequest;
 use App\Models\VocabCategory;
 use App\Services\VocabCategoryService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -75,6 +76,18 @@ class VocabCategoryController extends Controller
         notify()->success()->title('Icon updated.')->send();
 
         return back();
+    }
+
+    public function reorder(Request $request): JsonResponse
+    {
+        $ids    = $request->input('ids', []);
+        $offset = (int) $request->input('offset', 0);
+
+        foreach ($ids as $index => $id) {
+            VocabCategory::where('id', $id)->update(['sort_order' => $offset + $index + 1]);
+        }
+
+        return response()->json(['ok' => true]);
     }
 
     public function destroy(VocabCategory $vocabCategory): RedirectResponse

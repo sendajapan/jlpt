@@ -144,5 +144,6 @@
 
 <x-notify::notify />
 
+@stack('scripts')
 </body>
 </html>

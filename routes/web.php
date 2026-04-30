@@ -14,6 +14,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::prefix('vocab')->name('vocab.')->group(function () {
+        Route::post('categories/reorder', [VocabCategoryController::class, 'reorder'])->name('categories.reorder');
         Route::resource('categories', VocabCategoryController::class)
             ->except(['show'])
             ->parameters(['categories' => 'vocabCategory']);
