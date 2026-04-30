@@ -7,7 +7,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class VocabCategoryService
 {
-    public function getAll(?string $search = null, int $perPage = 15): LengthAwarePaginator
+    public function getAll(?string $search = null, int $perPage = 100): LengthAwarePaginator
     {
         return VocabCategory::query()
             ->when($search, fn ($q) => $q->where('name_en', 'like', "%{$search}%")

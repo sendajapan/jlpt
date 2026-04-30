@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\StoreVocabSubcategoryRequest;
 use App\Http\Requests\Admin\UpdateVocabSubcategoryRequest;
 use App\Models\VocabSubcategory;
 use App\Services\VocabSubcategoryService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -17,9 +18,14 @@ class VocabSubcategoryController extends Controller
 
     public function index(Request $request): View
     {
-        $subcategories = $this->service->getAll($request->input('search'));
+        $subcategories = $this->service->getAll(
+            $request->input('search'),
+            $request->input('category') ? (int) $request->input('category') : null,
+            $request->input('type'),
+        );
+        $categories = $this->service->getAllCategories();
 
-        return view('admin.vocab.subcategories.index', compact('subcategories'));
+        return view('admin.vocab.subcategories.index', compact('subcategories', 'categories'));
     }
 
     public function create(): View
@@ -79,6 +85,20 @@ class VocabSubcategoryController extends Controller
         notify()->success()->title('Icon updated.')->send();
 
         return back();
+    }
+
+    public function reorder(Request $request): JsonResponse
+    {
+        $ids        = $request->input('ids', []);
+        $categoryId = (int) $request->input('category_id');
+
+        foreach ($ids as $index => $id) {
+            VocabSubcategory::where('id', $id)
+                ->where('vocab_category_id', $categoryId)
+                ->update(['sort_order' => $index + 1]);
+        }
+
+        return response()->json(['ok' => true]);
     }
 
     public function destroy(VocabSubcategory $vocabSubcategory): RedirectResponse

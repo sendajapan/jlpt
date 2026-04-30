@@ -9,12 +9,16 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class VocabSubcategoryService
 {
-    public function getAll(?string $search = null, int $perPage = 15): LengthAwarePaginator
+    public function getAll(?string $search = null, ?int $categoryId = null, ?string $type = null, int $perPage = 100): LengthAwarePaginator
     {
         return VocabSubcategory::query()
             ->with('category')
             ->when($search, fn ($q) => $q->where('name_en', 'like', "%{$search}%")
                 ->orWhere('name_jp', 'like', "%{$search}%"))
+            ->when($categoryId, fn ($q) => $q->where('vocab_category_id', $categoryId))
+            ->when($type === 'premium', fn ($q) => $q->where('is_premium', true))
+            ->when($type === 'free', fn ($q) => $q->where('is_premium', false))
+            ->orderBy('vocab_category_id')
             ->orderBy('sort_order')
             ->orderBy('name_en')
             ->paginate($perPage)

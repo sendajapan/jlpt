@@ -20,6 +20,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
             ->parameters(['categories' => 'vocabCategory']);
         Route::patch('categories/{vocabCategory}/icon', [VocabCategoryController::class, 'updateIcon'])->name('categories.update-icon');
 
+        Route::post('subcategories/reorder', [VocabSubcategoryController::class, 'reorder'])->name('subcategories.reorder');
         Route::resource('subcategories', VocabSubcategoryController::class)
             ->except(['show'])
             ->parameters(['subcategories' => 'vocabSubcategory']);
