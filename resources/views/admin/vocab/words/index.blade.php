@@ -157,7 +157,7 @@
                                         <td width="30%"></td>
                                     </tr>
                                     <tr class="border-b border-zinc-300">
-                                        <td width="70%" nowrap><span class="text-red-500">Jp: {{ $vocab->word_jp ?: '—' }}</span></td>
+                                        <td width="70%" nowrap><span class="text-purple-500">Jp: {{ $vocab->word_jp ?: '—' }}</span></td>
                                         <td width="30%">
                                             @if($vocab->audio_jp)
                                                 <button class="inline-flex h-8 items-center gap-1.5 px-3 rounded-md border border-blue-200 bg-white hover:bg-blue-50 text-xs font-medium text-blue-600 transition-colors" onclick="document.getElementById('audio-en-{{ $vocab->id }}').play()">
@@ -193,7 +193,7 @@
                                         <td width="10%"></td>
                                     </tr>
                                     <tr class="border-b border-zinc-300">
-                                        <td width="90%" nowrap><span class="text-red-500">Jp: {{ $vocab->sentence_jp ?: '—' }}</span></td>
+                                        <td width="90%" nowrap><span class="text-purple-500">Jp: {{ $vocab->sentence_jp ?: '—' }}</span></td>
                                         <td width="10%">
                                             @if($vocab->sentence_audio_jp)
                                                 <button class="inline-flex h-8 items-center gap-1.5 px-3 rounded-md border border-blue-200 bg-white hover:bg-blue-50 text-xs font-medium text-blue-600 transition-colors" onclick="document.getElementById('audio-en-{{ $vocab->id }}').play()">
