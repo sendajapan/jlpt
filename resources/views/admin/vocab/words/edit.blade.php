@@ -182,12 +182,34 @@
 
                 <div>
                     <label class="block text-[10px] font-medium text-zinc-500 mb-1.5">Image</label>
-                    <x-image-preview name="image_path" hint="JPG, PNG, WebP" :current="$vocabulary->image_path ? Storage::url($vocabulary->image_path) : null">
+                    <x-image-preview name="image_path" id="image_path_preview" hint="JPG, PNG, WebP" :current="$vocabulary->image_path ? Storage::url($vocabulary->image_path) : null" >
                         @error('image_path')
                             <p class="mt-1 text-[10px] text-red-500">{{ $message }}</p>
                         @enderror
                     </x-image-preview>
                 </div>
+
+<div class="float-left">
+    <input type="hidden" name="image_thumbnail_bg" id="image_thumbnail_bg" value="{{ old('image_thumbnail_bg', $vocabulary->image_thumbnail_bg) }}">
+
+    @foreach($vocab_bg as $key=>$color)
+        <div
+            class="w-12 h-12 rounded cursor-pointer border-2 border-gray-300 hover:scale-110 transition bg-cover bg-center float-left mr-2 mb-2"
+            style="background-image: url('{{ asset($color->vocab_bg_path) }}')"
+            onclick="selectBgColor('{{ $color->vocab_bg_id }}', '{{ asset($color->vocab_bg_path) }}')"
+            title="{{ $color->vocab_bg_path }}"
+        ></div>
+        @if($key%5==0)
+        <div class="clearfix"></div>
+        @endif
+    @endforeach
+</div>
+
+
+
+
+
+
 
                 <div>
                     <label class="block text-[10px] font-medium text-zinc-500 mb-1">Sort Order</label>
@@ -234,3 +256,29 @@
 
 @endsection
 
+
+@push('scripts')
+
+<script>
+function selectBgColor(vocab_id, vocab_path){
+    document.getElementById('image_thumbnail_bg').value = vocab_id;
+    change_bg(vocab_path);
+}
+function change_bg(vocab_path){
+    const previewList = document.getElementsByClassName('object-cover');
+    preview = previewList[0];
+    preview.style.backgroundImage = `url(${vocab_path})`;
+    preview.style.backgroundSize = 'cover';
+    preview.style.backgroundPosition = 'center';
+}
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const vocabBg = @json($vocab_bg);
+        const bg = vocabBg.find(item => item.vocab_bg_id == {{ $vocabulary->image_thumbnail_bg }});
+        change_bg('{{ asset('') }}'+bg.vocab_bg_path);
+    });
+
+</script>
+
+
+@endpush

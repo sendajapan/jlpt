@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\VocabCategory;
 use App\Models\VocabSubcategory;
+use App\Models\VocabBg;
 use App\Models\Vocabulary;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -14,6 +15,7 @@ class VocabularyService
     {
         return Vocabulary::query()
             ->with('subcategory.category')
+            ->leftJoin('vocab_bgs', 'vocab_bgs.vocab_bg_id', '=', 'image_thumbnail_bg')
             ->when($filters['search'] ?? null, fn ($q, $s) => $q->where('word_jp', 'like', "%{$s}%")
                 ->orWhere('word_romaji', 'like', "%{$s}%")
                 ->orWhere('word_en', 'like', "%{$s}%"))
@@ -36,6 +38,11 @@ class VocabularyService
     public function getAllSubcategories(): Collection
     {
         return VocabSubcategory::with('category')->orderBy('name_en')->get();
+    }
+    
+    public function getAllVocabBg(): Collection
+    {
+        return VocabBg::orderBy('vocab_bg_id')->get();
     }
 
     public function create(array $data): Vocabulary

@@ -55,12 +55,14 @@ class VocabularyController extends Controller
     {
         $categories    = $this->service->getAllCategories();
         $subcategories = $this->service->getAllSubcategories();
-
-        return view('admin.vocab.words.edit', compact('vocabulary', 'categories', 'subcategories'));
+        $vocab_bg = $this->service->getAllVocabBg();
+        
+        return view('admin.vocab.words.edit', compact('vocabulary', 'categories', 'subcategories', 'vocab_bg'));
     }
 
     public function update(UpdateVocabularyRequest $request, Vocabulary $vocabulary): RedirectResponse
     {
+
         $data = $request->validated();
         $data['audio_jp']              = $this->replaceFile($request, 'audio_jp', 'vocab/words/audio', $vocabulary->audio_jp);
         $data['audio_en']              = $this->replaceFile($request, 'audio_en', 'vocab/words/audio', $vocabulary->audio_en);
@@ -68,6 +70,7 @@ class VocabularyController extends Controller
         $data['sentence_audio_en']     = $this->replaceFile($request, 'sentence_audio_en', 'vocab/words/audio', $vocabulary->sentence_audio_en);
         $data['image_path']            = $this->replaceImage($request, 'image_path', 'vocab/words/images', $vocabulary->image_path);
         $data['image_thumbnail_path']  = $this->replaceThumbnail($request->file('image_path'), 'vocab/words/thumbnails', $vocabulary->image_thumbnail_path);
+        $data['image_thumbnail_bg']  = $request->image_thumbnail_bg;
 
         $this->service->update($vocabulary, $data);
 

@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('sentence_audio_en')->nullable();
             $table->string('image_path')->nullable();
             $table->string('image_thumbnail_path')->nullable();
+            $table->unsignedSmallInteger('image_thumbnail_bg')->default(99);
             $table->unsignedSmallInteger('sort_order')->default(99);
             $table->boolean('is_premium')->default(false);
             $table->boolean('is_approved')->default(true);

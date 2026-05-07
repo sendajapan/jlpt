@@ -23,6 +23,7 @@ class Vocabulary extends Model
         'sentence_audio_en',
         'image_path',
         'image_thumbnail_path',
+        'image_thumbnail_bg',
         'sort_order',
         'is_premium',
         'is_approved',

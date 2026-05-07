@@ -9,7 +9,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class VocabSubcategoryService
 {
-    public function getAll(?string $search = null, ?int $categoryId = null, ?string $type = null, int $perPage = 100): LengthAwarePaginator
+    public function getAll(?string $search = null, ?int $categoryId = null, ?string $type = null, int $perPage = 250): LengthAwarePaginator
     {
         return VocabSubcategory::query()
             ->with('category')
