@@ -192,7 +192,7 @@
                     <input type="hidden" name="image_thumbnail_bg" id="image_thumbnail_bg" value="{{ old('image_thumbnail_bg', $vocabulary->image_thumbnail_bg) }}">
                     @foreach($vocab_bg as $key=>$color)
                         <div class="w-12 h-12 rounded cursor-pointer border-2 border-gray-300 hover:scale-110 transition bg-cover bg-center mr-2 mb-2"
-                            style="background-image: url('{{ asset($color->vocab_bg_path) }}'); background-size:cover; float:left;"
+                            style="background-image: url('{{ asset($color->vocab_bg_path) }}'); background-size:contain; background-repeat: round; float:left;"
                             onclick="selectBgColor('{{ $color->vocab_bg_id }}', '{{ asset($color->vocab_bg_path) }}')"
                             title="{{ $color->vocab_bg_path }}"
                         ></div>
@@ -260,8 +260,8 @@ function change_bg(vocab_path){
     preview.style.backgroundImage = `url(${vocab_path})`;
     preview.style.backgroundSize = 'cover';
     preview.style.backgroundPosition = 'center';
+    preview.style.backgroundRepeat = 'round';
 }
-
     document.addEventListener('DOMContentLoaded', function () {
         const vocabBg = @json($vocab_bg);
         const bg = vocabBg.find(item => item.vocab_bg_id == {{ $vocabulary->image_thumbnail_bg }});
