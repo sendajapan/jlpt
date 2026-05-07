@@ -23,7 +23,13 @@
       "Bash(cp -r resources/views/admin/subcategories resources/views/admin/vocab/subcategories)",
       "Bash(cp -r resources/views/admin/vocabularies resources/views/admin/vocab/words)",
       "Bash(sed -i 's/name=\"category_id\"/name=\"vocab_category_id\"/g; s/old\\('\\\\''category_id'\\\\''/old\\('\\\\''vocab_category_id'\\\\''/g; s/\\\\$subcategory->category_id/\\\\$subcategory->vocab_category_id/g; s/'\\\\''category_id'\\\\''\\\\]/'\\\\''vocab_category_id'\\\\'']/g' resources/views/admin/vocab/subcategories/create.blade.php resources/views/admin/vocab/subcategories/edit.blade.php)",
-      "Bash(sed -i 's/name=\"subcategory_id\"/name=\"vocab_subcategory_id\"/g; s/old\\('\\\\''subcategory_id'\\\\''/old\\('\\\\''vocab_subcategory_id'\\\\''/g; s/\\\\$vocabulary->subcategory_id/\\\\$vocabulary->vocab_subcategory_id/g; s/'\\\\''subcategory_id'\\\\''\\\\]/'\\\\''vocab_subcategory_id'\\\\'']/g' resources/views/admin/vocab/words/create.blade.php resources/views/admin/vocab/words/edit.blade.php)"
+      "Bash(sed -i 's/name=\"subcategory_id\"/name=\"vocab_subcategory_id\"/g; s/old\\('\\\\''subcategory_id'\\\\''/old\\('\\\\''vocab_subcategory_id'\\\\''/g; s/\\\\$vocabulary->subcategory_id/\\\\$vocabulary->vocab_subcategory_id/g; s/'\\\\''subcategory_id'\\\\''\\\\]/'\\\\''vocab_subcategory_id'\\\\'']/g' resources/views/admin/vocab/words/create.blade.php resources/views/admin/vocab/words/edit.blade.php)",
+      "WebFetch(domain:jlpt.senda.fit)",
+      "Bash(php *)",
+      "Bash(git -C /var/www/html/jlpt-laravel-vue status)",
+      "Bash(git -C /var/www/html/jlpt-laravel-vue log --oneline -3)",
+      "Bash(git *)",
+      "WebFetch(domain:ipms.senda.fit)"
     ]
   }
 }

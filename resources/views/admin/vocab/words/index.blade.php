@@ -41,18 +41,25 @@
                 <input type="text" name="search" value="{{ request('search') }}" placeholder="Search by word, romaji or meaning..."
                        class="flex-1 bg-transparent text-xs text-zinc-700 placeholder:text-zinc-400 focus:outline-none h-6">
             </div>
-            <div class="flex items-center gap-2 flex-wrap px-4 py-2.5 bg-zinc-50 border-t border-zinc-100">
-                <select name="category_id" class="h-7 rounded border border-zinc-200 bg-white px-2 text-xs text-zinc-700 focus:outline-none focus:ring-1 focus:ring-zinc-900">
+            <div x-data="{
+                    catId: '{{ request('category_id') }}',
+                    subId: '{{ request('subcategory_id') }}',
+                    allSubs: @js($subcategories->map(fn($s) => ['id' => $s->id, 'name' => $s->name_en, 'cat' => $s->vocab_category_id])),
+                    get subs() { return this.catId ? this.allSubs.filter(s => s.cat == this.catId) : this.allSubs; }
+                 }" class="flex items-center gap-2 flex-wrap px-4 py-2.5 bg-zinc-50 border-t border-zinc-100">
+                <select name="category_id" x-model="catId" @change="subId = ''"
+                        class="h-7 rounded border border-zinc-200 bg-white px-2 text-xs text-zinc-700 focus:outline-none focus:ring-1 focus:ring-zinc-900">
                     <option value="">All Categories</option>
                     @foreach ($categories as $cat)
-                        <option value="{{ $cat->id }}" {{ request('category_id') == $cat->id ? 'selected' : '' }}>{{ $cat->name_en }}</option>
+                        <option value="{{ $cat->id }}">{{ $cat->name_en }}</option>
                     @endforeach
                 </select>
-                <select name="subcategory_id" class="h-7 rounded border border-zinc-200 bg-white px-2 text-xs text-zinc-700 focus:outline-none focus:ring-1 focus:ring-zinc-900">
+                <select name="subcategory_id" x-model="subId"
+                        class="h-7 rounded border border-zinc-200 bg-white px-2 text-xs text-zinc-700 focus:outline-none focus:ring-1 focus:ring-zinc-900">
                     <option value="">All Subcategories</option>
-                    @foreach ($subcategories as $sub)
-                        <option value="{{ $sub->id }}" {{ request('subcategory_id') == $sub->id ? 'selected' : '' }}>{{ $sub->category->name_en ?? '' }} › {{ $sub->name_en }}</option>
-                    @endforeach
+                    <template x-for="sub in subs" :key="sub.id">
+                        <option :value="sub.id" :selected="sub.id == subId" x-text="sub.name"></option>
+                    </template>
                 </select>
                 <select name="is_approved" class="h-7 rounded border border-zinc-200 bg-white px-2 text-xs text-zinc-700 focus:outline-none focus:ring-1 focus:ring-zinc-900">
                     <option value="">All Status</option>
@@ -69,6 +76,7 @@
         <table class="min-w-full">
             <thead>
                 <tr class="border-b border-zinc-100 bg-zinc-50/50">
+                    <th class="w-8 px-2 py-2 text-center border-r border-zinc-100"></th>
                     <th class="w-10 px-3 py-2 text-center text-[10px] font-semibold uppercase tracking-wider text-zinc-400 border-r border-zinc-100">S/N</th>
                     <th class="w-10 px-2 py-2 text-center text-[10px] font-semibold uppercase tracking-wider text-zinc-400 border-r border-zinc-100">Image</th>
                     <th class="px-4 py-2 text-left text-[10px] font-semibold uppercase tracking-wider text-blue-500">EN</th>
@@ -82,202 +90,242 @@
                     <th class="w-8 px-2 py-2 text-center"></th>
                 </tr>
             </thead>
-            <tbody class="divide-y divide-zinc-100">
-                @forelse ($vocabularies as $vocab)
-                    <!-- Main Row -->
-                    <tr class="toggle-row" data-row="{{ $vocab->id }}">
-                        <td class="w-10 px-3 py-3 text-center text-xs text-zinc-400 border-r border-zinc-100">
-                            {{ ($vocabularies->currentPage() - 1) * $vocabularies->perPage() + $loop->iteration }}
-                        </td>
-                        <td class="w-10 px-2 py-3 text-center border-r border-zinc-100">
-                            <form method="POST" action="{{ route('admin.vocab.words.update-image', $vocab) }}" enctype="multipart/form-data">
-                                @csrf
-                                @method('PATCH')
-                                <label class="cursor-pointer block group">
-                                    @if($vocab->image_path)
-                                        <img src="{{ \Illuminate\Support\Facades\Storage::url($vocab->image_path) }}" alt="" class="w-6 h-6 mx-auto rounded object-cover border border-zinc-200 group-hover:opacity-60 transition-opacity">
-                                    @else
-                                        <div class="w-6 h-6 mx-auto rounded border-2 border-dashed border-zinc-200 flex items-center justify-center group-hover:border-zinc-400 transition-colors">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-zinc-300 group-hover:text-zinc-400" viewBox="0 0 20 20" fill="currentColor">
-                                                <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
-                                            </svg>
-                                        </div>
-                                    @endif
-                                    <input type="file" name="image_path" accept="image/*" class="hidden" onchange="this.form.submit()">
-                                </label>
-                            </form>
-                        </td>
-                        <td class="px-4 py-3 text-xs font-medium text-zinc-900">{{ $vocab->word_en ?: '—' }}</td>
-                        <td class="px-4 py-3 text-xs font-medium text-zinc-900">{{ $vocab->word_jp ?: '—' }}</td>
-                        <td class="px-4 py-3 text-xs text-zinc-600">{{ $vocab->word_romaji ?: '—' }}</td>
-                        <td class="px-4 py-3 text-xs text-zinc-600">{{ $vocab->subcategory->category->name_en ?? '—' }}</td>
-                        <td class="px-4 py-3 text-xs text-zinc-600">{{ $vocab->subcategory->name_en ?? '—' }}</td>
-                        <td class="px-4 py-3 text-xs text-zinc-500 text-center">{{ $vocab->sort_order }}</td>
-                        <td class="px-4 py-3 text-center">
-                            <form method="POST" action="{{ route('admin.vocab.words.toggle-approved', $vocab) }}" onclick="event.stopPropagation()">
-                                @csrf
-                                @method('PATCH')
-                                <button type="submit" class="relative inline-flex h-5 w-8 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:ring-offset-1 {{ $vocab->is_approved ? 'bg-zinc-900' : 'bg-white border border-zinc-300' }}" role="switch" aria-checked="{{ $vocab->is_approved ? 'true' : 'false' }}">
-                                    <span class="inline-block h-3.5 w-3.5 rounded-full transition-transform {{ $vocab->is_approved ? 'bg-white' : 'bg-zinc-900' }}" style="transform: translateX({{ $vocab->is_approved ? '13px' : '2px' }})"></span>
-                                </button>
-                            </form>
-                        </td>
-                        <td class="px-4 py-3 text-center border-l border-zinc-100">
-                            <div class="inline-flex items-center justify-center gap-1">
-                                <a href="{{ route('admin.vocab.words.edit', $vocab) }}"
-                                   class="inline-flex items-center h-7 px-2 rounded text-xs font-medium text-zinc-400 hover:text-zinc-900 hover:bg-zinc-100 transition-colors duration-150">
-                                    Edit
-                                </a>
-                                <form method="POST" action="{{ route('admin.vocab.words.destroy', $vocab) }}" onsubmit="return confirm('Delete this vocabulary entry?')">
+
+            @php
+                $grouped = collect($vocabularies->items())->groupBy('vocab_subcategory_id');
+                $rowNum  = ($vocabularies->currentPage() - 1) * $vocabularies->perPage();
+            @endphp
+
+            @forelse($grouped as $subcategoryId => $items)
+                <tbody
+                    class="sortable-group divide-y divide-zinc-100"
+                    data-subcat-id="{{ $subcategoryId }}"
+                    data-reorder-url="{{ route('admin.vocab.words.reorder') }}"
+                >
+                    @foreach($items as $vocab)
+                        @php $rowNum++ @endphp
+                        <tr data-id="{{ $vocab->id }}" class="toggle-row" data-row="{{ $vocab->id }}">
+                            <td class="w-8 px-2 py-2.5 text-center border-r border-zinc-100">
+                                <span class="drag-handle inline-flex items-center justify-center cursor-grab active:cursor-grabbing text-zinc-300 hover:text-zinc-500 transition-colors duration-100">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 16 16" fill="currentColor">
+                                        <circle cx="5.5" cy="3.5" r="1.25"/>
+                                        <circle cx="10.5" cy="3.5" r="1.25"/>
+                                        <circle cx="5.5" cy="8" r="1.25"/>
+                                        <circle cx="10.5" cy="8" r="1.25"/>
+                                        <circle cx="5.5" cy="12.5" r="1.25"/>
+                                        <circle cx="10.5" cy="12.5" r="1.25"/>
+                                    </svg>
+                                </span>
+                            </td>
+                            <td class="w-10 px-3 py-3 text-center text-xs text-zinc-400 border-r border-zinc-100">{{ $rowNum }}</td>
+                            <td class="w-10 px-2 py-3 text-center border-r border-zinc-100">
+                                <form method="POST" action="{{ route('admin.vocab.words.update-image', $vocab) }}" enctype="multipart/form-data">
                                     @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="inline-flex items-center h-7 px-2 rounded text-xs font-medium text-red-400 hover:text-red-600 hover:bg-red-50 transition-colors duration-150">
-                                        Delete
+                                    @method('PATCH')
+                                    <label class="cursor-pointer block group">
+                                        @if($vocab->image_path)
+                                            <img src="{{ \Illuminate\Support\Facades\Storage::url($vocab->image_path) }}" alt="" class="w-6 h-6 mx-auto rounded object-cover border border-zinc-200 group-hover:opacity-60 transition-opacity">
+                                        @else
+                                            <div class="w-6 h-6 mx-auto rounded border-2 border-dashed border-zinc-200 flex items-center justify-center group-hover:border-zinc-400 transition-colors">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-zinc-300 group-hover:text-zinc-400" viewBox="0 0 20 20" fill="currentColor">
+                                                    <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+                                                </svg>
+                                            </div>
+                                        @endif
+                                        <input type="file" name="image_path" accept="image/*" class="hidden" onchange="this.form.submit()">
+                                    </label>
+                                </form>
+                            </td>
+                            <td class="px-4 py-3 text-xs font-medium text-zinc-900">{{ $vocab->word_en ?: '—' }}</td>
+                            <td class="px-4 py-3 text-xs font-medium text-zinc-900">{{ $vocab->word_jp ?: '—' }}</td>
+                            <td class="px-4 py-3 text-xs text-zinc-600">{{ $vocab->word_romaji ?: '—' }}</td>
+                            <td class="px-4 py-3 text-xs text-zinc-600">
+                                @if($vocab->subcategory?->category)
+                                    <a href="{{ route('admin.vocab.words.index', ['category_id' => $vocab->subcategory->category->id]) }}"
+                                       onclick="event.stopPropagation()"
+                                       class="underline underline-offset-2 hover:text-zinc-900">{{ $vocab->subcategory->category->name_en }}</a>
+                                @else
+                                    —
+                                @endif
+                            </td>
+                            <td class="px-4 py-3 text-xs text-zinc-600">
+                                @if($vocab->subcategory)
+                                    <a href="{{ route('admin.vocab.words.index', ['subcategory_id' => $vocab->subcategory->id]) }}"
+                                       onclick="event.stopPropagation()"
+                                       class="underline underline-offset-2 hover:text-zinc-900">{{ $vocab->subcategory->name_en }}</a>
+                                @else
+                                    —
+                                @endif
+                            </td>
+                            <td class="px-4 py-3 text-xs text-zinc-500 text-center sort-cell">{{ $vocab->sort_order }}</td>
+                            <td class="px-4 py-3 text-center">
+                                <form method="POST" action="{{ route('admin.vocab.words.toggle-approved', $vocab) }}" onclick="event.stopPropagation()">
+                                    @csrf
+                                    @method('PATCH')
+                                    <button type="submit" class="relative inline-flex h-5 w-8 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:ring-offset-1 {{ $vocab->is_approved ? 'bg-zinc-900' : 'bg-white border border-zinc-300' }}" role="switch" aria-checked="{{ $vocab->is_approved ? 'true' : 'false' }}">
+                                        <span class="inline-block h-3.5 w-3.5 rounded-full transition-transform {{ $vocab->is_approved ? 'bg-white' : 'bg-zinc-900' }}" style="transform: translateX({{ $vocab->is_approved ? '13px' : '2px' }})"></span>
                                     </button>
                                 </form>
-                            </div>
-                        </td>
-                        <td class="w-8 px-2 py-3 text-center">
-                            <svg class="toggle-icon w-4 h-4 text-zinc-400 mx-auto" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
-                            </svg>
-                        </td>
-                    </tr>
+                            </td>
+                            <td class="px-4 py-3 text-center border-l border-zinc-100">
+                                <div class="inline-flex items-center justify-center gap-1">
+                                    <a href="{{ route('admin.vocab.words.edit', $vocab) }}"
+                                       onclick="event.stopPropagation()"
+                                       class="inline-flex items-center h-7 px-2 rounded text-xs font-medium text-zinc-400 hover:text-zinc-900 hover:bg-zinc-100 transition-colors duration-150">
+                                        Edit
+                                    </a>
+                                    <form method="POST" action="{{ route('admin.vocab.words.destroy', $vocab) }}" onsubmit="return confirm('Delete this vocabulary entry?')" onclick="event.stopPropagation()">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="inline-flex items-center h-7 px-2 rounded text-xs font-medium text-red-400 hover:text-red-600 hover:bg-red-50 transition-colors duration-150">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                            <td class="w-8 px-2 py-3 text-center">
+                                <svg class="toggle-icon w-4 h-4 text-zinc-400 mx-auto" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+                                </svg>
+                            </td>
+                        </tr>
 
-                    <!-- Expanded Row -->
-                    <tr class="row-expanded-{{ $vocab->id }} hidden border-b border-zinc-100">
-                        <td colspan="11" style="padding:0;">
-                            <div style="display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid #f4f4f5;">
+                        <tr class="detail-row row-expanded-{{ $vocab->id }} hidden border-b border-zinc-100">
+                            <td colspan="12" style="padding:0;">
+                                <div style="display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid #f4f4f5;">
 
-                                <!-- ENGLISH -->
-                                <div style="border-right:1px solid #f4f4f5;">
-                                    <div style="height:3px;background:#3b82f6;"></div>
-                                    <div class="px-4 pt-4 pb-4 space-y-2.5">
-                                        <div class="flex items-center gap-1.5 mb-3">
-                                            <span class="w-5 h-5 rounded bg-blue-50 text-blue-600 text-[9px] font-bold border border-blue-100 flex items-center justify-center">EN</span>
-                                            <span class="text-[10px] font-semibold uppercase tracking-widest text-zinc-500">English</span>
-                                        </div>
-                                        <div>
-                                            <p class="text-[10px] font-medium text-zinc-500 mb-1">Word</p>
-                                            <p class="text-xs font-medium text-zinc-900">{{ $vocab->word_en ?: '—' }}</p>
-                                        </div>
-                                        <div>
-                                            <p class="text-[10px] font-medium text-zinc-500 mb-1">Word Audio</p>
-                                            @if($vocab->audio_en)
-                                                <button class="inline-flex h-8 items-center gap-1.5 px-3 rounded-md border border-blue-200 bg-white hover:bg-blue-50 text-xs font-medium text-blue-600 transition-colors" onclick="document.getElementById('audio-en-{{ $vocab->id }}').play()">
-                                                    <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
-                                                    Play
-                                                </button>
-                                                <audio id="audio-en-{{ $vocab->id }}" class="hidden"><source src="{{ \Illuminate\Support\Facades\Storage::url($vocab->audio_en) }}"></audio>
-                                            @else
-                                                <span class="text-[10px] text-zinc-400">No audio</span>
-                                            @endif
-                                        </div>
-                                        <div class="pt-1 border-t border-zinc-100">
-                                            <p class="text-[10px] font-medium text-zinc-500 mb-1">Sentence</p>
-                                            <p class="text-[11px] text-zinc-700 leading-relaxed">{{ $vocab->sentence_en ?: '—' }}</p>
-                                        </div>
-                                        <div>
-                                            <p class="text-[10px] font-medium text-zinc-500 mb-1">Sentence Audio</p>
-                                            @if($vocab->sentence_audio_en)
-                                                <button class="inline-flex h-8 items-center gap-1.5 px-3 rounded-md border border-blue-200 bg-white hover:bg-blue-50 text-xs font-medium text-blue-600 transition-colors" onclick="document.getElementById('audio-en-sent-{{ $vocab->id }}').play()">
-                                                    <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
-                                                    Play
-                                                </button>
-                                                <audio id="audio-en-sent-{{ $vocab->id }}" class="hidden"><source src="{{ \Illuminate\Support\Facades\Storage::url($vocab->sentence_audio_en) }}"></audio>
-                                            @else
-                                                <span class="text-[10px] text-zinc-400">No audio</span>
-                                            @endif
+                                    <!-- ENGLISH -->
+                                    <div style="border-right:1px solid #f4f4f5;">
+                                        <div style="height:3px;background:#3b82f6;"></div>
+                                        <div class="px-4 pt-4 pb-4 space-y-2.5">
+                                            <div class="flex items-center gap-1.5 mb-3">
+                                                <span class="w-5 h-5 rounded bg-blue-50 text-blue-600 text-[9px] font-bold border border-blue-100 flex items-center justify-center">EN</span>
+                                                <span class="text-[10px] font-semibold uppercase tracking-widest text-zinc-500">English</span>
+                                            </div>
+                                            <div>
+                                                <p class="text-[10px] font-medium text-zinc-500 mb-1">Word</p>
+                                                <p class="text-xs font-medium text-zinc-900">{{ $vocab->word_en ?: '—' }}</p>
+                                            </div>
+                                            <div>
+                                                <p class="text-[10px] font-medium text-zinc-500 mb-1">Word Audio</p>
+                                                @if($vocab->audio_en)
+                                                    <button class="inline-flex h-8 items-center gap-1.5 px-3 rounded-md border border-blue-200 bg-white hover:bg-blue-50 text-xs font-medium text-blue-600 transition-colors" onclick="document.getElementById('audio-en-{{ $vocab->id }}').play()">
+                                                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
+                                                        Play
+                                                    </button>
+                                                    <audio id="audio-en-{{ $vocab->id }}" class="hidden"><source src="{{ \Illuminate\Support\Facades\Storage::url($vocab->audio_en) }}"></audio>
+                                                @else
+                                                    <span class="text-[10px] text-zinc-400">No audio</span>
+                                                @endif
+                                            </div>
+                                            <div class="pt-1 border-t border-zinc-100">
+                                                <p class="text-[10px] font-medium text-zinc-500 mb-1">Sentence</p>
+                                                <p class="text-[11px] text-zinc-700 leading-relaxed">{{ $vocab->sentence_en ?: '—' }}</p>
+                                            </div>
+                                            <div>
+                                                <p class="text-[10px] font-medium text-zinc-500 mb-1">Sentence Audio</p>
+                                                @if($vocab->sentence_audio_en)
+                                                    <button class="inline-flex h-8 items-center gap-1.5 px-3 rounded-md border border-blue-200 bg-white hover:bg-blue-50 text-xs font-medium text-blue-600 transition-colors" onclick="document.getElementById('audio-en-sent-{{ $vocab->id }}').play()">
+                                                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
+                                                        Play
+                                                    </button>
+                                                    <audio id="audio-en-sent-{{ $vocab->id }}" class="hidden"><source src="{{ \Illuminate\Support\Facades\Storage::url($vocab->sentence_audio_en) }}"></audio>
+                                                @else
+                                                    <span class="text-[10px] text-zinc-400">No audio</span>
+                                                @endif
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                <!-- JAPANESE -->
-                                <div style="border-right:1px solid #f4f4f5;">
-                                    <div style="height:3px;background:#ef4444;"></div>
-                                    <div class="px-4 pt-4 pb-4 space-y-2.5">
-                                        <div class="flex items-center gap-1.5 mb-3">
-                                            <span class="w-5 h-5 rounded bg-red-50 text-red-600 text-[9px] font-bold border border-red-100 flex items-center justify-center">JP</span>
-                                            <span class="text-[10px] font-semibold uppercase tracking-widest text-zinc-500">Japanese</span>
-                                        </div>
-                                        <div>
-                                            <p class="text-[10px] font-medium text-zinc-500 mb-1">Word</p>
-                                            <p class="text-xs font-medium text-zinc-900">{{ $vocab->word_jp ?: '—' }}</p>
-                                        </div>
-                                        <div>
-                                            <p class="flex items-center gap-1 text-[10px] font-medium text-zinc-500 mb-1">
-                                                Word Audio <span class="text-[8px] text-zinc-400 bg-zinc-100 px-1 rounded">shared</span>
-                                            </p>
-                                            @if($vocab->audio_jp)
-                                                <button class="inline-flex h-8 items-center gap-1.5 px-3 rounded-md border border-red-200 bg-white hover:bg-red-50 text-xs font-medium text-red-600 transition-colors" onclick="document.getElementById('audio-jp-{{ $vocab->id }}').play()">
-                                                    <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
-                                                    Play
-                                                </button>
-                                                <audio id="audio-jp-{{ $vocab->id }}" class="hidden"><source src="{{ \Illuminate\Support\Facades\Storage::url($vocab->audio_jp) }}"></audio>
-                                            @else
-                                                <span class="text-[10px] text-zinc-400">No audio</span>
-                                            @endif
-                                        </div>
-                                        <div class="pt-1 border-t border-zinc-100">
-                                            <p class="text-[10px] font-medium text-zinc-500 mb-1">Sentence</p>
-                                            <p class="text-[11px] text-zinc-700 leading-relaxed">{{ $vocab->sentence_jp ?: '—' }}</p>
-                                        </div>
-                                        <div>
-                                            <p class="flex items-center gap-1 text-[10px] font-medium text-zinc-500 mb-1">
-                                                Sentence Audio <span class="text-[8px] text-zinc-400 bg-zinc-100 px-1 rounded">shared</span>
-                                            </p>
-                                            @if($vocab->sentence_audio_jp)
-                                                <button class="inline-flex h-8 items-center gap-1.5 px-3 rounded-md border border-red-200 bg-white hover:bg-red-50 text-xs font-medium text-red-600 transition-colors" onclick="document.getElementById('audio-jp-sent-{{ $vocab->id }}').play()">
-                                                    <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
-                                                    Play
-                                                </button>
-                                                <audio id="audio-jp-sent-{{ $vocab->id }}" class="hidden"><source src="{{ \Illuminate\Support\Facades\Storage::url($vocab->sentence_audio_jp) }}"></audio>
-                                            @else
-                                                <span class="text-[10px] text-zinc-400">No audio</span>
-                                            @endif
+                                    <!-- JAPANESE -->
+                                    <div style="border-right:1px solid #f4f4f5;">
+                                        <div style="height:3px;background:#ef4444;"></div>
+                                        <div class="px-4 pt-4 pb-4 space-y-2.5">
+                                            <div class="flex items-center gap-1.5 mb-3">
+                                                <span class="w-5 h-5 rounded bg-red-50 text-red-600 text-[9px] font-bold border border-red-100 flex items-center justify-center">JP</span>
+                                                <span class="text-[10px] font-semibold uppercase tracking-widest text-zinc-500">Japanese</span>
+                                            </div>
+                                            <div>
+                                                <p class="text-[10px] font-medium text-zinc-500 mb-1">Word</p>
+                                                <p class="text-xs font-medium text-zinc-900">{{ $vocab->word_jp ?: '—' }}</p>
+                                            </div>
+                                            <div>
+                                                <p class="flex items-center gap-1 text-[10px] font-medium text-zinc-500 mb-1">
+                                                    Word Audio <span class="text-[8px] text-zinc-400 bg-zinc-100 px-1 rounded">shared</span>
+                                                </p>
+                                                @if($vocab->audio_jp)
+                                                    <button class="inline-flex h-8 items-center gap-1.5 px-3 rounded-md border border-red-200 bg-white hover:bg-red-50 text-xs font-medium text-red-600 transition-colors" onclick="document.getElementById('audio-jp-{{ $vocab->id }}').play()">
+                                                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
+                                                        Play
+                                                    </button>
+                                                    <audio id="audio-jp-{{ $vocab->id }}" class="hidden"><source src="{{ \Illuminate\Support\Facades\Storage::url($vocab->audio_jp) }}"></audio>
+                                                @else
+                                                    <span class="text-[10px] text-zinc-400">No audio</span>
+                                                @endif
+                                            </div>
+                                            <div class="pt-1 border-t border-zinc-100">
+                                                <p class="text-[10px] font-medium text-zinc-500 mb-1">Sentence</p>
+                                                <p class="text-[11px] text-zinc-700 leading-relaxed">{{ $vocab->sentence_jp ?: '—' }}</p>
+                                            </div>
+                                            <div>
+                                                <p class="flex items-center gap-1 text-[10px] font-medium text-zinc-500 mb-1">
+                                                    Sentence Audio <span class="text-[8px] text-zinc-400 bg-zinc-100 px-1 rounded">shared</span>
+                                                </p>
+                                                @if($vocab->sentence_audio_jp)
+                                                    <button class="inline-flex h-8 items-center gap-1.5 px-3 rounded-md border border-red-200 bg-white hover:bg-red-50 text-xs font-medium text-red-600 transition-colors" onclick="document.getElementById('audio-jp-sent-{{ $vocab->id }}').play()">
+                                                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
+                                                        Play
+                                                    </button>
+                                                    <audio id="audio-jp-sent-{{ $vocab->id }}" class="hidden"><source src="{{ \Illuminate\Support\Facades\Storage::url($vocab->sentence_audio_jp) }}"></audio>
+                                                @else
+                                                    <span class="text-[10px] text-zinc-400">No audio</span>
+                                                @endif
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                <!-- ROMAJI -->
-                                <div>
-                                    <div style="height:3px;background:#10b981;"></div>
-                                    <div class="px-4 pt-4 pb-4 space-y-2.5">
-                                        <div class="flex items-center gap-1.5 mb-3">
-                                            <span class="w-5 h-5 rounded bg-emerald-50 text-emerald-600 text-[9px] font-bold border border-emerald-100 flex items-center justify-center">RM</span>
-                                            <span class="text-[10px] font-semibold uppercase tracking-widest text-zinc-500">Romaji</span>
-                                        </div>
-                                        <div>
-                                            <p class="text-[10px] font-medium text-zinc-500 mb-1">Word</p>
-                                            <p class="text-xs font-medium text-zinc-900">{{ $vocab->word_romaji ?: '—' }}</p>
-                                        </div>
-                                        <div>
-                                            <p class="text-[10px] font-medium text-zinc-500 mb-1">Word Audio</p>
-                                            <span class="text-[10px] text-zinc-400 italic">Uses JP audio</span>
-                                        </div>
-                                        <div class="pt-1 border-t border-zinc-100">
-                                            <p class="text-[10px] font-medium text-zinc-500 mb-1">Sentence</p>
-                                            <p class="text-[11px] text-zinc-700 leading-relaxed">{{ $vocab->sentence_romaji ?: '—' }}</p>
-                                        </div>
-                                        <div>
-                                            <p class="text-[10px] font-medium text-zinc-500 mb-1">Sentence Audio</p>
-                                            <span class="text-[10px] text-zinc-400 italic">Uses JP sentence audio</span>
+                                    <!-- ROMAJI -->
+                                    <div>
+                                        <div style="height:3px;background:#10b981;"></div>
+                                        <div class="px-4 pt-4 pb-4 space-y-2.5">
+                                            <div class="flex items-center gap-1.5 mb-3">
+                                                <span class="w-5 h-5 rounded bg-emerald-50 text-emerald-600 text-[9px] font-bold border border-emerald-100 flex items-center justify-center">RM</span>
+                                                <span class="text-[10px] font-semibold uppercase tracking-widest text-zinc-500">Romaji</span>
+                                            </div>
+                                            <div>
+                                                <p class="text-[10px] font-medium text-zinc-500 mb-1">Word</p>
+                                                <p class="text-xs font-medium text-zinc-900">{{ $vocab->word_romaji ?: '—' }}</p>
+                                            </div>
+                                            <div>
+                                                <p class="text-[10px] font-medium text-zinc-500 mb-1">Word Audio</p>
+                                                <span class="text-[10px] text-zinc-400 italic">Uses JP audio</span>
+                                            </div>
+                                            <div class="pt-1 border-t border-zinc-100">
+                                                <p class="text-[10px] font-medium text-zinc-500 mb-1">Sentence</p>
+                                                <p class="text-[11px] text-zinc-700 leading-relaxed">{{ $vocab->sentence_romaji ?: '—' }}</p>
+                                            </div>
+                                            <div>
+                                                <p class="text-[10px] font-medium text-zinc-500 mb-1">Sentence Audio</p>
+                                                <span class="text-[10px] text-zinc-400 italic">Uses JP sentence audio</span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
 
-                            </div>
-                        </td>
-                    </tr>
-                @empty
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            @empty
+                <tbody>
                     <tr>
-                        <td colspan="11" class="px-4 py-10 text-center">
+                        <td colspan="12" class="px-4 py-10 text-center">
                             <p class="text-xs text-zinc-400">No entries found.</p>
                             <a href="{{ route('admin.vocab.words.create') }}" class="mt-1 inline-flex text-xs text-zinc-900 underline underline-offset-2">Create the first one</a>
                         </td>
                     </tr>
-                @endforelse
-            </tbody>
+                </tbody>
+            @endforelse
         </table>
     </div>
 
@@ -286,19 +334,86 @@
     @endif
 </div>
 
-<script>
-  document.querySelectorAll('.toggle-row').forEach(row => {
-    row.addEventListener('click', function(e) {
-      if (e.target.closest('button, a, form') || e.target.closest('label')) return;
-
-      const rowId = this.dataset.row;
-      const expandedRow = document.querySelector(`.row-expanded-${rowId}`);
-      const arrow = this.querySelector('.arrow-down');
-
-      this.classList.toggle('expanded');
-      expandedRow.classList.toggle('hidden');
-    });
-  });
-</script>
+<div id="reorder-toast" class="fixed bottom-5 right-5 hidden px-3 py-2 rounded-lg text-xs font-medium shadow-lg z-50 transition-opacity duration-300"></div>
 
 @endsection
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
+<script>
+(function () {
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+
+    document.querySelectorAll('.sortable-group').forEach(function (tbody) {
+        const subcatId   = tbody.dataset.subcatId;
+        const reorderUrl = tbody.dataset.reorderUrl;
+
+        new Sortable(tbody, {
+            handle: '.drag-handle',
+            filter: '.detail-row',
+            animation: 150,
+            ghostClass: 'opacity-40',
+            chosenClass: 'bg-blue-50',
+            onEnd: function (evt) {
+                const draggedRow = evt.item;
+                const rowId      = draggedRow.dataset.id;
+
+                const detailRow = tbody.querySelector('.row-expanded-' + rowId);
+                if (detailRow) {
+                    tbody.insertBefore(detailRow, draggedRow.nextSibling);
+                }
+
+                const mainRows = Array.from(tbody.querySelectorAll('tr[data-id]'));
+                const ids      = mainRows.map(function (r) { return r.dataset.id; });
+
+                mainRows.forEach(function (row, i) {
+                    const sortCell = row.querySelector('.sort-cell');
+                    if (sortCell) sortCell.textContent = i + 1;
+                });
+
+                fetch(reorderUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': csrfToken,
+                    },
+                    body: JSON.stringify({ ids: ids, subcategory_id: subcatId }),
+                })
+                .then(function (res) { return res.json(); })
+                .then(function (data) {
+                    if (data.ok) showToast('Order saved', 'success');
+                    else         showToast('Failed to save order', 'error');
+                })
+                .catch(function () {
+                    showToast('Failed to save order', 'error');
+                });
+            },
+        });
+    });
+
+    document.querySelectorAll('.toggle-row').forEach(function (row) {
+        row.addEventListener('click', function (e) {
+            if (e.target.closest('button, a, form') || e.target.closest('label') || e.target.closest('.drag-handle')) return;
+
+            const rowId      = this.dataset.row;
+            const expandedRow = document.querySelector('.row-expanded-' + rowId);
+
+            this.classList.toggle('expanded');
+            expandedRow.classList.toggle('hidden');
+        });
+    });
+
+    function showToast(message, type) {
+        const toast = document.getElementById('reorder-toast');
+        const base  = 'fixed bottom-5 right-5 px-3 py-2 rounded-lg text-xs font-medium shadow-lg z-50 transition-opacity duration-300';
+        const color = type === 'success' ? 'bg-zinc-900 text-white' : 'bg-red-600 text-white';
+        toast.className   = base + ' ' + color;
+        toast.textContent = message;
+        toast.style.opacity = '1';
+
+        setTimeout(function () { toast.style.opacity = '0'; }, 1800);
+        setTimeout(function () { toast.className = 'fixed bottom-5 right-5 hidden'; }, 2100);
+    }
+})();
+</script>
+@endpush

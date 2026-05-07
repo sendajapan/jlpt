@@ -26,17 +26,38 @@
 
             <div class="flex-1 px-5 py-4 space-y-5 min-w-0">
 
-                <div>
-                    <label class="block text-xs font-medium text-zinc-700 mb-1.5">Subcategory <span class="text-red-500">*</span></label>
-                    <select name="vocab_subcategory_id" class="{{ $errors->has('subcategory_id') ? 'flex h-8 w-full rounded-md border border-red-400 bg-white px-3 text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-0 transition-shadow duration-150' : 'flex h-8 w-full rounded-md border border-zinc-200 bg-white px-3 text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:ring-offset-0 transition-shadow duration-150' }}">
-                        <option value="">Select subcategory</option>
-                        @foreach ($subcategories as $sub)
-                            <option value="{{ $sub->id }}" {{ old('vocab_subcategory_id', $vocabulary->vocab_subcategory_id) == $sub->id ? 'selected' : '' }}>
-                                {{ $sub->category->name_en ?? '' }} 窶ｺ {{ $sub->name_en }}
-                            </option>
-                        @endforeach
-                    </select>
-                    @error('subcategory_id') <p class="mt-1 text-[10px] text-red-500">{{ $message }}</p> @enderror
+                <div x-data="{
+                    catId: '{{ old('vocab_category_id', $vocabulary->subcategory->vocab_category_id ?? '') }}',
+                    subId: '{{ old('vocab_subcategory_id', $vocabulary->vocab_subcategory_id) }}',
+                    allSubs: @js($subcategories->map(fn($s) => ['id' => $s->id, 'name' => $s->name_en, 'cat' => $s->vocab_category_id])),
+                    get subs() { return this.catId ? this.allSubs.filter(s => s.cat == this.catId) : []; }
+                }" class="space-y-3">
+                    <input type="hidden" name="vocab_category_id" :value="catId">
+
+                    <div>
+                        <label class="block text-xs font-medium text-zinc-700 mb-1.5">Category <span class="text-red-500">*</span></label>
+                        <select x-model="catId" @change="subId = ''"
+                                class="flex h-8 w-full rounded-md border border-zinc-200 bg-white px-3 text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:ring-offset-0 transition-shadow duration-150">
+                            <option value="">Select category</option>
+                            @foreach($categories as $cat)
+                                <option value="{{ $cat->id }}">{{ $cat->name_en }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-medium text-zinc-700 mb-1.5">Subcategory <span class="text-red-500">*</span></label>
+                        <select name="vocab_subcategory_id" x-model="subId"
+                                :disabled="!catId"
+                                :class="!catId ? 'opacity-50 cursor-not-allowed' : ''"
+                                class="{{ $errors->has('vocab_subcategory_id') ? 'flex h-8 w-full rounded-md border border-red-400 bg-white px-3 text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-0 transition-shadow duration-150' : 'flex h-8 w-full rounded-md border border-zinc-200 bg-white px-3 text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:ring-offset-0 transition-shadow duration-150' }}">
+                            <option value="">Select subcategory</option>
+                            <template x-for="sub in subs" :key="sub.id">
+                                <option :value="sub.id" :selected="sub.id == subId" x-text="sub.name"></option>
+                            </template>
+                        </select>
+                        @error('vocab_subcategory_id') <p class="mt-1 text-[10px] text-red-500">{{ $message }}</p> @enderror
+                    </div>
                 </div>
 
                 <div class="pl-3 border-l-2 border-blue-500">

@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\StoreVocabularyRequest;
 use App\Http\Requests\Admin\UpdateVocabularyRequest;
 use App\Models\Vocabulary;
 use App\Services\VocabularyService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -27,9 +28,10 @@ class VocabularyController extends Controller
 
     public function create(): View
     {
+        $categories    = $this->service->getAllCategories();
         $subcategories = $this->service->getAllSubcategories();
 
-        return view('admin.vocab.words.create', compact('subcategories'));
+        return view('admin.vocab.words.create', compact('categories', 'subcategories'));
     }
 
     public function store(StoreVocabularyRequest $request): RedirectResponse
@@ -51,9 +53,10 @@ class VocabularyController extends Controller
 
     public function edit(Vocabulary $vocabulary): View
     {
+        $categories    = $this->service->getAllCategories();
         $subcategories = $this->service->getAllSubcategories();
 
-        return view('admin.vocab.words.edit', compact('vocabulary', 'subcategories'));
+        return view('admin.vocab.words.edit', compact('vocabulary', 'categories', 'subcategories'));
     }
 
     public function update(UpdateVocabularyRequest $request, Vocabulary $vocabulary): RedirectResponse
@@ -71,6 +74,20 @@ class VocabularyController extends Controller
         notify()->success()->title('Vocabulary entry updated successfully.')->send();
 
         return redirect()->route('admin.vocab.words.index');
+    }
+
+    public function reorder(Request $request): JsonResponse
+    {
+        $ids           = $request->input('ids', []);
+        $subcategoryId = (int) $request->input('subcategory_id');
+
+        foreach ($ids as $index => $id) {
+            Vocabulary::where('id', $id)
+                ->where('vocab_subcategory_id', $subcategoryId)
+                ->update(['sort_order' => $index + 1]);
+        }
+
+        return response()->json(['ok' => true]);
     }
 
     public function toggleApproved(Vocabulary $vocabulary): RedirectResponse

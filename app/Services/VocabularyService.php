@@ -10,7 +10,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class VocabularyService
 {
-    public function getAll(array $filters = [], int $perPage = 15): LengthAwarePaginator
+    public function getAll(array $filters = [], int $perPage = 100): LengthAwarePaginator
     {
         return Vocabulary::query()
             ->with('subcategory.category')

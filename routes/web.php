@@ -26,6 +26,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
             ->parameters(['subcategories' => 'vocabSubcategory']);
         Route::patch('subcategories/{vocabSubcategory}/icon', [VocabSubcategoryController::class, 'updateIcon'])->name('subcategories.update-icon');
 
+        Route::post('words/reorder', [VocabularyController::class, 'reorder'])->name('words.reorder');
         Route::resource('words', VocabularyController::class)
             ->except(['show'])
             ->parameters(['words' => 'vocabulary']);
