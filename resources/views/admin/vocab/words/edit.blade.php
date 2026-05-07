@@ -193,11 +193,11 @@
     <input type="hidden" name="image_thumbnail_bg" id="image_thumbnail_bg" value="{{ old('image_thumbnail_bg', $vocabulary->image_thumbnail_bg) }}">
 
     @foreach($vocab_bg as $key=>$color)
-        <div
-            class="w-12 h-12 rounded cursor-pointer border-2 border-gray-300 hover:scale-110 transition bg-cover bg-center float-left mr-2 mb-2"
-            style="background-image: url('{{ asset($color->vocab_bg_path) }}')"
+        <div class="w-12 h-12 rounded cursor-pointer border-2 border-gray-300 hover:scale-110 transition bg-cover bg-center mr-2 mb-2"
+            style="background-image: url('{{ asset($color->vocab_bg_path) }}'); float:left;"
             onclick="selectBgColor('{{ $color->vocab_bg_id }}', '{{ asset($color->vocab_bg_path) }}')"
             title="{{ $color->vocab_bg_path }}"
+            
         ></div>
         @if($key%5==0)
         <div class="clearfix"></div>
