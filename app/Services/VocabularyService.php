@@ -20,6 +20,8 @@ class VocabularyService
             ->when($filters['subcategory_id'] ?? null, fn ($q, $v) => $q->where('vocab_subcategory_id', $v))
             ->when($filters['category_id'] ?? null, fn ($q, $v) => $q->whereHas('subcategory', fn ($s) => $s->where('vocab_category_id', $v)))
             ->when(isset($filters['is_approved']) && $filters['is_approved'] !== '', fn ($q) => $q->where('is_approved', $filters['is_approved']))
+            ->when(isset($filters['image_path']) && $filters['image_path'] === 'images', fn ($q) => $q->whereNot('image_path', ''))
+            ->when(isset($filters['image_path']) && $filters['image_path'] === 'pending', fn ($q) => $q->where('image_path', NULL))
             ->orderBy('sort_order')
             ->orderBy('word_jp')
             ->paginate($perPage)

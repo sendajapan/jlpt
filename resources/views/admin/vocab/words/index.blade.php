@@ -67,6 +67,11 @@
                     <option value="1" {{ request('is_approved') === '1' ? 'selected' : '' }}>Approved</option>
                     <option value="0" {{ request('is_approved') === '0' ? 'selected' : '' }}>Not Approved</option>
                 </select>
+                <select name="image_path" class="h-7 rounded border border-zinc-200 bg-white px-2 text-xs text-zinc-700 focus:outline-none focus:ring-1 focus:ring-zinc-900">
+                    <option value="all">All</option>
+                    <option value="images" {{ request('image_path') === 'images' ? 'selected' : '' }}>Added Images</option>
+                    <option value="pending" {{ request('image_path') === 'pending' ? 'selected' : '' }}>Pending Images</option>
+                </select>
                 <button type="submit" class="inline-flex items-center h-7 px-3 rounded bg-zinc-900 text-white text-xs font-medium hover:bg-zinc-700 transition-colors">Filter</button>
                 <a href="{{ route('admin.vocab.words.index') }}" class="inline-flex items-center h-7 px-3 rounded border border-zinc-200 bg-white text-xs text-zinc-500 hover:text-zinc-800 hover:bg-zinc-50 transition-colors">Reset</a>
             </div>
