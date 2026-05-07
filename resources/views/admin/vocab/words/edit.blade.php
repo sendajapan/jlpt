@@ -260,7 +260,6 @@ function change_bg(vocab_path){
     preview.style.backgroundImage = `url(${vocab_path})`;
     preview.style.backgroundSize = 'cover';
     preview.style.backgroundPosition = 'center';
-    preview.style.backgroundRepeat = 'round';
 }
     document.addEventListener('DOMContentLoaded', function () {
         const vocabBg = @json($vocab_bg);
