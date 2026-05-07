@@ -10,6 +10,7 @@
   .toggle-row.expanded { background-color: rgba(59, 130, 246, 0.07); }
   .toggle-icon { transition: transform 0.25s ease; }
   .toggle-row.expanded .toggle-icon { transform: rotate(180deg); }
+  .max-w-screen-xl, .mx-auto w-full{ min-width:100% !important;}
 </style>
 
 <div class="flex items-center justify-between mb-4">
@@ -78,10 +79,9 @@
                 <tr class="border-b border-zinc-100 bg-zinc-50/50">
                     <th class="w-8 px-2 py-2 text-center border-r border-zinc-100"></th>
                     <th class="w-10 px-3 py-2 text-center text-[10px] font-semibold uppercase tracking-wider text-zinc-400 border-r border-zinc-100">S/N</th>
-                    <th class="w-10 px-2 py-2 text-center text-[10px] font-semibold uppercase tracking-wider text-zinc-400 border-r border-zinc-100">Image</th>
-                    <th class="px-4 py-2 text-left text-[10px] font-semibold uppercase tracking-wider text-blue-500">EN</th>
-                    <th class="px-4 py-2 text-left text-[10px] font-semibold uppercase tracking-wider text-red-500">JP</th>
-                    <th class="px-4 py-2 text-left text-[10px] font-semibold uppercase tracking-wider text-emerald-500">RM</th>
+                    <th class="w-30 px-2 py-2 text-center text-[10px] font-semibold uppercase tracking-wider text-zinc-400 border-r border-zinc-100">Image</th>
+                    <th class="px-4 py-2 text-left text-[10px] font-semibold uppercase tracking-wider text-blue-500">Word</th>
+                    <th class="px-4 py-2 text-left text-[10px] font-semibold uppercase tracking-wider text-red-500">Sentence</th>
                     <th class="px-4 py-2 text-left text-[10px] font-semibold uppercase tracking-wider text-zinc-400">Category</th>
                     <th class="px-4 py-2 text-left text-[10px] font-semibold uppercase tracking-wider text-zinc-400">Subcategory</th>
                     <th class="px-4 py-2 text-center text-[10px] font-semibold uppercase tracking-wider text-zinc-400">Sort</th>
@@ -118,13 +118,13 @@
                                 </span>
                             </td>
                             <td class="w-10 px-3 py-3 text-center text-xs text-zinc-400 border-r border-zinc-100">{{ $rowNum }}</td>
-                            <td class="w-10 px-2 py-3 text-center border-r border-zinc-100">
+                            <td class="w-30 px-2 py-3 text-center border-r border-zinc-100">
                                 <form method="POST" action="{{ route('admin.vocab.words.update-image', $vocab) }}" enctype="multipart/form-data">
                                     @csrf
                                     @method('PATCH')
                                     <label class="cursor-pointer block group">
                                         @if($vocab->image_path)
-                                            <img src="{{ \Illuminate\Support\Facades\Storage::url($vocab->image_path) }}" alt="" class="w-6 h-6 mx-auto rounded object-cover border border-zinc-200 group-hover:opacity-60 transition-opacity">
+                                            <img src="{{ \Illuminate\Support\Facades\Storage::url($vocab->image_path) }}" alt="" class="w-30 h-30 mx-auto rounded object-cover border border-zinc-200 group-hover:opacity-60 transition-opacity">
                                         @else
                                             <div class="w-6 h-6 mx-auto rounded border-2 border-dashed border-zinc-200 flex items-center justify-center group-hover:border-zinc-400 transition-colors">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-zinc-300 group-hover:text-zinc-400" viewBox="0 0 20 20" fill="currentColor">
@@ -136,9 +136,78 @@
                                     </label>
                                 </form>
                             </td>
-                            <td class="px-4 py-3 text-xs font-medium text-zinc-900">{{ $vocab->word_en ?: '—' }}</td>
-                            <td class="px-4 py-3 text-xs font-medium text-zinc-900">{{ $vocab->word_jp ?: '—' }}</td>
-                            <td class="px-4 py-3 text-xs text-zinc-600">{{ $vocab->word_romaji ?: '—' }}</td>
+                            <td class="px-4 py-3 text-xs font-medium text-zinc-900">
+                                <table class="w-full">
+                                    <tr class="border-b border-zinc-300">
+                                        <td width="70%" nowrap><span class="text-blue-500">En: {{ $vocab->word_en ?: '—' }}</span></td>
+                                        <td width="30%">
+                                            @if($vocab->audio_en)
+                                                <button class="inline-flex h-8 items-center gap-1.5 px-3 rounded-md border border-blue-200 bg-white hover:bg-blue-50 text-xs font-medium text-blue-600 transition-colors" onclick="document.getElementById('audio-en-{{ $vocab->id }}').play()">
+                                                    <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
+                                                    Play
+                                                </button>
+                                                <audio id="audio-en-{{ $vocab->id }}" class="hidden"><source src="{{ \Illuminate\Support\Facades\Storage::url($vocab->audio_en) }}"></audio>
+                                            @else
+                                                <span class="text-[10px] text-zinc-400">No audio</span>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    <tr class="border-b border-zinc-300">
+                                        <td width="70%" nowrap><span class="text-red-500">Ro: {{ $vocab->word_romaji ?: '—' }}</span></td>
+                                        <td width="30%"></td>
+                                    </tr>
+                                    <tr class="border-b border-zinc-300">
+                                        <td width="70%" nowrap><span class="text-red-500">Jp: {{ $vocab->word_jp ?: '—' }}</span></td>
+                                        <td width="30%">
+                                            @if($vocab->audio_jp)
+                                                <button class="inline-flex h-8 items-center gap-1.5 px-3 rounded-md border border-blue-200 bg-white hover:bg-blue-50 text-xs font-medium text-blue-600 transition-colors" onclick="document.getElementById('audio-en-{{ $vocab->id }}').play()">
+                                                    <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
+                                                    Play
+                                                </button>
+                                                <audio id="audio-en-{{ $vocab->id }}" class="hidden"><source src="{{ \Illuminate\Support\Facades\Storage::url($vocab->audio_jp) }}"></audio>
+                                            @else
+                                                <span class="text-[10px] text-zinc-400">No audio</span>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td class="px-4 py-3 text-xs font-medium text-zinc-900">
+                                <table class="w-full">
+                                    <tr class="border-b border-zinc-300">
+                                        <td width="90%" nowrap><span class="text-blue-500">En: {{ $vocab->sentence_en ?: '—' }}</span></td>
+                                        <td width="10%">
+                                            @if($vocab->sentence_audio_en)
+                                                <button class="inline-flex h-8 items-center gap-1.5 px-3 rounded-md border border-blue-200 bg-white hover:bg-blue-50 text-xs font-medium text-blue-600 transition-colors" onclick="document.getElementById('audio-en-{{ $vocab->id }}').play()">
+                                                    <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
+                                                    Play
+                                                </button>
+                                                <audio id="audio-en-{{ $vocab->id }}" class="hidden"><source src="{{ \Illuminate\Support\Facades\Storage::url($vocab->sentence_audio_en) }}"></audio>
+                                            @else
+                                                <span class="text-[10px] text-zinc-400">No audio</span>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    <tr class="border-b border-zinc-300">
+                                        <td width="90%" nowrap><span class="text-red-500">Ro: {{ $vocab->sentence_romaji ?: '—' }}</span></td>
+                                        <td width="10%"></td>
+                                    </tr>
+                                    <tr class="border-b border-zinc-300">
+                                        <td width="90%" nowrap><span class="text-red-500">Jp: {{ $vocab->sentence_jp ?: '—' }}</span></td>
+                                        <td width="10%">
+                                            @if($vocab->sentence_audio_jp)
+                                                <button class="inline-flex h-8 items-center gap-1.5 px-3 rounded-md border border-blue-200 bg-white hover:bg-blue-50 text-xs font-medium text-blue-600 transition-colors" onclick="document.getElementById('audio-en-{{ $vocab->id }}').play()">
+                                                    <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
+                                                    Play
+                                                </button>
+                                                <audio id="audio-en-{{ $vocab->id }}" class="hidden"><source src="{{ \Illuminate\Support\Facades\Storage::url($vocab->sentence_audio_jp) }}"></audio>
+                                            @else
+                                                <span class="text-[10px] text-zinc-400">No audio</span>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
                             <td class="px-4 py-3 text-xs text-zinc-600">
                                 @if($vocab->subcategory?->category)
                                     <a href="{{ route('admin.vocab.words.index', ['category_id' => $vocab->subcategory->category->id]) }}"
@@ -183,136 +252,7 @@
                                     </form>
                                 </div>
                             </td>
-                            <td class="w-8 px-2 py-3 text-center">
-                                <svg class="toggle-icon w-4 h-4 text-zinc-400 mx-auto" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
-                                </svg>
-                            </td>
-                        </tr>
-
-                        <tr class="detail-row row-expanded-{{ $vocab->id }} hidden border-b border-zinc-100">
-                            <td colspan="12" style="padding:0;">
-                                <div style="display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid #f4f4f5;">
-
-                                    <!-- ENGLISH -->
-                                    <div style="border-right:1px solid #f4f4f5;">
-                                        <div style="height:3px;background:#3b82f6;"></div>
-                                        <div class="px-4 pt-4 pb-4 space-y-2.5">
-                                            <div class="flex items-center gap-1.5 mb-3">
-                                                <span class="w-5 h-5 rounded bg-blue-50 text-blue-600 text-[9px] font-bold border border-blue-100 flex items-center justify-center">EN</span>
-                                                <span class="text-[10px] font-semibold uppercase tracking-widest text-zinc-500">English</span>
-                                            </div>
-                                            <div>
-                                                <p class="text-[10px] font-medium text-zinc-500 mb-1">Word</p>
-                                                <p class="text-xs font-medium text-zinc-900">{{ $vocab->word_en ?: '—' }}</p>
-                                            </div>
-                                            <div>
-                                                <p class="text-[10px] font-medium text-zinc-500 mb-1">Word Audio</p>
-                                                @if($vocab->audio_en)
-                                                    <button class="inline-flex h-8 items-center gap-1.5 px-3 rounded-md border border-blue-200 bg-white hover:bg-blue-50 text-xs font-medium text-blue-600 transition-colors" onclick="document.getElementById('audio-en-{{ $vocab->id }}').play()">
-                                                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
-                                                        Play
-                                                    </button>
-                                                    <audio id="audio-en-{{ $vocab->id }}" class="hidden"><source src="{{ \Illuminate\Support\Facades\Storage::url($vocab->audio_en) }}"></audio>
-                                                @else
-                                                    <span class="text-[10px] text-zinc-400">No audio</span>
-                                                @endif
-                                            </div>
-                                            <div class="pt-1 border-t border-zinc-100">
-                                                <p class="text-[10px] font-medium text-zinc-500 mb-1">Sentence</p>
-                                                <p class="text-[11px] text-zinc-700 leading-relaxed">{{ $vocab->sentence_en ?: '—' }}</p>
-                                            </div>
-                                            <div>
-                                                <p class="text-[10px] font-medium text-zinc-500 mb-1">Sentence Audio</p>
-                                                @if($vocab->sentence_audio_en)
-                                                    <button class="inline-flex h-8 items-center gap-1.5 px-3 rounded-md border border-blue-200 bg-white hover:bg-blue-50 text-xs font-medium text-blue-600 transition-colors" onclick="document.getElementById('audio-en-sent-{{ $vocab->id }}').play()">
-                                                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
-                                                        Play
-                                                    </button>
-                                                    <audio id="audio-en-sent-{{ $vocab->id }}" class="hidden"><source src="{{ \Illuminate\Support\Facades\Storage::url($vocab->sentence_audio_en) }}"></audio>
-                                                @else
-                                                    <span class="text-[10px] text-zinc-400">No audio</span>
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- JAPANESE -->
-                                    <div style="border-right:1px solid #f4f4f5;">
-                                        <div style="height:3px;background:#ef4444;"></div>
-                                        <div class="px-4 pt-4 pb-4 space-y-2.5">
-                                            <div class="flex items-center gap-1.5 mb-3">
-                                                <span class="w-5 h-5 rounded bg-red-50 text-red-600 text-[9px] font-bold border border-red-100 flex items-center justify-center">JP</span>
-                                                <span class="text-[10px] font-semibold uppercase tracking-widest text-zinc-500">Japanese</span>
-                                            </div>
-                                            <div>
-                                                <p class="text-[10px] font-medium text-zinc-500 mb-1">Word</p>
-                                                <p class="text-xs font-medium text-zinc-900">{{ $vocab->word_jp ?: '—' }}</p>
-                                            </div>
-                                            <div>
-                                                <p class="flex items-center gap-1 text-[10px] font-medium text-zinc-500 mb-1">
-                                                    Word Audio <span class="text-[8px] text-zinc-400 bg-zinc-100 px-1 rounded">shared</span>
-                                                </p>
-                                                @if($vocab->audio_jp)
-                                                    <button class="inline-flex h-8 items-center gap-1.5 px-3 rounded-md border border-red-200 bg-white hover:bg-red-50 text-xs font-medium text-red-600 transition-colors" onclick="document.getElementById('audio-jp-{{ $vocab->id }}').play()">
-                                                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
-                                                        Play
-                                                    </button>
-                                                    <audio id="audio-jp-{{ $vocab->id }}" class="hidden"><source src="{{ \Illuminate\Support\Facades\Storage::url($vocab->audio_jp) }}"></audio>
-                                                @else
-                                                    <span class="text-[10px] text-zinc-400">No audio</span>
-                                                @endif
-                                            </div>
-                                            <div class="pt-1 border-t border-zinc-100">
-                                                <p class="text-[10px] font-medium text-zinc-500 mb-1">Sentence</p>
-                                                <p class="text-[11px] text-zinc-700 leading-relaxed">{{ $vocab->sentence_jp ?: '—' }}</p>
-                                            </div>
-                                            <div>
-                                                <p class="flex items-center gap-1 text-[10px] font-medium text-zinc-500 mb-1">
-                                                    Sentence Audio <span class="text-[8px] text-zinc-400 bg-zinc-100 px-1 rounded">shared</span>
-                                                </p>
-                                                @if($vocab->sentence_audio_jp)
-                                                    <button class="inline-flex h-8 items-center gap-1.5 px-3 rounded-md border border-red-200 bg-white hover:bg-red-50 text-xs font-medium text-red-600 transition-colors" onclick="document.getElementById('audio-jp-sent-{{ $vocab->id }}').play()">
-                                                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
-                                                        Play
-                                                    </button>
-                                                    <audio id="audio-jp-sent-{{ $vocab->id }}" class="hidden"><source src="{{ \Illuminate\Support\Facades\Storage::url($vocab->sentence_audio_jp) }}"></audio>
-                                                @else
-                                                    <span class="text-[10px] text-zinc-400">No audio</span>
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- ROMAJI -->
-                                    <div>
-                                        <div style="height:3px;background:#10b981;"></div>
-                                        <div class="px-4 pt-4 pb-4 space-y-2.5">
-                                            <div class="flex items-center gap-1.5 mb-3">
-                                                <span class="w-5 h-5 rounded bg-emerald-50 text-emerald-600 text-[9px] font-bold border border-emerald-100 flex items-center justify-center">RM</span>
-                                                <span class="text-[10px] font-semibold uppercase tracking-widest text-zinc-500">Romaji</span>
-                                            </div>
-                                            <div>
-                                                <p class="text-[10px] font-medium text-zinc-500 mb-1">Word</p>
-                                                <p class="text-xs font-medium text-zinc-900">{{ $vocab->word_romaji ?: '—' }}</p>
-                                            </div>
-                                            <div>
-                                                <p class="text-[10px] font-medium text-zinc-500 mb-1">Word Audio</p>
-                                                <span class="text-[10px] text-zinc-400 italic">Uses JP audio</span>
-                                            </div>
-                                            <div class="pt-1 border-t border-zinc-100">
-                                                <p class="text-[10px] font-medium text-zinc-500 mb-1">Sentence</p>
-                                                <p class="text-[11px] text-zinc-700 leading-relaxed">{{ $vocab->sentence_romaji ?: '—' }}</p>
-                                            </div>
-                                            <div>
-                                                <p class="text-[10px] font-medium text-zinc-500 mb-1">Sentence Audio</p>
-                                                <span class="text-[10px] text-zinc-400 italic">Uses JP sentence audio</span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </td>
+                            
                         </tr>
                     @endforeach
                 </tbody>
