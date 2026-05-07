@@ -129,7 +129,7 @@
                                     @method('PATCH')
                                     <label class="cursor-pointer block group">
                                         @if($vocab->image_path)
-                                            <img src="{{ \Illuminate\Support\Facades\Storage::url($vocab->image_path) }}" alt="" class="w-30 h-30 mx-auto rounded object-cover border border-zinc-200 group-hover:opacity-60 transition-opacity" style="border-radius:20px; max-height: 150px;max-width: 150px; background-size:cover; background-image:url('{{ asset($vocab->vocab_bg_path) }}')">
+                                            <img src="{{ \Illuminate\Support\Facades\Storage::url($vocab->image_path) }}" alt="" class="w-30 h-30 mx-auto rounded object-cover border border-zinc-200 group-hover:opacity-60 transition-opacity" style="border-radius:20px; max-height: 150px;max-width: 150px; background-size:contain; background-image:url('{{ asset($vocab->vocab_bg_path) }}')">
                                         @else
                                             <div class="w-6 h-6 mx-auto rounded border-2 border-dashed border-zinc-200 flex items-center justify-center group-hover:border-zinc-400 transition-colors">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-zinc-300 group-hover:text-zinc-400" viewBox="0 0 20 20" fill="currentColor">
