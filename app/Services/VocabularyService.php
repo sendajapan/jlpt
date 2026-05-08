@@ -42,7 +42,7 @@ class VocabularyService
     
     public function getAllVocabBg(): Collection
     {
-        return VocabBg::orderBy('vocab_bg_id')->get();
+        return VocabBg::orderBy('vocab_bg_sort')->get();
     }
 
     public function create(array $data): Vocabulary
