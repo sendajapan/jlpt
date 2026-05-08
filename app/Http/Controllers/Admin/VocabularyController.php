@@ -138,6 +138,7 @@ class VocabularyController extends Controller
 
         $storagePath = 'vocab/words/audio/' . Str::uuid() . '.wav';
         Storage::disk('public')->put($storagePath, file_get_contents($result->getPath()));
+        @unlink($result->getPath());
 
         $this->deleteFile($vocabulary->$field);
 
