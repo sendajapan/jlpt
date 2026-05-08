@@ -196,7 +196,7 @@
                             onclick="selectBgColor('{{ $color->vocab_bg_id }}', '{{ asset($color->vocab_bg_path) }}')"
                             title="{{ $color->vocab_bg_path }}"
                         ></div>
-                        @if($key%5==0)
+                        @if($key%7==0)
                         <div class="clearfix"></div>
                         @endif
                     @endforeach
