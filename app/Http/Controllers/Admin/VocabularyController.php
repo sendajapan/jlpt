@@ -149,6 +149,14 @@ class VocabularyController extends Controller
         return response()->json(['url' => Storage::disk('public')->url($storagePath)]);
     }
 
+    public function deleteAudio(Request $request, Vocabulary $vocabulary): JsonResponse
+    {
+        $field = $request->validate(['field' => ['required', 'in:audio_en,audio_jp,sentence_audio_en,sentence_audio_jp']])['field'];
+        $this->deleteFile($vocabulary->$field);
+        $vocabulary->update([$field => null]);
+        return response()->json(['ok' => true]);
+    }
+
     public function destroy(Vocabulary $vocabulary): RedirectResponse
     {
         $this->deleteFile($vocabulary->audio_jp);
