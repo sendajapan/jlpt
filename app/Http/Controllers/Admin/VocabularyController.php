@@ -135,12 +135,23 @@ class VocabularyController extends Controller
         }
 
         $isJapanese = in_array($field, ['audio_jp', 'sentence_audio_jp']);
-        $tts = \B7s\FluentVox\FluentVox::make()->text($text);
+        $tts = \B7s\FluentVox\FluentVox::make()->text($text)->slow();
         $result = $isJapanese ? $tts->multilingual()->japanese()->generate() : $tts->generate();
 
         $storagePath = 'vocab/words/audio/' . Str::uuid() . '.wav';
-        Storage::disk('public')->put($storagePath, file_get_contents($result->getPath()));
-        @unlink($result->getPath());
+        $rawPath = $result->getPath();
+
+        $ffmpeg = base_path('vendor/b7s/fluentvox/bin/ffmpeg');
+        $processedPath = tempnam(sys_get_temp_dir(), 'jlpt_') . '.wav';
+        exec(escapeshellarg($ffmpeg) . ' -y -i ' . escapeshellarg($rawPath) . " -af 'asetrate=24000*1.35,aresample=24000,atempo=0.74' " . escapeshellarg($processedPath) . ' 2>/dev/null', $out, $code);
+
+        if ($code === 0 && file_exists($processedPath) && filesize($processedPath) > 0) {
+            Storage::disk('public')->put($storagePath, file_get_contents($processedPath));
+            @unlink($processedPath);
+        } else {
+            Storage::disk('public')->put($storagePath, file_get_contents($rawPath));
+        }
+        @unlink($rawPath);
 
         $this->deleteFile($vocabulary->$field);
 

@@ -29,7 +29,20 @@
       "Bash(git -C /var/www/html/jlpt-laravel-vue status)",
       "Bash(git -C /var/www/html/jlpt-laravel-vue log --oneline -3)",
       "Bash(git *)",
-      "WebFetch(domain:ipms.senda.fit)"
+      "WebFetch(domain:ipms.senda.fit)",
+      "WebFetch(domain:packagist.org)",
+      "Bash(vendor/bin/fluentvox install *)",
+      "Bash(python3 -m venv .venv)",
+      "Bash(apt-get install *)",
+      "Bash(.venv/bin/python --version)",
+      "Bash(.venv/bin/python -c \"import chatterbox; print\\('chatterbox ok'\\)\")",
+      "Bash(.venv/bin/python *)",
+      "Read(//etc/nginx/**)",
+      "Read(//etc/nginx/sites-enabled/**)",
+      "Bash(chown -R www-data:www-data /var/www/html/jlpt-laravel-vue/storage/app/public/vocab/words/audio/)",
+      "Bash(chown www-data:www-data /var/www/html/jlpt-laravel-vue/storage/app/public/vocab/words/audio/d2912ba4-b9fc-4780-bbad-baa263c48ef1.wav)",
+      "Bash(ffmpeg -version)",
+      "Bash(/var/www/html/jlpt-laravel-vue/vendor/b7s/fluentvox/bin/ffmpeg -version)"
     ]
   }
 }
