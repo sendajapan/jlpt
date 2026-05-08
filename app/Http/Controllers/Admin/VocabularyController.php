@@ -10,6 +10,8 @@ use App\Services\VocabularyService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class VocabularyController extends Controller
@@ -113,6 +115,35 @@ class VocabularyController extends Controller
         notify()->success()->title('Image updated.')->send();
 
         return back();
+    }
+
+    public function generateAudio(Request $request, Vocabulary $vocabulary): JsonResponse
+    {
+        $field = $request->validate(['field' => ['required', 'in:audio_en,audio_jp,sentence_audio_en,sentence_audio_jp']])['field'];
+
+        $textMap = [
+            'audio_en'          => $vocabulary->word_en,
+            'audio_jp'          => $vocabulary->word_jp,
+            'sentence_audio_en' => $vocabulary->sentence_en,
+            'sentence_audio_jp' => $vocabulary->sentence_jp,
+        ];
+
+        $text = $textMap[$field];
+
+        if (empty($text)) {
+            return response()->json(['error' => 'No text available.'], 422);
+        }
+
+        $result = \B7s\FluentVox\FluentVox::make()->text($text)->generate();
+
+        $storagePath = 'vocab/words/audio/' . Str::uuid() . '.wav';
+        Storage::disk('public')->put($storagePath, file_get_contents($result->getPath()));
+
+        $this->deleteFile($vocabulary->$field);
+
+        $vocabulary->update([$field => $storagePath]);
+
+        return response()->json(['url' => Storage::disk('public')->url($storagePath)]);
     }
 
     public function destroy(Vocabulary $vocabulary): RedirectResponse

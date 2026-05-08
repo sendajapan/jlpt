@@ -127,18 +127,23 @@
                                 <form method="POST" action="{{ route('admin.vocab.words.update-image', $vocab) }}" enctype="multipart/form-data">
                                     @csrf
                                     @method('PATCH')
-                                    <label class="cursor-pointer block group">
-                                        @if($vocab->image_path)
-                                            <img src="{{ \Illuminate\Support\Facades\Storage::url($vocab->image_path) }}" alt="" class="w-30 h-30 mx-auto rounded object-cover border border-zinc-200 group-hover:opacity-60 transition-opacity" style="border-radius:20px; max-height: 150px;max-width: 150px; background-size:contain; background-repeat: round; background-image:url('{{ asset($vocab->vocab_bg_path) }}')">
-                                        @else
-                                            <div class="w-6 h-6 mx-auto rounded border-2 border-dashed border-zinc-200 flex items-center justify-center group-hover:border-zinc-400 transition-colors">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-zinc-300 group-hover:text-zinc-400" viewBox="0 0 20 20" fill="currentColor">
-                                                    <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
-                                                </svg>
+                                    @if($vocab->image_path)
+                                        <div x-data="{ hovered: false }" class="relative inline-block" @mouseenter="hovered = true" @mouseleave="hovered = false" onclick="event.stopPropagation()">
+                                            <img src="{{ \Illuminate\Support\Facades\Storage::url($vocab->image_path) }}" alt="" class="mx-auto rounded object-cover border border-zinc-200 transition-opacity" :class="hovered ? 'opacity-50' : 'opacity-100'" style="border-radius:20px; max-height:150px; max-width:150px; background-size:contain; background-repeat:round; background-image:url('{{ asset($vocab->vocab_bg_path) }}')">
+                                            <div x-show="hovered" class="absolute inset-0 flex items-center justify-center gap-1.5" style="display:none">
+                                                <a href="{{ \Illuminate\Support\Facades\Storage::url($vocab->image_path) }}" target="_blank" onclick="event.stopPropagation()" class="inline-flex items-center h-6 px-2 rounded bg-white/90 border border-zinc-200 text-[10px] font-medium text-zinc-700 hover:bg-white transition-colors shadow-sm">Preview</a>
+                                                <label class="inline-flex items-center h-6 px-2 rounded bg-white/90 border border-zinc-200 text-[10px] font-medium text-zinc-700 hover:bg-white transition-colors shadow-sm cursor-pointer">
+                                                    Replace
+                                                    <input type="file" name="image_path" accept="image/*" class="hidden" onchange="this.form.submit()">
+                                                </label>
                                             </div>
-                                        @endif
-                                        <input type="file" name="image_path" accept="image/*" class="hidden" onchange="this.form.submit()">
-                                    </label>
+                                        </div>
+                                    @else
+                                        <label class="cursor-pointer inline-flex items-center h-6 px-2 rounded border border-zinc-200 bg-white text-[10px] font-medium text-zinc-500 hover:text-zinc-800 hover:bg-zinc-50 transition-colors" onclick="event.stopPropagation()">
+                                            Upload
+                                            <input type="file" name="image_path" accept="image/*" class="hidden" onchange="this.form.submit()">
+                                        </label>
+                                    @endif
                                 </form>
                             </td>
                             <td class="px-4 py-3 text-xs font-medium text-zinc-900">
@@ -147,13 +152,29 @@
                                         <td width="70%" nowrap><span class="text-blue-500">En: {{ $vocab->word_en ?: '—' }}</span></td>
                                         <td width="30%">
                                             @if($vocab->audio_en)
-                                                <button class="inline-flex h-8 items-center gap-1.5 px-3 rounded-md border border-blue-200 bg-white hover:bg-blue-50 text-xs font-medium text-blue-600 transition-colors" onclick="document.getElementById('audio-en-{{ $vocab->id }}').play()">
+                                                <button class="inline-flex h-8 items-center gap-1.5 px-3 rounded-md border border-blue-200 bg-white hover:bg-blue-50 text-xs font-medium text-blue-600 transition-colors" onclick="document.getElementById('audio-word-en-{{ $vocab->id }}').play()">
                                                     <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
                                                     Play
                                                 </button>
-                                                <audio id="audio-en-{{ $vocab->id }}" class="hidden"><source src="{{ \Illuminate\Support\Facades\Storage::url($vocab->audio_en) }}"></audio>
+                                                <audio id="audio-word-en-{{ $vocab->id }}" class="hidden"><source src="{{ \Illuminate\Support\Facades\Storage::url($vocab->audio_en) }}"></audio>
                                             @else
-                                                <span class="text-[10px] text-zinc-400">No audio</span>
+                                                <div x-data="{ loading: false, url: null }" onclick="event.stopPropagation()">
+                                                    <template x-if="!url && !loading">
+                                                        <button @click="loading = true; fetch('{{ route('admin.vocab.words.generate-audio', $vocab) }}', { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content }, body: JSON.stringify({ field: 'audio_en' }) }).then(r => r.json()).then(d => { url = d.url; loading = false; }).catch(() => { loading = false; })" class="inline-flex h-7 items-center px-2 rounded border border-zinc-200 bg-white hover:bg-zinc-50 text-[10px] font-medium text-zinc-500 hover:text-zinc-800 transition-colors">Generate</button>
+                                                    </template>
+                                                    <template x-if="loading">
+                                                        <span class="text-[10px] text-zinc-400">Generating...</span>
+                                                    </template>
+                                                    <template x-if="url">
+                                                        <div>
+                                                            <button @click="$refs.player.play()" class="inline-flex h-8 items-center gap-1.5 px-3 rounded-md border border-blue-200 bg-white hover:bg-blue-50 text-xs font-medium text-blue-600 transition-colors">
+                                                                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
+                                                                Play
+                                                            </button>
+                                                            <audio x-ref="player" class="hidden"><source :src="url"></audio>
+                                                        </div>
+                                                    </template>
+                                                </div>
                                             @endif
                                         </td>
                                     </tr>
@@ -165,13 +186,29 @@
                                         <td width="70%" nowrap><span class="text-purple-500">Jp: {{ $vocab->word_jp ?: '—' }}</span></td>
                                         <td width="30%">
                                             @if($vocab->audio_jp)
-                                                <button class="inline-flex h-8 items-center gap-1.5 px-3 rounded-md border border-blue-200 bg-white hover:bg-blue-50 text-xs font-medium text-blue-600 transition-colors" onclick="document.getElementById('audio-en-{{ $vocab->id }}').play()">
+                                                <button class="inline-flex h-8 items-center gap-1.5 px-3 rounded-md border border-blue-200 bg-white hover:bg-blue-50 text-xs font-medium text-blue-600 transition-colors" onclick="document.getElementById('audio-word-jp-{{ $vocab->id }}').play()">
                                                     <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
                                                     Play
                                                 </button>
-                                                <audio id="audio-en-{{ $vocab->id }}" class="hidden"><source src="{{ \Illuminate\Support\Facades\Storage::url($vocab->audio_jp) }}"></audio>
+                                                <audio id="audio-word-jp-{{ $vocab->id }}" class="hidden"><source src="{{ \Illuminate\Support\Facades\Storage::url($vocab->audio_jp) }}"></audio>
                                             @else
-                                                <span class="text-[10px] text-zinc-400">No audio</span>
+                                                <div x-data="{ loading: false, url: null }" onclick="event.stopPropagation()">
+                                                    <template x-if="!url && !loading">
+                                                        <button @click="loading = true; fetch('{{ route('admin.vocab.words.generate-audio', $vocab) }}', { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content }, body: JSON.stringify({ field: 'audio_jp' }) }).then(r => r.json()).then(d => { url = d.url; loading = false; }).catch(() => { loading = false; })" class="inline-flex h-7 items-center px-2 rounded border border-zinc-200 bg-white hover:bg-zinc-50 text-[10px] font-medium text-zinc-500 hover:text-zinc-800 transition-colors">Generate</button>
+                                                    </template>
+                                                    <template x-if="loading">
+                                                        <span class="text-[10px] text-zinc-400">Generating...</span>
+                                                    </template>
+                                                    <template x-if="url">
+                                                        <div>
+                                                            <button @click="$refs.player.play()" class="inline-flex h-8 items-center gap-1.5 px-3 rounded-md border border-blue-200 bg-white hover:bg-blue-50 text-xs font-medium text-blue-600 transition-colors">
+                                                                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
+                                                                Play
+                                                            </button>
+                                                            <audio x-ref="player" class="hidden"><source :src="url"></audio>
+                                                        </div>
+                                                    </template>
+                                                </div>
                                             @endif
                                         </td>
                                     </tr>
@@ -183,13 +220,29 @@
                                         <td width="90%" nowrap><span class="text-blue-500">En: {{ $vocab->sentence_en ?: '—' }}</span></td>
                                         <td width="10%">
                                             @if($vocab->sentence_audio_en)
-                                                <button class="inline-flex h-8 items-center gap-1.5 px-3 rounded-md border border-blue-200 bg-white hover:bg-blue-50 text-xs font-medium text-blue-600 transition-colors" onclick="document.getElementById('audio-en-{{ $vocab->id }}').play()">
+                                                <button class="inline-flex h-8 items-center gap-1.5 px-3 rounded-md border border-blue-200 bg-white hover:bg-blue-50 text-xs font-medium text-blue-600 transition-colors" onclick="document.getElementById('audio-sent-en-{{ $vocab->id }}').play()">
                                                     <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
                                                     Play
                                                 </button>
-                                                <audio id="audio-en-{{ $vocab->id }}" class="hidden"><source src="{{ \Illuminate\Support\Facades\Storage::url($vocab->sentence_audio_en) }}"></audio>
+                                                <audio id="audio-sent-en-{{ $vocab->id }}" class="hidden"><source src="{{ \Illuminate\Support\Facades\Storage::url($vocab->sentence_audio_en) }}"></audio>
                                             @else
-                                                <span class="text-[10px] text-zinc-400">No audio</span>
+                                                <div x-data="{ loading: false, url: null }" onclick="event.stopPropagation()">
+                                                    <template x-if="!url && !loading">
+                                                        <button @click="loading = true; fetch('{{ route('admin.vocab.words.generate-audio', $vocab) }}', { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content }, body: JSON.stringify({ field: 'sentence_audio_en' }) }).then(r => r.json()).then(d => { url = d.url; loading = false; }).catch(() => { loading = false; })" class="inline-flex h-7 items-center px-2 rounded border border-zinc-200 bg-white hover:bg-zinc-50 text-[10px] font-medium text-zinc-500 hover:text-zinc-800 transition-colors">Generate</button>
+                                                    </template>
+                                                    <template x-if="loading">
+                                                        <span class="text-[10px] text-zinc-400">Generating...</span>
+                                                    </template>
+                                                    <template x-if="url">
+                                                        <div>
+                                                            <button @click="$refs.player.play()" class="inline-flex h-8 items-center gap-1.5 px-3 rounded-md border border-blue-200 bg-white hover:bg-blue-50 text-xs font-medium text-blue-600 transition-colors">
+                                                                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
+                                                                Play
+                                                            </button>
+                                                            <audio x-ref="player" class="hidden"><source :src="url"></audio>
+                                                        </div>
+                                                    </template>
+                                                </div>
                                             @endif
                                         </td>
                                     </tr>
@@ -201,13 +254,29 @@
                                         <td width="90%" nowrap><span class="text-purple-500">Jp: {{ $vocab->sentence_jp ?: '—' }}</span></td>
                                         <td width="10%">
                                             @if($vocab->sentence_audio_jp)
-                                                <button class="inline-flex h-8 items-center gap-1.5 px-3 rounded-md border border-blue-200 bg-white hover:bg-blue-50 text-xs font-medium text-blue-600 transition-colors" onclick="document.getElementById('audio-en-{{ $vocab->id }}').play()">
+                                                <button class="inline-flex h-8 items-center gap-1.5 px-3 rounded-md border border-blue-200 bg-white hover:bg-blue-50 text-xs font-medium text-blue-600 transition-colors" onclick="document.getElementById('audio-sent-jp-{{ $vocab->id }}').play()">
                                                     <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
                                                     Play
                                                 </button>
-                                                <audio id="audio-en-{{ $vocab->id }}" class="hidden"><source src="{{ \Illuminate\Support\Facades\Storage::url($vocab->sentence_audio_jp) }}"></audio>
+                                                <audio id="audio-sent-jp-{{ $vocab->id }}" class="hidden"><source src="{{ \Illuminate\Support\Facades\Storage::url($vocab->sentence_audio_jp) }}"></audio>
                                             @else
-                                                <span class="text-[10px] text-zinc-400">No audio</span>
+                                                <div x-data="{ loading: false, url: null }" onclick="event.stopPropagation()">
+                                                    <template x-if="!url && !loading">
+                                                        <button @click="loading = true; fetch('{{ route('admin.vocab.words.generate-audio', $vocab) }}', { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content }, body: JSON.stringify({ field: 'sentence_audio_jp' }) }).then(r => r.json()).then(d => { url = d.url; loading = false; }).catch(() => { loading = false; })" class="inline-flex h-7 items-center px-2 rounded border border-zinc-200 bg-white hover:bg-zinc-50 text-[10px] font-medium text-zinc-500 hover:text-zinc-800 transition-colors">Generate</button>
+                                                    </template>
+                                                    <template x-if="loading">
+                                                        <span class="text-[10px] text-zinc-400">Generating...</span>
+                                                    </template>
+                                                    <template x-if="url">
+                                                        <div>
+                                                            <button @click="$refs.player.play()" class="inline-flex h-8 items-center gap-1.5 px-3 rounded-md border border-blue-200 bg-white hover:bg-blue-50 text-xs font-medium text-blue-600 transition-colors">
+                                                                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
+                                                                Play
+                                                            </button>
+                                                            <audio x-ref="player" class="hidden"><source :src="url"></audio>
+                                                        </div>
+                                                    </template>
+                                                </div>
                                             @endif
                                         </td>
                                     </tr>
