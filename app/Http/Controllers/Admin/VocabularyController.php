@@ -134,7 +134,9 @@ class VocabularyController extends Controller
             return response()->json(['error' => 'No text available.'], 422);
         }
 
-        $result = \B7s\FluentVox\FluentVox::make()->text($text)->generate();
+        $isJapanese = in_array($field, ['audio_jp', 'sentence_audio_jp']);
+        $tts = \B7s\FluentVox\FluentVox::make()->text($text);
+        $result = $isJapanese ? $tts->multilingual()->japanese()->generate() : $tts->generate();
 
         $storagePath = 'vocab/words/audio/' . Str::uuid() . '.wav';
         Storage::disk('public')->put($storagePath, file_get_contents($result->getPath()));
