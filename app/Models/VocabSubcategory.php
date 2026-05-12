@@ -17,6 +17,7 @@ class VocabSubcategory extends Model
         'name_romaji',
         'icon_path',
         'icon_thumbnail_path',
+        'icon_thumbnail_bg',
         'audio_path',
         'sort_order',
         'is_premium',

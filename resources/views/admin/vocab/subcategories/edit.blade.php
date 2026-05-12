@@ -70,15 +70,6 @@
             {{-- Icon / Audio --}}
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                    <label class="block text-xs font-medium text-zinc-700 mb-1.5">Icon</label>
-                    <x-image-preview name="icon_path" :current="$subcategory->icon_path ? Storage::url($subcategory->icon_path) : null">
-                        @error('icon_path')
-                            <p class="mt-1 text-[10px] text-red-500">{{ $message }}</p>
-                        @enderror
-                    </x-image-preview>
-                </div>
-
-                <div>
                     <label class="block text-xs font-medium text-zinc-700 mb-1.5">Audio</label>
                     @if ($subcategory->audio_path)
                         <audio controls class="h-7 w-full mt-1 mb-2"><source src="{{ Storage::url($subcategory->audio_path) }}"></audio>
@@ -92,6 +83,32 @@
                     @endif
                     @error('audio_path') <p class="mt-1 text-[10px] text-red-500">{{ $message }}</p> @enderror
                 </div>
+            </div>
+
+            {{-- Icon / Audio --}}
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-medium text-zinc-700 mb-1.5">Icon</label>
+                    <x-image-preview name="icon_path" :current="$subcategory->icon_path ? Storage::url($subcategory->icon_path) : null">
+                        @error('icon_path')
+                            <p class="mt-1 text-[10px] text-red-500">{{ $message }}</p>
+                        @enderror
+                    </x-image-preview>
+
+                </div>
+                 <div class="float-left">
+                        <input type="hidden" name="icon_thumbnail_bg" id="icon_thumbnail_bg" value="{{ old('icon_thumbnail_bg', $subcategory->icon_thumbnail_bg) }}">
+                        @foreach($vocab_bg as $key=>$color)
+                            <div class="w-12 h-12 rounded cursor-pointer border-2 border-gray-300 hover:scale-110 transition bg-cover bg-center mr-2 mb-2"
+                                style="background-image: url('{{ asset($color->vocab_bg_path) }}'); background-size:cover; float:left;"
+                                onclick="selectBgColor('{{ $color->vocab_bg_id }}', '{{ asset($color->vocab_bg_path) }}')"
+                                title="{{ $color->vocab_bg_path }}"
+                            ></div>
+                            @if($key%6==0)
+                            <div class="clearfix"></div>
+                            @endif
+                        @endforeach
+                    </div>
             </div>
 
             {{-- Sort Order / Premium --}}
@@ -133,3 +150,29 @@
 
 @endsection
 
+
+
+@push('scripts')
+
+<script>
+function selectBgColor(vocab_id, vocab_path){
+    document.getElementById('icon_thumbnail_bg').value = vocab_id;
+    change_bg(vocab_path);
+}
+function change_bg(vocab_path){
+    const previewList = document.getElementsByClassName('object-cover');
+    preview = previewList[0];
+    preview.style.backgroundImage = `url(${vocab_path})`;
+    preview.style.backgroundSize = 'cover';
+    preview.style.backgroundPosition = 'center';
+}
+    document.addEventListener('DOMContentLoaded', function () {
+        const vocabBg = @json($vocab_bg);
+        const bg = vocabBg.find(item => item.vocab_bg_id == {{ $subcategory->icon_thumbnail_bg }});
+        change_bg('{{ asset('') }}'+bg.vocab_bg_path);
+    });
+
+</script>
+
+
+@endpush

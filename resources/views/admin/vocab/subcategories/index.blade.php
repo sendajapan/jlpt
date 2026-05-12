@@ -117,18 +117,23 @@
                                 <form method="POST" action="{{ route('admin.vocab.subcategories.update-icon', $subcategory) }}" enctype="multipart/form-data">
                                     @csrf
                                     @method('PATCH')
-                                    <label class="cursor-pointer block group">
-                                        @if($subcategory->icon_path)
-                                            <img src="{{ \Illuminate\Support\Facades\Storage::url($subcategory->icon_path) }}" alt="" class="w-7 h-7 mx-auto rounded object-cover border border-zinc-200 group-hover:opacity-60 transition-opacity">
-                                        @else
-                                            <div class="w-7 h-7 mx-auto rounded border-2 border-dashed border-zinc-200 flex items-center justify-center group-hover:border-zinc-400 transition-colors">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-zinc-300 group-hover:text-zinc-400" viewBox="0 0 20 20" fill="currentColor">
-                                                    <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
-                                                </svg>
+                                    @if($subcategory->icon_path)
+                                        <div x-data="{ hovered: false }" class="relative inline-block" @mouseenter="hovered = true" @mouseleave="hovered = false" onclick="event.stopPropagation()">
+                                            <img src="{{ \Illuminate\Support\Facades\Storage::url($subcategory->icon_path) }}" alt="" class="mx-auto rounded object-cover border border-zinc-200 transition-opacity" :class="hovered ? 'opacity-50' : 'opacity-100'" style="border-radius:20px; max-height:150px; max-width:150px; background-size:contain; background-repeat:round; background-image:url('{{ asset($subcategory->vocab_bg_path) }}')">
+                                            <div x-show="hovered" class="absolute inset-0 flex items-center justify-center gap-1.5" style="display:none">
+                                                <a href="{{ \Illuminate\Support\Facades\Storage::url($subcategory->icon_path) }}" target="_blank" onclick="event.stopPropagation()" class="inline-flex items-center h-6 px-2 rounded bg-white/90 border border-zinc-200 text-[10px] font-medium text-zinc-700 hover:bg-white transition-colors shadow-sm">Preview</a>
+                                                <label class="inline-flex items-center h-6 px-2 rounded bg-white/90 border border-zinc-200 text-[10px] font-medium text-zinc-700 hover:bg-white transition-colors shadow-sm cursor-pointer">
+                                                    Replace
+                                                    <input type="file" name="icon_path" accept="image/*" class="hidden" onchange="this.form.submit()">
+                                                </label>
                                             </div>
-                                        @endif
-                                        <input type="file" name="icon_path" accept="image/*" class="hidden" onchange="this.form.submit()">
-                                    </label>
+                                        </div>
+                                    @else
+                                        <label class="cursor-pointer inline-flex items-center h-6 px-2 rounded border border-zinc-200 bg-white text-[10px] font-medium text-zinc-500 hover:text-zinc-800 hover:bg-zinc-50 transition-colors" onclick="event.stopPropagation()">
+                                            Upload
+                                            <input type="file" name="icon_path" accept="image/*" class="hidden" onchange="this.form.submit()">
+                                        </label>
+                                    @endif
                                 </form>
                             </td>
                             <td class="px-4 py-2.5 text-xs font-medium text-zinc-900">{{ $subcategory->name_en }}</td>

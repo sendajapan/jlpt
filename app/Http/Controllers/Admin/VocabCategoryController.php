@@ -44,7 +44,9 @@ class VocabCategoryController extends Controller
 
     public function edit(VocabCategory $vocabCategory): View
     {
-        return view('admin.vocab.categories.edit', ['category' => $vocabCategory]);
+        $category = $vocabCategory;
+        $vocab_bg = $this->service->getAllVocabBg();
+        return view('admin.vocab.categories.edit', compact('category', 'vocab_bg'));
     }
 
     public function update(UpdateVocabCategoryRequest $request, VocabCategory $vocabCategory): RedirectResponse
@@ -53,6 +55,7 @@ class VocabCategoryController extends Controller
         $data['icon_path']           = $this->replaceImage($request, 'icon_path', 'vocab/categories/icons', $vocabCategory->icon_path);
         $data['icon_thumbnail_path'] = $this->replaceThumbnail($request->file('icon_path'), 'vocab/categories/icons', $vocabCategory->icon_thumbnail_path);
         $data['audio_path']          = $this->replaceFile($request, 'audio_path', 'vocab/categories/audio', $vocabCategory->audio_path);
+        $data['category_bg_path']  = $request->category_bg_path;
 
         $this->service->update($vocabCategory, $data);
 

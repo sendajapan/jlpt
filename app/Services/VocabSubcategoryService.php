@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\VocabCategory;
 use App\Models\VocabSubcategory;
+use App\Models\VocabBg;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -13,6 +14,7 @@ class VocabSubcategoryService
     {
         return VocabSubcategory::query()
             ->with('category')
+            ->leftJoin('vocab_bgs', 'vocab_bgs.vocab_bg_id', '=', 'icon_thumbnail_bg')
             ->when($search, fn ($q) => $q->where('name_en', 'like', "%{$search}%")
                 ->orWhere('name_jp', 'like', "%{$search}%"))
             ->when($categoryId, fn ($q) => $q->where('vocab_category_id', $categoryId))
@@ -39,6 +41,10 @@ class VocabSubcategoryService
     {
         $vocabSubcategory->update($data);
         return $vocabSubcategory;
+    }
+    public function getAllVocabBg(): Collection
+    {
+        return VocabBg::orderBy('vocab_bg_sort')->get();
     }
 
     public function delete(VocabSubcategory $vocabSubcategory): void

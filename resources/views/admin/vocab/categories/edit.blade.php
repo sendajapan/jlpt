@@ -112,6 +112,19 @@
                             <p class="mt-1 text-[10px] text-red-500">{{ $message }}</p>
                         @enderror
                     </x-image-preview>
+                <div class="float-left">
+                    <input type="hidden" name="category_bg_path" id="category_bg_path" value="{{ old('category_bg_path', $category->category_bg_path) }}">
+                    @foreach($vocab_bg as $key=>$color)
+                        <div class="w-12 h-12 rounded cursor-pointer border-2 border-gray-300 hover:scale-110 transition bg-cover bg-center mr-2 mb-2"
+                            style="background-image: url('{{ asset($color->vocab_bg_path) }}'); background-size:cover; float:left;"
+                            onclick="selectBgColor('{{ $color->vocab_bg_id }}', '{{ asset($color->vocab_bg_path) }}')"
+                            title="{{ $color->vocab_bg_path }}"
+                        ></div>
+                        @if($key%9==0)
+                        <div class="clearfix"></div>
+                        @endif
+                    @endforeach
+                </div>
                 </div>
 
                 <div>
@@ -164,3 +177,29 @@
 </div>
 
 @endsection
+
+
+@push('scripts')
+
+<script>
+function selectBgColor(vocab_id, vocab_path){
+    document.getElementById('category_bg_path').value = vocab_id;
+    change_bg(vocab_path);
+}
+function change_bg(vocab_path){
+    const previewList = document.getElementsByClassName('object-cover');
+    preview = previewList[0];
+    preview.style.backgroundImage = `url(${vocab_path})`;
+    preview.style.backgroundSize = 'cover';
+    preview.style.backgroundPosition = 'center';
+}
+    document.addEventListener('DOMContentLoaded', function () {
+        const vocabBg = @json($vocab_bg);
+        const bg = vocabBg.find(item => item.vocab_bg_id == {{ $category->category_bg_path }});
+        change_bg('{{ asset('') }}'+bg.vocab_bg_path);
+    });
+
+</script>
+
+
+@endpush

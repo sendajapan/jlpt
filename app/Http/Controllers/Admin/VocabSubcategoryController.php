@@ -37,6 +37,7 @@ class VocabSubcategoryController extends Controller
 
     public function store(StoreVocabSubcategoryRequest $request): RedirectResponse
     {
+
         $data = $request->validated();
         $data['icon_path']           = $this->storeImage($request, 'icon_path', 'vocab/subcategories/icons');
         $data['icon_thumbnail_path'] = $this->storeThumbnail($request->file('icon_path'), 'vocab/subcategories/icons');
@@ -51,9 +52,11 @@ class VocabSubcategoryController extends Controller
 
     public function edit(VocabSubcategory $vocabSubcategory): View
     {
+        $subcategory = $vocabSubcategory;
+        $vocab_bg = $this->service->getAllVocabBg();
         $categories = $this->service->getAllCategories();
 
-        return view('admin.vocab.subcategories.edit', ['subcategory' => $vocabSubcategory, 'categories' => $categories]);
+        return view('admin.vocab.subcategories.edit', compact('subcategory', 'categories', 'vocab_bg'));
     }
 
     public function update(UpdateVocabSubcategoryRequest $request, VocabSubcategory $vocabSubcategory): RedirectResponse
@@ -62,6 +65,7 @@ class VocabSubcategoryController extends Controller
         $data['icon_path']           = $this->replaceImage($request, 'icon_path', 'vocab/subcategories/icons', $vocabSubcategory->icon_path);
         $data['icon_thumbnail_path'] = $this->replaceThumbnail($request->file('icon_path'), 'vocab/subcategories/icons', $vocabSubcategory->icon_thumbnail_path);
         $data['audio_path']          = $this->replaceFile($request, 'audio_path', 'vocab/subcategories/audio', $vocabSubcategory->audio_path);
+        $data['icon_thumbnail_bg']  = $request->icon_thumbnail_bg;
 
         $this->service->update($vocabSubcategory, $data);
 
