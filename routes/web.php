@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\VocabCategoryController;
 use App\Http\Controllers\Admin\VocabSubcategoryController;
 use App\Http\Controllers\Admin\VocabularyController;
+use App\Http\Controllers\Admin\VoiceController;
 use Illuminate\Support\Facades\Route;
 
 require __DIR__.'/auth.php';
@@ -33,6 +34,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
         Route::patch('words/{vocabulary}/image', [VocabularyController::class, 'updateImage'])->name('words.update-image');
         Route::patch('words/{vocabulary}/toggle-approved', [VocabularyController::class, 'toggleApproved'])->name('words.toggle-approved');
         Route::post('words/{vocabulary}/generate-audio', [VocabularyController::class, 'generateAudio'])->name('words.generate-audio');
+        Route::post('words/{vocabulary}/regenerate-audio', [VocabularyController::class, 'regenerateAudio'])->name('words.regenerate-audio');
         Route::delete('words/{vocabulary}/delete-audio', [VocabularyController::class, 'deleteAudio'])->name('words.delete-audio');
     });
+
+    Route::resource('voices', VoiceController::class)->except(['show']);
 });

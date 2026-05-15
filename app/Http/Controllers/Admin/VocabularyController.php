@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreVocabularyRequest;
 use App\Http\Requests\Admin\UpdateVocabularyRequest;
 use App\Models\Vocabulary;
+use App\Models\Voice;
 use App\Services\VocabularyService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -119,7 +120,21 @@ class VocabularyController extends Controller
 
     public function generateAudio(Request $request, Vocabulary $vocabulary): JsonResponse
     {
-        $field = $request->validate(['field' => ['required', 'in:audio_en,audio_jp,sentence_audio_en,sentence_audio_jp']])['field'];
+        return $this->runAudioGeneration($request, $vocabulary);
+    }
+
+    public function regenerateAudio(Request $request, Vocabulary $vocabulary): JsonResponse
+    {
+        return $this->runAudioGeneration($request, $vocabulary);
+    }
+
+    private function runAudioGeneration(Request $request, Vocabulary $vocabulary): JsonResponse
+    {
+        $data = $request->validate([
+            'field'    => ['required', 'in:audio_en,audio_jp,sentence_audio_en,sentence_audio_jp'],
+            'voice_id' => ['nullable', 'integer', 'exists:voices,id'],
+        ]);
+        $field = $data['field'];
 
         $textMap = [
             'audio_en'          => $vocabulary->word_en,
@@ -134,10 +149,35 @@ class VocabularyController extends Controller
             return response()->json(['error' => 'No text available.'], 422);
         }
 
+        $voice = ! empty($data['voice_id']) ? Voice::find($data['voice_id']) : Voice::default();
+
         $isJapanese = in_array($field, ['audio_jp', 'sentence_audio_jp']);
-        $voiceRef = storage_path('app/voice-references/attenborough.wav');
-        $tts = \B7s\FluentVox\FluentVox::make()->text($text)->voiceFrom($voiceRef)->slow();
-        $result = $isJapanese ? $tts->multilingual()->japanese()->generate() : $tts->generate();
+        $voiceRef = $voice?->referenceAbsolutePath() ?? storage_path('app/voice-references/attenborough.wav');
+        $settings = $voice?->settings ?? [];
+
+        $tts = \B7s\FluentVox\FluentVox::make()->text($text);
+        if (file_exists($voiceRef)) {
+            $tts = $tts->voiceFrom($voiceRef);
+        }
+        if (isset($settings['exaggeration'])) $tts = $tts->exaggeration((float) $settings['exaggeration']);
+        if (isset($settings['cfg_weight']))   $tts = $tts->cfgWeight((float) $settings['cfg_weight']);
+        else                                   $tts = $tts->slow();
+        if (isset($settings['temperature']))  $tts = $tts->temperature((float) $settings['temperature']);
+        if (isset($settings['seed']))         $tts = $tts->seed((int) $settings['seed']);
+
+        $model = $settings['model'] ?? null;
+        if ($isJapanese || $model === 'chatterbox-multilingual') {
+            $tts = $tts->multilingual();
+        } elseif ($model === 'chatterbox-turbo') {
+            $tts = $tts->turbo();
+        } elseif ($model === 'chatterbox') {
+            $tts = $tts->standard();
+        }
+        if ($isJapanese) {
+            $tts = $tts->japanese();
+        }
+
+        $result = $tts->generate();
 
         $storagePath = 'vocab/words/audio/' . Str::uuid() . '.wav';
         Storage::disk('public')->put($storagePath, file_get_contents($result->getPath()));
