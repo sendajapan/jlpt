@@ -195,6 +195,10 @@
                     </div>
                     @foreach($vocab_bg as $key=>$color)
 
+                        @if($key%7==0)
+                        <div style="clear:both"></div>
+                        @endif
+
                         @if($color->vocab_bg_sort==41)
                         <div style="clear:both"></div>
                         <div class="pl-3 border-l-2 border-blue-500">
@@ -214,9 +218,6 @@
                             onclick="selectBgColor('{{ $color->vocab_bg_id }}', '{{ asset($color->vocab_bg_path) }}')"
                             title="{{ $color->vocab_bg_path }}"
                         ></div>
-                        @if($key%7==0)
-                        <div style="clear:both"></div>
-                        @endif
 
                     @endforeach
                 </div>
