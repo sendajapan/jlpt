@@ -190,8 +190,23 @@
                 </div>
                 <div class="float-left">
                     <input type="hidden" name="image_thumbnail_bg" id="image_thumbnail_bg" value="{{ old('image_thumbnail_bg', $vocabulary->image_thumbnail_bg) }}">
-                        <div class="">Light</div>
+                    <div class="pl-3 border-l-2 border-blue-500">
+                        <span class="text-[9px] font-bold uppercase tracking-[0.18em] text-blue-500 block mb-2.5">Light</span>
+                    </div>
                     @foreach($vocab_bg as $key=>$color)
+
+                        @if($color->vocab_bg_id==41)
+                        <div class="pl-3 border-l-2 border-blue-500">
+                            <span class="text-[9px] font-bold uppercase tracking-[0.18em] text-blue-500 block mb-2.5">Light</span>
+                        </div>
+                        @endif
+                        @if($color->vocab_bg_id==81)
+                        <div class="pl-3 border-l-2 border-blue-500">
+                            <span class="text-[9px] font-bold uppercase tracking-[0.18em] text-blue-500 block mb-2.5">Light</span>
+                        </div>
+                        @endif
+
+
                         <div class="w-12 h-12 rounded cursor-pointer border-2 border-gray-300 hover:scale-110 transition bg-cover bg-center mr-2 mb-2"
                             style="background-image: url('{{ asset($color->vocab_bg_path) }}'); background-size:cover; float:left;"
                             onclick="selectBgColor('{{ $color->vocab_bg_id }}', '{{ asset($color->vocab_bg_path) }}')"
@@ -200,14 +215,7 @@
                         @if($key%7==0)
                         <div class="clearfix"></div>
                         @endif
-                        @if($color->vocab_bg_id==41)
-                        <div class="clearfix"></div>
-                        <div class="">Medium</div>
-                        @endif
-                        @if($color->vocab_bg_id==81)
-                        <div class="clearfix"></div>
-                        <div class="">Dark</div>
-                        @endif
+
                     @endforeach
                 </div>
                 <div>
