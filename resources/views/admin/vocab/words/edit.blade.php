@@ -197,7 +197,7 @@
 
                     @foreach($vocab_bg as $key=>$color)
 
-                        @if($key%6==0)
+                        @if($key%5==0)
                         <div style="clear:both"></div>
                         @endif
 
