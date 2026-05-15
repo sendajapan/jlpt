@@ -17,13 +17,13 @@
     <div class="flex items-center justify-between px-5 py-3 border-b border-zinc-100">
         <div>
             <p class="text-sm font-semibold text-zinc-900">New Voice</p>
-            <p class="text-xs text-zinc-500 mt-0.5">Configure a FluentVox voice profile</p>
+            <p class="text-xs text-zinc-500 mt-0.5">Configure a voice profile</p>
         </div>
     </div>
 
     <form method="POST" action="{{ route('admin.voices.store') }}" enctype="multipart/form-data">
         @csrf
-        @include('admin.voices._form', ['voice' => $voice])
+        @include('admin.voices.voice-form', ['voice' => $voice])
 
         <div class="flex items-center gap-2 px-5 py-3.5 border-t border-zinc-100 bg-zinc-50/50">
             <button type="submit" class="inline-flex items-center gap-1.5 h-8 px-3 rounded-md bg-zinc-900 text-white text-xs font-medium hover:bg-zinc-700 transition-all">
