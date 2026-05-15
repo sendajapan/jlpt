@@ -276,6 +276,7 @@
 <script>
 function selectBgColor(vocab_id, vocab_path){
     document.getElementById('image_thumbnail_bg').value = vocab_id;
+    document.getElementById('is_approved').checked = true;
     change_bg(vocab_path);
 }
 function change_bg(vocab_path){
