@@ -25,8 +25,10 @@ class VocabularyController extends Controller
         $vocabularies = $this->service->getAll($filters);
         $categories = $this->service->getAllCategories();
         $subcategories = $this->service->getAllSubcategories();
+        $voices = Voice::orderBy('sort_order')->orderBy('name')->get(['id', 'name']);
+        $defaultVoiceId = Voice::default()?->id;
 
-        return view('admin.vocab.words.index', compact('vocabularies', 'categories', 'subcategories'));
+        return view('admin.vocab.words.index', compact('vocabularies', 'categories', 'subcategories', 'voices', 'defaultVoiceId'));
     }
 
     public function create(): View
@@ -131,8 +133,8 @@ class VocabularyController extends Controller
     private function runAudioGeneration(Request $request, Vocabulary $vocabulary): JsonResponse
     {
         $data = $request->validate([
-            'field'    => ['required', 'in:audio_en,audio_jp,sentence_audio_en,sentence_audio_jp'],
-            'voice_id' => ['nullable', 'integer', 'exists:voices,id'],
+            'field' => ['required', 'in:audio_en,audio_jp,sentence_audio_en,sentence_audio_jp'],
+            'voice' => ['nullable', 'integer', 'exists:voices,id'],
         ]);
         $field = $data['field'];
 
@@ -149,7 +151,10 @@ class VocabularyController extends Controller
             return response()->json(['error' => 'No text available.'], 422);
         }
 
-        $voice = ! empty($data['voice_id']) ? Voice::find($data['voice_id']) : Voice::default();
+        $voice = ! empty($data['voice']) ? Voice::find($data['voice']) : Voice::default();
+        if ($voice) {
+            $vocabulary->update(['voice_id' => $voice->id]);
+        }
 
         $isJapanese = in_array($field, ['audio_jp', 'sentence_audio_jp']);
         $voiceRef = $voice?->referenceAbsolutePath() ?? storage_path('app/voice-references/attenborough.wav');

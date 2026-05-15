@@ -27,6 +27,7 @@ class Vocabulary extends Model
         'sort_order',
         'is_premium',
         'is_approved',
+        'voice_id',
     ];
 
     protected $casts = [
@@ -38,5 +39,10 @@ class Vocabulary extends Model
     public function subcategory(): BelongsTo
     {
         return $this->belongsTo(VocabSubcategory::class, 'vocab_subcategory_id');
+    }
+
+    public function voice(): BelongsTo
+    {
+        return $this->belongsTo(Voice::class);
     }
 }

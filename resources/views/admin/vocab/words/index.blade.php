@@ -151,61 +151,7 @@
                                     <tr class="border-b border-zinc-300">
                                         <td width="70%" nowrap><span class="text-blue-500">En: {{ $vocab->word_en ?: '—' }}</span></td>
                                         <td width="30%">
-                                            @if($vocab->audio_en)
-                                                <div x-data="{ gone: false, loading: false, url: null, confirm: false }" onclick="event.stopPropagation()">
-                                                    <audio id="audio-word-en-{{ $vocab->id }}" class="hidden"><source src="{{ \Illuminate\Support\Facades\Storage::url($vocab->audio_en) }}"></audio>
-                                                    <template x-if="!gone && !url">
-                                                        <div class="inline-flex items-center gap-1">
-                                                            <button class="inline-flex h-8 items-center gap-1.5 px-3 rounded-md border border-blue-200 bg-white hover:bg-blue-50 text-xs font-medium text-blue-600 transition-colors" onclick="document.getElementById('audio-word-en-{{ $vocab->id }}').play()">
-                                                                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
-                                                                Play
-                                                            </button>
-                                                            <span x-show="!confirm"><button @click="loading = true; fetch('{{ route('admin.vocab.words.regenerate-audio', $vocab) }}', { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content }, body: JSON.stringify({ field: 'audio_en' }) }).then(r => r.json()).then(d => { url = d.url; loading = false; }).catch(() => { loading = false; })" class="inline-flex h-7 items-center px-2 rounded border border-amber-200 bg-white hover:bg-amber-50 text-[10px] font-medium text-amber-600 transition-all">Regenerate</button></span>
-                                                            <span x-show="!confirm"><button @click="confirm = true" class="inline-flex h-7 items-center px-2 rounded border border-red-200 bg-white hover:bg-red-50 text-[10px] font-medium text-red-400 transition-all">Delete</button></span>
-                                                            <span x-show="confirm" style="display:none" class="inline-flex items-center gap-0.5"><button @click="confirm = false" class="inline-flex h-7 items-center px-1.5 rounded border border-zinc-200 bg-white text-[10px] text-zinc-400 hover:text-zinc-700 transition-colors">Cancel</button><button @click="fetch('{{ route('admin.vocab.words.delete-audio', $vocab) }}', { method: 'DELETE', headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content }, body: JSON.stringify({ field: 'audio_en' }) }).then(() => gone = true)" class="inline-flex h-7 items-center px-2 rounded border border-red-400 bg-red-50 text-[10px] font-medium text-red-600 hover:bg-red-100 transition-colors">Yes, delete</button></span>
-                                                        </div>
-                                                    </template>
-                                                    <template x-if="gone && !loading && !url">
-                                                        <button @click="loading = true; fetch('{{ route('admin.vocab.words.generate-audio', $vocab) }}', { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content }, body: JSON.stringify({ field: 'audio_en' }) }).then(r => r.json()).then(d => { url = d.url; loading = false; }).catch(() => { loading = false; })" class="inline-flex h-7 items-center px-2 rounded border border-zinc-200 bg-white hover:bg-zinc-50 text-[10px] font-medium text-zinc-500 hover:text-zinc-800 transition-colors">Generate</button>
-                                                    </template>
-                                                    <template x-if="loading">
-                                                        <span class="text-[10px] text-zinc-400">Generating...</span>
-                                                    </template>
-                                                    <template x-if="url">
-                                                        <div class="inline-flex items-center gap-1">
-                                                            <button @click="$refs.newPlayerWordEn.play()" class="inline-flex h-8 items-center gap-1.5 px-3 rounded-md border border-blue-200 bg-white hover:bg-blue-50 text-xs font-medium text-blue-600 transition-colors">
-                                                                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
-                                                                Play
-                                                            </button>
-                                                            <span x-show="!confirm"><button @click="loading = true; fetch('{{ route('admin.vocab.words.regenerate-audio', $vocab) }}', { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content }, body: JSON.stringify({ field: 'audio_en' }) }).then(r => r.json()).then(d => { url = d.url; loading = false; }).catch(() => { loading = false; })" class="inline-flex h-7 items-center px-2 rounded border border-amber-200 bg-white hover:bg-amber-50 text-[10px] font-medium text-amber-600 transition-all">Regenerate</button></span>
-                                                            <span x-show="!confirm"><button @click="confirm = true" class="inline-flex h-7 items-center px-2 rounded border border-red-200 bg-white hover:bg-red-50 text-[10px] font-medium text-red-400 transition-all">Delete</button></span>
-                                                            <span x-show="confirm" style="display:none" class="inline-flex items-center gap-0.5"><button @click="confirm = false" class="inline-flex h-7 items-center px-1.5 rounded border border-zinc-200 bg-white text-[10px] text-zinc-400 hover:text-zinc-700 transition-colors">Cancel</button><button @click="fetch('{{ route('admin.vocab.words.delete-audio', $vocab) }}', { method: 'DELETE', headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content }, body: JSON.stringify({ field: 'audio_en' }) }).then(() => { url = null; gone = true; })" class="inline-flex h-7 items-center px-2 rounded border border-red-400 bg-red-50 text-[10px] font-medium text-red-600 hover:bg-red-100 transition-colors">Yes, delete</button></span>
-                                                            <audio x-ref="newPlayerWordEn" class="hidden"><source :src="url"></audio>
-                                                        </div>
-                                                    </template>
-                                                </div>
-                                            @else
-                                                <div x-data="{ loading: false, url: null, confirm: false }" onclick="event.stopPropagation()">
-                                                    <template x-if="!url && !loading">
-                                                        <button @click="loading = true; fetch('{{ route('admin.vocab.words.generate-audio', $vocab) }}', { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content }, body: JSON.stringify({ field: 'audio_en' }) }).then(r => r.json()).then(d => { url = d.url; loading = false; }).catch(() => { loading = false; })" class="inline-flex h-7 items-center px-2 rounded border border-zinc-200 bg-white hover:bg-zinc-50 text-[10px] font-medium text-zinc-500 hover:text-zinc-800 transition-colors">Generate</button>
-                                                    </template>
-                                                    <template x-if="loading">
-                                                        <span class="text-[10px] text-zinc-400">Generating...</span>
-                                                    </template>
-                                                    <template x-if="url">
-                                                        <div class="inline-flex items-center gap-1">
-                                                            <button @click="$refs.playerWordEn.play()" class="inline-flex h-8 items-center gap-1.5 px-3 rounded-md border border-blue-200 bg-white hover:bg-blue-50 text-xs font-medium text-blue-600 transition-colors">
-                                                                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
-                                                                Play
-                                                            </button>
-                                                            <span x-show="!confirm"><button @click="loading = true; fetch('{{ route('admin.vocab.words.regenerate-audio', $vocab) }}', { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content }, body: JSON.stringify({ field: 'audio_en' }) }).then(r => r.json()).then(d => { url = d.url; loading = false; }).catch(() => { loading = false; })" class="inline-flex h-7 items-center px-2 rounded border border-amber-200 bg-white hover:bg-amber-50 text-[10px] font-medium text-amber-600 transition-all">Regenerate</button></span>
-                                                            <span x-show="!confirm"><button @click="confirm = true" class="inline-flex h-7 items-center px-2 rounded border border-red-200 bg-white hover:bg-red-50 text-[10px] font-medium text-red-400 transition-all">Delete</button></span>
-                                                            <span x-show="confirm" style="display:none" class="inline-flex items-center gap-0.5"><button @click="confirm = false" class="inline-flex h-7 items-center px-1.5 rounded border border-zinc-200 bg-white text-[10px] text-zinc-400 hover:text-zinc-700 transition-colors">Cancel</button><button @click="fetch('{{ route('admin.vocab.words.delete-audio', $vocab) }}', { method: 'DELETE', headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content }, body: JSON.stringify({ field: 'audio_en' }) }).then(() => { url = null; })" class="inline-flex h-7 items-center px-2 rounded border border-red-400 bg-red-50 text-[10px] font-medium text-red-600 hover:bg-red-100 transition-colors">Yes, delete</button></span>
-                                                            <audio x-ref="playerWordEn" class="hidden"><source :src="url"></audio>
-                                                        </div>
-                                                    </template>
-                                                </div>
-                                            @endif
+                                            @include('admin.vocab.words._audio_cell', ['field' => 'audio_en'])
                                         </td>
                                     </tr>
                                     <tr class="border-b border-zinc-300">
@@ -215,61 +161,7 @@
                                     <tr class="border-b border-zinc-300">
                                         <td width="70%" nowrap><span class="text-purple-500">Jp: {{ $vocab->word_jp ?: '—' }}</span></td>
                                         <td width="30%">
-                                            @if($vocab->audio_jp)
-                                                <div x-data="{ gone: false, loading: false, url: null, confirm: false }" onclick="event.stopPropagation()">
-                                                    <audio id="audio-word-jp-{{ $vocab->id }}" class="hidden"><source src="{{ \Illuminate\Support\Facades\Storage::url($vocab->audio_jp) }}"></audio>
-                                                    <template x-if="!gone && !url">
-                                                        <div class="inline-flex items-center gap-1">
-                                                            <button class="inline-flex h-8 items-center gap-1.5 px-3 rounded-md border border-blue-200 bg-white hover:bg-blue-50 text-xs font-medium text-blue-600 transition-colors" onclick="document.getElementById('audio-word-jp-{{ $vocab->id }}').play()">
-                                                                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
-                                                                Play
-                                                            </button>
-                                                            <span x-show="!confirm"><button @click="loading = true; fetch('{{ route('admin.vocab.words.regenerate-audio', $vocab) }}', { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content }, body: JSON.stringify({ field: 'audio_jp' }) }).then(r => r.json()).then(d => { url = d.url; loading = false; }).catch(() => { loading = false; })" class="inline-flex h-7 items-center px-2 rounded border border-amber-200 bg-white hover:bg-amber-50 text-[10px] font-medium text-amber-600 transition-all">Regenerate</button></span>
-                                                            <span x-show="!confirm"><button @click="confirm = true" class="inline-flex h-7 items-center px-2 rounded border border-red-200 bg-white hover:bg-red-50 text-[10px] font-medium text-red-400 transition-all">Delete</button></span>
-                                                            <span x-show="confirm" style="display:none" class="inline-flex items-center gap-0.5"><button @click="confirm = false" class="inline-flex h-7 items-center px-1.5 rounded border border-zinc-200 bg-white text-[10px] text-zinc-400 hover:text-zinc-700 transition-colors">Cancel</button><button @click="fetch('{{ route('admin.vocab.words.delete-audio', $vocab) }}', { method: 'DELETE', headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content }, body: JSON.stringify({ field: 'audio_jp' }) }).then(() => gone = true)" class="inline-flex h-7 items-center px-2 rounded border border-red-400 bg-red-50 text-[10px] font-medium text-red-600 hover:bg-red-100 transition-colors">Yes, delete</button></span>
-                                                        </div>
-                                                    </template>
-                                                    <template x-if="gone && !loading && !url">
-                                                        <button @click="loading = true; fetch('{{ route('admin.vocab.words.generate-audio', $vocab) }}', { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content }, body: JSON.stringify({ field: 'audio_jp' }) }).then(r => r.json()).then(d => { url = d.url; loading = false; }).catch(() => { loading = false; })" class="inline-flex h-7 items-center px-2 rounded border border-zinc-200 bg-white hover:bg-zinc-50 text-[10px] font-medium text-zinc-500 hover:text-zinc-800 transition-colors">Generate</button>
-                                                    </template>
-                                                    <template x-if="loading">
-                                                        <span class="text-[10px] text-zinc-400">Generating...</span>
-                                                    </template>
-                                                    <template x-if="url">
-                                                        <div class="inline-flex items-center gap-1">
-                                                            <button @click="$refs.newPlayerWordJp.play()" class="inline-flex h-8 items-center gap-1.5 px-3 rounded-md border border-blue-200 bg-white hover:bg-blue-50 text-xs font-medium text-blue-600 transition-colors">
-                                                                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
-                                                                Play
-                                                            </button>
-                                                            <span x-show="!confirm"><button @click="loading = true; fetch('{{ route('admin.vocab.words.regenerate-audio', $vocab) }}', { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content }, body: JSON.stringify({ field: 'audio_jp' }) }).then(r => r.json()).then(d => { url = d.url; loading = false; }).catch(() => { loading = false; })" class="inline-flex h-7 items-center px-2 rounded border border-amber-200 bg-white hover:bg-amber-50 text-[10px] font-medium text-amber-600 transition-all">Regenerate</button></span>
-                                                            <span x-show="!confirm"><button @click="confirm = true" class="inline-flex h-7 items-center px-2 rounded border border-red-200 bg-white hover:bg-red-50 text-[10px] font-medium text-red-400 transition-all">Delete</button></span>
-                                                            <span x-show="confirm" style="display:none" class="inline-flex items-center gap-0.5"><button @click="confirm = false" class="inline-flex h-7 items-center px-1.5 rounded border border-zinc-200 bg-white text-[10px] text-zinc-400 hover:text-zinc-700 transition-colors">Cancel</button><button @click="fetch('{{ route('admin.vocab.words.delete-audio', $vocab) }}', { method: 'DELETE', headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content }, body: JSON.stringify({ field: 'audio_jp' }) }).then(() => { url = null; gone = true; })" class="inline-flex h-7 items-center px-2 rounded border border-red-400 bg-red-50 text-[10px] font-medium text-red-600 hover:bg-red-100 transition-colors">Yes, delete</button></span>
-                                                            <audio x-ref="newPlayerWordJp" class="hidden"><source :src="url"></audio>
-                                                        </div>
-                                                    </template>
-                                                </div>
-                                            @else
-                                                <div x-data="{ loading: false, url: null, confirm: false }" onclick="event.stopPropagation()">
-                                                    <template x-if="!url && !loading">
-                                                        <button @click="loading = true; fetch('{{ route('admin.vocab.words.generate-audio', $vocab) }}', { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content }, body: JSON.stringify({ field: 'audio_jp' }) }).then(r => r.json()).then(d => { url = d.url; loading = false; }).catch(() => { loading = false; })" class="inline-flex h-7 items-center px-2 rounded border border-zinc-200 bg-white hover:bg-zinc-50 text-[10px] font-medium text-zinc-500 hover:text-zinc-800 transition-colors">Generate</button>
-                                                    </template>
-                                                    <template x-if="loading">
-                                                        <span class="text-[10px] text-zinc-400">Generating...</span>
-                                                    </template>
-                                                    <template x-if="url">
-                                                        <div class="inline-flex items-center gap-1">
-                                                            <button @click="$refs.playerWordJp.play()" class="inline-flex h-8 items-center gap-1.5 px-3 rounded-md border border-blue-200 bg-white hover:bg-blue-50 text-xs font-medium text-blue-600 transition-colors">
-                                                                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
-                                                                Play
-                                                            </button>
-                                                            <span x-show="!confirm"><button @click="loading = true; fetch('{{ route('admin.vocab.words.regenerate-audio', $vocab) }}', { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content }, body: JSON.stringify({ field: 'audio_jp' }) }).then(r => r.json()).then(d => { url = d.url; loading = false; }).catch(() => { loading = false; })" class="inline-flex h-7 items-center px-2 rounded border border-amber-200 bg-white hover:bg-amber-50 text-[10px] font-medium text-amber-600 transition-all">Regenerate</button></span>
-                                                            <span x-show="!confirm"><button @click="confirm = true" class="inline-flex h-7 items-center px-2 rounded border border-red-200 bg-white hover:bg-red-50 text-[10px] font-medium text-red-400 transition-all">Delete</button></span>
-                                                            <span x-show="confirm" style="display:none" class="inline-flex items-center gap-0.5"><button @click="confirm = false" class="inline-flex h-7 items-center px-1.5 rounded border border-zinc-200 bg-white text-[10px] text-zinc-400 hover:text-zinc-700 transition-colors">Cancel</button><button @click="fetch('{{ route('admin.vocab.words.delete-audio', $vocab) }}', { method: 'DELETE', headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content }, body: JSON.stringify({ field: 'audio_jp' }) }).then(() => { url = null; })" class="inline-flex h-7 items-center px-2 rounded border border-red-400 bg-red-50 text-[10px] font-medium text-red-600 hover:bg-red-100 transition-colors">Yes, delete</button></span>
-                                                            <audio x-ref="playerWordJp" class="hidden"><source :src="url"></audio>
-                                                        </div>
-                                                    </template>
-                                                </div>
-                                            @endif
+                                            @include('admin.vocab.words._audio_cell', ['field' => 'audio_jp'])
                                         </td>
                                     </tr>
                                 </table>
@@ -279,61 +171,7 @@
                                     <tr class="border-b border-zinc-300">
                                         <td width="90%" nowrap><span class="text-blue-500">En: {{ $vocab->sentence_en ?: '—' }}</span></td>
                                         <td width="10%">
-                                            @if($vocab->sentence_audio_en)
-                                                <div x-data="{ gone: false, loading: false, url: null, confirm: false }" onclick="event.stopPropagation()">
-                                                    <audio id="audio-sent-en-{{ $vocab->id }}" class="hidden"><source src="{{ \Illuminate\Support\Facades\Storage::url($vocab->sentence_audio_en) }}"></audio>
-                                                    <template x-if="!gone && !url">
-                                                        <div class="inline-flex items-center gap-1">
-                                                            <button class="inline-flex h-8 items-center gap-1.5 px-3 rounded-md border border-blue-200 bg-white hover:bg-blue-50 text-xs font-medium text-blue-600 transition-colors" onclick="document.getElementById('audio-sent-en-{{ $vocab->id }}').play()">
-                                                                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
-                                                                Play
-                                                            </button>
-                                                            <span x-show="!confirm"><button @click="loading = true; fetch('{{ route('admin.vocab.words.regenerate-audio', $vocab) }}', { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content }, body: JSON.stringify({ field: 'sentence_audio_en' }) }).then(r => r.json()).then(d => { url = d.url; loading = false; }).catch(() => { loading = false; })" class="inline-flex h-7 items-center px-2 rounded border border-amber-200 bg-white hover:bg-amber-50 text-[10px] font-medium text-amber-600 transition-all">Regenerate</button></span>
-                                                            <span x-show="!confirm"><button @click="confirm = true" class="inline-flex h-7 items-center px-2 rounded border border-red-200 bg-white hover:bg-red-50 text-[10px] font-medium text-red-400 transition-all">Delete</button></span>
-                                                            <span x-show="confirm" style="display:none" class="inline-flex items-center gap-0.5"><button @click="confirm = false" class="inline-flex h-7 items-center px-1.5 rounded border border-zinc-200 bg-white text-[10px] text-zinc-400 hover:text-zinc-700 transition-colors">Cancel</button><button @click="fetch('{{ route('admin.vocab.words.delete-audio', $vocab) }}', { method: 'DELETE', headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content }, body: JSON.stringify({ field: 'sentence_audio_en' }) }).then(() => gone = true)" class="inline-flex h-7 items-center px-2 rounded border border-red-400 bg-red-50 text-[10px] font-medium text-red-600 hover:bg-red-100 transition-colors">Yes, delete</button></span>
-                                                        </div>
-                                                    </template>
-                                                    <template x-if="gone && !loading && !url">
-                                                        <button @click="loading = true; fetch('{{ route('admin.vocab.words.generate-audio', $vocab) }}', { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content }, body: JSON.stringify({ field: 'sentence_audio_en' }) }).then(r => r.json()).then(d => { url = d.url; loading = false; }).catch(() => { loading = false; })" class="inline-flex h-7 items-center px-2 rounded border border-zinc-200 bg-white hover:bg-zinc-50 text-[10px] font-medium text-zinc-500 hover:text-zinc-800 transition-colors">Generate</button>
-                                                    </template>
-                                                    <template x-if="loading">
-                                                        <span class="text-[10px] text-zinc-400">Generating...</span>
-                                                    </template>
-                                                    <template x-if="url">
-                                                        <div class="inline-flex items-center gap-1">
-                                                            <button @click="$refs.newPlayerSentEn.play()" class="inline-flex h-8 items-center gap-1.5 px-3 rounded-md border border-blue-200 bg-white hover:bg-blue-50 text-xs font-medium text-blue-600 transition-colors">
-                                                                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
-                                                                Play
-                                                            </button>
-                                                            <span x-show="!confirm"><button @click="loading = true; fetch('{{ route('admin.vocab.words.regenerate-audio', $vocab) }}', { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content }, body: JSON.stringify({ field: 'sentence_audio_en' }) }).then(r => r.json()).then(d => { url = d.url; loading = false; }).catch(() => { loading = false; })" class="inline-flex h-7 items-center px-2 rounded border border-amber-200 bg-white hover:bg-amber-50 text-[10px] font-medium text-amber-600 transition-all">Regenerate</button></span>
-                                                            <span x-show="!confirm"><button @click="confirm = true" class="inline-flex h-7 items-center px-2 rounded border border-red-200 bg-white hover:bg-red-50 text-[10px] font-medium text-red-400 transition-all">Delete</button></span>
-                                                            <span x-show="confirm" style="display:none" class="inline-flex items-center gap-0.5"><button @click="confirm = false" class="inline-flex h-7 items-center px-1.5 rounded border border-zinc-200 bg-white text-[10px] text-zinc-400 hover:text-zinc-700 transition-colors">Cancel</button><button @click="fetch('{{ route('admin.vocab.words.delete-audio', $vocab) }}', { method: 'DELETE', headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content }, body: JSON.stringify({ field: 'sentence_audio_en' }) }).then(() => { url = null; gone = true; })" class="inline-flex h-7 items-center px-2 rounded border border-red-400 bg-red-50 text-[10px] font-medium text-red-600 hover:bg-red-100 transition-colors">Yes, delete</button></span>
-                                                            <audio x-ref="newPlayerSentEn" class="hidden"><source :src="url"></audio>
-                                                        </div>
-                                                    </template>
-                                                </div>
-                                            @else
-                                                <div x-data="{ loading: false, url: null, confirm: false }" onclick="event.stopPropagation()">
-                                                    <template x-if="!url && !loading">
-                                                        <button @click="loading = true; fetch('{{ route('admin.vocab.words.generate-audio', $vocab) }}', { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content }, body: JSON.stringify({ field: 'sentence_audio_en' }) }).then(r => r.json()).then(d => { url = d.url; loading = false; }).catch(() => { loading = false; })" class="inline-flex h-7 items-center px-2 rounded border border-zinc-200 bg-white hover:bg-zinc-50 text-[10px] font-medium text-zinc-500 hover:text-zinc-800 transition-colors">Generate</button>
-                                                    </template>
-                                                    <template x-if="loading">
-                                                        <span class="text-[10px] text-zinc-400">Generating...</span>
-                                                    </template>
-                                                    <template x-if="url">
-                                                        <div class="inline-flex items-center gap-1">
-                                                            <button @click="$refs.playerSentEn.play()" class="inline-flex h-8 items-center gap-1.5 px-3 rounded-md border border-blue-200 bg-white hover:bg-blue-50 text-xs font-medium text-blue-600 transition-colors">
-                                                                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
-                                                                Play
-                                                            </button>
-                                                            <span x-show="!confirm"><button @click="loading = true; fetch('{{ route('admin.vocab.words.regenerate-audio', $vocab) }}', { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content }, body: JSON.stringify({ field: 'sentence_audio_en' }) }).then(r => r.json()).then(d => { url = d.url; loading = false; }).catch(() => { loading = false; })" class="inline-flex h-7 items-center px-2 rounded border border-amber-200 bg-white hover:bg-amber-50 text-[10px] font-medium text-amber-600 transition-all">Regenerate</button></span>
-                                                            <span x-show="!confirm"><button @click="confirm = true" class="inline-flex h-7 items-center px-2 rounded border border-red-200 bg-white hover:bg-red-50 text-[10px] font-medium text-red-400 transition-all">Delete</button></span>
-                                                            <span x-show="confirm" style="display:none" class="inline-flex items-center gap-0.5"><button @click="confirm = false" class="inline-flex h-7 items-center px-1.5 rounded border border-zinc-200 bg-white text-[10px] text-zinc-400 hover:text-zinc-700 transition-colors">Cancel</button><button @click="fetch('{{ route('admin.vocab.words.delete-audio', $vocab) }}', { method: 'DELETE', headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content }, body: JSON.stringify({ field: 'sentence_audio_en' }) }).then(() => { url = null; })" class="inline-flex h-7 items-center px-2 rounded border border-red-400 bg-red-50 text-[10px] font-medium text-red-600 hover:bg-red-100 transition-colors">Yes, delete</button></span>
-                                                            <audio x-ref="playerSentEn" class="hidden"><source :src="url"></audio>
-                                                        </div>
-                                                    </template>
-                                                </div>
-                                            @endif
+                                            @include('admin.vocab.words._audio_cell', ['field' => 'sentence_audio_en'])
                                         </td>
                                     </tr>
                                     <tr class="border-b border-zinc-300">
@@ -343,61 +181,7 @@
                                     <tr class="border-b border-zinc-300">
                                         <td width="90%" nowrap><span class="text-purple-500">Jp: {{ $vocab->sentence_jp ?: '—' }}</span></td>
                                         <td width="10%">
-                                            @if($vocab->sentence_audio_jp)
-                                                <div x-data="{ gone: false, loading: false, url: null, confirm: false }" onclick="event.stopPropagation()">
-                                                    <audio id="audio-sent-jp-{{ $vocab->id }}" class="hidden"><source src="{{ \Illuminate\Support\Facades\Storage::url($vocab->sentence_audio_jp) }}"></audio>
-                                                    <template x-if="!gone && !url">
-                                                        <div class="inline-flex items-center gap-1">
-                                                            <button class="inline-flex h-8 items-center gap-1.5 px-3 rounded-md border border-blue-200 bg-white hover:bg-blue-50 text-xs font-medium text-blue-600 transition-colors" onclick="document.getElementById('audio-sent-jp-{{ $vocab->id }}').play()">
-                                                                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
-                                                                Play
-                                                            </button>
-                                                            <span x-show="!confirm"><button @click="loading = true; fetch('{{ route('admin.vocab.words.regenerate-audio', $vocab) }}', { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content }, body: JSON.stringify({ field: 'sentence_audio_jp' }) }).then(r => r.json()).then(d => { url = d.url; loading = false; }).catch(() => { loading = false; })" class="inline-flex h-7 items-center px-2 rounded border border-amber-200 bg-white hover:bg-amber-50 text-[10px] font-medium text-amber-600 transition-all">Regenerate</button></span>
-                                                            <span x-show="!confirm"><button @click="confirm = true" class="inline-flex h-7 items-center px-2 rounded border border-red-200 bg-white hover:bg-red-50 text-[10px] font-medium text-red-400 transition-all">Delete</button></span>
-                                                            <span x-show="confirm" style="display:none" class="inline-flex items-center gap-0.5"><button @click="confirm = false" class="inline-flex h-7 items-center px-1.5 rounded border border-zinc-200 bg-white text-[10px] text-zinc-400 hover:text-zinc-700 transition-colors">Cancel</button><button @click="fetch('{{ route('admin.vocab.words.delete-audio', $vocab) }}', { method: 'DELETE', headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content }, body: JSON.stringify({ field: 'sentence_audio_jp' }) }).then(() => gone = true)" class="inline-flex h-7 items-center px-2 rounded border border-red-400 bg-red-50 text-[10px] font-medium text-red-600 hover:bg-red-100 transition-colors">Yes, delete</button></span>
-                                                        </div>
-                                                    </template>
-                                                    <template x-if="gone && !loading && !url">
-                                                        <button @click="loading = true; fetch('{{ route('admin.vocab.words.generate-audio', $vocab) }}', { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content }, body: JSON.stringify({ field: 'sentence_audio_jp' }) }).then(r => r.json()).then(d => { url = d.url; loading = false; }).catch(() => { loading = false; })" class="inline-flex h-7 items-center px-2 rounded border border-zinc-200 bg-white hover:bg-zinc-50 text-[10px] font-medium text-zinc-500 hover:text-zinc-800 transition-colors">Generate</button>
-                                                    </template>
-                                                    <template x-if="loading">
-                                                        <span class="text-[10px] text-zinc-400">Generating...</span>
-                                                    </template>
-                                                    <template x-if="url">
-                                                        <div class="inline-flex items-center gap-1">
-                                                            <button @click="$refs.newPlayerSentJp.play()" class="inline-flex h-8 items-center gap-1.5 px-3 rounded-md border border-blue-200 bg-white hover:bg-blue-50 text-xs font-medium text-blue-600 transition-colors">
-                                                                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
-                                                                Play
-                                                            </button>
-                                                            <span x-show="!confirm"><button @click="loading = true; fetch('{{ route('admin.vocab.words.regenerate-audio', $vocab) }}', { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content }, body: JSON.stringify({ field: 'sentence_audio_jp' }) }).then(r => r.json()).then(d => { url = d.url; loading = false; }).catch(() => { loading = false; })" class="inline-flex h-7 items-center px-2 rounded border border-amber-200 bg-white hover:bg-amber-50 text-[10px] font-medium text-amber-600 transition-all">Regenerate</button></span>
-                                                            <span x-show="!confirm"><button @click="confirm = true" class="inline-flex h-7 items-center px-2 rounded border border-red-200 bg-white hover:bg-red-50 text-[10px] font-medium text-red-400 transition-all">Delete</button></span>
-                                                            <span x-show="confirm" style="display:none" class="inline-flex items-center gap-0.5"><button @click="confirm = false" class="inline-flex h-7 items-center px-1.5 rounded border border-zinc-200 bg-white text-[10px] text-zinc-400 hover:text-zinc-700 transition-colors">Cancel</button><button @click="fetch('{{ route('admin.vocab.words.delete-audio', $vocab) }}', { method: 'DELETE', headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content }, body: JSON.stringify({ field: 'sentence_audio_jp' }) }).then(() => { url = null; gone = true; })" class="inline-flex h-7 items-center px-2 rounded border border-red-400 bg-red-50 text-[10px] font-medium text-red-600 hover:bg-red-100 transition-colors">Yes, delete</button></span>
-                                                            <audio x-ref="newPlayerSentJp" class="hidden"><source :src="url"></audio>
-                                                        </div>
-                                                    </template>
-                                                </div>
-                                            @else
-                                                <div x-data="{ loading: false, url: null, confirm: false }" onclick="event.stopPropagation()">
-                                                    <template x-if="!url && !loading">
-                                                        <button @click="loading = true; fetch('{{ route('admin.vocab.words.generate-audio', $vocab) }}', { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content }, body: JSON.stringify({ field: 'sentence_audio_jp' }) }).then(r => r.json()).then(d => { url = d.url; loading = false; }).catch(() => { loading = false; })" class="inline-flex h-7 items-center px-2 rounded border border-zinc-200 bg-white hover:bg-zinc-50 text-[10px] font-medium text-zinc-500 hover:text-zinc-800 transition-colors">Generate</button>
-                                                    </template>
-                                                    <template x-if="loading">
-                                                        <span class="text-[10px] text-zinc-400">Generating...</span>
-                                                    </template>
-                                                    <template x-if="url">
-                                                        <div class="inline-flex items-center gap-1">
-                                                            <button @click="$refs.playerSentJp.play()" class="inline-flex h-8 items-center gap-1.5 px-3 rounded-md border border-blue-200 bg-white hover:bg-blue-50 text-xs font-medium text-blue-600 transition-colors">
-                                                                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
-                                                                Play
-                                                            </button>
-                                                            <span x-show="!confirm"><button @click="loading = true; fetch('{{ route('admin.vocab.words.regenerate-audio', $vocab) }}', { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content }, body: JSON.stringify({ field: 'sentence_audio_jp' }) }).then(r => r.json()).then(d => { url = d.url; loading = false; }).catch(() => { loading = false; })" class="inline-flex h-7 items-center px-2 rounded border border-amber-200 bg-white hover:bg-amber-50 text-[10px] font-medium text-amber-600 transition-all">Regenerate</button></span>
-                                                            <span x-show="!confirm"><button @click="confirm = true" class="inline-flex h-7 items-center px-2 rounded border border-red-200 bg-white hover:bg-red-50 text-[10px] font-medium text-red-400 transition-all">Delete</button></span>
-                                                            <span x-show="confirm" style="display:none" class="inline-flex items-center gap-0.5"><button @click="confirm = false" class="inline-flex h-7 items-center px-1.5 rounded border border-zinc-200 bg-white text-[10px] text-zinc-400 hover:text-zinc-700 transition-colors">Cancel</button><button @click="fetch('{{ route('admin.vocab.words.delete-audio', $vocab) }}', { method: 'DELETE', headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content }, body: JSON.stringify({ field: 'sentence_audio_jp' }) }).then(() => { url = null; })" class="inline-flex h-7 items-center px-2 rounded border border-red-400 bg-red-50 text-[10px] font-medium text-red-600 hover:bg-red-100 transition-colors">Yes, delete</button></span>
-                                                            <audio x-ref="playerSentJp" class="hidden"><source :src="url"></audio>
-                                                        </div>
-                                                    </template>
-                                                </div>
-                                            @endif
+                                            @include('admin.vocab.words._audio_cell', ['field' => 'sentence_audio_jp'])
                                         </td>
                                     </tr>
                                 </table>

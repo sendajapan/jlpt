@@ -56,6 +56,15 @@ class VoiceController extends Controller
         return redirect()->route('admin.voices.index');
     }
 
+    public function toggleDefault(Voice $voice): RedirectResponse
+    {
+        $this->service->toggleDefault($voice);
+
+        notify()->success()->title($voice->is_default ? 'Default voice updated.' : 'Default voice cleared.')->send();
+
+        return back();
+    }
+
     public function destroy(Voice $voice): RedirectResponse
     {
         $this->deleteFile($voice->reference_path);
@@ -80,13 +89,11 @@ class VoiceController extends Controller
 
         return [
             'name'        => $validated['name'],
-            'voice_id'    => $validated['voice_id'] ?? null,
             'language'    => $validated['language'] ?? null,
             'gender'      => $validated['gender'] ?? null,
             'description' => $validated['description'] ?? null,
             'settings'    => $settings,
             'is_default'  => $validated['is_default'] ?? false,
-            'sort_order'  => $validated['sort_order'],
         ];
     }
 }

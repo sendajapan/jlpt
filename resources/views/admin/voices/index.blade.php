@@ -42,9 +42,10 @@
                 <tr class="border-b border-zinc-100 bg-zinc-50/50">
                     <th class="w-10 px-3 py-2 text-center text-[10px] font-semibold uppercase tracking-wider text-zinc-400 border-r border-zinc-100">S/N</th>
                     <th class="px-4 py-2 text-left text-[10px] font-semibold uppercase tracking-wider text-zinc-400">Name</th>
-                    <th class="px-4 py-2 text-left text-[10px] font-semibold uppercase tracking-wider text-zinc-400">Voice ID</th>
                     <th class="px-4 py-2 text-left text-[10px] font-semibold uppercase tracking-wider text-zinc-400">Language</th>
                     <th class="px-4 py-2 text-left text-[10px] font-semibold uppercase tracking-wider text-zinc-400">Gender</th>
+                    <th class="px-4 py-2 text-left text-[10px] font-semibold uppercase tracking-wider text-zinc-400">Model</th>
+                    <th class="px-4 py-2 text-left text-[10px] font-semibold uppercase tracking-wider text-zinc-400">Settings</th>
                     <th class="px-4 py-2 text-left text-[10px] font-semibold uppercase tracking-wider text-zinc-400">Sample</th>
                     <th class="px-4 py-2 text-center text-[10px] font-semibold uppercase tracking-wider text-zinc-400">Default</th>
                     <th class="px-4 py-2 text-center text-[10px] font-semibold uppercase tracking-wider text-zinc-400 border-l border-zinc-100">Action</th>
@@ -56,10 +57,31 @@
                         <td class="w-10 px-3 py-2.5 text-center text-xs text-zinc-400 border-r border-zinc-100">
                             {{ ($voices->currentPage() - 1) * $voices->perPage() + $loop->iteration }}
                         </td>
-                        <td class="px-4 py-2.5 text-xs font-medium text-zinc-900">{{ $voice->name }}</td>
-                        <td class="px-4 py-2.5 text-xs text-zinc-600">{{ $voice->voice_id ?: '—' }}</td>
+                        <td class="px-4 py-2.5 text-xs font-medium text-zinc-900">
+                            {{ $voice->name }}
+                            @if($voice->description)
+                                <p class="mt-0.5 text-[10px] font-normal text-zinc-400 max-w-xs truncate" title="{{ $voice->description }}">{{ $voice->description }}</p>
+                            @endif
+                        </td>
                         <td class="px-4 py-2.5 text-xs text-zinc-600">{{ $voice->language ?: '—' }}</td>
-                        <td class="px-4 py-2.5 text-xs text-zinc-600">{{ $voice->gender ?: '—' }}</td>
+                        <td class="px-4 py-2.5 text-xs text-zinc-600">{{ $voice->gender ? ucfirst($voice->gender) : '—' }}</td>
+                        <td class="px-4 py-2.5 text-xs text-zinc-600">{{ $voice->settings['model'] ?? '—' }}</td>
+                        <td class="px-4 py-2.5">
+                            <div class="flex flex-wrap gap-1">
+                                @isset($voice->settings['exaggeration'])
+                                    <span class="inline-flex items-center px-1.5 py-0.5 rounded bg-sky-50 text-sky-700 text-[10px]" title="Exaggeration">E <strong class="ml-0.5">{{ $voice->settings['exaggeration'] }}</strong></span>
+                                @endisset
+                                @isset($voice->settings['cfg_weight'])
+                                    <span class="inline-flex items-center px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-700 text-[10px]" title="CFG Weight / Pace">C <strong class="ml-0.5">{{ $voice->settings['cfg_weight'] }}</strong></span>
+                                @endisset
+                                @isset($voice->settings['temperature'])
+                                    <span class="inline-flex items-center px-1.5 py-0.5 rounded bg-amber-50 text-amber-700 text-[10px]" title="Temperature">T <strong class="ml-0.5">{{ $voice->settings['temperature'] }}</strong></span>
+                                @endisset
+                                @isset($voice->settings['seed'])
+                                    <span class="inline-flex items-center px-1.5 py-0.5 rounded bg-rose-50 text-rose-700 text-[10px]" title="Seed">S <strong class="ml-0.5">{{ $voice->settings['seed'] }}</strong></span>
+                                @endisset
+                            </div>
+                        </td>
                         <td class="px-4 py-2.5 text-xs text-zinc-600">
                             @if($voice->reference_path)
                                 <audio controls class="h-7" style="height:28px">
@@ -70,11 +92,15 @@
                             @endif
                         </td>
                         <td class="px-4 py-2.5 text-center">
-                            @if($voice->is_default)
-                                <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wide bg-emerald-50 text-emerald-700 border border-emerald-200/80">Default</span>
-                            @else
-                                <span class="text-[10px] text-zinc-300">—</span>
-                            @endif
+                            <form method="POST" action="{{ route('admin.voices.toggle-default', $voice) }}" class="inline-flex">
+                                @csrf
+                                @method('PATCH')
+                                <button type="submit"
+                                        title="{{ $voice->is_default ? 'Click to unset default' : 'Set as default' }}"
+                                        class="relative inline-flex items-center h-5 w-9 rounded-full transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-emerald-500 {{ $voice->is_default ? 'bg-emerald-500' : 'bg-zinc-200' }}">
+                                    <span class="inline-block w-4 h-4 bg-white rounded-full shadow transform transition-transform duration-150 {{ $voice->is_default ? 'translate-x-4' : 'translate-x-0.5' }}"></span>
+                                </button>
+                            </form>
                         </td>
                         <td class="px-4 py-2.5 text-center border-l border-zinc-100">
                             <div class="flex items-center justify-center gap-0.5">
@@ -96,7 +122,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="8" class="px-4 py-10 text-center">
+                        <td colspan="9" class="px-4 py-10 text-center">
                             <p class="text-xs text-zinc-400">No voices found.</p>
                             <a href="{{ route('admin.voices.create') }}" class="mt-1 inline-flex text-xs text-zinc-900 underline underline-offset-2">Create the first one</a>
                         </td>

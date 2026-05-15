@@ -15,7 +15,6 @@ class StoreVoiceRequest extends FormRequest
     {
         return [
             'name'           => ['required', 'string', 'max:255'],
-            'voice_id'       => ['nullable', 'string', 'max:255'],
             'language'       => ['nullable', 'string', 'max:10'],
             'gender'         => ['nullable', 'in:male,female,neutral'],
             'description'    => ['nullable', 'string'],
@@ -25,7 +24,6 @@ class StoreVoiceRequest extends FormRequest
             'cfg_weight'     => ['nullable', 'numeric', 'min:0.2', 'max:1.0'],
             'temperature'    => ['nullable', 'numeric', 'min:0.05', 'max:5.0'],
             'seed'           => ['nullable', 'integer', 'min:0'],
-            'sort_order'     => ['required', 'integer', 'min:0', 'max:9999'],
             'is_default'     => ['boolean'],
         ];
     }

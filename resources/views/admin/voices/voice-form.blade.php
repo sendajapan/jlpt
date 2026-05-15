@@ -7,26 +7,16 @@
 
 <div class="p-5 space-y-4">
 
-    <div class="grid grid-cols-1 sm:grid-cols-1">
-        <div>
-            <label class="block text-xs font-medium text-zinc-700 mb-1.5">
-                Name<span class="text-zinc-400 ml-0.5">*</span>
-            </label>
-            <input type="text" name="name" value="{{ old('name', $voice->name) }}" placeholder="e.g. Test Voice"
-                   class="flex h-8 w-full rounded-md border {{ $errors->has('name') ? 'border-red-400 focus:ring-red-400' : 'border-zinc-200' }} bg-white px-3 text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900">
-            @error('name') <p class="mt-1 text-[10px] text-red-500">{{ $message }}</p> @enderror
-        </div>
-
-        <div class="hidden">
-            <label class="block text-xs font-medium text-zinc-700 mb-1.5">Voice ID</label>
-            <input type="text" name="voice_id" value="{{ old('voice_id', $voice->voice_id) }}"
-                   placeholder="optional slug or external id"
-                   class="flex h-8 w-full rounded-md border {{ $errors->has('voice_id') ? 'border-red-400 focus:ring-red-400' : 'border-zinc-200' }} bg-white px-3 text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900">
-            @error('voice_id') <p class="mt-1 text-[10px] text-red-500">{{ $message }}</p> @enderror
-        </div>
+    <div>
+        <label class="block text-xs font-medium text-zinc-700 mb-1.5">
+            Name<span class="text-zinc-400 ml-0.5">*</span>
+        </label>
+        <input type="text" name="name" value="{{ old('name', $voice->name) }}" placeholder="e.g. Test Voice"
+               class="flex h-8 w-full rounded-md border {{ $errors->has('name') ? 'border-red-400 focus:ring-red-400' : 'border-zinc-200' }} bg-white px-3 text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900">
+        @error('name') <p class="mt-1 text-[10px] text-red-500">{{ $message }}</p> @enderror
     </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
             <label class="block text-xs font-medium text-zinc-700 mb-1.5">Language</label>
             <select name="language"
@@ -51,16 +41,6 @@
                         value="{{ $g }}" {{ old('gender', $voice->gender) === $g ? 'selected' : '' }}>{{ ucfirst($g) }}</option>
                 @endforeach
             </select>
-        </div>
-
-        <div>
-            <label class="block text-xs font-medium text-zinc-700 mb-1.5">
-                Sort Order<span class="text-zinc-400 ml-0.5">*</span>
-            </label>
-            <input type="number" name="sort_order" value="{{ old('sort_order', $voice->sort_order ?? 99) }}" min="0"
-                   max="9999"
-                   class="flex h-8 w-full rounded-md border {{ $errors->has('sort_order') ? 'border-red-400 focus:ring-red-400' : 'border-zinc-200' }} bg-white px-3 text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-zinc-900">
-            @error('sort_order') <p class="mt-1 text-[10px] text-red-500">{{ $message }}</p> @enderror
         </div>
     </div>
 
@@ -103,7 +83,13 @@
                 <input type="number" step="0.05" min="0.25" max="2.0" name="exaggeration"
                        value="{{ old('exaggeration', $settings['exaggeration'] ?? 0.5) }}"
                        class="flex h-8 w-full rounded-md border border-zinc-200 bg-white px-3 text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-zinc-900">
-                <p class="mt-1 text-[10px] text-zinc-400">Control the emotional intensity and expressiveness of the generated speech. Higher values produce more dramatic, animated voices while lower values create calmer, more subdued speech.</p>
+                <p class="mt-1 text-[10px] text-zinc-400 leading-5">Control the emotional intensity and expressiveness of the generated speech. Higher values produce more dramatic, animated voices while lower values create calmer, more subdued speech.</p>
+                <div class="mt-1.5 flex flex-wrap gap-1">
+                    <span class="inline-block px-1.5 py-0.5 rounded bg-sky-50 text-sky-700 text-[10px]"><strong>0.3</strong> subtle, understated calm delivery</span>
+                    <span class="inline-block px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-700 text-[10px]"><strong>0.5</strong> neutral, balanced and natural</span>
+                    <span class="inline-block px-1.5 py-0.5 rounded bg-amber-50 text-amber-700 text-[10px]"><strong>0.7</strong> expressive, more animated and emotional</span>
+                    <span class="inline-block px-1.5 py-0.5 rounded bg-rose-50 text-rose-700 text-[10px]"><strong>1.0</strong> dramatic, highly theatrical</span>
+                </div>
             </div>
 
             <div>
@@ -111,7 +97,12 @@
                 <input type="number" step="0.05" min="0.2" max="1.0" name="cfg_weight"
                        value="{{ old('cfg_weight', $settings['cfg_weight'] ?? 0.3) }}"
                        class="flex h-8 w-full rounded-md border border-zinc-200 bg-white px-3 text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-zinc-900">
-                <p class="mt-1 text-[10px] text-zinc-400">Adjust the rhythm and speed of speech delivery. CFG (Classifier-Free Guidance) weight controls how closely the model follows the text pacing. Lower values create slower, more deliberate speech while higher values speed up delivery. Lower = slower / more deliberate.</p>
+                <p class="mt-1 text-[10px] text-zinc-400 leading-5">Adjust the rhythm and speed of speech delivery. CFG (Classifier-Free Guidance) weight controls how closely the model follows the text pacing. Lower values create slower, more deliberate speech while higher values speed up delivery.</p>
+                <div class="mt-1.5 flex flex-wrap gap-1">
+                    <span class="inline-block px-1.5 py-0.5 rounded bg-sky-50 text-sky-700 text-[10px]"><strong>0.3</strong> slow, deliberate and measured pacing</span>
+                    <span class="inline-block px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-700 text-[10px]"><strong>0.5</strong> natural speaking speed</span>
+                    <span class="inline-block px-1.5 py-0.5 rounded bg-amber-50 text-amber-700 text-[10px]"><strong>0.7</strong> fast, quick and energetic delivery</span>
+                </div>
             </div>
 
             <div>
@@ -119,7 +110,12 @@
                 <input type="number" step="0.05" min="0.05" max="5.0" name="temperature"
                        value="{{ old('temperature', $settings['temperature'] ?? 0.8) }}"
                        class="flex h-8 w-full rounded-md border border-zinc-200 bg-white px-3 text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-zinc-900">
-                <p class="mt-1 text-[10px] text-zinc-400">Control the variability and creativity in speech generation. Temperature affects how predictable vs. varied the output is.</p>
+                <p class="mt-1 text-[10px] text-zinc-400 leading-5">Control the variability and creativity in speech generation. Temperature affects how predictable vs. varied the output is.</p>
+                <div class="mt-1.5 flex flex-wrap gap-1">
+                    <span class="inline-block px-1.5 py-0.5 rounded bg-sky-50 text-sky-700 text-[10px]"><strong>0.3</strong> deterministic, consistent and predictable output</span>
+                    <span class="inline-block px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-700 text-[10px]"><strong>0.8</strong> default, balanced natural variation</span>
+                    <span class="inline-block px-1.5 py-0.5 rounded bg-amber-50 text-amber-700 text-[10px]"><strong>1.2</strong> creative, more varied and spontaneous speech</span>
+                </div>
             </div>
 
             <div>
@@ -127,7 +123,11 @@
                 <input type="number" step="1" min="0" name="seed"
                        value="{{ old('seed', $settings['seed'] ?? 0) }}"
                        class="flex h-8 w-full rounded-md border border-zinc-200 bg-white px-3 text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-zinc-900">
-                <p class="mt-1 text-[10px] text-zinc-400">Control the variability and creativity in speech generation. Temperature affects how predictable vs. varied the output is. Seeds allow you to reproduce exact results. Use 0 for random each time.</p>
+                <p class="mt-1 text-[10px] text-zinc-400 leading-5">Seed for reproducibility — reuse the same seed to get identical audio for the same input.</p>
+                <div class="mt-1.5 flex flex-wrap gap-1">
+                    <span class="inline-block px-1.5 py-0.5 rounded bg-sky-50 text-sky-700 text-[10px]"><strong>0</strong> random each generation (default)</span>
+                    <span class="inline-block px-1.5 py-0.5 rounded bg-amber-50 text-amber-700 text-[10px]"><strong>42</strong> any positive integer locks the output so the same text always produces the same waveform</span>
+                </div>
             </div>
         </div>
     </div>

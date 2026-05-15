@@ -11,7 +11,6 @@ class VoiceService
     {
         return Voice::query()
             ->when($search, fn ($q) => $q->where('name', 'like', "%{$search}%")
-                ->orWhere('voice_id', 'like', "%{$search}%")
                 ->orWhere('language', 'like', "%{$search}%"))
             ->orderBy('sort_order')
             ->orderBy('name')
@@ -33,6 +32,19 @@ class VoiceService
             Voice::query()->where('id', '!=', $voice->id)->update(['is_default' => false]);
         }
         $voice->update($data);
+        return $voice;
+    }
+
+    public function toggleDefault(Voice $voice): Voice
+    {
+        if ($voice->is_default) {
+            $voice->update(['is_default' => false]);
+            return $voice;
+        }
+
+        Voice::query()->where('id', '!=', $voice->id)->update(['is_default' => false]);
+        $voice->update(['is_default' => true]);
+
         return $voice;
     }
 
