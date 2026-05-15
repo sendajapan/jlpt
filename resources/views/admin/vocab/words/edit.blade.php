@@ -195,17 +195,14 @@
                     </div>
                     @foreach($vocab_bg as $key=>$color)
 
-                    @php
-                        echo $color->vocab_bg_id;
-                    @endphp
-                        @if($color->vocab_bg_id==41)
+                        @if($color->vocab_bg_sort==41)
                         <div class="pl-3 border-l-2 border-blue-500">
-                            <span class="text-[9px] font-bold uppercase tracking-[0.18em] text-blue-500 block mb-2.5">Light</span>
+                            <span class="text-[9px] font-bold uppercase tracking-[0.18em] text-blue-500 block mb-2.5">Medium</span>
                         </div>
                         @endif
-                        @if($color->vocab_bg_id==81)
+                        @if($color->vocab_bg_sort==81)
                         <div class="pl-3 border-l-2 border-blue-500">
-                            <span class="text-[9px] font-bold uppercase tracking-[0.18em] text-blue-500 block mb-2.5">Light</span>
+                            <span class="text-[9px] font-bold uppercase tracking-[0.18em] text-blue-500 block mb-2.5">Dark</span>
                         </div>
                         @endif
 
