@@ -7,17 +7,17 @@
 
 <div class="p-5 space-y-4">
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div class="grid grid-cols-1 sm:grid-cols-1">
         <div>
             <label class="block text-xs font-medium text-zinc-700 mb-1.5">
                 Name<span class="text-zinc-400 ml-0.5">*</span>
             </label>
-            <input type="text" name="name" value="{{ old('name', $voice->name) }}" placeholder="e.g. David Attenborough"
+            <input type="text" name="name" value="{{ old('name', $voice->name) }}" placeholder="e.g. Test Voice"
                    class="flex h-8 w-full rounded-md border {{ $errors->has('name') ? 'border-red-400 focus:ring-red-400' : 'border-zinc-200' }} bg-white px-3 text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900">
             @error('name') <p class="mt-1 text-[10px] text-red-500">{{ $message }}</p> @enderror
         </div>
 
-        <div>
+        <div class="hidden">
             <label class="block text-xs font-medium text-zinc-700 mb-1.5">Voice ID</label>
             <input type="text" name="voice_id" value="{{ old('voice_id', $voice->voice_id) }}"
                    placeholder="optional slug or external id"
@@ -119,6 +119,7 @@
                 <input type="number" step="0.05" min="0.05" max="5.0" name="temperature"
                        value="{{ old('temperature', $settings['temperature'] ?? 0.8) }}"
                        class="flex h-8 w-full rounded-md border border-zinc-200 bg-white px-3 text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-zinc-900">
+                <p class="mt-1 text-[10px] text-zinc-400">Control the variability and creativity in speech generation. Temperature affects how predictable vs. varied the output is.</p>
             </div>
 
             <div>
@@ -126,7 +127,7 @@
                 <input type="number" step="1" min="0" name="seed"
                        value="{{ old('seed', $settings['seed'] ?? 0) }}"
                        class="flex h-8 w-full rounded-md border border-zinc-200 bg-white px-3 text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-zinc-900">
-                <p class="mt-1 text-[10px] text-zinc-400">0 for random each time.</p>
+                <p class="mt-1 text-[10px] text-zinc-400">Control the variability and creativity in speech generation. Temperature affects how predictable vs. varied the output is. Seeds allow you to reproduce exact results. Use 0 for random each time.</p>
             </div>
         </div>
     </div>
