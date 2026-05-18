@@ -61,7 +61,7 @@ class VocabularyController extends Controller
         $categories    = $this->service->getAllCategories();
         $subcategories = $this->service->getAllSubcategories();
         $vocab_bg = $this->service->getAllVocabBg();
-        
+
         return view('admin.vocab.words.edit', compact('vocabulary', 'categories', 'subcategories', 'vocab_bg'));
     }
 
@@ -157,7 +157,8 @@ class VocabularyController extends Controller
         }
 
         $isJapanese = in_array($field, ['audio_jp', 'sentence_audio_jp']);
-        $voiceRef = $voice?->referenceAbsolutePath() ?? storage_path('app/voice-references/attenborough.wav');
+        $voiceRef = $voice?->referenceAbsolutePath();
+        // ?? storage_path('app/voice-references/attenborough.wav');
         $settings = $voice?->settings ?? [];
 
         $tts = \B7s\FluentVox\FluentVox::make()->text($text);
@@ -165,8 +166,11 @@ class VocabularyController extends Controller
             $tts = $tts->voiceFrom($voiceRef);
         }
         if (isset($settings['exaggeration'])) $tts = $tts->exaggeration((float) $settings['exaggeration']);
-        if (isset($settings['cfg_weight']))   $tts = $tts->cfgWeight((float) $settings['cfg_weight']);
-        else                                   $tts = $tts->slow();
+        //if (isset($settings['cfg_weight']))   $tts = $tts->cfgWeight((float) $settings['cfg_weight']);
+        //else
+
+        $tts = $tts->slow();
+
         if (isset($settings['temperature']))  $tts = $tts->temperature((float) $settings['temperature']);
         if (isset($settings['seed']))         $tts = $tts->seed((int) $settings['seed']);
 
