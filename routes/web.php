@@ -11,11 +11,6 @@ require __DIR__.'/auth.php';
 
 Route::redirect('/', '/admin/dashboard');
 
-Route::prefix('admin/vocab')->name('admin.vocab.')->group(function () {
-    Route::get('words/{vocabulary}/generate-audio', [VocabularyController::class, 'generateAudio'])->name('words.generate-audio');
-    Route::get('words/{vocabulary}/regenerate-audio', [VocabularyController::class, 'regenerateAudio'])->name('words.regenerate-audio');
-});
-
 Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
@@ -39,6 +34,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
         Route::patch('words/{vocabulary}/image', [VocabularyController::class, 'updateImage'])->name('words.update-image');
         Route::patch('words/{vocabulary}/toggle-approved', [VocabularyController::class, 'toggleApproved'])->name('words.toggle-approved');
         Route::delete('words/{vocabulary}/delete-audio', [VocabularyController::class, 'deleteAudio'])->name('words.delete-audio');
+        Route::get('words/{vocabulary}/generate-audio', [VocabularyController::class, 'generateAudio'])->name('words.generate-audio');
+        Route::get('words/{vocabulary}/regenerate-audio', [VocabularyController::class, 'regenerateAudio'])->name('words.regenerate-audio');
     });
 
     Route::patch('voices/{voice}/toggle-default', [VoiceController::class, 'toggleDefault'])->name('voices.toggle-default');
