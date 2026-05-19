@@ -80,6 +80,19 @@ class VocabularyService
             throw new \InvalidArgumentException('No text available for this field.');
         }
 
+        // Chatterbox is trained on sentences. Bare single words like "earmuffs" or
+        // "イヤーマフ" make the model think the utterance is unfinished, so it
+        // hallucinates an extra word at the end. Wrapping the word so it looks
+        // like a complete sentence (English: "word.", Japanese: "「word」。")
+        // gives the model a clear stop signal. Brackets/periods are not spoken.
+        $isSingleWord = in_array($field, ['audio_en', 'audio_jp']);
+        $isSingleWordJp = $field === 'audio_jp';
+
+        if ($isSingleWord) {
+            $clean = rtrim($text, " .。!?！？「」\"'");
+            $text = $isSingleWordJp ? "「{$clean}」。" : "{$clean}.";
+        }
+
         $voice = $voiceId ? Voice::find($voiceId) : Voice::default();
 
         if ($voice) {
@@ -100,14 +113,34 @@ class VocabularyService
             $tts = $tts->exaggeration((float) $settings['exaggeration']);
         }
 
-        if (isset($settings['cfg_weight'])) {
-            $tts = $tts->cfgWeight((float) $settings['cfg_weight']);
-        } else {
+        // ->slow() stretches generation time, which makes any trailing
+        // hallucination more audible. Skip it for single words.
+        if (! $isSingleWord && ! isset($settings['cfg_weight'])) {
             $tts = $tts->slow();
         }
 
-        if (isset($settings['temperature'])) {
-            $tts = $tts->temperature((float) $settings['temperature']);
+        // For single words the model needs a stricter leash so it sticks to
+        // the text. The "single_word_*" values on the voice config supply
+        // that stricter setting. If they are not set, fall back to the
+        // voice's base temperature/cfg_weight.
+        $temperature = isset($settings['temperature']) ? (float) $settings['temperature'] : null;
+        $cfgWeight = isset($settings['cfg_weight']) ? (float) $settings['cfg_weight'] : null;
+
+        if ($isSingleWord) {
+            if (isset($settings['single_word_temperature'])) {
+                $temperature = (float) $settings['single_word_temperature'];
+            }
+            if (isset($settings['single_word_cfg_weight'])) {
+                $cfgWeight = (float) $settings['single_word_cfg_weight'];
+            }
+        }
+
+        if ($temperature !== null) {
+            $tts = $tts->temperature($temperature);
+        }
+
+        if ($cfgWeight !== null) {
+            $tts = $tts->cfgWeight($cfgWeight);
         }
 
         if (isset($settings['seed'])) {
@@ -129,10 +162,20 @@ class VocabularyService
         }
 
         $result = $tts->generate();
-        $storagePath = 'vocab/words/audio/' . Str::uuid() . '.wav';
 
-        Storage::disk('public')->put($storagePath, file_get_contents($result->getPath()));
+        // Chatterbox always pads its output to a minimum length. When the
+        // spoken word ends earlier than that, the model fills the rest with
+        // low-level noise / instrumental-sounding garbage. Trim it off before
+        // saving, unless the voice config explicitly disables trimming.
+        $wavBytes = file_get_contents($result->getPath());
         @unlink($result->getPath());
+
+        if (($settings['trim_trailing_noise'] ?? true)) {
+            $wavBytes = $this->trimTrailingNoise($wavBytes);
+        }
+
+        $storagePath = 'vocab/words/audio/' . Str::uuid() . '.wav';
+        Storage::disk('public')->put($storagePath, $wavBytes);
 
         if ($vocabulary->$field) {
             Storage::disk('public')->delete($vocabulary->$field);
@@ -141,5 +184,128 @@ class VocabularyService
         $vocabulary->update([$field => $storagePath]);
 
         return $storagePath;
+    }
+
+    // Cuts the silent/noisy padding the TTS engine leaves at the end of a clip.
+    //
+    // How it works:
+    //   1. Parse the WAV header to find the audio samples. Supports both 16-bit
+    //      PCM and 32-bit float (Chatterbox writes float32).
+    //   2. Scan samples from the END of the file backward, looking for the last
+    //      point where the audio is actually loud enough to be speech (above the
+    //      noise threshold) and stays loud for a short window (so a single click
+    //      is not mistaken for the end of the word).
+    //   3. Keep a small "tail" after that point so the natural release of the
+    //      voice is not clipped, then apply a brief fade-out so the cut does not
+    //      cause an audible pop.
+    //   4. Rewrite the WAV with the shortened data and corrected size fields.
+    //
+    // Knobs if results need tuning:
+    //   $threshold  -> raise to cut more aggressively, lower to keep more audio
+    //   $tailMs     -> extra silence kept after the last detected speech sample
+    //   $fadeMs     -> length of the fade-out applied at the very end
+    private function trimTrailingNoise(string $wav): string
+    {
+        if (strlen($wav) < 44 || substr($wav, 0, 4) !== 'RIFF' || substr($wav, 8, 4) !== 'WAVE') {
+            return $wav;
+        }
+
+        $offset = 12;
+        $sampleRate = 24000;
+        $channels = 1;
+        $bitsPerSample = 16;
+        $audioFormat = 1;
+        $dataOffset = null;
+        $dataSize = null;
+
+        while ($offset + 8 <= strlen($wav)) {
+            $chunkId = substr($wav, $offset, 4);
+            $chunkSize = unpack('V', substr($wav, $offset + 4, 4))[1];
+            if ($chunkId === 'fmt ') {
+                $audioFormat = unpack('v', substr($wav, $offset + 8, 2))[1];
+                $channels = unpack('v', substr($wav, $offset + 10, 2))[1];
+                $sampleRate = unpack('V', substr($wav, $offset + 12, 4))[1];
+                $bitsPerSample = unpack('v', substr($wav, $offset + 22, 2))[1];
+            } elseif ($chunkId === 'data') {
+                $dataOffset = $offset + 8;
+                $dataSize = $chunkSize;
+                break;
+            }
+            $offset += 8 + $chunkSize + ($chunkSize % 2);
+        }
+
+        $isFloat32 = ($audioFormat === 3 && $bitsPerSample === 32);
+        $isPcm16 = ($audioFormat === 1 && $bitsPerSample === 16);
+
+        if ($dataOffset === null || (! $isFloat32 && ! $isPcm16)) {
+            return $wav;
+        }
+
+        $bytesPerSample = ($bitsPerSample / 8) * $channels;
+        $totalSamples = intdiv($dataSize, $bytesPerSample);
+        $pcm = substr($wav, $dataOffset, $dataSize);
+
+        $readSample = $isFloat32
+            ? fn (int $i) => unpack('g', substr($pcm, $i * $bytesPerSample, 4))[1]
+            : fn (int $i) => unpack('s', substr($pcm, $i * $bytesPerSample, 2))[1] / 32768.0;
+
+        $threshold = 0.018;
+        $windowMs = 30;
+        $windowSize = max(1, (int) ($sampleRate * $windowMs / 1000));
+        $requiredHits = max(1, (int) ($windowSize * 0.2));
+
+        $lastVoiced = -1;
+        for ($i = $totalSamples - 1; $i >= 0; $i--) {
+            if (abs($readSample($i)) >= $threshold) {
+                $hits = 1;
+                $from = max(0, $i - $windowSize + 1);
+                for ($j = $i - 1; $j >= $from; $j--) {
+                    if (abs($readSample($j)) >= $threshold) {
+                        $hits++;
+                    }
+                    if ($hits >= $requiredHits) {
+                        break;
+                    }
+                }
+                if ($hits >= $requiredHits) {
+                    $lastVoiced = $i;
+                    break;
+                }
+            }
+        }
+
+        if ($lastVoiced < 0) {
+            return $wav;
+        }
+
+        $tailMs = 120;
+        $tailSamples = (int) ($sampleRate * $tailMs / 1000);
+        $keepSamples = min($totalSamples, $lastVoiced + 1 + $tailSamples);
+        $fadeMs = 40;
+        $fadeSamples = min($tailSamples, (int) ($sampleRate * $fadeMs / 1000));
+
+        $newPcm = substr($pcm, 0, $keepSamples * $bytesPerSample);
+
+        if ($fadeSamples > 0 && $keepSamples >= $fadeSamples) {
+            $fadeStart = $keepSamples - $fadeSamples;
+            for ($i = 0; $i < $fadeSamples; $i++) {
+                $idx = ($fadeStart + $i) * $bytesPerSample;
+                $gain = 1 - ($i / $fadeSamples);
+                if ($isFloat32) {
+                    $sample = unpack('g', substr($newPcm, $idx, 4))[1];
+                    $newPcm = substr_replace($newPcm, pack('g', $sample * $gain), $idx, 4);
+                } else {
+                    $sample = unpack('s', substr($newPcm, $idx, 2))[1];
+                    $newPcm = substr_replace($newPcm, pack('s', (int) ($sample * $gain)), $idx, 2);
+                }
+            }
+        }
+
+        $newDataSize = strlen($newPcm);
+        $header = substr($wav, 0, $dataOffset - 8);
+        $rebuilt = $header . 'data' . pack('V', $newDataSize) . $newPcm;
+        $rebuilt = substr_replace($rebuilt, pack('V', strlen($rebuilt) - 8), 4, 4);
+
+        return $rebuilt;
     }
 }

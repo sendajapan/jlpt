@@ -23,6 +23,9 @@ class StoreVoiceRequest extends FormRequest
             'exaggeration'   => ['nullable', 'numeric', 'min:0.25', 'max:2.0'],
             'cfg_weight'     => ['nullable', 'numeric', 'min:0.2', 'max:1.0'],
             'temperature'    => ['nullable', 'numeric', 'min:0.05', 'max:5.0'],
+            'single_word_cfg_weight'  => ['nullable', 'numeric', 'min:0.2', 'max:1.0'],
+            'single_word_temperature' => ['nullable', 'numeric', 'min:0.05', 'max:5.0'],
+            'trim_trailing_noise'     => ['boolean'],
             'seed'           => ['nullable', 'integer', 'min:0'],
             'is_default'     => ['boolean'],
         ];
@@ -30,6 +33,9 @@ class StoreVoiceRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
-        $this->merge(['is_default' => $this->boolean('is_default')]);
+        $this->merge([
+            'is_default'          => $this->boolean('is_default'),
+            'trim_trailing_noise' => $this->boolean('trim_trailing_noise'),
+        ]);
     }
 }

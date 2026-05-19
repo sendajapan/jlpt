@@ -80,11 +80,14 @@ class VoiceController extends Controller
         $validated = $request->validated();
 
         $settings = array_filter([
-            'model'        => $request->input('model'),
-            'exaggeration' => $request->filled('exaggeration') ? (float) $request->input('exaggeration') : null,
-            'cfg_weight'   => $request->filled('cfg_weight') ? (float) $request->input('cfg_weight') : null,
-            'temperature'  => $request->filled('temperature') ? (float) $request->input('temperature') : null,
-            'seed'         => $request->filled('seed') ? (int) $request->input('seed') : null,
+            'model'                   => $request->input('model'),
+            'exaggeration'            => $request->filled('exaggeration') ? (float) $request->input('exaggeration') : null,
+            'cfg_weight'              => $request->filled('cfg_weight') ? (float) $request->input('cfg_weight') : null,
+            'temperature'             => $request->filled('temperature') ? (float) $request->input('temperature') : null,
+            'single_word_cfg_weight'  => $request->filled('single_word_cfg_weight') ? (float) $request->input('single_word_cfg_weight') : null,
+            'single_word_temperature' => $request->filled('single_word_temperature') ? (float) $request->input('single_word_temperature') : null,
+            'trim_trailing_noise'     => $request->boolean('trim_trailing_noise'),
+            'seed'                    => $request->filled('seed') ? (int) $request->input('seed') : null,
         ], fn ($v) => $v !== null && $v !== '');
 
         return [
