@@ -69,7 +69,7 @@ class VocabularyService
     {
         $textMap = [
             'audio_en' => $vocabulary->word_en,
-            'audio_jp' => $vocabulary->word_jp,
+            'audio_jp' => $vocabulary->word_romaji,
             'sentence_audio_en' => $vocabulary->sentence_en,
             'sentence_audio_jp' => $vocabulary->sentence_jp,
         ];
