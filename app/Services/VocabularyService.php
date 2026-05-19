@@ -71,7 +71,7 @@ class VocabularyService
             'audio_en' => $vocabulary->word_en,
             'audio_jp' => $vocabulary->word_romaji,
             'sentence_audio_en' => $vocabulary->sentence_en,
-            'sentence_audio_jp' => $vocabulary->sentence_jp,
+            'sentence_audio_jp' => $vocabulary->sentence_romaji,
         ];
 
         $text = $textMap[$field] ?? null;
