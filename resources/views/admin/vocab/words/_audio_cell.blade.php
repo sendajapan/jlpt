@@ -52,7 +52,7 @@
     </template>
 
     <template x-if="(!{{ $existing ? 'true' : 'false' }} || gone) && !loading && !url">
-        <div class="inline-flex items-center gap-1 flex-wrap">
+        <div class="inline-flex items-center gap-1">
             @include('admin.vocab.words._voice_select')
             <button @click="run('{{ $generateUrl }}')" class="inline-flex h-7 items-center px-2 rounded border border-zinc-200 bg-white hover:bg-zinc-50 text-[10px] font-medium text-zinc-500 hover:text-zinc-800 transition-colors">Generate</button>
         </div>
@@ -63,7 +63,7 @@
     </template>
 
     <template x-if="url">
-        <div class="inline-flex items-center gap-1 flex-wrap">
+        <div class="inline-flex items-center gap-1">
             <button @click="$refs.player.play()" class="inline-flex h-8 items-center gap-1.5 px-3 rounded-md border border-blue-200 bg-white hover:bg-blue-50 text-xs font-medium text-blue-600 transition-colors">
                 <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
                 Play
