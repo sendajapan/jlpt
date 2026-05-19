@@ -12,12 +12,13 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class VocabularyController extends Controller
 {
-    public function __construct(private VocabularyService $service) {}
+    public function __construct(private VocabularyService $service)
+    {
+    }
 
     public function index(Request $request): View
     {
@@ -33,7 +34,7 @@ class VocabularyController extends Controller
 
     public function create(): View
     {
-        $categories    = $this->service->getAllCategories();
+        $categories = $this->service->getAllCategories();
         $subcategories = $this->service->getAllSubcategories();
 
         return view('admin.vocab.words.create', compact('categories', 'subcategories'));
@@ -42,12 +43,12 @@ class VocabularyController extends Controller
     public function store(StoreVocabularyRequest $request): RedirectResponse
     {
         $data = $request->validated();
-        $data['audio_jp']              = $this->storeFile($request, 'audio_jp', 'vocab/words/audio');
-        $data['audio_en']              = $this->storeFile($request, 'audio_en', 'vocab/words/audio');
-        $data['sentence_audio_jp']     = $this->storeFile($request, 'sentence_audio_jp', 'vocab/words/audio');
-        $data['sentence_audio_en']     = $this->storeFile($request, 'sentence_audio_en', 'vocab/words/audio');
-        $data['image_path']            = $this->storeImage($request, 'image_path', 'vocab/words/images');
-        $data['image_thumbnail_path']  = $this->storeThumbnail($request->file('image_path'), 'vocab/words/thumbnails');
+        $data['audio_jp'] = $this->storeFile($request, 'audio_jp', 'vocab/words/audio');
+        $data['audio_en'] = $this->storeFile($request, 'audio_en', 'vocab/words/audio');
+        $data['sentence_audio_jp'] = $this->storeFile($request, 'sentence_audio_jp', 'vocab/words/audio');
+        $data['sentence_audio_en'] = $this->storeFile($request, 'sentence_audio_en', 'vocab/words/audio');
+        $data['image_path'] = $this->storeImage($request, 'image_path', 'vocab/words/images');
+        $data['image_thumbnail_path'] = $this->storeThumbnail($request->file('image_path'), 'vocab/words/thumbnails');
 
         $this->service->create($data);
 
@@ -58,7 +59,7 @@ class VocabularyController extends Controller
 
     public function edit(Vocabulary $vocabulary): View
     {
-        $categories    = $this->service->getAllCategories();
+        $categories = $this->service->getAllCategories();
         $subcategories = $this->service->getAllSubcategories();
         $vocab_bg = $this->service->getAllVocabBg();
 
@@ -67,15 +68,14 @@ class VocabularyController extends Controller
 
     public function update(UpdateVocabularyRequest $request, Vocabulary $vocabulary): RedirectResponse
     {
-
         $data = $request->validated();
-        $data['audio_jp']              = $this->replaceFile($request, 'audio_jp', 'vocab/words/audio', $vocabulary->audio_jp);
-        $data['audio_en']              = $this->replaceFile($request, 'audio_en', 'vocab/words/audio', $vocabulary->audio_en);
-        $data['sentence_audio_jp']     = $this->replaceFile($request, 'sentence_audio_jp', 'vocab/words/audio', $vocabulary->sentence_audio_jp);
-        $data['sentence_audio_en']     = $this->replaceFile($request, 'sentence_audio_en', 'vocab/words/audio', $vocabulary->sentence_audio_en);
-        $data['image_path']            = $this->replaceImage($request, 'image_path', 'vocab/words/images', $vocabulary->image_path);
-        $data['image_thumbnail_path']  = $this->replaceThumbnail($request->file('image_path'), 'vocab/words/thumbnails', $vocabulary->image_thumbnail_path);
-        $data['image_thumbnail_bg']  = $request->image_thumbnail_bg;
+        $data['audio_jp'] = $this->replaceFile($request, 'audio_jp', 'vocab/words/audio', $vocabulary->audio_jp);
+        $data['audio_en'] = $this->replaceFile($request, 'audio_en', 'vocab/words/audio', $vocabulary->audio_en);
+        $data['sentence_audio_jp'] = $this->replaceFile($request, 'sentence_audio_jp', 'vocab/words/audio', $vocabulary->sentence_audio_jp);
+        $data['sentence_audio_en'] = $this->replaceFile($request, 'sentence_audio_en', 'vocab/words/audio', $vocabulary->sentence_audio_en);
+        $data['image_path'] = $this->replaceImage($request, 'image_path', 'vocab/words/images', $vocabulary->image_path);
+        $data['image_thumbnail_path'] = $this->replaceThumbnail($request->file('image_path'), 'vocab/words/thumbnails', $vocabulary->image_thumbnail_path);
+        $data['image_thumbnail_bg'] = $request->image_thumbnail_bg;
 
         $this->service->update($vocabulary, $data);
 
@@ -86,7 +86,7 @@ class VocabularyController extends Controller
 
     public function reorder(Request $request): JsonResponse
     {
-        $ids           = $request->input('ids', []);
+        $ids = $request->input('ids', []);
         $subcategoryId = (int) $request->input('subcategory_id');
 
         foreach ($ids as $index => $id) {
@@ -100,7 +100,7 @@ class VocabularyController extends Controller
 
     public function toggleApproved(Vocabulary $vocabulary): RedirectResponse
     {
-        $vocabulary->update(['is_approved' => ! $vocabulary->is_approved]);
+        $vocabulary->update(['is_approved' => !$vocabulary->is_approved]);
 
         return back();
     }
@@ -111,7 +111,7 @@ class VocabularyController extends Controller
         $this->deleteFile($vocabulary->image_path);
         $this->deleteFile($vocabulary->image_thumbnail_path);
         $vocabulary->update([
-            'image_path'           => $this->saveImageFile($request->file('image_path'), 'vocab/words/images'),
+            'image_path' => $this->saveImageFile($request->file('image_path'), 'vocab/words/images'),
             'image_thumbnail_path' => $this->storeThumbnail($request->file('image_path'), 'vocab/words/thumbnails'),
         ]);
 
@@ -136,74 +136,24 @@ class VocabularyController extends Controller
             'field' => ['required', 'in:audio_en,audio_jp,sentence_audio_en,sentence_audio_jp'],
             'voice' => ['nullable', 'integer', 'exists:voices,id'],
         ]);
-        $field = $data['field'];
 
-        $textMap = [
-            'audio_en'          => $vocabulary->word_en,
-            'audio_jp'          => $vocabulary->word_jp,
-            'sentence_audio_en' => $vocabulary->sentence_en,
-            'sentence_audio_jp' => $vocabulary->sentence_jp,
-        ];
-
-        $text = $textMap[$field];
-
-        if (empty($text)) {
-            return response()->json(['error' => 'No text available.'], 422);
+        try {
+            $path = $this->service->generateAudio($vocabulary, $data['field'], $data['voice'] ?? null);
+        } catch (\InvalidArgumentException $e) {
+            return response()->json(['error' => $e->getMessage()], 422);
         }
 
-        $voice = ! empty($data['voice']) ? Voice::find($data['voice']) : Voice::default();
-        if ($voice) {
-            $vocabulary->update(['voice_id' => $voice->id]);
-        }
-
-        $isJapanese = in_array($field, ['audio_jp', 'sentence_audio_jp']);
-        $voiceRef = $voice?->referenceAbsolutePath();
-        // ?? storage_path('app/voice-references/attenborough.wav');
-        $settings = $voice?->settings ?? [];
-
-        $tts = \B7s\FluentVox\FluentVox::make()->text($text);
-        if (file_exists($voiceRef)) {
-            $tts = $tts->voiceFrom($voiceRef);
-        }
-        if (isset($settings['exaggeration'])) $tts = $tts->exaggeration((float) $settings['exaggeration']);
-        //if (isset($settings['cfg_weight']))   $tts = $tts->cfgWeight((float) $settings['cfg_weight']);
-        //else
-
-        $tts = $tts->slow();
-
-        if (isset($settings['temperature']))  $tts = $tts->temperature((float) $settings['temperature']);
-        if (isset($settings['seed']))         $tts = $tts->seed((int) $settings['seed']);
-
-        $model = $settings['model'] ?? null;
-        if ($isJapanese || $model === 'chatterbox-multilingual') {
-            $tts = $tts->multilingual();
-        } elseif ($model === 'chatterbox-turbo') {
-            $tts = $tts->turbo();
-        } elseif ($model === 'chatterbox') {
-            $tts = $tts->standard();
-        }
-        if ($isJapanese) {
-            $tts = $tts->japanese();
-        }
-
-        $result = $tts->generate();
-
-        $storagePath = 'vocab/words/audio/' . Str::uuid() . '.wav';
-        Storage::disk('public')->put($storagePath, file_get_contents($result->getPath()));
-        @unlink($result->getPath());
-
-        $this->deleteFile($vocabulary->$field);
-
-        $vocabulary->update([$field => $storagePath]);
-
-        return response()->json(['url' => Storage::disk('public')->url($storagePath)]);
+        return response()->json(['url' => Storage::disk('public')->url($path)]);
     }
 
     public function deleteAudio(Request $request, Vocabulary $vocabulary): JsonResponse
     {
-        $field = $request->validate(['field' => ['required', 'in:audio_en,audio_jp,sentence_audio_en,sentence_audio_jp']])['field'];
+        $validated = $request->validate(['field' => ['required', 'in:audio_en,audio_jp,sentence_audio_en,sentence_audio_jp']]);
+        $field = $validated['field'];
+
         $this->deleteFile($vocabulary->$field);
         $vocabulary->update([$field => null]);
+
         return response()->json(['ok' => true]);
     }
 
