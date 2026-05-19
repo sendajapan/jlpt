@@ -85,7 +85,7 @@ class VocabularyService
         // hallucinates an extra word at the end. Wrapping the word so it looks
         // like a complete sentence (English: "word.", Japanese: "「word」。")
         // gives the model a clear stop signal. Brackets/periods are not spoken.
-        $isSingleWord = in_array($field, ['audio_en', 'audio_jp']);
+        $isSingleWord = $field === 'audio_en';
         $isSingleWordJp = $field === 'audio_jp';
 
         if ($isSingleWord) {
