@@ -109,7 +109,7 @@ class SocialLoginService
             return $user;
         }
 
-        return AppUser::create([
+        $user = AppUser::create([
             'full_name' => $name,
             'email' => $email ?: $provider.'_'.$providerId.'@users.noreply',
             'avatar' => $avatar,
@@ -119,5 +119,7 @@ class SocialLoginService
             'native_language_code' => 'en',
             'learning_language_code' => 'ja',
         ]);
+
+        return $user->refresh();
     }
 }

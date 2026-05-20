@@ -37,7 +37,7 @@ Route::middleware('auth:app_users')->group(function () {
     Route::post('auth/email/verify-send', [EmailVerificationController::class, 'send']);
 
     Route::get('me', [ProfileController::class, 'show']);
-    Route::post('me', [ProfileController::class, 'update']);
+    Route::match(['post', 'patch'], 'me', [ProfileController::class, 'update']);
 
     Route::get('favorites', [FavoriteController::class, 'index']);
     Route::post('favorites/{vocabulary}', [FavoriteController::class, 'store']);

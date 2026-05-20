@@ -31,8 +31,17 @@ class AppUser extends Authenticatable implements MustVerifyEmail
         'facebook_id',
         'email_verified_at',
         'coins',
+        'bio',
+        'gender',
+        'birth_date',
         'native_language_code',
         'learning_language_code',
+        'proficiency_level',
+        'learning_goal',
+        'daily_goal_minutes',
+        'timezone',
+        'reminder_time',
+        'notifications_enabled',
     ];
 
     protected $hidden = [
@@ -48,6 +57,13 @@ class AppUser extends Authenticatable implements MustVerifyEmail
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'coins' => 'integer',
+            'birth_date' => 'date',
+            'last_streak_at' => 'datetime',
+            'last_seen_at' => 'datetime',
+            'last_lesson_at' => 'datetime',
+            'notifications_enabled' => 'boolean',
+            'is_verified' => 'boolean',
+            'is_banned' => 'boolean',
         ];
     }
 

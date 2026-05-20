@@ -20,6 +20,7 @@ class AppUserAuthService
             'learning_language_code' => 'ja',
         ]);
 
+        $user->refresh();
         $user->sendEmailVerificationNotification();
 
         return $user;

@@ -2,20 +2,19 @@
 
 namespace App\Http\Controllers\Api\V1\Auth;
 
+use App\Http\Controllers\Api\V1\Auth\Concerns\IssuesAuthResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\SocialLoginRequest;
-use App\Http\Resources\AppUserResource;
-use App\Services\AppUserAuthService;
 use App\Services\SocialLoginService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\ValidationException;
 
 class SocialLoginController extends Controller
 {
-    public function __construct(
-        private SocialLoginService $social,
-        private AppUserAuthService $auth,
-    ) {
+    use IssuesAuthResponse;
+
+    public function __construct(private SocialLoginService $social)
+    {
     }
 
     public function google(SocialLoginRequest $request): JsonResponse
@@ -26,7 +25,7 @@ class SocialLoginController extends Controller
 
         $user = $this->social->loginWithGoogle($request->string('id_token'));
 
-        return $this->respond($user, $request->string('device_name'));
+        return $this->authResponse($user, $request->string('device_name'));
     }
 
     public function facebook(SocialLoginRequest $request): JsonResponse
@@ -37,16 +36,6 @@ class SocialLoginController extends Controller
 
         $user = $this->social->loginWithFacebook($request->string('access_token'));
 
-        return $this->respond($user, $request->string('device_name'));
-    }
-
-    private function respond($user, string $deviceName): JsonResponse
-    {
-        $token = $this->auth->issueToken($user, $deviceName);
-
-        return response()->json([
-            'user' => new AppUserResource($user),
-            'token' => $token,
-        ]);
+        return $this->authResponse($user, $request->string('device_name'));
     }
 }
