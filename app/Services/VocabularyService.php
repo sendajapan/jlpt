@@ -104,8 +104,7 @@ class VocabularyService
         $settings = $voice?->settings ?? [];
 
 
-        $storagePath = 'vocab/words/audio/' . Str::uuid() . '.mp3';
-        $tts = FluentVox::make()->text($text)->convertToMp3($storagePath, bitrate: 192);;
+        $tts = FluentVox::make()->text($text);
 
         if ($voiceRef && file_exists($voiceRef)) {
             $tts = $tts->voiceFrom($voiceRef);
@@ -162,6 +161,9 @@ class VocabularyService
         if ($isJapanese) {
             $tts = $tts->japanese();
         }
+
+        $storagePath = 'vocab/words/audio/' . Str::uuid() . '.mp3';
+        $tts = $tts->convertTo($storagePath);
 
         $result = $tts->generate();
 
