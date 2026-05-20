@@ -103,7 +103,9 @@ class VocabularyService
         $voiceRef = $voice?->referenceAbsolutePath();
         $settings = $voice?->settings ?? [];
 
-        $tts = FluentVox::make()->text($text);
+
+        $storagePath = 'vocab/words/audio/' . Str::uuid() . '.mp3';
+        $tts = FluentVox::make()->text($text)->convertToMp3($storagePath, bitrate: 192);;
 
         if ($voiceRef && file_exists($voiceRef)) {
             $tts = $tts->voiceFrom($voiceRef);
@@ -174,7 +176,7 @@ class VocabularyService
             $wavBytes = $this->trimTrailingNoise($wavBytes);
         }
 
-        $storagePath = 'vocab/words/audio/' . Str::uuid() . '.wav';
+
         Storage::disk('public')->put($storagePath, $wavBytes);
 
         if ($vocabulary->$field) {
