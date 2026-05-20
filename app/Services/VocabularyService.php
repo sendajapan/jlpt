@@ -172,7 +172,6 @@ class VocabularyService
 
         $storagePath = 'vocab/words/audio/' . Str::uuid() . '.wav';
 
-        $tts->convertAudio($storagePath, str_replace(".wav", ".mp3", $storagePath), 'mp3', ['bitrate' => 192]);
 
         @unlink($storagePath);
 
@@ -181,6 +180,10 @@ class VocabularyService
         }
 
         Storage::disk('public')->put($storagePath, $wavBytes);
+
+
+        $tts->convertAudio($storagePath, str_replace(".wav", ".mp3", $storagePath), 'mp3', ['bitrate' => 192]);
+
 
         if ($vocabulary->$field) {
             Storage::disk('public')->delete($vocabulary->$field);
