@@ -64,6 +64,12 @@
                         'label'   => 'Voices',
                         'icon'    => '<path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 01-14 0m7 7v4m-4 0h8m-4-8a3 3 0 003-3V5a3 3 0 00-6 0v6a3 3 0 003 3z"/>',
                     ],
+                    [
+                        'route'   => 'admin.audio-automation.index',
+                        'pattern' => 'admin.audio-automation.*',
+                        'label'   => 'Audio Automation',
+                        'icon'    => '<path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>',
+                    ],
                 ];
             @endphp
 

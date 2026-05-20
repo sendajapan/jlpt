@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AudioAutomationController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\VocabCategoryController;
 use App\Http\Controllers\Admin\VocabSubcategoryController;
@@ -40,4 +41,11 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
 
     Route::patch('voices/{voice}/toggle-default', [VoiceController::class, 'toggleDefault'])->name('voices.toggle-default');
     Route::resource('voices', VoiceController::class)->except(['show']);
+
+    Route::prefix('audio-automation')->name('audio-automation.')->group(function () {
+        Route::get('/', [AudioAutomationController::class, 'index'])->name('index');
+        Route::post('/toggle', [AudioAutomationController::class, 'toggle'])->name('toggle');
+        Route::post('/run-now', [AudioAutomationController::class, 'runNow'])->name('run-now');
+        Route::delete('/failures/{failure}', [AudioAutomationController::class, 'resetFailure'])->name('failures.reset');
+    });
 });
