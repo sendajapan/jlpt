@@ -182,8 +182,14 @@ class VocabularyService
         Storage::disk('public')->put($storagePath, $wavBytes);
 
 
-        $tts->convertAudio($storagePath, str_replace(".wav", ".mp3", $storagePath), 'mp3', ['bitrate' => 192]);
-
+        $tts->convertAudio(
+            Storage::disk('public')->path($storagePath),
+            Storage::disk('public')->path(str_replace(".wav", ".mp3", $storagePath)),
+            'mp3',
+            [
+                'bitrate' => 192,
+            ]
+        );
 
         if ($vocabulary->$field) {
             Storage::disk('public')->delete($vocabulary->$field);
