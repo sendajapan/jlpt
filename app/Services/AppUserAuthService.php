@@ -15,7 +15,6 @@ class AppUserAuthService
             'username' => $data['display_name'] ?? null,
             'email' => $data['email'],
             'password' => $data['password'],
-            'login_provider' => 'email',
             'native_language_code' => 'en',
             'learning_language_code' => 'ja',
         ]);
