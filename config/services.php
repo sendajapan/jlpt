@@ -35,4 +35,18 @@ return [
         ],
     ],
 
+    'google' => [
+        'client_ids' => array_filter(explode(',', (string) env('GOOGLE_CLIENT_IDS', ''))),
+    ],
+
+    'facebook' => [
+        'app_id' => env('FACEBOOK_APP_ID'),
+        'app_secret' => env('FACEBOOK_APP_SECRET'),
+    ],
+
+    'app_rewards' => [
+        'coins_per_first_read' => (int) env('REWARD_COINS_PER_FIRST_READ', 1),
+        'coins_per_quiz_win' => (int) env('REWARD_COINS_PER_QUIZ_WIN', 10),
+    ],
+
 ];

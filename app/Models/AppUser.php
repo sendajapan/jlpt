@@ -1,0 +1,79 @@
+<?php
+
+namespace App\Models;
+
+use App\Notifications\AppUserResetPasswordNotification;
+use App\Notifications\AppUserVerifyEmailNotification;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
+
+class AppUser extends Authenticatable implements MustVerifyEmail
+{
+    use HasApiTokens;
+    use HasFactory;
+    use Notifiable;
+
+    protected $table = 'app_users';
+
+    protected $fillable = [
+        'full_name',
+        'username',
+        'email',
+        'password',
+        'avatar',
+        'login_provider',
+        'google_id',
+        'facebook_id',
+        'email_verified_at',
+        'coins',
+        'native_language_code',
+        'learning_language_code',
+    ];
+
+    protected $hidden = [
+        'password',
+        'remember_token',
+        'google_id',
+        'facebook_id',
+    ];
+
+    protected function casts(): array
+    {
+        return [
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
+            'coins' => 'integer',
+        ];
+    }
+
+    public function favorites(): BelongsToMany
+    {
+        return $this->belongsToMany(Vocabulary::class, 'app_user_favorites', 'app_user_id', 'vocab_id')
+            ->withTimestamps();
+    }
+
+    public function reads(): HasMany
+    {
+        return $this->hasMany(AppUserWordRead::class);
+    }
+
+    public function coinTransactions(): HasMany
+    {
+        return $this->hasMany(CoinTransaction::class);
+    }
+
+    public function sendPasswordResetNotification($token): void
+    {
+        $this->notify(new AppUserResetPasswordNotification($token));
+    }
+
+    public function sendEmailVerificationNotification(): void
+    {
+        $this->notify(new AppUserVerifyEmailNotification());
+    }
+}

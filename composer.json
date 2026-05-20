@@ -13,6 +13,7 @@
         "b7s/fluentvox": "*",
         "intervention/image-laravel": "*",
         "laravel/framework": "^13.0",
+        "laravel/sanctum": "*",
         "laravel/tinker": "^3.0",
         "mckenziearts/laravel-notify": "^3.2"
     },
