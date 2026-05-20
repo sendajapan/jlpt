@@ -155,7 +155,7 @@
     @endif
 </div>
 
-<div class="mt-4 p-3 rounded-md bg-blue-50 border border-blue-100 text-[11px] text-blue-900">
+<div class="mt-4 p-3 rounded-md bg-blue-50 border border-blue-100 text-[11px] text-blue-900 hidden">
     <p class="font-semibold mb-1">Setup notes</p>
     <p>1. Add to crontab: <code class="bg-white px-1 py-0.5 rounded">* * * * * cd {{ base_path() }} && php artisan schedule:run >> /dev/null 2>&1</code></p>
     <p>2. Run a queue worker: <code class="bg-white px-1 py-0.5 rounded">php artisan queue:work --queue=default --sleep=3 --tries=1</code> (use Supervisor in production).</p>
