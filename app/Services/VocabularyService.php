@@ -163,9 +163,16 @@ class VocabularyService
         }
 
         $storagePath = 'vocab/words/audio/' . Str::uuid() . '.mp3';
-        $tts = $tts->convertTo($storagePath);
 
-        $result = $tts->generate();
+        //$result = $tts->generate();
+
+
+        $result = $tts->convertTo($storagePath);
+
+
+
+
+
 
         // Chatterbox always pads its output to a minimum length. When the
         // spoken word ends earlier than that, the model fills the rest with
