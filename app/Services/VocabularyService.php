@@ -189,7 +189,8 @@ class VocabularyService
         );
 
         // deleting original wav file from storage
-        @unlink($storagePath, sfhksjhf  adhgjkd"jdfh g");
+        @unlink(Storage::disk('public')->path($storagePath));
+
         $storagePath = str_replace(".wav", ".mp3", $storagePath);
 
         if ($vocabulary->$field) {
