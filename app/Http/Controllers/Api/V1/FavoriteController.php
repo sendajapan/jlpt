@@ -7,6 +7,7 @@ use App\Models\Vocabulary;
 use App\Services\FavoriteService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use OpenApi\Attributes as OA;
 
 class FavoriteController extends Controller
 {
@@ -14,11 +15,29 @@ class FavoriteController extends Controller
     {
     }
 
+    #[OA\Get(
+        path: '/api/v1/favorites',
+        tags: ['Favorites'],
+        summary: "List the authenticated user's favorite vocab words (paginated)",
+        security: [['sanctum' => []]],
+        responses: [new OA\Response(response: 200, description: 'OK')]
+    )]
     public function index(Request $request): JsonResponse
     {
         return response()->json($this->favorites->list($request->user()));
     }
 
+    #[OA\Post(
+        path: '/api/v1/favorites/{vocabulary}',
+        tags: ['Favorites'],
+        summary: 'Add a vocab word to favorites',
+        security: [['sanctum' => []]],
+        parameters: [new OA\Parameter(name: 'vocabulary', in: 'path', required: true, schema: new OA\Schema(type: 'integer'))],
+        responses: [
+            new OA\Response(response: 201, description: 'Added'),
+            new OA\Response(response: 404, description: 'Vocab not found'),
+        ]
+    )]
     public function store(Request $request, Vocabulary $vocabulary): JsonResponse
     {
         $this->favorites->add($request->user(), $vocabulary);
@@ -26,6 +45,14 @@ class FavoriteController extends Controller
         return response()->json(['message' => 'Added to favorites.'], 201);
     }
 
+    #[OA\Delete(
+        path: '/api/v1/favorites/{vocabulary}',
+        tags: ['Favorites'],
+        summary: 'Remove a vocab word from favorites',
+        security: [['sanctum' => []]],
+        parameters: [new OA\Parameter(name: 'vocabulary', in: 'path', required: true, schema: new OA\Schema(type: 'integer'))],
+        responses: [new OA\Response(response: 200, description: 'Removed')]
+    )]
     public function destroy(Request $request, Vocabulary $vocabulary): JsonResponse
     {
         $this->favorites->remove($request->user(), $vocabulary);

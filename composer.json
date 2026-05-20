@@ -11,6 +11,7 @@
     "require": {
         "php": "^8.3",
         "b7s/fluentvox": "*",
+        "darkaonline/l5-swagger": "*",
         "intervention/image-laravel": "*",
         "laravel/framework": "^13.0",
         "laravel/sanctum": "*",

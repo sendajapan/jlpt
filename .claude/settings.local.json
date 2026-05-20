@@ -84,7 +84,8 @@
       "Bash(systemctl enable *)",
       "Bash(systemctl status *)",
       "Bash(journalctl -u jlpt-queue-worker -n 20 --no-pager)",
-      "Bash(journalctl -u jlpt-queue-worker --since \"2 minutes ago\" --no-pager)"
+      "Bash(journalctl -u jlpt-queue-worker --since \"2 minutes ago\" --no-pager)",
+      "Bash(python3 -c 'import json,sys; d=json.load\\(sys.stdin\\); print\\(\"paths:\", list\\(d.get\\(\"paths\",{}\\).keys\\(\\)\\)[:5], \"schemas:\", list\\(d.get\\(\"components\",{}\\).get\\(\"schemas\",{}\\).keys\\(\\)\\)\\)')"
     ]
   }
 }

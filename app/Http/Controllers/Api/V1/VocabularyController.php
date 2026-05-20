@@ -7,9 +7,21 @@ use App\Models\Vocabulary;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use OpenApi\Attributes as OA;
 
 class VocabularyController extends Controller
 {
+    #[OA\Get(
+        path: '/api/v1/vocabularies',
+        tags: ['Public'],
+        summary: 'List vocab words (optional search and filters)',
+        parameters: [
+            new OA\Parameter(name: 'search', in: 'query', required: false, schema: new OA\Schema(type: 'string')),
+            new OA\Parameter(name: 'category_id', in: 'query', required: false, schema: new OA\Schema(type: 'integer')),
+            new OA\Parameter(name: 'subcategory_id', in: 'query', required: false, schema: new OA\Schema(type: 'integer')),
+        ],
+        responses: [new OA\Response(response: 200, description: 'OK')]
+    )]
     public function index(Request $request): JsonResponse
     {
         $search = $request->string('search')->toString();

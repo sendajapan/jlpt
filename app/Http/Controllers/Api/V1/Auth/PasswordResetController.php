@@ -8,9 +8,26 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Validation\Rules\Password as PasswordRule;
 use Illuminate\Validation\ValidationException;
+use OpenApi\Attributes as OA;
 
 class PasswordResetController extends Controller
 {
+    #[OA\Post(
+        path: '/api/v1/auth/forgot-password',
+        tags: ['Auth'],
+        summary: 'Email a password reset link',
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\JsonContent(
+                required: ['email'],
+                properties: [new OA\Property(property: 'email', type: 'string', format: 'email')]
+            )
+        ),
+        responses: [
+            new OA\Response(response: 200, description: 'Reset link sent'),
+            new OA\Response(response: 422, description: 'Validation error'),
+        ]
+    )]
     public function forgot(Request $request): JsonResponse
     {
         $request->validate(['email' => ['required', 'email']]);
@@ -24,6 +41,27 @@ class PasswordResetController extends Controller
         return response()->json(['message' => __($status)]);
     }
 
+    #[OA\Post(
+        path: '/api/v1/auth/reset-password',
+        tags: ['Auth'],
+        summary: 'Reset password using the emailed token',
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\JsonContent(
+                required: ['token', 'email', 'password', 'password_confirmation'],
+                properties: [
+                    new OA\Property(property: 'token', type: 'string'),
+                    new OA\Property(property: 'email', type: 'string', format: 'email'),
+                    new OA\Property(property: 'password', type: 'string', format: 'password', minLength: 8),
+                    new OA\Property(property: 'password_confirmation', type: 'string', format: 'password'),
+                ]
+            )
+        ),
+        responses: [
+            new OA\Response(response: 200, description: 'Password reset'),
+            new OA\Response(response: 422, description: 'Invalid token or password'),
+        ]
+    )]
     public function reset(Request $request): JsonResponse
     {
         $request->validate([

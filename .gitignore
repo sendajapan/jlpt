@@ -26,3 +26,4 @@ Homestead.yaml
 Thumbs.db
 fluentvox_*.wav
 .venv/
+storage/api-docs/

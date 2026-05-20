@@ -6,9 +6,16 @@ use App\Http\Controllers\Controller;
 use App\Models\VocabCategory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Storage;
+use OpenApi\Attributes as OA;
 
 class CategoryController extends Controller
 {
+    #[OA\Get(
+        path: '/api/v1/categories',
+        tags: ['Public'],
+        summary: 'List all vocab categories',
+        responses: [new OA\Response(response: 200, description: 'OK')]
+    )]
     public function index(): JsonResponse
     {
         $categories = VocabCategory::query()

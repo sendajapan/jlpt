@@ -7,9 +7,17 @@ use App\Models\VocabSubcategory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use OpenApi\Attributes as OA;
 
 class SubcategoryController extends Controller
 {
+    #[OA\Get(
+        path: '/api/v1/subcategories',
+        tags: ['Public'],
+        summary: 'List subcategories (optionally filtered by category_id)',
+        parameters: [new OA\Parameter(name: 'category_id', in: 'query', required: false, schema: new OA\Schema(type: 'integer'))],
+        responses: [new OA\Response(response: 200, description: 'OK')]
+    )]
     public function index(Request $request): JsonResponse
     {
         $subcategories = VocabSubcategory::query()
