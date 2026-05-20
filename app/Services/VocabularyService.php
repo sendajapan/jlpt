@@ -187,7 +187,25 @@ class VocabularyService
             Storage::disk('public')->path(str_replace(".wav", ".mp3", $storagePath)),
             'mp3',
             [
-                'bitrate' => 192,
+                'bitrate' => 64,
+            ]
+        );
+
+        $tts->convertAudio(
+            Storage::disk('public')->path($storagePath),
+            Storage::disk('public')->path(str_replace(".wav", ".ogg", $storagePath)),
+            'ogg',
+            [
+                'quality' => 5,
+            ]
+        );
+
+        $tts->convertAudio(
+            Storage::disk('public')->path($storagePath),
+            Storage::disk('public')->path(str_replace(".wav", ".opus", $storagePath)),
+            'opus',
+            [
+                'bitrate' => 96,
             ]
         );
 
