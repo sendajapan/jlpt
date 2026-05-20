@@ -73,7 +73,18 @@
       "Bash(/var/www/html/jlpt-laravel-vue/bin/python-throttled.sh *)",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" \"http://localhost/admin/vocab/words/1/generate-audio?field=audio_en&voice=1\")",
       "Bash(curl *)",
-      "Bash(chown www-data:www-data storage/app/fluentvox-tmp)"
+      "Bash(chown www-data:www-data storage/app/fluentvox-tmp)",
+      "Bash(crontab -l)",
+      "Read(//tmp/**)",
+      "Bash(crontab /tmp/new_cron.txt)",
+      "Bash(rm /tmp/current_cron.txt /tmp/new_cron.txt)",
+      "Bash(systemctl list-units *)",
+      "Bash(chown -R www-data:www-data /var/www/html/jlpt-laravel-vue/storage /var/www/html/jlpt-laravel-vue/bootstrap/cache)",
+      "Bash(systemctl daemon-reload *)",
+      "Bash(systemctl enable *)",
+      "Bash(systemctl status *)",
+      "Bash(journalctl -u jlpt-queue-worker -n 20 --no-pager)",
+      "Bash(journalctl -u jlpt-queue-worker --since \"2 minutes ago\" --no-pager)"
     ]
   }
 }
