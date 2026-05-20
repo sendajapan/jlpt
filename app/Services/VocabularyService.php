@@ -20,14 +20,14 @@ class VocabularyService
         return Vocabulary::query()
             ->with('subcategory.category')
             ->leftJoin('vocab_bgs', 'vocab_bgs.vocab_bg_id', '=', 'image_thumbnail_bg')
-            ->when($filters['search'] ?? null, fn ($q, $s) => $q->where('word_jp', 'like', "%{$s}%")
+            ->when($filters['search'] ?? null, fn($q, $s) => $q->where('word_jp', 'like', "%{$s}%")
                 ->orWhere('word_romaji', 'like', "%{$s}%")
                 ->orWhere('word_en', 'like', "%{$s}%"))
-            ->when($filters['subcategory_id'] ?? null, fn ($q, $v) => $q->where('vocab_subcategory_id', $v))
-            ->when($filters['category_id'] ?? null, fn ($q, $v) => $q->whereHas('subcategory', fn ($s) => $s->where('vocab_category_id', $v)))
-            ->when(isset($filters['is_approved']) && $filters['is_approved'] !== '', fn ($q) => $q->where('is_approved', $filters['is_approved']))
-            ->when(isset($filters['image_path']) && $filters['image_path'] === 'images', fn ($q) => $q->whereNot('image_path', ''))
-            ->when(isset($filters['image_path']) && $filters['image_path'] === 'pending', fn ($q) => $q->where('image_path', null))
+            ->when($filters['subcategory_id'] ?? null, fn($q, $v) => $q->where('vocab_subcategory_id', $v))
+            ->when($filters['category_id'] ?? null, fn($q, $v) => $q->whereHas('subcategory', fn($s) => $s->where('vocab_category_id', $v)))
+            ->when(isset($filters['is_approved']) && $filters['is_approved'] !== '', fn($q) => $q->where('is_approved', $filters['is_approved']))
+            ->when(isset($filters['image_path']) && $filters['image_path'] === 'images', fn($q) => $q->whereNot('image_path', ''))
+            ->when(isset($filters['image_path']) && $filters['image_path'] === 'pending', fn($q) => $q->where('image_path', null))
             ->orderBy('sort_order')
             ->orderBy('word_jp')
             ->paginate($perPage)
@@ -110,12 +110,12 @@ class VocabularyService
         }
 
         if (isset($settings['exaggeration'])) {
-            $tts = $tts->exaggeration((float) $settings['exaggeration']);
+            $tts = $tts->exaggeration((float)$settings['exaggeration']);
         }
 
         // ->slow() stretches generation time, which makes any trailing
         // hallucination more audible. Skip it for single words.
-        if (! $isSingleWord && ! isset($settings['cfg_weight'])) {
+        if (!$isSingleWord && !isset($settings['cfg_weight'])) {
             $tts = $tts->slow();
         }
 
@@ -123,15 +123,15 @@ class VocabularyService
         // the text. The "single_word_*" values on the voice config supply
         // that stricter setting. If they are not set, fall back to the
         // voice's base temperature/cfg_weight.
-        $temperature = isset($settings['temperature']) ? (float) $settings['temperature'] : null;
-        $cfgWeight = isset($settings['cfg_weight']) ? (float) $settings['cfg_weight'] : null;
+        $temperature = isset($settings['temperature']) ? (float)$settings['temperature'] : null;
+        $cfgWeight = isset($settings['cfg_weight']) ? (float)$settings['cfg_weight'] : null;
 
         if ($isSingleWord) {
             if (isset($settings['single_word_temperature'])) {
-                $temperature = (float) $settings['single_word_temperature'];
+                $temperature = (float)$settings['single_word_temperature'];
             }
             if (isset($settings['single_word_cfg_weight'])) {
-                $cfgWeight = (float) $settings['single_word_cfg_weight'];
+                $cfgWeight = (float)$settings['single_word_cfg_weight'];
             }
         }
 
@@ -144,7 +144,7 @@ class VocabularyService
         }
 
         if (isset($settings['seed'])) {
-            $tts = $tts->seed((int) $settings['seed']);
+            $tts = $tts->seed((int)$settings['seed']);
         }
 
         $model = $settings['model'] ?? null;
@@ -172,16 +172,13 @@ class VocabularyService
 
         $storagePath = 'vocab/words/audio/' . Str::uuid() . '.wav';
 
-
-        @unlink($storagePath);
-
         if (($settings['trim_trailing_noise'] ?? true)) {
             $wavBytes = $this->trimTrailingNoise($wavBytes);
         }
 
         Storage::disk('public')->put($storagePath, $wavBytes);
 
-
+        // Converting existing generated wav audio to mp3
         $tts->convertAudio(
             Storage::disk('public')->path($storagePath),
             Storage::disk('public')->path(str_replace(".wav", ".mp3", $storagePath)),
@@ -191,23 +188,9 @@ class VocabularyService
             ]
         );
 
-        $tts->convertAudio(
-            Storage::disk('public')->path($storagePath),
-            Storage::disk('public')->path(str_replace(".wav", ".ogg", $storagePath)),
-            'ogg',
-            [
-                'quality' => 5,
-            ]
-        );
-
-        $tts->convertAudio(
-            Storage::disk('public')->path($storagePath),
-            Storage::disk('public')->path(str_replace(".wav", ".opus", $storagePath)),
-            'opus',
-            [
-                'bitrate' => 96,
-            ]
-        );
+        // deleting original wav file from storage
+        @unlink($storagePath);
+        $storagePath = str_replace(".wav", ".mp3", $storagePath);
 
         if ($vocabulary->$field) {
             Storage::disk('public')->delete($vocabulary->$field);
@@ -269,7 +252,7 @@ class VocabularyService
         $isFloat32 = ($audioFormat === 3 && $bitsPerSample === 32);
         $isPcm16 = ($audioFormat === 1 && $bitsPerSample === 16);
 
-        if ($dataOffset === null || (! $isFloat32 && ! $isPcm16)) {
+        if ($dataOffset === null || (!$isFloat32 && !$isPcm16)) {
             return $wav;
         }
 
@@ -278,13 +261,13 @@ class VocabularyService
         $pcm = substr($wav, $dataOffset, $dataSize);
 
         $readSample = $isFloat32
-            ? fn (int $i) => unpack('g', substr($pcm, $i * $bytesPerSample, 4))[1]
-            : fn (int $i) => unpack('s', substr($pcm, $i * $bytesPerSample, 2))[1] / 32768.0;
+            ? fn(int $i) => unpack('g', substr($pcm, $i * $bytesPerSample, 4))[1]
+            : fn(int $i) => unpack('s', substr($pcm, $i * $bytesPerSample, 2))[1] / 32768.0;
 
         $threshold = 0.018;
         $windowMs = 30;
-        $windowSize = max(1, (int) ($sampleRate * $windowMs / 1000));
-        $requiredHits = max(1, (int) ($windowSize * 0.2));
+        $windowSize = max(1, (int)($sampleRate * $windowMs / 1000));
+        $requiredHits = max(1, (int)($windowSize * 0.2));
 
         $lastVoiced = -1;
         for ($i = $totalSamples - 1; $i >= 0; $i--) {
@@ -311,10 +294,10 @@ class VocabularyService
         }
 
         $tailMs = 120;
-        $tailSamples = (int) ($sampleRate * $tailMs / 1000);
+        $tailSamples = (int)($sampleRate * $tailMs / 1000);
         $keepSamples = min($totalSamples, $lastVoiced + 1 + $tailSamples);
         $fadeMs = 40;
-        $fadeSamples = min($tailSamples, (int) ($sampleRate * $fadeMs / 1000));
+        $fadeSamples = min($tailSamples, (int)($sampleRate * $fadeMs / 1000));
 
         $newPcm = substr($pcm, 0, $keepSamples * $bytesPerSample);
 
@@ -328,7 +311,7 @@ class VocabularyService
                     $newPcm = substr_replace($newPcm, pack('g', $sample * $gain), $idx, 4);
                 } else {
                     $sample = unpack('s', substr($newPcm, $idx, 2))[1];
-                    $newPcm = substr_replace($newPcm, pack('s', (int) ($sample * $gain)), $idx, 2);
+                    $newPcm = substr_replace($newPcm, pack('s', (int)($sample * $gain)), $idx, 2);
                 }
             }
         }
