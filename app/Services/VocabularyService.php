@@ -103,7 +103,6 @@ class VocabularyService
         $voiceRef = $voice?->referenceAbsolutePath();
         $settings = $voice?->settings ?? [];
 
-
         $tts = FluentVox::make()->text($text);
 
         if ($voiceRef && file_exists($voiceRef)) {
@@ -162,16 +161,7 @@ class VocabularyService
             $tts = $tts->japanese();
         }
 
-        $storagePath = 'vocab/words/audio/' . Str::uuid() . '.mp3';
-
-        //$result = $tts->generate();
-
-
-        $result = $tts->convertTo($storagePath);
-
-
-
-
+        $result = $tts->generate();
 
 
         // Chatterbox always pads its output to a minimum length. When the
@@ -179,12 +169,16 @@ class VocabularyService
         // low-level noise / instrumental-sounding garbage. Trim it off before
         // saving, unless the voice config explicitly disables trimming.
         $wavBytes = file_get_contents($result->getPath());
-        @unlink($result->getPath());
+
+        $storagePath = 'vocab/words/audio/' . Str::uuid() . '.wav';
+
+        $tts->convertAudio($storagePath, str_replace(".wav", ".mp3", $storagePath), 'mp3', ['bitrate' => 192]);
+
+        @unlink($storagePath);
 
         if (($settings['trim_trailing_noise'] ?? true)) {
             $wavBytes = $this->trimTrailingNoise($wavBytes);
         }
-
 
         Storage::disk('public')->put($storagePath, $wavBytes);
 
