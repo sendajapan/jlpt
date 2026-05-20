@@ -158,7 +158,7 @@
                     @php
                         foreach($items as $vocab){
                             if(isset($_GET['showlinks'])){
-                                echo  route('admin.vocab.words.edit', $vocab);
+                                echo 'https://jlpt.senda.fit/admin/vocab/words/'.$vocab->id.'/edit<br>';
                             }
                     }
                     @endphp
