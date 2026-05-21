@@ -66,6 +66,7 @@ class VocabularyController extends Controller
                 ->where('word_jp', 'like', "%{$search}%")
                 ->orWhere('word_romaji', 'like', "%{$search}%")
                 ->orWhere('word_en', 'like', "%{$search}%")))
+            ->with('background')
             ->orderBy('sort_order')
             ->orderBy('word_jp')
             ->get()
@@ -85,6 +86,7 @@ class VocabularyController extends Controller
                 'image_url'            => $this->url($v->image_path),
                 'image_thumbnail_url'  => $this->url($v->image_thumbnail_path),
                 'image_thumbnail_bg'   => $v->image_thumbnail_bg,
+                'bg_url'               => $v->background ? asset($v->background->vocab_bg_path) : null,
                 'sort_order'           => $v->sort_order,
                 'is_premium'           => $v->is_premium,
             ]);

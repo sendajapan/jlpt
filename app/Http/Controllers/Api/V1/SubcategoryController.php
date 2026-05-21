@@ -43,6 +43,7 @@ class SubcategoryController extends Controller
     public function index(Request $request): JsonResponse
     {
         $subcategories = VocabSubcategory::query()
+            ->with('background')
             ->when($request->filled('category_id'), fn ($q) => $q->where('vocab_category_id', $request->integer('category_id')))
             ->orderBy('sort_order')
             ->orderBy('name_en')
@@ -56,6 +57,7 @@ class SubcategoryController extends Controller
                 'icon_url'             => $this->url($s->icon_path),
                 'icon_thumbnail_url'   => $this->url($s->icon_thumbnail_path),
                 'icon_thumbnail_bg'    => $s->icon_thumbnail_bg,
+                'bg_url'               => $s->background ? asset($s->background->vocab_bg_path) : null,
                 'audio_url'            => $this->url($s->audio_path),
                 'sort_order'           => $s->sort_order,
                 'is_premium'           => $s->is_premium,

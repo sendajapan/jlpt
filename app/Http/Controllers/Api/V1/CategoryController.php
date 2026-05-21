@@ -33,6 +33,7 @@ class CategoryController extends Controller
     public function index(): JsonResponse
     {
         $categories = VocabCategory::query()
+            ->with('background')
             ->orderBy('sort_order')
             ->orderBy('name_en')
             ->get()
@@ -44,6 +45,7 @@ class CategoryController extends Controller
                 'icon_url'            => $this->url($c->icon_path),
                 'icon_thumbnail_url'  => $this->url($c->icon_thumbnail_path),
                 'category_bg_path'    => $c->category_bg_path,
+                'bg_url'              => $c->background ? asset($c->background->vocab_bg_path) : null,
                 'audio_url'           => $this->url($c->audio_path),
                 'sort_order'          => $c->sort_order,
                 'is_premium'          => $c->is_premium,
