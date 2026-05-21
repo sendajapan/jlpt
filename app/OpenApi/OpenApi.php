@@ -9,7 +9,7 @@ use OpenApi\Attributes as OA;
     title: 'JLPT Mobile API',
     description: 'REST API for the JLPT mobile app. All authenticated endpoints expect a Sanctum bearer token issued by /auth/login or /auth/register.'
 )]
-#[OA\Server(url: '%(L5_SWAGGER_CONST_HOST)s', description: 'API Server')]
+#[OA\Server(url: 'https://pathlingo.scholarlyapps.com', description: 'API Server')]
 #[OA\SecurityScheme(
     securityScheme: 'sanctum',
     type: 'http',
@@ -144,6 +144,4 @@ use OpenApi\Attributes as OA;
         new OA\Property(property: 'is_premium', type: 'boolean', example: false),
     ]
 )]
-class OpenApi
-{
-}
+class OpenApi {}

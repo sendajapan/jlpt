@@ -7,12 +7,8 @@
     },
     "servers": [
         {
-            "url": "https://jlpt.senda.fit",
-            "description": "Production"
-        },
-        {
-            "url": "http://127.0.0.1:8000",
-            "description": "Local"
+            "url": "https://pathlingo.scholarlyapps.com",
+            "description": "API Server"
         }
     ],
     "paths": {
@@ -429,7 +425,22 @@
                 "operationId": "e225c2b7eb5daf7fb16e00f4f07ff030",
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "List of vocab categories ordered by sort_order then name_en",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/VocabCategory"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -730,21 +741,38 @@
                 "tags": [
                     "Public"
                 ],
-                "summary": "List subcategories (optionally filtered by category_id)",
+                "summary": "List subcategories, optionally filtered by category",
                 "operationId": "3d35744905e4257c1e844a788b5fb31c",
                 "parameters": [
                     {
                         "name": "category_id",
                         "in": "query",
+                        "description": "Filter by parent category ID",
                         "required": false,
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "example": 1
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "List of subcategories ordered by sort_order then name_en",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/VocabSubcategory"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -754,37 +782,58 @@
                 "tags": [
                     "Public"
                 ],
-                "summary": "List vocab words (optional search and filters)",
+                "summary": "List approved vocab words with optional search and filters",
                 "operationId": "fee18a2abb523870482563179db17f1b",
                 "parameters": [
                     {
                         "name": "search",
                         "in": "query",
+                        "description": "Search across word_jp, word_romaji, and word_en",
                         "required": false,
                         "schema": {
-                            "type": "string"
+                            "type": "string",
+                            "example": "neko"
                         }
                     },
                     {
                         "name": "category_id",
                         "in": "query",
+                        "description": "Filter words that belong to subcategories of this category",
                         "required": false,
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "example": 1
                         }
                     },
                     {
                         "name": "subcategory_id",
                         "in": "query",
+                        "description": "Filter words that belong to this subcategory",
                         "required": false,
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "example": 3
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "List of approved vocab words ordered by sort_order then word_jp",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/VocabWord"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -1050,6 +1099,202 @@
                     "created_at": {
                         "type": "string",
                         "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "VocabCategory": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name_en": {
+                        "type": "string",
+                        "example": "Animals",
+                        "nullable": true
+                    },
+                    "name_jp": {
+                        "type": "string",
+                        "example": "どうぶつ",
+                        "nullable": true
+                    },
+                    "name_romaji": {
+                        "type": "string",
+                        "example": "doubutsu",
+                        "nullable": true
+                    },
+                    "icon_url": {
+                        "type": "string",
+                        "format": "uri",
+                        "nullable": true
+                    },
+                    "icon_thumbnail_url": {
+                        "type": "string",
+                        "format": "uri",
+                        "nullable": true
+                    },
+                    "category_bg_path": {
+                        "type": "string",
+                        "example": "1",
+                        "nullable": true
+                    },
+                    "audio_url": {
+                        "type": "string",
+                        "format": "uri",
+                        "nullable": true
+                    },
+                    "sort_order": {
+                        "type": "integer",
+                        "example": 10,
+                        "nullable": true
+                    },
+                    "is_premium": {
+                        "type": "boolean",
+                        "example": false
+                    }
+                },
+                "type": "object"
+            },
+            "VocabSubcategory": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 3
+                    },
+                    "vocab_category_id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name_en": {
+                        "type": "string",
+                        "example": "Farm Animals",
+                        "nullable": true
+                    },
+                    "name_jp": {
+                        "type": "string",
+                        "example": "のうじょうのどうぶつ",
+                        "nullable": true
+                    },
+                    "name_romaji": {
+                        "type": "string",
+                        "example": "noujou no doubutsu",
+                        "nullable": true
+                    },
+                    "icon_url": {
+                        "type": "string",
+                        "format": "uri",
+                        "nullable": true
+                    },
+                    "icon_thumbnail_url": {
+                        "type": "string",
+                        "format": "uri",
+                        "nullable": true
+                    },
+                    "icon_thumbnail_bg": {
+                        "type": "string",
+                        "example": "#e8f5e9",
+                        "nullable": true
+                    },
+                    "audio_url": {
+                        "type": "string",
+                        "format": "uri",
+                        "nullable": true
+                    },
+                    "sort_order": {
+                        "type": "integer",
+                        "example": 10,
+                        "nullable": true
+                    },
+                    "is_premium": {
+                        "type": "boolean",
+                        "example": false
+                    }
+                },
+                "type": "object"
+            },
+            "VocabWord": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 42
+                    },
+                    "vocab_subcategory_id": {
+                        "type": "integer",
+                        "example": 3
+                    },
+                    "word_jp": {
+                        "type": "string",
+                        "example": "ねこ"
+                    },
+                    "word_romaji": {
+                        "type": "string",
+                        "example": "neko",
+                        "nullable": true
+                    },
+                    "word_en": {
+                        "type": "string",
+                        "example": "cat",
+                        "nullable": true
+                    },
+                    "sentence_jp": {
+                        "type": "string",
+                        "example": "ねこがいます。",
+                        "nullable": true
+                    },
+                    "sentence_romaji": {
+                        "type": "string",
+                        "example": "Neko ga imasu.",
+                        "nullable": true
+                    },
+                    "sentence_en": {
+                        "type": "string",
+                        "example": "There is a cat.",
+                        "nullable": true
+                    },
+                    "audio_jp_url": {
+                        "type": "string",
+                        "format": "uri",
+                        "nullable": true
+                    },
+                    "audio_en_url": {
+                        "type": "string",
+                        "format": "uri",
+                        "nullable": true
+                    },
+                    "sentence_audio_jp_url": {
+                        "type": "string",
+                        "format": "uri",
+                        "nullable": true
+                    },
+                    "sentence_audio_en_url": {
+                        "type": "string",
+                        "format": "uri",
+                        "nullable": true
+                    },
+                    "image_url": {
+                        "type": "string",
+                        "format": "uri",
+                        "nullable": true
+                    },
+                    "image_thumbnail_url": {
+                        "type": "string",
+                        "format": "uri",
+                        "nullable": true
+                    },
+                    "image_thumbnail_bg": {
+                        "type": "string",
+                        "example": "#e3f2fd",
+                        "nullable": true
+                    },
+                    "sort_order": {
+                        "type": "integer",
+                        "example": 10,
+                        "nullable": true
+                    },
+                    "is_premium": {
+                        "type": "boolean",
+                        "example": false
                     }
                 },
                 "type": "object"
