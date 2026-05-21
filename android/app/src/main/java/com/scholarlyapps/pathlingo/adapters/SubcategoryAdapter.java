@@ -1,6 +1,7 @@
 package com.scholarlyapps.pathlingo.adapters;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import com.scholarlyapps.pathlingo.R;
 import com.scholarlyapps.pathlingo.models.Subcategory;
@@ -52,6 +54,7 @@ public class SubcategoryAdapter extends RecyclerView.Adapter<SubcategoryAdapter.
 
     public class SubcategoryViewHolder extends RecyclerView.ViewHolder {
         private CardView cardView;
+        private View colorBar;
         private TextView jpView;
         private TextView enView;
         private ProgressBar progressBar;
@@ -61,6 +64,7 @@ public class SubcategoryAdapter extends RecyclerView.Adapter<SubcategoryAdapter.
         public SubcategoryViewHolder(@NonNull View itemView) {
             super(itemView);
             cardView = itemView.findViewById(R.id.card_view);
+            colorBar = itemView.findViewById(R.id.color_bar);
             jpView = itemView.findViewById(R.id.jp_text);
             enView = itemView.findViewById(R.id.en_text);
             progressBar = itemView.findViewById(R.id.progress_bar);
@@ -71,12 +75,14 @@ public class SubcategoryAdapter extends RecyclerView.Adapter<SubcategoryAdapter.
         public void bind(Subcategory subcat) {
             jpView.setText(subcat.jp);
             enView.setText(subcat.en);
-            progressBar.setProgress((int) ((subcat.mastered * 100) / (float) subcat.total));
-            masteryView.setText(subcat.mastered + "/" + subcat.total);
+            int progress = subcat.total > 0 ? (int) ((subcat.mastered * 100) / (float) subcat.total) : 0;
+            progressBar.setProgress(progress);
+            masteryView.setText(subcat.mastered + " / " + subcat.total + " words");
             lockView.setVisibility(subcat.locked ? View.VISIBLE : View.GONE);
 
-            int bgRes = getBgResource(subcat.bg);
-            cardView.setCardBackgroundColor(context.getColor(bgRes));
+            int colorRes = getAccentColor(subcat.bg);
+            colorBar.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context, colorRes)));
+            progressBar.setProgressTintList(ColorStateList.valueOf(ContextCompat.getColor(context, colorRes)));
 
             cardView.setOnClickListener(v -> {
                 if (!subcat.locked && !subcat.words.isEmpty() && listener != null) {
@@ -85,15 +91,15 @@ public class SubcategoryAdapter extends RecyclerView.Adapter<SubcategoryAdapter.
             });
         }
 
-        private int getBgResource(String bg) {
+        private int getAccentColor(String bg) {
             switch (bg) {
-                case "sage": return R.color.sage;
+                case "sage":   return R.color.sage_deep;
                 case "butter": return R.color.butter;
-                case "lav": return R.color.lav;
-                case "sky": return R.color.sky;
-                case "rose": return R.color.rose;
-                case "terra": return R.color.terra;
-                default: return R.color.sage;
+                case "lav":    return R.color.lav;
+                case "sky":    return R.color.sky;
+                case "rose":   return R.color.rose;
+                case "terra":  return R.color.terra;
+                default:       return R.color.sage_deep;
             }
         }
     }
