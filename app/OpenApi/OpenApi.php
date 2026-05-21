@@ -9,8 +9,7 @@ use OpenApi\Attributes as OA;
     title: 'JLPT Mobile API',
     description: 'REST API for the JLPT mobile app. All authenticated endpoints expect a Sanctum bearer token issued by /auth/login or /auth/register.'
 )]
-#[OA\Server(url: 'https://jlpt.senda.fit', description: 'Production')]
-#[OA\Server(url: 'http://127.0.0.1:8000', description: 'Local')]
+#[OA\Server(url: '%(L5_SWAGGER_CONST_HOST)s', description: 'API Server')]
 #[OA\SecurityScheme(
     securityScheme: 'sanctum',
     type: 'http',
