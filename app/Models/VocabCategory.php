@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class VocabCategory extends Model
@@ -25,6 +26,11 @@ class VocabCategory extends Model
         'is_premium' => 'boolean',
         'sort_order' => 'integer',
     ];
+
+    public function background(): BelongsTo
+    {
+        return $this->belongsTo(VocabBg::class, 'category_bg_path', 'vocab_bg_id');
+    }
 
     public function subcategories(): HasMany
     {

@@ -28,37 +28,37 @@
         </activity>
 
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.activities.MainActivity"
             android:exported="false"
             android:theme="@style/Theme.PathLingo" />
 
         <activity
-            android:name=".activities.WordDetailActivity"
+            android:name=".ui.activities.WordDetailActivity"
             android:exported="false"
             android:theme="@style/Theme.PathLingo" />
 
         <activity
-            android:name=".activities.ScoreActivity"
+            android:name=".ui.activities.ScoreActivity"
             android:exported="false"
             android:theme="@style/Theme.PathLingo" />
 
         <activity
-            android:name=".activities.ProfileActivity"
+            android:name=".ui.activities.ProfileActivity"
             android:exported="false"
             android:theme="@style/Theme.PathLingo" />
 
         <activity
-            android:name=".activities.MainDashboardActivity"
+            android:name=".ui.activities.MainDashboardActivity"
             android:exported="false"
             android:theme="@style/Theme.PathLingo" />
 
         <activity
-            android:name=".activities.SubcategoryActivity"
+            android:name=".ui.activities.SubcategoryActivity"
             android:exported="false"
             android:theme="@style/Theme.PathLingo" />
 
         <activity
-            android:name=".activities.CategoryListActivity"
+            android:name=".ui.activities.CategoryListActivity"
             android:exported="false"
             android:theme="@style/Theme.PathLingo" />
 

@@ -1,4 +1,4 @@
-package com.scholarlyapps.pathlingo.activities
+package com.scholarlyapps.pathlingo.ui
 
 import android.os.Bundle
 import androidx.activity.compose.setContent

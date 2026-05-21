@@ -41,6 +41,11 @@ class Vocabulary extends Model
         return $this->belongsTo(VocabSubcategory::class, 'vocab_subcategory_id');
     }
 
+    public function background(): BelongsTo
+    {
+        return $this->belongsTo(VocabBg::class, 'image_thumbnail_bg', 'vocab_bg_id');
+    }
+
     public function voice(): BelongsTo
     {
         return $this->belongsTo(Voice::class);
