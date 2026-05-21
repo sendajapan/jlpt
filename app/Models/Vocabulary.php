@@ -28,12 +28,20 @@ class Vocabulary extends Model
         'is_premium',
         'is_approved',
         'voice_id',
+        'audio_jp_reviewed',
+        'audio_en_reviewed',
+        'sentence_audio_jp_reviewed',
+        'sentence_audio_en_reviewed',
     ];
 
     protected $casts = [
-        'sort_order'  => 'integer',
-        'is_premium'  => 'boolean',
+        'sort_order' => 'integer',
+        'is_premium' => 'boolean',
         'is_approved' => 'boolean',
+        'audio_jp_reviewed' => 'boolean',
+        'audio_en_reviewed' => 'boolean',
+        'sentence_audio_jp_reviewed' => 'boolean',
+        'sentence_audio_en_reviewed' => 'boolean',
     ];
 
     public function subcategory(): BelongsTo

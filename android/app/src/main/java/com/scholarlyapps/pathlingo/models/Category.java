@@ -11,6 +11,7 @@ public class Category {
     public String bg;
     public int count;
     public String img;
+    public String iconUrl;
     public int progress;
     public boolean locked;
     public List<Subcategory> subcategories = new ArrayList<>();

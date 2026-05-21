@@ -8,6 +8,8 @@ public class Subcategory {
     public String jp;
     public String en;
     public String bg;
+    public String img;
+    public String iconUrl;
     public int total;
     public int mastered;
     public boolean locked;

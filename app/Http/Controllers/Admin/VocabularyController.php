@@ -16,9 +16,7 @@ use Illuminate\View\View;
 
 class VocabularyController extends Controller
 {
-    public function __construct(private VocabularyService $service)
-    {
-    }
+    public function __construct(private VocabularyService $service) {}
 
     public function index(Request $request): View
     {
@@ -100,9 +98,22 @@ class VocabularyController extends Controller
 
     public function toggleApproved(Vocabulary $vocabulary): RedirectResponse
     {
-        $vocabulary->update(['is_approved' => !$vocabulary->is_approved]);
+        $vocabulary->update(['is_approved' => ! $vocabulary->is_approved]);
 
         return back();
+    }
+
+    public function toggleReviewed(Request $request, Vocabulary $vocabulary): JsonResponse
+    {
+        $validated = $request->validate([
+            'field' => ['required', 'in:audio_jp,audio_en,sentence_audio_jp,sentence_audio_en'],
+            'value' => ['required', 'boolean'],
+        ]);
+
+        $column = $validated['field'].'_reviewed';
+        $vocabulary->update([$column => $validated['value']]);
+
+        return response()->json(['ok' => true]);
     }
 
     public function updateImage(Request $request, Vocabulary $vocabulary): RedirectResponse

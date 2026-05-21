@@ -150,7 +150,7 @@
 
                 @forelse($grouped as $subcategoryId => $items)
                     <tbody
-                        class="sortable-group divide-y divide-zinc-100"
+                        class="sortable-group"
                         data-subcat-id="{{ $subcategoryId }}"
                         data-reorder-url="{{ route('admin.vocab.words.reorder') }}"
                     >
@@ -165,7 +165,7 @@
 
                     @foreach($items as $vocab)
                         @php $rowNum++ @endphp
-                        <tr data-id="{{ $vocab->id }}" class="toggle-row" data-row="{{ $vocab->id }}">
+                        <tr data-id="{{ $vocab->id }}" class="toggle-row border-b border-zinc-100" data-row="{{ $vocab->id }}">
                             <td class="w-8 px-2 py-2.5 text-center border-r border-zinc-100">
                                 <span
                                     class="drag-handle inline-flex items-center justify-center cursor-grab active:cursor-grabbing text-zinc-300 hover:text-zinc-500 transition-colors duration-100">
@@ -222,51 +222,34 @@
                                 </form>
                             </td>
                             <td class="px-4 py-3 text-xs font-medium text-zinc-900">
-                                <table class="w-full">
-                                    <tr class="border-b border-zinc-300">
-                                        <td width="70%" nowrap><span
-                                                class="text-blue-500">En: {{ $vocab->word_en ?: '—' }}</span></td>
-                                        <td width="30%">
-                                            @include('admin.vocab.words._audio_cell', ['field' => 'audio_en'])
-                                        </td>
-                                    </tr>
-                                    <tr class="border-b border-zinc-300">
-                                        <td width="70%" nowrap><span
-                                                class="text-red-500">Ro: {{ $vocab->word_romaji ?: '—' }}</span></td>
-                                        <td width="30%"></td>
-                                    </tr>
-                                    <tr class="border-b border-zinc-300">
-                                        <td width="70%" nowrap><span
-                                                class="text-purple-500">Jp: {{ $vocab->word_jp ?: '—' }}</span></td>
-                                        <td width="30%">
-                                            @include('admin.vocab.words._audio_cell', ['field' => 'audio_jp'])
-                                        </td>
-                                    </tr>
-                                </table>
+                                <div class="flex flex-col divide-y divide-zinc-100">
+                                    <div class="flex items-center justify-between gap-3 py-1.5">
+                                        <span class="text-blue-500 whitespace-nowrap">En: {{ $vocab->word_en ?: '—' }}</span>
+                                        <div class="shrink-0">@include('admin.vocab.words._audio_cell', ['field' => 'audio_en'])</div>
+                                    </div>
+                                    <div class="flex items-center py-1.5">
+                                        <span class="text-red-500 whitespace-nowrap">Ro: {{ $vocab->word_romaji ?: '—' }}</span>
+                                    </div>
+                                    <div class="flex items-center justify-between gap-3 py-1.5">
+                                        <span class="text-purple-500 whitespace-nowrap">Jp: {{ $vocab->word_jp ?: '—' }}</span>
+                                        <div class="shrink-0">@include('admin.vocab.words._audio_cell', ['field' => 'audio_jp'])</div>
+                                    </div>
+                                </div>
                             </td>
-                            <td class="px-4 py-3 text-xs font-medium text-zinc-900">
-                                <table class="w-full">
-                                    <tr class="border-b border-zinc-300">
-                                        <td width="90%" nowrap><span
-                                                class="text-blue-500">En: {{ $vocab->sentence_en ?: '—' }}</span></td>
-                                        <td width="10%">
-                                            @include('admin.vocab.words._audio_cell', ['field' => 'sentence_audio_en'])
-                                        </td>
-                                    </tr>
-                                    <tr class="border-b border-zinc-300">
-                                        <td width="90%" nowrap><span
-                                                class="text-red-500">Ro: {{ $vocab->sentence_romaji ?: '—' }}</span>
-                                        </td>
-                                        <td width="10%"></td>
-                                    </tr>
-                                    <tr class="border-b border-zinc-300">
-                                        <td width="90%" nowrap><span
-                                                class="text-purple-500">Jp: {{ $vocab->sentence_jp ?: '—' }}</span></td>
-                                        <td width="10%">
-                                            @include('admin.vocab.words._audio_cell', ['field' => 'sentence_audio_jp'])
-                                        </td>
-                                    </tr>
-                                </table>
+                            <td class="px-4 py-3 text-xs font-medium text-zinc-900 border-l border-zinc-200">
+                                <div class="flex flex-col divide-y divide-zinc-100">
+                                    <div class="flex items-center justify-between gap-3 py-1.5">
+                                        <span class="text-blue-500 whitespace-nowrap">En: {{ $vocab->sentence_en ?: '—' }}</span>
+                                        <div class="shrink-0">@include('admin.vocab.words._audio_cell', ['field' => 'sentence_audio_en'])</div>
+                                    </div>
+                                    <div class="flex items-center py-1.5">
+                                        <span class="text-red-500 whitespace-nowrap">Ro: {{ $vocab->sentence_romaji ?: '—' }}</span>
+                                    </div>
+                                    <div class="flex items-center justify-between gap-3 py-1.5">
+                                        <span class="text-purple-500 whitespace-nowrap">Jp: {{ $vocab->sentence_jp ?: '—' }}</span>
+                                        <div class="shrink-0">@include('admin.vocab.words._audio_cell', ['field' => 'sentence_audio_jp'])</div>
+                                    </div>
+                                </div>
                             </td>
                             <td class="px-4 py-3 text-xs text-zinc-600">
                                 @if($vocab->subcategory?->category)

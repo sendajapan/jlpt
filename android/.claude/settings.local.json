@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\sulai\\\\Herd\\\\jlpt_laravel\\\\android\\\\app\\\\src\\\\main\" -Recurse -File | Select-Object FullName | ForEach-Object { $_.FullName } | Sort-Object)",
+      "Bash(grep -v \"//.*R\\\\.drawable\")",
+      "Bash(sort -t: -k3)"
+    ]
+  }
+}

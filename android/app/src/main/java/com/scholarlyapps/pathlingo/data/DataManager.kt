@@ -71,7 +71,8 @@ class DataManager private constructor() {
                 en = c.nameEn.orEmpty()
                 ch = c.nameRomaji.orEmpty()
                 bg = c.bgUrl.orEmpty()
-                img = c.iconUrl.orEmpty()
+                img = c.iconThumbnailUrl.orEmpty()
+                iconUrl = c.iconUrl.orEmpty()
                 progress = 0
                 locked = c.isPremium
             }
@@ -82,6 +83,8 @@ class DataManager private constructor() {
                     jp = s.nameJp.orEmpty()
                     en = s.nameEn.orEmpty()
                     bg = s.iconThumbnailBg.orEmpty()
+                    img = s.iconThumbnailUrl.orEmpty()
+                    iconUrl = s.iconUrl.orEmpty()
                     total = words.size
                     mastered = 0
                     locked = s.isPremium

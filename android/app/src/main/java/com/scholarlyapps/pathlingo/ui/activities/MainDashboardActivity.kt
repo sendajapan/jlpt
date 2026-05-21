@@ -22,12 +22,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -38,84 +34,93 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.viewinterop.AndroidView
-import androidx.fragment.app.FragmentContainerView
 import androidx.navigation.NavController
-import androidx.navigation.NavOptions
-import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import com.scholarlyapps.pathlingo.R
+import com.scholarlyapps.pathlingo.ui.screens.CategoryListScreen
+import com.scholarlyapps.pathlingo.ui.screens.FavoritesScreen
+import com.scholarlyapps.pathlingo.ui.screens.HomeScreen
+import com.scholarlyapps.pathlingo.ui.screens.ProgressScreen
+import com.scholarlyapps.pathlingo.ui.screens.ScoreScreen
+import com.scholarlyapps.pathlingo.ui.screens.SettingsScreen
+import com.scholarlyapps.pathlingo.ui.screens.SubcategoryScreen
+import com.scholarlyapps.pathlingo.ui.screens.WordDetailScreen
 
-private data class NavTab(val iconRes: Int, val label: String, val destId: Int)
+private data class NavTab(val iconRes: Int, val label: String, val route: String)
 
 class MainDashboardActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val tabs = listOf(
-            NavTab(R.drawable.ic_home,     "Home",     R.id.nav_home),
-            NavTab(R.drawable.ic_heart,    "Saved",    R.id.nav_favorites),
-            NavTab(R.drawable.ic_chart,    "Progress", R.id.nav_progress),
-            NavTab(R.drawable.ic_settings, "Settings", R.id.nav_settings),
-        )
-
         setContent {
             MaterialTheme {
-                DashboardScreen(activity = this, tabs = tabs)
+                AppNavigation()
             }
         }
     }
 }
 
+@Preview(showBackground = true)
 @Composable
-private fun DashboardScreen(activity: AppCompatActivity, tabs: List<NavTab>) {
-    var selectedTab by remember { mutableIntStateOf(0) }
-    var navController by remember { mutableStateOf<NavController?>(null) }
+private fun AppNavigation() {
+    val navController = rememberNavController()
+    val backStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = backStackEntry?.destination?.route
 
-    DisposableEffect(navController) {
-        val listener = NavController.OnDestinationChangedListener { _, destination, _ ->
-            val idx = tabs.indexOfFirst { it.destId == destination.id }
-            if (idx >= 0) selectedTab = idx
-        }
-        navController?.addOnDestinationChangedListener(listener)
-        onDispose { navController?.removeOnDestinationChangedListener(listener) }
-    }
+    val tabs = listOf(
+        NavTab(R.drawable.ic_home, "Home", "home"),
+        NavTab(R.drawable.ic_heart, "Saved", "favorites"),
+        NavTab(R.drawable.ic_chart, "Progress", "progress"),
+        NavTab(R.drawable.ic_settings, "Settings", "settings"),
+    )
+    val tabRoutes = tabs.map { it.route }.toSet()
 
     Scaffold(
         containerColor = Color(0xFFF6EBD7),
         bottomBar = {
-            FloatingBottomNav(
-                tabs = tabs,
-                selectedTab = selectedTab,
-                onTabSelected = { index ->
-                    selectedTab = index
-                    val options = NavOptions.Builder()
-                        .setPopUpTo(R.id.nav_home, false, true)
-                        .setLaunchSingleTop(true)
-                        .setRestoreState(true)
-                        .build()
-                    navController?.navigate(tabs[index].destId, null, options)
-                },
-            )
-        },
-    ) { innerPadding ->
-        val fm = activity.supportFragmentManager
-        AndroidView(
-            factory = { ctx ->
-                FragmentContainerView(ctx).apply { id = R.id.fragment_container }
-            },
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding),
-        ) {
-            if (fm.findFragmentById(R.id.fragment_container) == null) {
-                val navHost = NavHostFragment.create(R.navigation.nav_dashboard)
-                fm.beginTransaction()
-                    .replace(R.id.fragment_container, navHost)
-                    .setPrimaryNavigationFragment(navHost)
-                    .commitNow()
-                navController = navHost.navController
+            if (currentRoute in tabRoutes) {
+                FloatingBottomNav(
+                    tabs = tabs,
+                    selectedRoute = currentRoute,
+                    onTabSelected = { route ->
+                        navController.navigate(route) {
+                            popUpTo("home") { saveState = true }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                    },
+                )
             }
+        },
+    ) { padding ->
+        NavHost(
+            navController = navController,
+            startDestination = "home",
+            modifier = Modifier.padding(padding),
+        ) {
+            composable("home") { HomeScreen(navController) }
+            composable("categories") { CategoryListScreen(navController) }
+            composable("subcategory/{categoryId}") { entry ->
+                SubcategoryScreen(
+                    categoryId = entry.arguments?.getString("categoryId"),
+                    navController = navController,
+                )
+            }
+            composable("word_detail/{categoryId}/{subcategoryId}/{wordIndex}") { entry ->
+                WordDetailScreen(
+                    categoryId = entry.arguments?.getString("categoryId"),
+                    subcategoryId = entry.arguments?.getString("subcategoryId"),
+                    initialIndex = entry.arguments?.getString("wordIndex")?.toIntOrNull() ?: 0,
+                    navController = navController,
+                )
+            }
+            composable("score") { ScoreScreen(navController) }
+            composable("favorites") { FavoritesScreen() }
+            composable("progress") { ProgressScreen() }
+            composable("settings") { SettingsScreen(navController) }
         }
     }
 }
@@ -123,8 +128,8 @@ private fun DashboardScreen(activity: AppCompatActivity, tabs: List<NavTab>) {
 @Composable
 private fun FloatingBottomNav(
     tabs: List<NavTab>,
-    selectedTab: Int,
-    onTabSelected: (Int) -> Unit,
+    selectedRoute: String?,
+    onTabSelected: (String) -> Unit,
 ) {
     Row(
         modifier = Modifier
@@ -136,13 +141,13 @@ private fun FloatingBottomNav(
             .background(Color(0xFF6E9579)),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        tabs.forEachIndexed { index, tab ->
+        tabs.forEach { tab ->
             NavTabItem(
                 modifier = Modifier.weight(1f),
                 iconRes = tab.iconRes,
                 label = tab.label,
-                isSelected = selectedTab == index,
-                onClick = { onTabSelected(index) },
+                isSelected = selectedRoute == tab.route,
+                onClick = { onTabSelected(tab.route) },
             )
         }
     }
@@ -155,7 +160,7 @@ private fun NavTabItem(
     label: String,
     isSelected: Boolean,
     onClick: () -> Unit,
-) {
+) { 
     val interactionSource = remember { MutableInteractionSource() }
     Box(
         modifier = modifier
