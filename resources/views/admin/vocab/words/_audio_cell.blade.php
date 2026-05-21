@@ -50,8 +50,9 @@
     <template x-if="!gone && !url && {{ $existing ? 'true' : 'false' }}">
         <div id="id_{{$field}}" class="inline-flex items-center gap-1">
             <label class="inline-flex items-center gap-1 cursor-pointer select-none">
+                <img src="https://pathlingo.scholarlyapps.com/storage/vocab/words/images/image_2d3b065e-e0e8-45d1-8c42-d7f0ede9d435.png" onclick="">
                 <input type="checkbox" :checked="reviewed" @change="toggleReviewed($event.target.checked)" class="accent-green-600 w-3.5 h-3.5">
-                <span class="text-[10px]" :class="reviewed ? 'text-green-600 font-medium' : 'text-zinc-400'">Reviewed</span>
+                <span class="text-[10px]" :class="reviewed ? 'text-green-600 font-medium' : 'text-zinc-400'"></span>
             </label>
             <button class="inline-flex h-7 items-center gap-1 px-2 rounded border border-blue-200 bg-white hover:bg-blue-50 text-[10px] font-medium text-blue-600 transition-colors" onclick="document.getElementById('{{ $audioId }}').play()">
                 <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
@@ -86,7 +87,7 @@
         <div class="inline-flex items-center gap-1">
             <label class="inline-flex items-center gap-1 cursor-pointer select-none">
                 <input type="checkbox" :checked="reviewed" @change="toggleReviewed($event.target.checked)" class="accent-green-600 w-3.5 h-3.5">
-                <span class="text-[10px]" :class="reviewed ? 'text-green-600 font-medium' : 'text-zinc-400'">Reviewed</span>
+                <span class="text-[10px]" :class="reviewed ? 'text-green-600 font-medium' : 'text-zinc-400'"></span>
             </label>
             <button @click="$refs.player.play()" class="inline-flex h-7 items-center gap-1 px-2 rounded border border-blue-200 bg-white hover:bg-blue-50 text-[10px] font-medium text-blue-600 transition-colors">
                 <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
