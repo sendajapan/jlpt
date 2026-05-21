@@ -10,8 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import com.scholarlyapps.pathlingo.R;
-import com.scholarlyapps.pathlingo.activities.auth.LoginActivity;
 import com.scholarlyapps.pathlingo.data.DataManager;
+import com.scholarlyapps.pathlingo.ui.auth.AuthActivity;
+import com.scholarlyapps.pathlingo.ui.auth.LogoutHelper;
 import com.scholarlyapps.pathlingo.models.User;
 
 public class SettingsFragment extends Fragment {
@@ -39,9 +40,7 @@ public class SettingsFragment extends Fragment {
         }
 
         view.findViewById(R.id.btn_logout).setOnClickListener(v -> {
-            Intent intent = new Intent(requireContext(), LoginActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
+            LogoutHelper.logout(requireContext());
         });
     }
 }
