@@ -236,7 +236,7 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="px-4 py-3 text-xs font-medium text-zinc-900 border-l border-zinc-200">
+                            <td class="px-4 py-3 text-xs font-medium text-zinc-900 border-x border-zinc-100">
                                 <div class="flex flex-col divide-y divide-zinc-100">
                                     <div class="flex items-center justify-between gap-3 py-1.5">
                                         <span class="text-blue-500 whitespace-nowrap">En: {{ $vocab->sentence_en ?: '—' }}</span>
