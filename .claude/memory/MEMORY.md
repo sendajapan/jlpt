@@ -1,0 +1,4 @@
+- [Project overview](project_overview.md) — Laravel 13 + Vue admin with mobile API at /api/v1/*; Android client consumes it
+- [Android integration status](project_android_integration.md) — Android app wired to live API with Compose auth; awaits Google Web Client ID
+- [Code style rules](feedback_code_style.md) — Admin tables uniform; flat code, no comments, thin services/controllers
+- [Pint formatting](feedback_pint.md) — Run `vendor/bin/pint --dirty --format agent` after PHP edits
