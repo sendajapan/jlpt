@@ -81,6 +81,7 @@ dependencies {
     implementation(libs.moshi)
     implementation(libs.moshi.kotlin)
     implementation(libs.androidx.datastore.preferences)
+    implementation(libs.coil)
     implementation(libs.coil.compose)
     implementation(libs.credentials)
     implementation(libs.credentials.play.services.auth)

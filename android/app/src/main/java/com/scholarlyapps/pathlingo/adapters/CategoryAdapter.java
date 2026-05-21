@@ -13,6 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+import coil.Coil;
+import coil.request.ImageRequest;
 import com.scholarlyapps.pathlingo.R;
 import com.scholarlyapps.pathlingo.models.Category;
 import java.util.List;
@@ -94,11 +96,19 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
                     ? ContextCompat.getColor(ctx, inkRes)
                     : ContextCompat.getColor(ctx, R.color.ink);
 
-            // Category PNG image (right side, no tint)
             if (categoryImage != null && category.img != null && !category.img.isEmpty()) {
-                int imgRes = ctx.getResources().getIdentifier(
-                        category.img, "drawable", ctx.getPackageName());
-                if (imgRes != 0) categoryImage.setImageResource(imgRes);
+                if (category.img.startsWith("http")) {
+                    ImageRequest request = new ImageRequest.Builder(ctx)
+                            .data(category.img)
+                            .target(categoryImage)
+                            .crossfade(true)
+                            .build();
+                    Coil.imageLoader(ctx).enqueue(request);
+                } else {
+                    int imgRes = ctx.getResources().getIdentifier(
+                            category.img, "drawable", ctx.getPackageName());
+                    if (imgRes != 0) categoryImage.setImageResource(imgRes);
+                }
             }
 
             // Kanji char watermark
