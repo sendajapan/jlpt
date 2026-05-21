@@ -42,6 +42,8 @@ class AppUser extends Authenticatable implements MustVerifyEmail
         'timezone',
         'reminder_time',
         'notifications_enabled',
+        'is_banned',
+        'banned_reason',
     ];
 
     protected $hidden = [

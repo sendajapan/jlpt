@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AppUserController;
 use App\Http\Controllers\Admin\AudioAutomationController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\VocabCategoryController;
@@ -14,6 +15,10 @@ Route::redirect('/', '/admin/dashboard');
 
 Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::resource('app-users', AppUserController::class)
+        ->only(['index', 'edit', 'update'])
+        ->parameters(['app-users' => 'appUser']);
 
     Route::prefix('vocab')->name('vocab.')->group(function () {
         Route::post('categories/reorder', [VocabCategoryController::class, 'reorder'])->name('categories.reorder');
