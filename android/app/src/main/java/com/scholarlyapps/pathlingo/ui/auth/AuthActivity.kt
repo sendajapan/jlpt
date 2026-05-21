@@ -8,7 +8,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.scholarlyapps.pathlingo.activities.MainDashboardActivity
+import com.scholarlyapps.pathlingo.ui.activities.MainDashboardActivity
 import com.scholarlyapps.pathlingo.data.DataManager
 import com.scholarlyapps.pathlingo.data.remote.ServiceLocator
 

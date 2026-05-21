@@ -7,25 +7,25 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.scholarlyapps.pathlingo.fragments.HomeFragment"
+        android:name="com.scholarlyapps.pathlingo.ui.fragments.HomeFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/nav_favorites"
-        android:name="com.scholarlyapps.pathlingo.fragments.FavoritesFragment"
+        android:name="com.scholarlyapps.pathlingo.ui.fragments.FavoritesFragment"
         android:label="Favorites"
         tools:layout="@layout/fragment_favorites" />
 
     <fragment
         android:id="@+id/nav_progress"
-        android:name="com.scholarlyapps.pathlingo.fragments.ProgressFragment"
+        android:name="com.scholarlyapps.pathlingo.ui.fragments.ProgressFragment"
         android:label="Progress"
         tools:layout="@layout/fragment_progress" />
 
     <fragment
         android:id="@+id/nav_settings"
-        android:name="com.scholarlyapps.pathlingo.fragments.SettingsFragment"
+        android:name="com.scholarlyapps.pathlingo.ui.fragments.SettingsFragment"
         android:label="Settings"
         tools:layout="@layout/fragment_settings" />
 

@@ -1,4 +1,4 @@
-package com.scholarlyapps.pathlingo.fragments;
+package com.scholarlyapps.pathlingo.ui.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

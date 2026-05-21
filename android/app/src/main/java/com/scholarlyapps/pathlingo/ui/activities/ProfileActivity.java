@@ -1,8 +1,7 @@
-package com.scholarlyapps.pathlingo.activities;
+package com.scholarlyapps.pathlingo.ui.activities;
 
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;

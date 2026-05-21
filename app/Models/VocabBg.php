@@ -31,9 +31,4 @@ class VocabBg extends Model
     {
         return $this->hasMany(VocabSubcategory::class, 'icon_thumbnail_bg', 'vocab_bg_id');
     }
-
-    public function vocabularies(): HasMany
-    {
-        return $this->hasMany(Vocabulary::class, 'image_thumbnail_bg', 'vocab_bg_id');
-    }
 }

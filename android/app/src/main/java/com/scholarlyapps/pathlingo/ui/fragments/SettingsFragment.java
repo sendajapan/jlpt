@@ -1,6 +1,5 @@
-package com.scholarlyapps.pathlingo.fragments;
+package com.scholarlyapps.pathlingo.ui.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import com.scholarlyapps.pathlingo.R;
 import com.scholarlyapps.pathlingo.data.DataManager;
-import com.scholarlyapps.pathlingo.ui.auth.AuthActivity;
 import com.scholarlyapps.pathlingo.ui.auth.LogoutHelper;
 import com.scholarlyapps.pathlingo.models.User;
 

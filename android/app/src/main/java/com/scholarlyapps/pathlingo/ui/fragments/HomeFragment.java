@@ -1,4 +1,4 @@
-package com.scholarlyapps.pathlingo.fragments;
+package com.scholarlyapps.pathlingo.ui.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,8 +12,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.scholarlyapps.pathlingo.R;
-import com.scholarlyapps.pathlingo.activities.CategoryListActivity;
-import com.scholarlyapps.pathlingo.activities.SubcategoryActivity;
+import com.scholarlyapps.pathlingo.ui.activities.CategoryListActivity;
+import com.scholarlyapps.pathlingo.ui.activities.SubcategoryActivity;
 import com.scholarlyapps.pathlingo.adapters.CategoryAdapter;
 import com.scholarlyapps.pathlingo.data.DataManager;
 import com.scholarlyapps.pathlingo.models.User;

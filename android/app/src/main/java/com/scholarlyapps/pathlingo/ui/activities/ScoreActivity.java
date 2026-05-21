@@ -1,4 +1,4 @@
-package com.scholarlyapps.pathlingo.activities;
+package com.scholarlyapps.pathlingo.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import com.scholarlyapps.pathlingo.R;
 import com.scholarlyapps.pathlingo.data.DataManager;
+
 import org.json.JSONObject;
 
 public class ScoreActivity extends AppCompatActivity {
