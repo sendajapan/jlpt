@@ -85,7 +85,38 @@
       "Bash(systemctl status *)",
       "Bash(journalctl -u jlpt-queue-worker -n 20 --no-pager)",
       "Bash(journalctl -u jlpt-queue-worker --since \"2 minutes ago\" --no-pager)",
-      "Bash(python3 -c 'import json,sys; d=json.load\\(sys.stdin\\); print\\(\"paths:\", list\\(d.get\\(\"paths\",{}\\).keys\\(\\)\\)[:5], \"schemas:\", list\\(d.get\\(\"components\",{}\\).get\\(\"schemas\",{}\\).keys\\(\\)\\)\\)')"
+      "Bash(python3 -c 'import json,sys; d=json.load\\(sys.stdin\\); print\\(\"paths:\", list\\(d.get\\(\"paths\",{}\\).keys\\(\\)\\)[:5], \"schemas:\", list\\(d.get\\(\"components\",{}\\).get\\(\"schemas\",{}\\).keys\\(\\)\\)\\)')",
+      "Bash(grep -nE \"MAIL|GOOGLE|FACEBOOK|^$\" /var/www/html/jlpt-laravel-vue/.env.example)",
+      "Bash(rm -f java/com/scholarlyapps/pathlingo/activities/welcome/SplashActivity.java java/com/scholarlyapps/pathlingo/activities/auth/LoginActivity.java java/com/scholarlyapps/pathlingo/activities/auth/SignupActivity.java res/layout/activity_splash.xml res/layout/activity_login.xml res/layout/activity_signup.xml)",
+      "Bash(rmdir java/com/scholarlyapps/pathlingo/activities/welcome java/com/scholarlyapps/pathlingo/activities/auth)",
+      "Bash(./gradlew :app:assembleDebug --no-daemon)",
+      "Bash(chmod +x ./gradlew)",
+      "Bash(gradle --version)",
+      "Bash(unzip -q /tmp/gradle.zip -d /tmp/)",
+      "Bash(/tmp/gradle-8.13/bin/gradle --version)",
+      "Bash(/tmp/gradle-8.13/bin/gradle wrapper *)",
+      "Bash(/tmp/gradle-8.13/bin/gradle :app:assembleDebug --no-daemon)",
+      "Bash(/usr/lib/jvm/jdk-26/bin/javac --version)",
+      "Bash(JAVA_HOME=/usr/lib/jvm/jdk-26 /tmp/gradle-8.13/bin/gradle :app:assembleDebug --no-daemon)",
+      "Bash(/usr/lib/jvm/java-21-openjdk-amd64/bin/javac --version)",
+      "Bash(JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64 /tmp/gradle-8.13/bin/gradle :app:assembleDebug --no-daemon)",
+      "Bash(mkdir -p /root/android-sdk/cmdline-tools)",
+      "Read(//root/android-sdk/**)",
+      "Bash(unzip -q commandlinetools-linux-11076708_latest.zip)",
+      "Bash(mv cmdline-tools *)",
+      "Bash(export ANDROID_HOME=/root/android-sdk JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64)",
+      "Bash(yes)",
+      "Bash(mysqldump --no-tablespaces -h 127.0.0.1 -u sendajapan1 -psulaiman007 jlpt_db)",
+      "Bash(echo \"exit=$?\")",
+      "Bash(grep -oE \"INSERT INTO \\\\`[^\\\\`]+\\\\`\" database/backups/jlpt_db.sql)",
+      "Bash(mkdir -p .claude/memory)",
+      "Bash(cp /root/.claude/projects/-var-www-html-jlpt-laravel-vue/memory/*.md .claude/memory/)",
+      "Bash(systemctl reload *)",
+      "Bash(python3 -c 'import json,sys; d=json.load\\(sys.stdin\\); print\\(d[\"servers\"]\\)')"
     ]
-  }
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "laravel-boost"
+  ]
 }

@@ -13,9 +13,7 @@ class LoginController extends Controller
 {
     use IssuesAuthResponse;
 
-    public function __construct(private AppUserAuthService $auth)
-    {
-    }
+    public function __construct(private AppUserAuthService $auth) {}
 
     #[OA\Post(
         path: '/api/v1/auth/login',
@@ -26,8 +24,8 @@ class LoginController extends Controller
             content: new OA\JsonContent(
                 required: ['email', 'password', 'device_name'],
                 properties: [
-                    new OA\Property(property: 'email', type: 'string', format: 'email'),
-                    new OA\Property(property: 'password', type: 'string', format: 'password'),
+                    new OA\Property(property: 'email', type: 'string', format: 'email', example: 'sulaiman@sendajapan.com'),
+                    new OA\Property(property: 'password', type: 'string', format: 'password', example: 'p@ssword'),
                     new OA\Property(property: 'device_name', type: 'string', example: 'iphone-15'),
                 ]
             )

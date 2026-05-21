@@ -86,11 +86,13 @@
                                 "properties": {
                                     "email": {
                                         "type": "string",
-                                        "format": "email"
+                                        "format": "email",
+                                        "example": "sulaiman@sendajapan.com"
                                     },
                                     "password": {
                                         "type": "string",
-                                        "format": "password"
+                                        "format": "password",
+                                        "example": "p@ssword"
                                     },
                                     "device_name": {
                                         "type": "string",
@@ -1135,8 +1137,13 @@
                         "nullable": true
                     },
                     "category_bg_path": {
+                        "type": "integer",
+                        "example": 1,
+                        "nullable": true
+                    },
+                    "bg_url": {
                         "type": "string",
-                        "example": "1",
+                        "format": "uri",
                         "nullable": true
                     },
                     "audio_url": {
@@ -1192,8 +1199,13 @@
                         "nullable": true
                     },
                     "icon_thumbnail_bg": {
+                        "type": "integer",
+                        "example": 3,
+                        "nullable": true
+                    },
+                    "bg_url": {
                         "type": "string",
-                        "example": "#e8f5e9",
+                        "format": "uri",
                         "nullable": true
                     },
                     "audio_url": {
@@ -1283,8 +1295,13 @@
                         "nullable": true
                     },
                     "image_thumbnail_bg": {
+                        "type": "integer",
+                        "example": 5,
+                        "nullable": true
+                    },
+                    "bg_url": {
                         "type": "string",
-                        "example": "#e3f2fd",
+                        "format": "uri",
                         "nullable": true
                     },
                     "sort_order": {
