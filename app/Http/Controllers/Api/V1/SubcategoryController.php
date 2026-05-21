@@ -13,10 +13,32 @@ class SubcategoryController extends Controller
 {
     #[OA\Get(
         path: '/api/v1/subcategories',
+        summary: 'List subcategories, optionally filtered by category',
         tags: ['Public'],
-        summary: 'List subcategories (optionally filtered by category_id)',
-        parameters: [new OA\Parameter(name: 'category_id', in: 'query', required: false, schema: new OA\Schema(type: 'integer'))],
-        responses: [new OA\Response(response: 200, description: 'OK')]
+        parameters: [
+            new OA\Parameter(
+                name: 'category_id',
+                in: 'query',
+                required: false,
+                description: 'Filter by parent category ID',
+                schema: new OA\Schema(type: 'integer', example: 1)
+            ),
+        ],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: 'List of subcategories ordered by sort_order then name_en',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(
+                            property: 'data',
+                            type: 'array',
+                            items: new OA\Items(ref: '#/components/schemas/VocabSubcategory')
+                        ),
+                    ]
+                )
+            ),
+        ]
     )]
     public function index(Request $request): JsonResponse
     {

@@ -13,14 +13,46 @@ class VocabularyController extends Controller
 {
     #[OA\Get(
         path: '/api/v1/vocabularies',
+        summary: 'List approved vocab words with optional search and filters',
         tags: ['Public'],
-        summary: 'List vocab words (optional search and filters)',
         parameters: [
-            new OA\Parameter(name: 'search', in: 'query', required: false, schema: new OA\Schema(type: 'string')),
-            new OA\Parameter(name: 'category_id', in: 'query', required: false, schema: new OA\Schema(type: 'integer')),
-            new OA\Parameter(name: 'subcategory_id', in: 'query', required: false, schema: new OA\Schema(type: 'integer')),
+            new OA\Parameter(
+                name: 'search',
+                in: 'query',
+                required: false,
+                description: 'Search across word_jp, word_romaji, and word_en',
+                schema: new OA\Schema(type: 'string', example: 'neko')
+            ),
+            new OA\Parameter(
+                name: 'category_id',
+                in: 'query',
+                required: false,
+                description: 'Filter words that belong to subcategories of this category',
+                schema: new OA\Schema(type: 'integer', example: 1)
+            ),
+            new OA\Parameter(
+                name: 'subcategory_id',
+                in: 'query',
+                required: false,
+                description: 'Filter words that belong to this subcategory',
+                schema: new OA\Schema(type: 'integer', example: 3)
+            ),
         ],
-        responses: [new OA\Response(response: 200, description: 'OK')]
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: 'List of approved vocab words ordered by sort_order then word_jp',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(
+                            property: 'data',
+                            type: 'array',
+                            items: new OA\Items(ref: '#/components/schemas/VocabWord')
+                        ),
+                    ]
+                )
+            ),
+        ]
     )]
     public function index(Request $request): JsonResponse
     {

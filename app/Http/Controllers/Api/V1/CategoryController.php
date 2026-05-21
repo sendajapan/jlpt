@@ -12,9 +12,23 @@ class CategoryController extends Controller
 {
     #[OA\Get(
         path: '/api/v1/categories',
-        tags: ['Public'],
         summary: 'List all vocab categories',
-        responses: [new OA\Response(response: 200, description: 'OK')]
+        tags: ['Public'],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: 'List of vocab categories ordered by sort_order then name_en',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(
+                            property: 'data',
+                            type: 'array',
+                            items: new OA\Items(ref: '#/components/schemas/VocabCategory')
+                        ),
+                    ]
+                )
+            ),
+        ]
     )]
     public function index(): JsonResponse
     {

@@ -89,6 +89,62 @@ use OpenApi\Attributes as OA;
         new OA\Property(property: 'created_at', type: 'string', format: 'date-time'),
     ]
 )]
+#[OA\Schema(
+    schema: 'VocabCategory',
+    type: 'object',
+    properties: [
+        new OA\Property(property: 'id', type: 'integer', example: 1),
+        new OA\Property(property: 'name_en', type: 'string', nullable: true, example: 'Animals'),
+        new OA\Property(property: 'name_jp', type: 'string', nullable: true, example: 'どうぶつ'),
+        new OA\Property(property: 'name_romaji', type: 'string', nullable: true, example: 'doubutsu'),
+        new OA\Property(property: 'icon_url', type: 'string', format: 'uri', nullable: true),
+        new OA\Property(property: 'icon_thumbnail_url', type: 'string', format: 'uri', nullable: true),
+        new OA\Property(property: 'category_bg_path', type: 'string', nullable: true, example: '1'),
+        new OA\Property(property: 'audio_url', type: 'string', format: 'uri', nullable: true),
+        new OA\Property(property: 'sort_order', type: 'integer', nullable: true, example: 10),
+        new OA\Property(property: 'is_premium', type: 'boolean', example: false),
+    ]
+)]
+#[OA\Schema(
+    schema: 'VocabSubcategory',
+    type: 'object',
+    properties: [
+        new OA\Property(property: 'id', type: 'integer', example: 3),
+        new OA\Property(property: 'vocab_category_id', type: 'integer', example: 1),
+        new OA\Property(property: 'name_en', type: 'string', nullable: true, example: 'Farm Animals'),
+        new OA\Property(property: 'name_jp', type: 'string', nullable: true, example: 'のうじょうのどうぶつ'),
+        new OA\Property(property: 'name_romaji', type: 'string', nullable: true, example: 'noujou no doubutsu'),
+        new OA\Property(property: 'icon_url', type: 'string', format: 'uri', nullable: true),
+        new OA\Property(property: 'icon_thumbnail_url', type: 'string', format: 'uri', nullable: true),
+        new OA\Property(property: 'icon_thumbnail_bg', type: 'string', nullable: true, example: '#e8f5e9'),
+        new OA\Property(property: 'audio_url', type: 'string', format: 'uri', nullable: true),
+        new OA\Property(property: 'sort_order', type: 'integer', nullable: true, example: 10),
+        new OA\Property(property: 'is_premium', type: 'boolean', example: false),
+    ]
+)]
+#[OA\Schema(
+    schema: 'VocabWord',
+    type: 'object',
+    properties: [
+        new OA\Property(property: 'id', type: 'integer', example: 42),
+        new OA\Property(property: 'vocab_subcategory_id', type: 'integer', example: 3),
+        new OA\Property(property: 'word_jp', type: 'string', example: 'ねこ'),
+        new OA\Property(property: 'word_romaji', type: 'string', nullable: true, example: 'neko'),
+        new OA\Property(property: 'word_en', type: 'string', nullable: true, example: 'cat'),
+        new OA\Property(property: 'sentence_jp', type: 'string', nullable: true, example: 'ねこがいます。'),
+        new OA\Property(property: 'sentence_romaji', type: 'string', nullable: true, example: 'Neko ga imasu.'),
+        new OA\Property(property: 'sentence_en', type: 'string', nullable: true, example: 'There is a cat.'),
+        new OA\Property(property: 'audio_jp_url', type: 'string', format: 'uri', nullable: true),
+        new OA\Property(property: 'audio_en_url', type: 'string', format: 'uri', nullable: true),
+        new OA\Property(property: 'sentence_audio_jp_url', type: 'string', format: 'uri', nullable: true),
+        new OA\Property(property: 'sentence_audio_en_url', type: 'string', format: 'uri', nullable: true),
+        new OA\Property(property: 'image_url', type: 'string', format: 'uri', nullable: true),
+        new OA\Property(property: 'image_thumbnail_url', type: 'string', format: 'uri', nullable: true),
+        new OA\Property(property: 'image_thumbnail_bg', type: 'string', nullable: true, example: '#e3f2fd'),
+        new OA\Property(property: 'sort_order', type: 'integer', nullable: true, example: 10),
+        new OA\Property(property: 'is_premium', type: 'boolean', example: false),
+    ]
+)]
 class OpenApi
 {
 }
