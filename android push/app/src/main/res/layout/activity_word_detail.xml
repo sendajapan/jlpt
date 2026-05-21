@@ -1,0 +1,218 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/paper">
+
+    <!-- Hero section -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="320dp"
+        android:background="@drawable/bg_word">
+
+        <Button
+            android:id="@+id/btn_back"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="top|start"
+            android:layout_margin="16dp"
+            android:text="Back"
+            android:textSize="18sp" />
+    </FrameLayout>
+
+    <!-- Content scroll -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Word card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="20dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="JAPANESE"
+                        android:textSize="10sp"
+                        android:textColor="@color/ink_soft"
+                        android:layout_marginBottom="4dp" />
+
+                    <TextView
+                        android:id="@+id/kanji"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Label"
+                        android:textSize="48sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/ink"
+                        android:layout_marginBottom="4dp" />
+
+                    <TextView
+                        android:id="@+id/reading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="reading"
+                        android:textSize="14sp"
+                        android:textColor="@color/ink_soft"
+                        android:layout_marginBottom="16dp" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:text="Item Play"
+                        android:textColor="@color/white"
+                        android:background="@drawable/bg_pill_sage"
+                        android:layout_marginBottom="16dp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/paper2"
+                        android:layout_marginBottom="16dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ROMAJI"
+                        android:textSize="10sp"
+                        android:textColor="@color/ink_soft"
+                        android:layout_marginBottom="4dp" />
+
+                    <TextView
+                        android:id="@+id/romaji"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="neko"
+                        android:textSize="16sp"
+                        android:textStyle="italic"
+                        android:textColor="@color/ink"
+                        android:layout_marginBottom="16dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ENGLISH"
+                        android:textSize="10sp"
+                        android:textColor="@color/ink_soft"
+                        android:layout_marginBottom="4dp" />
+
+                    <TextView
+                        android:id="@+id/english"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="cat"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/terra_deep" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Example sentence card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="16dp"
+                app:cardBackgroundColor="@color/sage"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="start|center_vertical"
+                        android:layout_marginBottom="12dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Item EXAMPLE"
+                            android:textSize="11sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/white" />
+
+                        <Button
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:text="Label"
+                            android:textSize="14sp"
+                            android:background="@drawable/bg_card_white" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/example_jp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Example"
+                        android:textSize="14sp"
+                        android:textColor="@color/white"
+                        android:layout_marginBottom="8dp" />
+
+                    <TextView
+                        android:id="@+id/example_romaji"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="uchi no neko wa totemo kawaii desu."
+                        android:textSize="11sp"
+                        android:textStyle="italic"
+                        android:textColor="@color/white"
+                        android:alpha="0.8"
+                        android:layout_marginBottom="8dp" />
+
+                    <TextView
+                        android:id="@+id/example_en"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="My cat is very cute."
+                        android:textSize="12sp"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Meta chips -->
+            <LinearLayout
+                android:id="@+id/chips_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="start"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Next button -->
+            <Button
+                android:id="@+id/btn_next"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="Next"
+                android:textColor="@color/white"
+                android:background="@drawable/bg_pill_terra" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
+

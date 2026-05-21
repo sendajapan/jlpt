@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.scholarlyapps.pathlingo.fragments.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_login_to_home"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.scholarlyapps.pathlingo.fragments.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_home_to_subcategory"
+            app:destination="@id/subcategoryFragment" />
+        <action
+            android:id="@+id/action_home_to_profile"
+            app:destination="@id/profileFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/subcategoryFragment"
+        android:name="com.scholarlyapps.pathlingo.fragments.SubcategoryFragment"
+        android:label="fragment_subcategory"
+        tools:layout="@layout/fragment_subcategory">
+        <argument
+            android:name="categoryId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_subcategory_to_wordDetail"
+            app:destination="@id/wordDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/wordDetailFragment"
+        android:name="com.scholarlyapps.pathlingo.fragments.WordDetailFragment"
+        android:label="fragment_word_detail"
+        tools:layout="@layout/fragment_word_detail">
+        <argument
+            android:name="categoryId"
+            app:argType="string" />
+        <argument
+            android:name="subcategoryId"
+            app:argType="string" />
+        <argument
+            android:name="wordIndex"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <action
+            android:id="@+id/action_wordDetail_to_score"
+            app:destination="@id/scoreFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/scoreFragment"
+        android:name="com.scholarlyapps.pathlingo.fragments.ScoreFragment"
+        android:label="fragment_score"
+        tools:layout="@layout/fragment_score">
+        <action
+            android:id="@+id/action_score_to_home"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.scholarlyapps.pathlingo.fragments.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+
+</navigation>

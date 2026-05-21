@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="preloaded_fonts" translatable="false">
+        <!-- Nunito: Thin to Black -->
+        <item>@font/nunito_thin</item>
+        <item>@font/nunito_extralight</item>
+        <item>@font/nunito_light</item>
+        <item>@font/nunito_regular</item>
+        <item>@font/nunito_medium</item>
+        <item>@font/nunito_semibold</item>
+        <item>@font/nunito_bold</item>
+        <item>@font/nunito_extrabold</item>
+        <item>@font/nunito_black</item>
+        <!-- Noto Sans JP: Thin to Black -->
+        <item>@font/noto_sans_jp_thin</item>
+        <item>@font/noto_sans_jp_light</item>
+        <item>@font/noto_sans_jp_regular</item>
+        <item>@font/noto_sans_jp_medium</item>
+        <item>@font/noto_sans_jp_semibold</item>
+        <item>@font/noto_sans_jp_bold</item>
+        <item>@font/noto_sans_jp_black</item>
+        <!-- Montserrat: Thin to Black -->
+        <item>@font/montserrat_thin</item>
+        <item>@font/montserrat_extralight</item>
+        <item>@font/montserrat_light</item>
+        <item>@font/montserrat_regular</item>
+        <item>@font/montserrat_medium</item>
+        <item>@font/montserrat_semibold</item>
+        <item>@font/montserrat_bold</item>
+        <item>@font/montserrat_extrabold</item>
+        <item>@font/montserrat_black</item>
+    </array>
+</resources>

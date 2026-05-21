@@ -1,0 +1,354 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imgBackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/bg_login" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:clipChildren="false"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingHorizontal="16dp">
+
+        <!-- Branding section -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:cardBackgroundColor="@color/surface"
+            app:cardCornerRadius="50dp"
+            app:cardElevation="0dp">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_owl" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Subtitle -->
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="はじめ"
+            android:fontFamily="@font/noto_sans_jp_bold"
+            android:textColor="@color/ink_soft"
+            android:textSize="12sp"
+            android:includeFontPadding="false"/>
+
+        <!-- App title - Material 3 Display Large -->
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/nunito_extrabold"
+            android:text="Hajime"
+            android:textColor="@color/ink"
+            android:textSize="32sp"
+            android:textStyle="bold" />
+
+        <!-- Tagline - Material 3 Label Large -->
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_medium"
+            android:letterSpacing="0.1"
+            android:text="FUN LANGUAGE LEARNING"
+            android:textColor="@color/terra_deep"
+            android:textSize="10sp"
+            android:textStyle="bold" />
+
+        <!-- Subtitle text -->
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:text="Words heal the soul in your heart"
+            android:fontFamily="@font/montserrat_regular"
+            android:textColor="@color/ink_soft"
+            android:textSize="12sp" />
+
+        <!-- Login card - Material 3 CardView -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="0dp"
+            app:cardBackgroundColor="@color/morphic_card_transparent"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="24dp">
+
+                <!-- Welcome text - Material 3 Headline Small -->
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:text="Welcome back"
+                    android:textColor="@color/ink"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <!-- Email label -->
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:letterSpacing="0.05"
+                    android:text="EMAIL"
+                    android:textColor="@color/ink_soft"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+
+                <!-- Email field - Material 3 OutlinedTextField -->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginBottom="8dp"
+                    android:hint="hana@hajime-app"
+                    app:boxBackgroundColor="@color/white"
+                    app:boxCornerRadiusBottomEnd="10dp"
+                    app:boxCornerRadiusBottomStart="10dp"
+                    app:boxCornerRadiusTopEnd="10dp"
+                    app:boxCornerRadiusTopStart="10dp"
+                    app:boxStrokeColor="@android:color/transparent"
+                    app:boxStrokeErrorColor="@color/secondary"
+                    app:boxStrokeWidth="0dp"
+                    app:counterEnabled="false"
+                    app:hintTextColor="@color/ink_soft">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/montserrat_semibold"
+                        android:inputType="textEmailAddress"
+                        android:textColor="@color/ink"
+                        android:textSize="14sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Password label -->
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:letterSpacing="0.05"
+                    android:text="PASSWORD"
+                    android:textColor="@color/ink_soft"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+
+                <!-- Password field - Material 3 OutlinedTextField -->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:hint="••••••••••"
+                    app:boxBackgroundColor="@color/white"
+                    app:boxCornerRadiusBottomEnd="10dp"
+                    app:boxCornerRadiusBottomStart="10dp"
+                    app:boxCornerRadiusTopEnd="10dp"
+                    app:boxCornerRadiusTopStart="10dp"
+                    app:boxStrokeColor="@android:color/transparent"
+                    app:boxStrokeErrorColor="@color/secondary"
+                    app:boxStrokeWidth="0dp"
+                    app:counterEnabled="false"
+                    app:hintTextColor="@color/ink_soft"
+                    app:passwordToggleEnabled="true"
+                    app:passwordToggleTint="@color/ink_soft">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/montserrat_semibold"
+                        android:inputType="textPassword"
+                        android:textColor="@color/ink"
+                        android:textSize="14sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Remember me & Forgot -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="@color/primary"
+                        android:checked="true"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:text="Remember me"
+                        android:textColor="@color/ink"
+                        android:textSize="12sp" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:text="Forgot password?"
+                        android:scaleX="0.8"
+                        android:scaleY="0.8"
+                        android:textColor="@color/primary"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <!-- Begin learning button - Material 3 Button -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_begin_learning"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/nunito_bold"
+                    android:text="Begin learning →"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:textAllCaps="false"
+                    android:textStyle="bold"
+                    app:backgroundTint="#6E9579"
+                    app:cornerRadius="24dp" />
+
+                <!-- Divider with text -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1"
+                        android:alpha="0.3"
+                        android:background="@color/ink_mute" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:letterSpacing="0.05"
+                        android:paddingHorizontal="12dp"
+                        android:text="OR CONTINUE WITH"
+                        android:textColor="@color/ink_soft"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1"
+                        android:alpha="0.3"
+                        android:background="@color/ink_mute" />
+                </LinearLayout>
+
+                <!-- Social buttons - Material 3 Outlined Button -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:spacing="8dp">
+
+                    <com.google.android.material.button.MaterialButton
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp"
+                        android:layout_height="44dp"
+                        android:layout_margin="6dp"
+                        android:layout_weight="1"
+                        android:text="Google"
+                        android:textColor="@color/ink"
+                        android:textSize="11sp"
+                        app:cornerRadius="10dp"
+                        app:strokeColor="@color/ink_mute"
+                        app:strokeWidth="1dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp"
+                        android:layout_height="44dp"
+                        android:layout_margin="6dp"
+                        android:layout_weight="1"
+                        android:text="Facebook"
+                        android:textColor="@color/ink"
+                        android:textSize="11sp"
+                        app:cornerRadius="10dp"
+                        app:strokeColor="@color/ink_mute"
+                        app:strokeWidth="1dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp"
+                        android:layout_height="44dp"
+                        android:layout_margin="6dp"
+                        android:layout_weight="1"
+                        android:text="Apple"
+                        android:textColor="@color/ink"
+                        android:textSize="11sp"
+                        app:cornerRadius="10dp"
+                        app:strokeColor="@color/ink_mute"
+                        app:strokeWidth="1dp" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:layout_marginBottom="24dp"
+        android:orientation="horizontal">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="New to Hajime? "
+            android:textColor="@color/ink_soft"
+            android:textSize="9sp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="Create account"
+            android:textColor="@color/terra_deep"
+            android:textSize="9sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</RelativeLayout>
+

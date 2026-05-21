@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Hajime · Category background — family
+  Layered: base diagonal gradient + soft top highlight + bottom-right watercolor splotch.
+  Compatible with API 24+ (uses ShapeDrawable gradients, no VectorDrawable shenanigans).
+  Use as android:background on the category card.
+-->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 1. Base diagonal gradient (160deg approximated as TL → BR) -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="linear"
+                android:angle="315"
+                android:startColor="#C9B7DC"
+                android:endColor="#CCAC97C6"/>
+        </shape>
+    </item>
+
+    <!-- 2. Top inner highlight (white sheen along top edge) -->
+    <item android:bottom="0dp">
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="linear"
+                android:angle="270"
+                android:startColor="#73FFFFFF"
+                android:centerColor="#26FFFFFF"
+                android:endColor="#00FFFFFF"
+                android:centerY="0.18"/>
+        </shape>
+    </item>
+
+    <!-- 3. Bottom-right watercolor splotch (radial wash) -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="radial"
+                android:gradientRadius="320dp"
+                android:centerX="0.95"
+                android:centerY="1.05"
+                android:startColor="#80FFFFFF"
+                android:centerColor="#3DFFFFFF"
+                android:endColor="#00FFFFFF"/>
+        </shape>
+    </item>
+
+    <!-- 4. Subtle top-left bloom -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="radial"
+                android:gradientRadius="280dp"
+                android:centerX="0.05"
+                android:centerY="0.0"
+                android:startColor="#3DFFFFFF"
+                android:endColor="#00FFFFFF"/>
+        </shape>
+    </item>
+
+</layer-list>

@@ -1,0 +1,365 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/paper">
+
+    <!-- Hero section -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:background="@drawable/bg_profile">
+
+        <Button
+            android:id="@+id/btn_back"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="top|start"
+            android:layout_margin="16dp"
+            android:text="Item"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center_horizontal|bottom"
+            android:paddingBottom="20dp">
+
+            <!-- Avatar -->
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/ic_owl"
+                android:background="@color/white"
+                app:civ_border_width="3dp"
+                app:civ_border_color="@color/terra"
+                android:layout_marginBottom="12dp" />
+
+            <TextView
+                android:id="@+id/user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hana Watanabe"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/ink" />
+
+            <TextView
+                android:id="@+id/user_jp_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Label"
+                android:textSize="12sp"
+                android:textColor="@color/ink_soft" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <!-- Content scroll -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Level card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="16dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="start|center_vertical"
+                        android:layout_marginBottom="8dp">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="LEVEL"
+                                android:textSize="10sp"
+                                android:textColor="@color/ink_soft" />
+
+                            <TextView
+                                android:id="@+id/user_level"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Level 7"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/ink" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="APPRENTICE"
+                                android:textSize="10sp"
+                                android:textColor="@color/ink_soft" />
+
+                            <TextView
+                                android:id="@+id/user_subtitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Apprentice  since May 2026"
+                                android:textSize="11sp"
+                                android:textColor="@color/sage" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <ProgressBar
+                        android:id="@+id/xp_progress"
+                        android:layout_width="match_parent"
+                        android:layout_height="6dp"
+                        android:progress="64"
+                        android:background="@drawable/progress_bg"
+                        android:progressDrawable="@drawable/progress_bar"
+                        android:layout_marginBottom="8dp" />
+
+                    <TextView
+                        android:id="@+id/user_xp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="320/500 XP"
+                        android:textSize="10sp"
+                        android:textColor="@color/ink_soft" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Stats -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginBottom="24dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/stat_words"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="142 words"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/ink"
+                        android:layout_marginBottom="4dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Item Known"
+                        android:textSize="10sp"
+                        android:textColor="@color/ink_soft" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/stat_streak"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="7 day streak"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/terra"
+                        android:layout_marginBottom="4dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Item Streak"
+                        android:textSize="10sp"
+                        android:textColor="@color/ink_soft" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/stat_accuracy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="86% accuracy"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/sage"
+                        android:layout_marginBottom="4dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Accuracy"
+                        android:textSize="10sp"
+                        android:textColor="@color/ink_soft" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Settings section -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SETTINGS"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="@color/ink"
+                android:layout_marginBottom="12dp" />
+
+            <!-- Notification setting -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:orientation="horizontal"
+                android:gravity="start|center_vertical"
+                android:paddingHorizontal="12dp"
+                android:background="@color/white"
+                android:layout_marginBottom="1dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Item Notifications"
+                        android:textSize="13sp"
+                        android:textColor="@color/ink" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Daily 8:00"
+                        android:textSize="11sp"
+                        android:textColor="@color/ink_soft" />
+                </LinearLayout>
+
+                <Switch
+                    android:id="@+id/toggle_notifications"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <!-- Sound setting -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:orientation="horizontal"
+                android:gravity="start|center_vertical"
+                android:paddingHorizontal="12dp"
+                android:background="@color/white"
+                android:layout_marginBottom="1dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Item Sound effects"
+                    android:textSize="13sp"
+                    android:textColor="@color/ink" />
+
+                <Switch
+                    android:id="@+id/toggle_sound"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <!-- Dark mode setting -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:orientation="horizontal"
+                android:gravity="start|center_vertical"
+                android:paddingHorizontal="12dp"
+                android:background="@color/white"
+                android:layout_marginBottom="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Item Dark mode"
+                    android:textSize="13sp"
+                    android:textColor="@color/ink" />
+
+                <Switch
+                    android:id="@+id/toggle_dark"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <!-- Support section -->
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="Item Help &amp; Feedback"
+                android:textSize="13sp"
+                android:textColor="@color/ink"
+                android:gravity="start|center_vertical"
+                android:paddingStart="16dp"
+                android:background="@color/white"
+                android:layout_marginBottom="1dp" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="Item Upgrade to Pro"
+                android:textSize="13sp"
+                android:textColor="@color/terra"
+                android:gravity="start|center_vertical"
+                android:paddingStart="16dp"
+                android:background="@color/white"
+                android:layout_marginBottom="1dp" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="Item Sign out"
+                android:textSize="13sp"
+                android:textColor="@color/ink"
+                android:gravity="start|center_vertical"
+                android:paddingStart="16dp"
+                android:background="@color/white" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
+

@@ -1,0 +1,38 @@
+# Build files
+*.apk
+*.ap_
+*.dex
+*.class
+bin/
+build/
+gen/
+out/
+
+# Gradle files
+.gradle/
+gradle-app.setting
+!gradle-wrapper.jar
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.iml
+*.iws
+*.ipr
+*.iml
+
+# Local properties
+local.properties
+
+# Generated files
+.DS_Store
+
+# Android Studio specific files
+*.so
+*.jar
+*.aar
+
+# Test coverage
+coverage/
+.coverage

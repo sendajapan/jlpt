@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">PathLingo</string>
+    <string name="animals_category">Animals category</string>
+    <string name="food_category">Food category</string>
+    <string name="greetings_category">Greetings category</string>
+    <string name="family_category">Family category</string>
+    <string name="travel_category">Travel category</string>
+    <string name="things_category">Things category</string>
+    <string name="nav_home">Home</string>
+    <string name="nav_favorites">Favorites</string>
+    <string name="nav_progress">Progress</string>
+    <string name="nav_settings">Settings</string>
+</resources>

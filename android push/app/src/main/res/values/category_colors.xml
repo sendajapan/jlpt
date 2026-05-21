@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="cat_animals_bg">#9CBFA1</color>
+    <color name="cat_animals_ink">#2E523A</color>
+
+    <color name="cat_food_bg">#F2CE6A</color>
+    <color name="cat_food_ink">#7A5A18</color>
+
+    <color name="cat_family_bg">#C9B7DC</color>
+    <color name="cat_family_ink">#4A3A6A</color>
+
+    <color name="cat_travel_bg">#A8C9D6</color>
+    <color name="cat_travel_ink">#2A4A5A</color>
+
+    <color name="cat_things_bg">#EFB6B0</color>
+    <color name="cat_things_ink">#7A3A38</color>
+
+    <color name="cat_greetings_bg">#D78867</color>
+    <color name="cat_greetings_ink">#5C2A18</color>
+</resources>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Rounded corners for the nav bar card itself -->
+    <style name="BottomNavShapeOverlay" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">24dp</item>
+    </style>
+
+    <!-- No indicator behind selected item -->
+    <style name="BottomNavActiveIndicatorStyle">
+        <item name="android:width">0dp</item>
+        <item name="android:height">0dp</item>
+    </style>
+
+    <!-- Label text styles -->
+    <style name="BottomNavLabelActive" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
+    </style>
+
+    <style name="BottomNavLabelInactive" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textColor">@color/ink_soft</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
+    </style>
+
+    <style name="Theme.PathLingo" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/sage_deep</item>
+        <item name="colorSecondary">@color/terra</item>
+        <item name="colorTertiary">@color/butter</item>
+        <item name="android:colorBackground">@color/paper</item>
+        <item name="android:textColor">@color/ink</item>
+        <item name="android:textColorPrimary">@color/ink</item>
+        <item name="android:textColorSecondary">@color/ink_soft</item>
+        <item name="android:windowBackground">@color/paper</item>
+    </style>
+</resources>

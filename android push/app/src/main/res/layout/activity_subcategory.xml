@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/paper">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="280dp"
+        android:background="@drawable/bg_subcategory">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="蜍・"
+                android:textSize="120sp"
+                android:textColor="@color/terra"
+                android:alpha="0.1" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_back"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="top|start"
+            android:layout_margin="16dp"
+            android:text="竊・"
+            android:textSize="18sp" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="縺ｩ縺・・縺､ / Animals"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/ink"
+            android:layout_marginBottom="4dp" />
+
+        <TextView
+            android:id="@+id/word_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="36 words ﾂｷ across 4 worlds"
+            android:textSize="12sp"
+            android:textColor="@color/ink_soft"
+            android:layout_marginBottom="16dp" />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/subcategory_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingHorizontal="16dp"
+        android:scrollbars="vertical" />
+</LinearLayout>

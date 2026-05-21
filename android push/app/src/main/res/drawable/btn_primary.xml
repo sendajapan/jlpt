@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/shape">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/hajime_sage" />
+            <corners android:radius="999dp" />
+            <gradient
+                android:type="linear"
+                android:angle="90"
+                android:startColor="#9CBFA1"
+                android:endColor="#6E9579" />
+        </shape>
+    </item>
+    <item android:id="@+id/ripple">
+        <ripple android:color="@color/hajime_sage_dark" android:radius="999dp" />
+    </item>
+</layer-list>
