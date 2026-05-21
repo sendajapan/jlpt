@@ -15,11 +15,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <View
+        <ImageView
             android:id="@+id/bg_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/bg_cat_animals_rounded" />
+            android:scaleType="centerCrop"
+            android:background="@drawable/bg_cat_animals_rounded"
+            android:contentDescription="@null" />
 
         <ImageView
             android:id="@+id/category_image"

@@ -12,6 +12,7 @@ data class CategoryDto(
     @Json(name = "icon_url") val iconUrl: String?,
     @Json(name = "icon_thumbnail_url") val iconThumbnailUrl: String?,
     @Json(name = "category_bg_path") val categoryBgPath: String?,
+    @Json(name = "bg_url") val bgUrl: String?,
     @Json(name = "audio_url") val audioUrl: String?,
     @Json(name = "sort_order") val sortOrder: Int?,
     @Json(name = "is_premium") val isPremium: Boolean = false,

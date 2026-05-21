@@ -70,7 +70,7 @@ class DataManager private constructor() {
                 jp = c.nameJp.orEmpty()
                 en = c.nameEn.orEmpty()
                 ch = c.nameRomaji.orEmpty()
-                bg = c.categoryBgPath.orEmpty()
+                bg = c.bgUrl.orEmpty()
                 img = c.iconUrl.orEmpty()
                 progress = 0
                 locked = c.isPremium

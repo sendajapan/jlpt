@@ -56,7 +56,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
     static class CategoryViewHolder extends RecyclerView.ViewHolder {
         private final CardView cardView;
-        private final View bgView;
+        private final ImageView bgView;
         private final ImageView categoryImage;
         private final TextView tvChar;
         private final TextView jpName;
@@ -81,12 +81,23 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         void bind(Category category, OnCategoryClickListener listener) {
             Context ctx = itemView.getContext();
 
-            // Gradient background on dedicated bg_view
-            int bgRes = ctx.getResources().getIdentifier(
-                    "bg_cat_" + category.id + "_rounded", "drawable", ctx.getPackageName());
-            if (bgRes != 0 && bgView != null) {
-                cardView.setCardBackgroundColor(Color.TRANSPARENT);
-                bgView.setBackgroundResource(bgRes);
+            if (bgView != null && category.bg != null && !category.bg.isEmpty()) {
+                if (category.bg.startsWith("http")) {
+                    cardView.setCardBackgroundColor(Color.TRANSPARENT);
+                    ImageRequest bgRequest = new ImageRequest.Builder(ctx)
+                            .data(category.bg)
+                            .target(bgView)
+                            .crossfade(true)
+                            .build();
+                    Coil.imageLoader(ctx).enqueue(bgRequest);
+                } else {
+                    int bgRes = ctx.getResources().getIdentifier(
+                            "bg_cat_" + category.id + "_rounded", "drawable", ctx.getPackageName());
+                    if (bgRes != 0) {
+                        cardView.setCardBackgroundColor(Color.TRANSPARENT);
+                        bgView.setBackgroundResource(bgRes);
+                    }
+                }
             }
 
             // Ink color for text
