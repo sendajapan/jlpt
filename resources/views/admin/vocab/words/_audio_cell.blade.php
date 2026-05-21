@@ -50,7 +50,6 @@
     <template x-if="!gone && !url && {{ $existing ? 'true' : 'false' }}">
         <div id="id_{{$field}}" class="inline-flex items-center gap-1">
             <label class="inline-flex items-center gap-1 cursor-pointer select-none">
-                <img src="https://pathlingo.scholarlyapps.com/storage/vocab/words/images/image_2d3b065e-e0e8-45d1-8c42-d7f0ede9d435.png" onclick="">
                 <input type="checkbox" :checked="reviewed" @change="toggleReviewed($event.target.checked)" class="accent-green-600 w-3.5 h-3.5">
                 <span class="text-[10px]" :class="reviewed ? 'text-green-600 font-medium' : 'text-zinc-400'"></span>
             </label>
