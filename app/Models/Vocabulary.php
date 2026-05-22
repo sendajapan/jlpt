@@ -27,6 +27,7 @@ class Vocabulary extends Model
         'sort_order',
         'is_premium',
         'is_approved',
+        'level',
         'voice_id',
         'audio_jp_reviewed',
         'audio_en_reviewed',
