@@ -112,7 +112,11 @@
       "Bash(mkdir -p .claude/memory)",
       "Bash(cp /root/.claude/projects/-var-www-html-jlpt-laravel-vue/memory/*.md .claude/memory/)",
       "Bash(systemctl reload *)",
-      "Bash(python3 -c 'import json,sys; d=json.load\\(sys.stdin\\); print\\(d[\"servers\"]\\)')"
+      "Bash(python3 -c 'import json,sys; d=json.load\\(sys.stdin\\); print\\(d[\"servers\"]\\)')",
+      "Read(//mnt/c/Users/sulai/Herd/**)",
+      "PowerShell(php artisan route:list --name=admin.vocab.words --except-vendor 2>$null)",
+      "PowerShell(git add *)",
+      "PowerShell(git push *)"
     ]
   },
   "enableAllProjectMcpServers": true,
