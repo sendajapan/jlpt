@@ -158,7 +158,7 @@
                     @php
                         foreach($items as $vocab){
                             if(isset($_GET['showlinks'])){
-                                echo 'https://jlpt.senda.fit/admin/vocab/words/'.$vocab->id.'/edit<br>';
+                                echo 'https://pathlingo.scholarlyapps.com/admin/vocab/words/'.$vocab->id.'/edit<br>';
                             }
                     }
                     @endphp
