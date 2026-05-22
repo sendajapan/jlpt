@@ -20,7 +20,7 @@ class VocabularyController extends Controller
 
     public function index(Request $request): View
     {
-        $filters = $request->only(['search', 'category_id', 'subcategory_id', 'is_approved', 'image_path']);
+        $filters = $request->only(['search', 'category_id', 'subcategory_id', 'is_approved', 'image_path', 'audio_flag']);
         $vocabularies = $this->service->getAll($filters);
         $categories = $this->service->getAllCategories();
         $subcategories = $this->service->getAllSubcategories();
