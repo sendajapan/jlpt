@@ -97,6 +97,15 @@
                             Images
                         </option>
                     </select>
+                    <select name="audio_flag"
+                            class="h-7 rounded border border-zinc-200 bg-white px-2 text-xs text-zinc-700 focus:outline-none focus:ring-1 focus:ring-zinc-900">
+                        <option value="all">All</option>
+                        <option value="pending" {{ request('audio_flag') === 'pending' ? 'selected' : '' }}>Pending Audio
+                        </option>
+                        <option value="complete" {{ request('audio_flag') === 'complete' ? 'selected' : '' }}>Completed Audio
+                            Images
+                        </option>
+                    </select>
                     <button type="submit"
                             class="inline-flex items-center h-7 px-3 rounded bg-zinc-900 text-white text-xs font-medium hover:bg-zinc-700 transition-colors">
                         Filter
