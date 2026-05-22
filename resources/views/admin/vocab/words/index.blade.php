@@ -103,7 +103,6 @@
                         <option value="pending" {{ request('audio_flag') === 'pending' ? 'selected' : '' }}>Pending Audio
                         </option>
                         <option value="complete" {{ request('audio_flag') === 'complete' ? 'selected' : '' }}>Completed Audio
-                            Images
                         </option>
                     </select>
                     <button type="submit"
