@@ -15,7 +15,7 @@ use Illuminate\Support\Str;
 
 class VocabularyService
 {
-    public function getAll(array $filters = [], int $perPage = 100): LengthAwarePaginator
+    public function getAll(array $filters = [], int $perPage = 50): LengthAwarePaginator
     {
         return Vocabulary::query()
             ->with('subcategory.category')
