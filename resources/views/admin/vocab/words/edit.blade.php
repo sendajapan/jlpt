@@ -182,7 +182,7 @@
 
                 <div>
                     <label class="block text-[10px] font-medium text-zinc-500 mb-1.5">Image</label>
-                    <x-image-preview name="image_path" id="image_path_preview" hint="JPG, PNG, WebP" :current="$vocabulary->image_path ? Storage::url($vocabulary->image_path) : null" >
+                    <x-image-preview name="image_path" id="image_path_preview" hint="JPG, PNG, WebP" :en="$vocabulary->word_en" :jp="$vocabulary->word_jp" :rm="$vocabulary->word_romaji" :current="$vocabulary->image_path ? Storage::url($vocabulary->image_path) : null" >
                         @error('image_path')
                             <p class="mt-1 text-[10px] text-red-500">{{ $message }}</p>
                         @enderror

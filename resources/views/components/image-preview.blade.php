@@ -1,5 +1,8 @@
 @props([
     'name',
+    'en',
+    'jp',
+    'rm',
     'current' => null,
     'hint' => 'JPG, PNG, SVG, WebP',
 ])
@@ -7,7 +10,16 @@
 <div x-data="{ preview: @js($current) }">
     <div class="w-64 h-64 rounded-lg border-2 border-dashed border-zinc-200 bg-zinc-50 overflow-hidden flex items-center justify-center mb-3">
         <template x-if="preview">
-            <img :src="preview" class="w-full h-full object-cover">
+           <div style="display: flex; position: relative">
+               <img :src="preview" class="w-full h-full object-cover">
+               <div class="p-4 w-64 h-64" style="position: absolute; display: flex; flex-direction: column; justify-content: space-between">
+                   <h4>{{$en}}</h4>
+                   <div>
+                       <h4>{{$rm}}</h4>
+                       <h4>{{$jp}}</h4>
+                   </div>
+               </div>
+           </div>
         </template>
         <template x-if="!preview">
             <div class="text-center select-none">
