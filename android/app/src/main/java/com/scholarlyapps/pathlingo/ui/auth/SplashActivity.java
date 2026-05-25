@@ -1,5 +1,6 @@
 package com.scholarlyapps.pathlingo.ui.auth;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +14,7 @@ import com.scholarlyapps.pathlingo.data.DataManager;
 import com.scholarlyapps.pathlingo.data.remote.ServiceLocator;
 import com.scholarlyapps.pathlingo.ui.activities.MainDashboardActivity;
 
+@SuppressLint("CustomSplashScreen")
 public class SplashActivity extends AppCompatActivity {
 
     @Override
@@ -27,7 +29,7 @@ public class SplashActivity extends AppCompatActivity {
 
         SplashViewModel viewModel = new ViewModelProvider(this).get(SplashViewModel.class);
         viewModel.getAuthenticated().observe(this, authenticated -> {
-            if (Boolean.TRUE.equals(authenticated)) {
+            if (authenticated) {
                 goToDashboard();
             } else {
                 startActivity(new Intent(this, LoginActivity.class));
