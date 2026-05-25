@@ -2,8 +2,10 @@ package com.scholarlyapps.pathlingo.ui.auth;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.scholarlyapps.pathlingo.R;
@@ -18,6 +20,10 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ServiceLocator.INSTANCE.init(this);
         setContentView(R.layout.activity_splash);
+
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.color_theme_dark));
+        getWindow().getDecorView().setSystemUiVisibility(
+                getWindow().getDecorView().getSystemUiVisibility() & ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
         SplashViewModel viewModel = new ViewModelProvider(this).get(SplashViewModel.class);
         viewModel.getAuthenticated().observe(this, authenticated -> {

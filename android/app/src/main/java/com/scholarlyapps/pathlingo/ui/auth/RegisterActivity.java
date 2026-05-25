@@ -8,6 +8,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.button.MaterialButton;
@@ -35,6 +36,10 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.color_theme_dark));
+        getWindow().getDecorView().setSystemUiVisibility(
+                getWindow().getDecorView().getSystemUiVisibility() & ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+
         viewModel = new ViewModelProvider(this).get(AuthViewModel.class);
         googleClient = new GoogleAuthClient(this, BuildConfig.GOOGLE_WEB_CLIENT_ID);
 
@@ -52,7 +57,12 @@ public class RegisterActivity extends AppCompatActivity {
 
         findViewById(R.id.btnLoginAsGuest).setOnClickListener(v -> finish());
 
-        findViewById(R.id.btnSignIn).setOnClickListener(v -> finish());
+        findViewById(R.id.btnSignIn).setOnClickListener(v -> {
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+            finish();
+        });
 
         viewModel.getStateLiveData().observe(this, state -> {
             boolean loading = state.getLoading();
