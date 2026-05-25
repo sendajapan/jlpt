@@ -126,10 +126,10 @@ class VocabularyService
 
         if ($isSingleWord) {
             $clean = rtrim($text, " .。!?！？「」\"'");
-            $text = $isSingleWordJp ? "「{$clean}」。" : "{$clean}.";
+            $text = $isSingleWordJp ? "「{$clean}」。" : "{$clean}./";
         }elseif ($isSingleWordJp) {
             $clean = rtrim($text, " .。!?！？「」\"'");
-            $text = $isSingleWordJp ? "「{$clean}」。" : "{$clean}.";
+            $text = $isSingleWordJp ? "「{$clean}」。" : "{$clean}./";
         }
 
         $voice = $voiceId ? Voice::find($voiceId) : Voice::default();
