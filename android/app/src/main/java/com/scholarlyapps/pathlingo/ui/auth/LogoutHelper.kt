@@ -16,7 +16,7 @@ object LogoutHelper {
     fun logout(context: Context) {
         ServiceLocator.init(context)
         scope.launch { ServiceLocator.authRepository.logout() }
-        val intent = Intent(context, AuthActivity::class.java)
+        val intent = Intent(context, LoginActivity::class.java)
             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         context.startActivity(intent)
     }
