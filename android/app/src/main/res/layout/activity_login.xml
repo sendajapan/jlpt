@@ -20,7 +20,7 @@
             android:id="@+id/txtLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/lato_bold"
+            android:fontFamily="@font/lato_black"
             android:text="Login"
             android:textAllCaps="true"
             android:textColor="@color/color_theme_dark"
@@ -62,8 +62,8 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="@dimen/_32sdp"
                 android:inputType="textEmailAddress"
-                android:textColor="@color/auth_title"
-                android:textColorHint="@color/auth_subtitle"
+                android:textColor="@color/color_theme_black"
+                android:textColorHint="@color/color_theme_dark"
                 android:textSize="@dimen/_12ssp" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -83,7 +83,7 @@
             app:hintEnabled="true"
             app:endIconMode="password_toggle"
             app:endIconDrawable="@drawable/selector_eye_toggle"
-            app:endIconTint="@color/auth_subtitle"
+            app:endIconTint="@color/color_theme_dark"
             android:hint="Password"
             app:startIconDrawable="@drawable/ic_lock_outline"
             app:startIconTint="@color/color_theme_dark">
@@ -94,8 +94,8 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="@dimen/_32sdp"
                 android:inputType="textPassword"
-                android:textColor="@color/auth_title"
-                android:textColorHint="@color/auth_subtitle"
+                android:textColor="@color/color_theme_black"
+                android:textColorHint="@color/color_theme_dark"
                 android:textSize="@dimen/_12ssp" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -125,7 +125,7 @@
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:layout_weight="1"
-                android:background="@color/auth_divider" />
+                android:background="@color/color_theme_light" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -133,14 +133,14 @@
                 android:fontFamily="@font/lato"
                 android:paddingHorizontal="@dimen/_8sdp"
                 android:text="Or Continue With"
-                android:textColor="@color/auth_subtitle"
+                android:textColor="@color/color_theme_dark"
                 android:textSize="@dimen/_10ssp" />
 
             <View
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:layout_weight="1"
-                android:background="@color/auth_divider" />
+                android:background="@color/color_theme_light" />
 
         </LinearLayout>
 
@@ -168,7 +168,7 @@
                 app:iconPadding="0dp"
                 app:iconSize="@dimen/_22sdp"
                 app:iconTint="@null"
-                app:strokeColor="@color/auth_social_border"
+                app:strokeColor="@color/color_theme_light"
                 app:strokeWidth="1dp" />
 
             <Space
@@ -189,7 +189,7 @@
                 app:iconPadding="0dp"
                 app:iconSize="@dimen/_22sdp"
                 app:iconTint="@null"
-                app:strokeColor="@color/auth_social_border"
+                app:strokeColor="@color/color_theme_light"
                 app:strokeWidth="1dp" />
 
         </LinearLayout>
@@ -206,7 +206,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lato"
                 android:text="Don't have an account? "
-                android:textColor="@color/auth_subtitle"
+                android:textColor="@color/color_theme_dark"
                 android:textSize="@dimen/_10ssp" />
 
             <TextView
@@ -217,7 +217,7 @@
                 android:focusable="true"
                 android:fontFamily="@font/lato_bold"
                 android:text="Sign Up"
-                android:textColor="@color/auth_primary"
+                android:textColor="@color/color_theme_dark"
                 android:textSize="@dimen/_10ssp" />
 
         </LinearLayout>
@@ -238,7 +238,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/_12sdp"
-            android:indeterminateTint="@color/auth_primary"
+            android:indeterminateTint="@color/color_theme_dark"
             android:visibility="gone" />
 
     </LinearLayout>
