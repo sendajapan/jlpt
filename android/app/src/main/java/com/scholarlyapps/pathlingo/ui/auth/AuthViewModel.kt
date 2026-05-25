@@ -1,5 +1,7 @@
 package com.scholarlyapps.pathlingo.ui.auth
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.scholarlyapps.pathlingo.data.remote.ServiceLocator
@@ -23,6 +25,9 @@ class AuthViewModel : ViewModel() {
     private val _state = MutableStateFlow(AuthUiState())
     val state: StateFlow<AuthUiState> = _state.asStateFlow()
 
+    private val _stateLiveData = MutableLiveData(AuthUiState())
+    val stateLiveData: LiveData<AuthUiState> = _stateLiveData
+
     fun login(email: String, password: String, deviceName: String) {
         launchAuth { repo.login(email, password, deviceName) }
     }
@@ -40,13 +45,16 @@ class AuthViewModel : ViewModel() {
     }
 
     private fun launchAuth(block: suspend () -> Result<AppUserDto>) {
-        _state.value = AuthUiState(loading = true)
+        val loading = AuthUiState(loading = true)
+        _state.value = loading
+        _stateLiveData.value = loading
         viewModelScope.launch {
-            val result = block()
-            _state.value = result.fold(
+            val next = block().fold(
                 onSuccess = { AuthUiState(user = it, success = true) },
                 onFailure = { AuthUiState(error = it.message ?: "Something went wrong.") },
             )
+            _state.value = next
+            _stateLiveData.postValue(next)
         }
     }
 }

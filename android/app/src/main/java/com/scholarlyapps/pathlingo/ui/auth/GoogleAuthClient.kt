@@ -6,6 +6,13 @@ import androidx.credentials.CustomCredential
 import androidx.credentials.GetCredentialRequest
 import com.google.android.libraries.identity.googleid.GetSignInWithGoogleOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+
+fun interface GoogleSignInCallback {
+    fun onSuccess(idToken: String)
+}
 
 class GoogleAuthClient(
     private val context: Context,
@@ -13,6 +20,12 @@ class GoogleAuthClient(
 ) {
 
     private val credentialManager = CredentialManager.create(context)
+
+    fun signIn(callback: GoogleSignInCallback) {
+        CoroutineScope(Dispatchers.Main).launch {
+            signIn().onSuccess { callback.onSuccess(it) }
+        }
+    }
 
     suspend fun signIn(): Result<String> = runCatching {
         require(webClientId.isNotEmpty()) {

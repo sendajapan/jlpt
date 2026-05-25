@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/layout_auth_background" />
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/_20sdp"
+            android:paddingTop="@dimen/_60sdp"
+            android:paddingBottom="@dimen/_40sdp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lato_bold"
+                android:text="Register"
+                android:textAllCaps="true"
+                android:textColor="@color/color_theme_dark"
+                android:textSize="@dimen/_32ssp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lato_bold"
+                android:text="Create your account to start\nYour Japanese Learning Path"
+                android:textColor="@color/color_theme_black"
+                android:textSize="@dimen/_12ssp"
+                android:layout_marginTop="@dimen/_8sdp" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_28sdp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutName"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_46sdp"
+                app:boxBackgroundColor="@android:color/transparent"
+                app:boxCornerRadiusBottomEnd="@dimen/_8sdp"
+                app:boxCornerRadiusBottomStart="@dimen/_8sdp"
+                app:boxCornerRadiusTopEnd="@dimen/_8sdp"
+                app:boxCornerRadiusTopStart="@dimen/_8sdp"
+                app:boxStrokeColor="@color/auth_field_stroke"
+                app:hintEnabled="true"
+                android:hint="Full Name"
+                app:startIconDrawable="@drawable/ic_person_outline"
+                app:startIconTint="@color/color_theme_dark">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/_32sdp"
+                    android:inputType="textPersonName"
+                    android:textColor="@color/auth_title"
+                    android:textColorHint="@color/auth_subtitle"
+                    android:textSize="@dimen/_12ssp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutEmail"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_46sdp"
+                app:boxBackgroundColor="@android:color/transparent"
+                app:boxCornerRadiusBottomEnd="@dimen/_8sdp"
+                app:boxCornerRadiusBottomStart="@dimen/_8sdp"
+                app:boxCornerRadiusTopEnd="@dimen/_8sdp"
+                app:boxCornerRadiusTopStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                app:boxStrokeColor="@color/auth_field_stroke"
+                app:hintEnabled="true"
+                android:hint="Enter Email"
+                app:startIconDrawable="@drawable/ic_email_outline"
+                app:startIconTint="@color/color_theme_dark">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/_32sdp"
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/auth_title"
+                    android:textColorHint="@color/auth_subtitle"
+                    android:textSize="@dimen/_12ssp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutPassword"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_46sdp"
+                app:boxBackgroundColor="@android:color/transparent"
+                app:boxCornerRadiusBottomEnd="@dimen/_8sdp"
+                app:boxCornerRadiusBottomStart="@dimen/_8sdp"
+                app:boxCornerRadiusTopEnd="@dimen/_8sdp"
+                app:boxCornerRadiusTopStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                app:boxStrokeColor="@color/auth_field_stroke"
+                app:hintEnabled="true"
+                app:endIconMode="password_toggle"
+                app:endIconDrawable="@drawable/selector_eye_toggle"
+                app:endIconTint="@color/auth_subtitle"
+                android:hint="Password"
+                app:startIconDrawable="@drawable/ic_lock_outline"
+                app:startIconTint="@color/color_theme_dark">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/_32sdp"
+                    android:inputType="textPassword"
+                    android:textColor="@color/auth_title"
+                    android:textColorHint="@color/auth_subtitle"
+                    android:textSize="@dimen/_12ssp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutConfirm"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_46sdp"
+                app:boxBackgroundColor="@android:color/transparent"
+                app:boxCornerRadiusBottomEnd="@dimen/_8sdp"
+                app:boxCornerRadiusBottomStart="@dimen/_8sdp"
+                app:boxCornerRadiusTopEnd="@dimen/_8sdp"
+                app:boxCornerRadiusTopStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                app:boxStrokeColor="@color/auth_field_stroke"
+                app:hintEnabled="true"
+                app:endIconMode="password_toggle"
+                app:endIconDrawable="@drawable/selector_eye_toggle"
+                app:endIconTint="@color/auth_subtitle"
+                android:hint="Confirm Password"
+                app:startIconDrawable="@drawable/ic_lock_outline"
+                app:startIconTint="@color/color_theme_dark">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editConfirm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/_32sdp"
+                    android:inputType="textPassword"
+                    android:textColor="@color/auth_title"
+                    android:textColorHint="@color/auth_subtitle"
+                    android:textSize="@dimen/_12ssp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnRegister"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_46sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:fontFamily="@font/lato_bold"
+                android:text="Register"
+                android:textColor="@color/color_theme_black"
+                android:textSize="@dimen/_14ssp"
+                android:textAllCaps="false"
+                android:letterSpacing="0"
+                app:backgroundTint="@color/color_theme_light"
+                app:cornerRadius="@dimen/_8sdp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/_22sdp">
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"
+                    android:background="@color/auth_divider" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/lato"
+                    android:paddingHorizontal="@dimen/_8sdp"
+                    android:text="Or Continue With"
+                    android:textColor="@color/auth_subtitle"
+                    android:textSize="@dimen/_10ssp" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"
+                    android:background="@color/auth_divider" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_20sdp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnGoogle"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="@dimen/_46sdp"
+                    android:layout_height="@dimen/_46sdp"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:padding="0dp"
+                    app:cornerRadius="@dimen/_46sdp"
+                    app:icon="@drawable/google"
+                    app:iconGravity="textStart"
+                    app:iconPadding="0dp"
+                    app:iconSize="@dimen/_22sdp"
+                    app:iconTint="@null"
+                    app:strokeColor="@color/auth_social_border"
+                    app:strokeWidth="1dp" />
+
+                <Space
+                    android:layout_width="@dimen/_16sdp"
+                    android:layout_height="match_parent" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnFacebook"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="@dimen/_46sdp"
+                    android:layout_height="@dimen/_46sdp"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:padding="0dp"
+                    app:cornerRadius="@dimen/_46sdp"
+                    app:icon="@drawable/facebook"
+                    app:iconGravity="textStart"
+                    app:iconPadding="0dp"
+                    app:iconSize="@dimen/_22sdp"
+                    app:iconTint="@null"
+                    app:strokeColor="@color/auth_social_border"
+                    app:strokeWidth="1dp" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_16sdp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnLoginAsGuest"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_46sdp"
+                android:fontFamily="@font/lato_bold"
+                android:text="Login As Guest"
+                android:textAllCaps="false"
+                android:textSize="@dimen/_14ssp"
+                android:textColor="@color/color_theme_dark"
+                android:letterSpacing="0"
+                app:cornerRadius="@dimen/_8sdp"
+                app:strokeColor="@color/color_theme_dark"
+                app:strokeWidth="1dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/_36sdp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/lato"
+                    android:text="Already have an account? "
+                    android:textColor="@color/auth_subtitle"
+                    android:textSize="@dimen/_10ssp" />
+
+                <TextView
+                    android:id="@+id/btnSignIn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:fontFamily="@font/lato_bold"
+                    android:text="Sign In"
+                    android:textColor="@color/auth_primary"
+                    android:textSize="@dimen/_10ssp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textError"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:fontFamily="@font/lato"
+                android:textColor="#D32F2F"
+                android:textSize="@dimen/_13ssp"
+                android:visibility="gone" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:indeterminateTint="@color/auth_primary"
+                android:visibility="gone" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

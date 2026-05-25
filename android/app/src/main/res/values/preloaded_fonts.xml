@@ -2,6 +2,7 @@
 <resources>
     <array name="preloaded_fonts" translatable="false">
         <!-- Nunito: Thin to Black -->
+        <item>@font/lato</item>
         <item>@font/nunito_thin</item>
         <item>@font/nunito_extralight</item>
         <item>@font/nunito_light</item>
@@ -23,10 +24,10 @@
         <item>@font/montserrat_thin</item>
         <item>@font/montserrat_extralight</item>
         <item>@font/montserrat_light</item>
-        <item>@font/montserrat_regular</item>
+        <item>@font/lato</item>
         <item>@font/montserrat_medium</item>
         <item>@font/montserrat_semibold</item>
-        <item>@font/montserrat_bold</item>
+        <item>@font/lato_bold</item>
         <item>@font/montserrat_extrabold</item>
         <item>@font/montserrat_black</item>
     </array>

@@ -1,5 +1,7 @@
 <resources>
-    <string name="app_name">PathLingo</string>
+    <string name="app_name">Path Lingo</string>
+    <string name="app_name_jp">パスリンゴ</string>
+    <string name="app_slogan">Free beginner language learning</string>
     <string name="animals_category">Animals category</string>
     <string name="food_category">Food category</string>
     <string name="greetings_category">Greetings category</string>

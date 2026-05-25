@@ -52,6 +52,17 @@
     <color name="surface">#FFFCF4</color>
     <color name="on_surface">#2E3A33</color>
 
+    <!-- Auth Screen Colors -->
+    <color name="auth_bg_top">#E9F4FD</color>
+    <color name="auth_bg_bottom">#FCFCFC</color>
+    <color name="auth_primary">#4B81F5</color>
+    <color name="auth_title">#1A2F4A</color>
+    <color name="auth_subtitle">#50687A</color>
+    <color name="auth_field_border">#C8DCEA</color>
+    <color name="auth_deco">#C5DDF5</color>
+    <color name="auth_divider">#C0D5E8</color>
+    <color name="auth_social_border">#D0E4F0</color>
+
     <!-- Hajime Color Aliases (for PROMPT.md compatibility) -->
     <color name="hajime_paper">@color/paper</color>
     <color name="hajime_paper_alt">@color/paper2</color>
@@ -70,4 +81,11 @@
     <color name="hajime_sky">@color/sky</color>
     <color name="hajime_sky_light">@color/sky_light</color>
     <color name="hajime_petal">@color/petal</color>
+
+    #Theme
+    <color name="color_theme_dark_black">#15559A</color>
+    <color name="color_theme_dark">#57A4F6</color>
+    <color name="color_theme_light">#B0D4FB</color>
+
+    <color name="color_theme_black">#1D1D1D</color>
 </resources>
