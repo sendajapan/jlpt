@@ -19,7 +19,7 @@ class AudioAutomationService
     {
         foreach (self::FIELDS as $audioField => $textField) {
             $vocab = Vocabulary::query()
-                ->where('is_approved', true)
+                //->where('is_approved', true)
                 ->whereNull($audioField)
                 ->whereNotNull($textField)
                 ->where($textField, '!=', '')
