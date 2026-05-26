@@ -20,6 +20,7 @@ class RegisterRequest extends FormRequest
             'email' => ['required', 'email', 'max:150', 'unique:app_users,email'],
             'password' => ['required', 'confirmed', Password::min(8)],
             'device_name' => ['required', 'string', 'max:100'],
+            'guest_token' => ['nullable', 'string'],
         ];
     }
 }

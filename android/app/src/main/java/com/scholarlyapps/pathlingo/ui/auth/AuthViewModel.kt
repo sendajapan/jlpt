@@ -36,6 +36,10 @@ class AuthViewModel : ViewModel() {
         launchAuth { repo.register(name, email, password, confirm, deviceName) }
     }
 
+    fun guestLogin(deviceName: String) {
+        launchAuth { repo.guestLogin(deviceName) }
+    }
+
     fun loginWithGoogle(idToken: String, deviceName: String) {
         launchAuth { repo.loginWithGoogle(idToken, deviceName) }
     }

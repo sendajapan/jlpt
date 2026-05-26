@@ -25,6 +25,7 @@ class AuthInterceptor(private val tokenStore: TokenStore) : Interceptor {
     private fun isPublicAuthEndpoint(path: String): Boolean {
         return path.endsWith("/auth/login") ||
             path.endsWith("/auth/register") ||
+            path.endsWith("/auth/guest") ||
             path.contains("/auth/social/") ||
             path.endsWith("/auth/forgot-password") ||
             path.endsWith("/auth/reset-password")

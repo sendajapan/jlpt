@@ -55,7 +55,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         findViewById(R.id.btnGoogle).setOnClickListener(v -> signInWithGoogle());
 
-        findViewById(R.id.btnLoginAsGuest).setOnClickListener(v -> finish());
+        findViewById(R.id.btnLoginAsGuest).setOnClickListener(v -> viewModel.guestLogin(deviceName()));
 
         findViewById(R.id.btnSignIn).setOnClickListener(v -> {
             Intent intent = new Intent(this, LoginActivity.class);

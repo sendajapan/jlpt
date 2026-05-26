@@ -69,6 +69,7 @@ data class AppUserDto(
     @Json(name = "email_verified") val emailVerified: Boolean = false,
     val avatar: String?,
     @Json(name = "login_provider") val loginProvider: String?,
+    @Json(name = "is_guest") val isGuest: Boolean = false,
     @Json(name = "created_at") val createdAt: String?,
     val bio: String?,
     val gender: String?,
@@ -109,6 +110,12 @@ data class MessageResponse(val message: String?)
 data class CoinsBalanceResponse(val coins: Int = 0)
 
 @JsonClass(generateAdapter = true)
+data class GuestLoginRequest(
+    @Json(name = "device_name") val deviceName: String,
+    @Json(name = "guest_name") val guestName: String? = null,
+)
+
+@JsonClass(generateAdapter = true)
 data class RegisterRequest(
     val name: String,
     val email: String,
@@ -116,6 +123,7 @@ data class RegisterRequest(
     @Json(name = "password_confirmation") val passwordConfirmation: String,
     @Json(name = "device_name") val deviceName: String,
     @Json(name = "display_name") val displayName: String? = null,
+    @Json(name = "guest_token") val guestToken: String? = null,
 )
 
 @JsonClass(generateAdapter = true)
@@ -123,6 +131,7 @@ data class LoginRequest(
     val email: String,
     val password: String,
     @Json(name = "device_name") val deviceName: String,
+    @Json(name = "guest_token") val guestToken: String? = null,
 )
 
 @JsonClass(generateAdapter = true)

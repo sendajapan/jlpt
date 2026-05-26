@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\V1\Auth\EmailVerificationController;
+use App\Http\Controllers\Api\V1\Auth\GuestLoginController;
 use App\Http\Controllers\Api\V1\Auth\LoginController;
 use App\Http\Controllers\Api\V1\Auth\LogoutController;
 use App\Http\Controllers\Api\V1\Auth\PasswordResetController;
@@ -20,6 +21,7 @@ Route::get('subcategories', [SubcategoryController::class, 'index']);
 Route::get('vocabularies', [VocabularyController::class, 'index']);
 
 Route::prefix('auth')->group(function () {
+    Route::post('guest', GuestLoginController::class);
     Route::post('register', RegisterController::class);
     Route::post('login', LoginController::class);
     Route::post('social/google', [SocialLoginController::class, 'google']);

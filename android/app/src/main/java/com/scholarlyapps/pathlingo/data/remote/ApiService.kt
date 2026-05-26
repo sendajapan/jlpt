@@ -6,6 +6,7 @@ import com.scholarlyapps.pathlingo.data.remote.dto.CategoryDto
 import com.scholarlyapps.pathlingo.data.remote.dto.CoinsBalanceResponse
 import com.scholarlyapps.pathlingo.data.remote.dto.ForgotPasswordRequest
 import com.scholarlyapps.pathlingo.data.remote.dto.GoogleLoginRequest
+import com.scholarlyapps.pathlingo.data.remote.dto.GuestLoginRequest
 import com.scholarlyapps.pathlingo.data.remote.dto.ListResponse
 import com.scholarlyapps.pathlingo.data.remote.dto.LoginRequest
 import com.scholarlyapps.pathlingo.data.remote.dto.MessageResponse
@@ -36,6 +37,9 @@ interface ApiService {
         @Query("category_id") categoryId: Long? = null,
         @Query("subcategory_id") subcategoryId: Long? = null,
     ): ListResponse<VocabularyDto>
+
+    @POST("auth/guest")
+    suspend fun guestLogin(@Body body: GuestLoginRequest): AuthResponse
 
     @POST("auth/register")
     suspend fun register(@Body body: RegisterRequest): AuthResponse

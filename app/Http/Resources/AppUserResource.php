@@ -16,6 +16,7 @@ class AppUserResource extends JsonResource
             'email_verified' => (bool) $this->email_verified_at,
             'avatar' => $this->avatar ? asset('storage/'.$this->avatar) : null,
             'login_provider' => $this->login_provider,
+            'is_guest' => $this->login_provider === 'guest',
             'created_at' => $this->created_at?->toIso8601String(),
 
             'bio' => $this->bio,

@@ -39,6 +39,10 @@ class LoginController extends Controller
     {
         $user = $this->auth->login($request->string('email'), $request->string('password'));
 
+        if ($request->filled('guest_token')) {
+            $this->auth->mergeGuestAccount($user, $request->string('guest_token'));
+        }
+
         return $this->authResponse($user, $request->string('device_name'));
     }
 }

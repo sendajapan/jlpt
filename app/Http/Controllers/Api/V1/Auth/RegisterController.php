@@ -13,9 +13,7 @@ class RegisterController extends Controller
 {
     use IssuesAuthResponse;
 
-    public function __construct(private AppUserAuthService $auth)
-    {
-    }
+    public function __construct(private AppUserAuthService $auth) {}
 
     #[OA\Post(
         path: '/api/v1/auth/register',
@@ -43,6 +41,10 @@ class RegisterController extends Controller
     public function __invoke(RegisterRequest $request): JsonResponse
     {
         $user = $this->auth->register($request->validated());
+
+        if ($request->filled('guest_token')) {
+            $this->auth->mergeGuestAccount($user, $request->string('guest_token'));
+        }
 
         return $this->authResponse($user, $request->string('device_name'), 201);
     }
