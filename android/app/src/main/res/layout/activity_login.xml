@@ -11,7 +11,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingHorizontal="@dimen/_20sdp"
+        android:paddingHorizontal="@dimen/_24sdp"
+        android:paddingTop="@dimen/_16sdp"
+        android:paddingBottom="@dimen/_24sdp"
         app:layout_constraintVertical_bias="0.25"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -36,15 +38,12 @@
             android:textSize="@dimen/_12ssp"
             android:layout_marginTop="@dimen/_8sdp" />
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_28sdp" />
-
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layoutEmail"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_46sdp"
+            android:layout_marginTop="@dimen/_28sdp"
             app:boxBackgroundColor="@android:color/transparent"
             app:boxCornerRadiusBottomEnd="@dimen/_8sdp"
             app:boxCornerRadiusBottomStart="@dimen/_8sdp"
@@ -73,12 +72,12 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_46sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             app:boxBackgroundColor="@android:color/transparent"
             app:boxCornerRadiusBottomEnd="@dimen/_8sdp"
             app:boxCornerRadiusBottomStart="@dimen/_8sdp"
             app:boxCornerRadiusTopEnd="@dimen/_8sdp"
             app:boxCornerRadiusTopStart="@dimen/_8sdp"
-            android:layout_marginTop="@dimen/_8sdp"
             app:boxStrokeColor="@color/auth_field_stroke"
             app:hintEnabled="true"
             app:endIconMode="password_toggle"
@@ -104,10 +103,10 @@
             android:id="@+id/btnLogin"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_46sdp"
-            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_20sdp"
             android:fontFamily="@font/lato_bold"
             android:text="Login"
-            android:textColor="@color/color_theme_black"
+            android:textColor="@color/color_theme_navy"
             android:textSize="@dimen/_14ssp"
             android:textAllCaps="false"
             android:letterSpacing="0"
@@ -119,7 +118,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:layout_marginTop="@dimen/_22sdp">
+            android:layout_marginTop="@dimen/_20sdp">
 
             <View
                 android:layout_width="0dp"
@@ -144,15 +143,12 @@
 
         </LinearLayout>
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_20sdp" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/_16sdp">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnGoogle"
@@ -199,7 +195,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal"
-            android:layout_marginTop="@dimen/_36sdp">
+            android:layout_marginTop="@dimen/_24sdp">
 
             <TextView
                 android:layout_width="wrap_content"

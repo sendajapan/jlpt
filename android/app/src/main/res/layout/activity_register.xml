@@ -11,9 +11,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:paddingHorizontal="@dimen/_20sdp"
-        android:paddingTop="@dimen/_40sdp"
-        android:paddingBottom="@dimen/_40sdp">
+        android:paddingHorizontal="@dimen/_24sdp"
+        android:paddingTop="@dimen/_48sdp"
+        android:paddingBottom="@dimen/_24sdp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -38,12 +38,12 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_46sdp"
+            android:layout_marginTop="@dimen/_24sdp"
             app:boxBackgroundColor="@android:color/transparent"
             app:boxCornerRadiusBottomEnd="@dimen/_8sdp"
             app:boxCornerRadiusBottomStart="@dimen/_8sdp"
             app:boxCornerRadiusTopEnd="@dimen/_8sdp"
             app:boxCornerRadiusTopStart="@dimen/_8sdp"
-            android:layout_marginTop="@dimen/_16sdp"
             app:boxStrokeColor="@color/auth_field_stroke"
             app:hintEnabled="true"
             android:hint="Full Name"
@@ -67,12 +67,12 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_46sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             app:boxBackgroundColor="@android:color/transparent"
             app:boxCornerRadiusBottomEnd="@dimen/_8sdp"
             app:boxCornerRadiusBottomStart="@dimen/_8sdp"
             app:boxCornerRadiusTopEnd="@dimen/_8sdp"
             app:boxCornerRadiusTopStart="@dimen/_8sdp"
-            android:layout_marginTop="@dimen/_4sdp"
             app:boxStrokeColor="@color/auth_field_stroke"
             app:hintEnabled="true"
             android:hint="Enter Email"
@@ -96,12 +96,12 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_46sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             app:boxBackgroundColor="@android:color/transparent"
             app:boxCornerRadiusBottomEnd="@dimen/_8sdp"
             app:boxCornerRadiusBottomStart="@dimen/_8sdp"
             app:boxCornerRadiusTopEnd="@dimen/_8sdp"
             app:boxCornerRadiusTopStart="@dimen/_8sdp"
-            android:layout_marginTop="@dimen/_4sdp"
             app:boxStrokeColor="@color/auth_field_stroke"
             app:hintEnabled="true"
             app:endIconMode="password_toggle"
@@ -128,12 +128,12 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_46sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             app:boxBackgroundColor="@android:color/transparent"
             app:boxCornerRadiusBottomEnd="@dimen/_8sdp"
             app:boxCornerRadiusBottomStart="@dimen/_8sdp"
             app:boxCornerRadiusTopEnd="@dimen/_8sdp"
             app:boxCornerRadiusTopStart="@dimen/_8sdp"
-            android:layout_marginTop="@dimen/_4sdp"
             app:boxStrokeColor="@color/auth_field_stroke"
             app:hintEnabled="true"
             app:endIconMode="password_toggle"
@@ -159,11 +159,11 @@
             android:id="@+id/btnRegister"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_46sdp"
-            android:textSize="@dimen/_14ssp"
-            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_20sdp"
             android:text="Register"
             android:fontFamily="@font/lato_bold"
-            android:textColor="@color/color_theme_black"
+            android:textColor="@color/color_theme_navy"
+            android:textSize="@dimen/_14ssp"
             android:textAllCaps="false"
             android:letterSpacing="0"
             app:backgroundTint="@color/color_theme_light"
@@ -174,7 +174,8 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:layout_marginVertical="@dimen/_16sdp">
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_16sdp">
 
             <View
                 android:layout_width="0dp"
@@ -213,6 +214,7 @@
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
                 android:padding="0dp"
+                android:layout_marginEnd="@dimen/_16sdp"
                 app:cornerRadius="@dimen/_24sdp"
                 app:icon="@drawable/google"
                 app:iconGravity="textStart"
@@ -220,8 +222,7 @@
                 app:iconSize="@dimen/_24sdp"
                 app:iconTint="@null"
                 app:strokeColor="@color/color_theme_light"
-                app:strokeWidth="1dp"
-                android:layout_marginEnd="@dimen/_16sdp"/>
+                app:strokeWidth="1dp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnFacebook"
@@ -238,7 +239,7 @@
                 app:iconSize="@dimen/_24sdp"
                 app:iconTint="@null"
                 app:strokeColor="@color/color_theme_light"
-                app:strokeWidth="1dp"/>
+                app:strokeWidth="1dp" />
 
         </LinearLayout>
 
@@ -247,11 +248,11 @@
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_46sdp"
+            android:layout_marginTop="@dimen/_16sdp"
             android:fontFamily="@font/lato_bold"
             android:text="Login As Guest"
             android:textAllCaps="false"
             android:textSize="@dimen/_12ssp"
-            android:layout_marginTop="@dimen/_16sdp"
             android:textColor="@color/color_theme_dark"
             android:letterSpacing="0"
             app:cornerRadius="@dimen/_8sdp"

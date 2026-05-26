@@ -5,10 +5,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.button.MaterialButton;
@@ -17,6 +15,8 @@ import com.scholarlyapps.pathlingo.BuildConfig;
 import com.scholarlyapps.pathlingo.R;
 import com.scholarlyapps.pathlingo.data.DataManager;
 import com.scholarlyapps.pathlingo.ui.activities.MainDashboardActivity;
+import com.scholarlyapps.pathlingo.ui.utils.NavAnim;
+import com.scholarlyapps.pathlingo.ui.utils.ToastHelper;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -28,7 +28,6 @@ public class RegisterActivity extends AppCompatActivity {
     private TextInputEditText editPassword;
     private TextInputEditText editConfirm;
     private MaterialButton btnRegister;
-    private TextView textError;
     private ProgressBar progressBar;
 
     @Override
@@ -36,9 +35,9 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.color_theme_dark));
+        getWindow().setStatusBarColor(android.graphics.Color.TRANSPARENT);
         getWindow().getDecorView().setSystemUiVisibility(
-                getWindow().getDecorView().getSystemUiVisibility() & ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
         viewModel = new ViewModelProvider(this).get(AuthViewModel.class);
         googleClient = new GoogleAuthClient(this, BuildConfig.GOOGLE_WEB_CLIENT_ID);
@@ -48,7 +47,6 @@ public class RegisterActivity extends AppCompatActivity {
         editPassword = findViewById(R.id.editPassword);
         editConfirm = findViewById(R.id.editConfirm);
         btnRegister = findViewById(R.id.btnRegister);
-        textError = findViewById(R.id.textError);
         progressBar = findViewById(R.id.progressBar);
 
         btnRegister.setOnClickListener(v -> submitRegister());
@@ -61,6 +59,7 @@ public class RegisterActivity extends AppCompatActivity {
             Intent intent = new Intent(this, LoginActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
+            NavAnim.slideBack(this);
             finish();
         });
 
@@ -72,13 +71,11 @@ public class RegisterActivity extends AppCompatActivity {
 
             String error = state.getError();
             if (error != null && !error.isEmpty()) {
-                textError.setText(error);
-                textError.setVisibility(View.VISIBLE);
-            } else {
-                textError.setVisibility(View.GONE);
+                ToastHelper.error(this, error);
             }
 
             if (state.getSuccess()) {
+                ToastHelper.success(this, "Account created successfully!");
                 goToDashboard();
             }
         });
@@ -89,6 +86,14 @@ public class RegisterActivity extends AppCompatActivity {
         String email = editEmail.getText() != null ? editEmail.getText().toString().trim() : "";
         String password = editPassword.getText() != null ? editPassword.getText().toString() : "";
         String confirm = editConfirm.getText() != null ? editConfirm.getText().toString() : "";
+        if (name.isEmpty() || email.isEmpty() || password.isEmpty() || confirm.isEmpty()) {
+            ToastHelper.warning(this, "Please fill in all fields.");
+            return;
+        }
+        if (!password.equals(confirm)) {
+            ToastHelper.warning(this, "Passwords do not match.");
+            return;
+        }
         viewModel.register(name, email, password, confirm, deviceName());
     }
 
@@ -99,6 +104,7 @@ public class RegisterActivity extends AppCompatActivity {
     private void goToDashboard() {
         DataManager.getInstance().loadData(getApplicationContext());
         startActivity(new Intent(this, MainDashboardActivity.class));
+        NavAnim.slideForward(this);
         finish();
     }
 
