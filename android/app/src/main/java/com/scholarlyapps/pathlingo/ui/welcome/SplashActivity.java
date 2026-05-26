@@ -1,4 +1,4 @@
-package com.scholarlyapps.pathlingo.ui.auth;
+package com.scholarlyapps.pathlingo.ui.welcome;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -14,6 +14,8 @@ import com.scholarlyapps.pathlingo.R;
 import com.scholarlyapps.pathlingo.data.DataManager;
 import com.scholarlyapps.pathlingo.data.remote.ServiceLocator;
 import com.scholarlyapps.pathlingo.ui.activities.MainDashboardActivity;
+import com.scholarlyapps.pathlingo.ui.auth.LoginActivity;
+import com.scholarlyapps.pathlingo.ui.auth.SplashViewModel;
 import com.scholarlyapps.pathlingo.ui.utils.NavAnim;
 
 @SuppressLint("CustomSplashScreen")
@@ -37,7 +39,14 @@ public class SplashActivity extends AppCompatActivity {
                 if (authenticated) {
                     goToDashboard();
                 } else {
-                    startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+                    boolean onboardingDone = getSharedPreferences(
+                            OnboardingActivity.PREFS_NAME, MODE_PRIVATE)
+                            .getBoolean(OnboardingActivity.KEY_ONBOARDING_DONE, false);
+                    //if (!onboardingDone) {
+                        startActivity(new Intent(SplashActivity.this, OnboardingActivity.class));
+//                    } else {
+//                        startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+//                    }
                     NavAnim.slideForward(SplashActivity.this);
                     finish();
                 }

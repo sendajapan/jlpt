@@ -5,7 +5,7 @@
     <color name="color_theme_dark">#57A4F6</color>
     <color name="color_theme_light">#B0D4FB</color>
     <color name="color_theme_black">#1D1D1D</color>
-    <color name="color_theme_navy">#143C6A</color>
+    <color name="color_theme_navy">#225692</color>
 
     <!-- Aliases for app screens — all map to the 4 theme colors -->
     <color name="white">#FFFFFF</color>

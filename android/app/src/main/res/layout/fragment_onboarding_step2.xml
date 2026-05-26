@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/_24sdp"
+        android:paddingTop="@dimen/_20sdp"
+        android:paddingBottom="@dimen/_16sdp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato_black"
+            android:text="Your learning preferences"
+            android:textColor="@color/color_theme_dark"
+            android:textSize="@dimen/_22ssp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:fontFamily="@font/lato"
+            android:text="Help us customize the best experience\nfor your language journey."
+            android:textColor="@color/color_theme_black"
+            android:textSize="@dimen/_11ssp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:fontFamily="@font/lato_bold"
+            android:text="Proficiency Level"
+            android:textColor="@color/color_theme_dark"
+            android:textSize="@dimen/_12ssp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/chipBeginner"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_onboarding_selected"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/lato_bold"
+                    android:text="Beginner"
+                    android:textColor="@color/color_theme_navy"
+                    android:textSize="@dimen/_11ssp" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="@dimen/_8sdp"
+                android:layout_height="match_parent" />
+
+            <LinearLayout
+                android:id="@+id/chipElementary"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_onboarding_unselected"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/lato_bold"
+                    android:text="Elementary"
+                    android:textColor="@color/color_theme_black"
+                    android:textSize="@dimen/_11ssp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/chipIntermediate"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_onboarding_unselected"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/lato_bold"
+                    android:text="Intermediate"
+                    android:textColor="@color/color_theme_black"
+                    android:textSize="@dimen/_11ssp" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="@dimen/_8sdp"
+                android:layout_height="match_parent" />
+
+            <LinearLayout
+                android:id="@+id/chipAdvanced"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_onboarding_unselected"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/lato_bold"
+                    android:text="Advanced"
+                    android:textColor="@color/color_theme_black"
+                    android:textSize="@dimen/_11ssp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/chipNative"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_onboarding_unselected"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/lato_bold"
+                    android:text="Native-like"
+                    android:textColor="@color/color_theme_black"
+                    android:textSize="@dimen/_11ssp" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="@dimen/_8sdp"
+                android:layout_height="match_parent" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:fontFamily="@font/lato_bold"
+            android:text="Learning Goal"
+            android:textColor="@color/color_theme_dark"
+            android:textSize="@dimen/_12ssp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/goalTravel"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_64sdp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_onboarding_unselected"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/_6sdp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="✈️"
+                    android:textSize="@dimen/_18ssp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/lato"
+                    android:text="Travel"
+                    android:textColor="@color/color_theme_black"
+                    android:textSize="@dimen/_9ssp" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="@dimen/_6sdp"
+                android:layout_height="match_parent" />
+
+            <LinearLayout
+                android:id="@+id/goalSchool"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_64sdp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_onboarding_unselected"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/_6sdp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="📚"
+                    android:textSize="@dimen/_18ssp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/lato"
+                    android:text="School"
+                    android:textColor="@color/color_theme_black"
+                    android:textSize="@dimen/_9ssp" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="@dimen/_6sdp"
+                android:layout_height="match_parent" />
+
+            <LinearLayout
+                android:id="@+id/goalBusiness"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_64sdp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_onboarding_unselected"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/_6sdp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="💼"
+                    android:textSize="@dimen/_18ssp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/lato"
+                    android:text="Business"
+                    android:textColor="@color/color_theme_black"
+                    android:textSize="@dimen/_9ssp" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="@dimen/_6sdp"
+                android:layout_height="match_parent" />
+
+            <LinearLayout
+                android:id="@+id/goalAnime"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_64sdp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_onboarding_unselected"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/_6sdp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🎌"
+                    android:textSize="@dimen/_18ssp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/lato"
+                    android:text="Anime"
+                    android:textColor="@color/color_theme_black"
+                    android:textSize="@dimen/_9ssp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/goalExam"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_64sdp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_onboarding_unselected"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/_6sdp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="📝"
+                    android:textSize="@dimen/_18ssp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/lato"
+                    android:text="Exam"
+                    android:textColor="@color/color_theme_black"
+                    android:textSize="@dimen/_9ssp" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="@dimen/_6sdp"
+                android:layout_height="match_parent" />
+
+            <LinearLayout
+                android:id="@+id/goalCulture"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_64sdp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_onboarding_unselected"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/_6sdp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🏯"
+                    android:textSize="@dimen/_18ssp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/lato"
+                    android:text="Culture"
+                    android:textColor="@color/color_theme_black"
+                    android:textSize="@dimen/_9ssp" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="@dimen/_6sdp"
+                android:layout_height="match_parent" />
+
+            <LinearLayout
+                android:id="@+id/goalSocial"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_64sdp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_onboarding_unselected"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/_6sdp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="💬"
+                    android:textSize="@dimen/_18ssp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/lato"
+                    android:text="Social"
+                    android:textColor="@color/color_theme_black"
+                    android:textSize="@dimen/_9ssp" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="@dimen/_6sdp"
+                android:layout_height="match_parent" />
+
+            <LinearLayout
+                android:id="@+id/goalGaming"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_64sdp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_onboarding_unselected"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/_6sdp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🎮"
+                    android:textSize="@dimen/_18ssp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/lato"
+                    android:text="Other"
+                    android:textColor="@color/color_theme_black"
+                    android:textSize="@dimen/_9ssp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

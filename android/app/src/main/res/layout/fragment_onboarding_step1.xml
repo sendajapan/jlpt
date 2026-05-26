@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/_24sdp"
+        android:paddingTop="@dimen/_20sdp"
+        android:paddingBottom="@dimen/_16sdp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato_black"
+            android:text="Let's get to know you 👋"
+            android:textColor="@color/color_theme_dark"
+            android:textSize="@dimen/_22ssp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:fontFamily="@font/lato"
+            android:text="Tell us a bit about yourself so we can\npersonalize your learning experience."
+            android:textColor="@color/color_theme_black"
+            android:textSize="@dimen/_11ssp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_24sdp"
+            android:fontFamily="@font/lato_bold"
+            android:text="Date of Birth"
+            android:textColor="@color/color_theme_dark"
+            android:textSize="@dimen/_12ssp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:padding="@dimen/_8sdp"
+            android:background="@drawable/bg_onboarding_unselected">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_32sdp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_onboarding_unselected"
+                android:gravity="center"
+                android:paddingHorizontal="@dimen/_4sdp">
+
+                <Spinner
+                    android:id="@+id/spinnerYear"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null" />
+
+            </LinearLayout>
+
+            <Space android:layout_width="@dimen/_8sdp" android:layout_height="match_parent" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_32sdp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_onboarding_unselected"
+                android:gravity="center"
+                android:paddingHorizontal="@dimen/_4sdp">
+
+                <Spinner
+                    android:id="@+id/spinnerMonth"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null" />
+
+            </LinearLayout>
+
+            <Space android:layout_width="@dimen/_8sdp" android:layout_height="match_parent" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_32sdp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_onboarding_unselected"
+                android:gravity="center"
+                android:paddingHorizontal="@dimen/_4sdp">
+
+                <Spinner
+                    android:id="@+id/spinnerDay"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_24sdp"
+            android:fontFamily="@font/lato_bold"
+            android:text="Gender"
+            android:textColor="@color/color_theme_dark"
+            android:textSize="@dimen/_12ssp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/_8sdp">
+
+            <LinearLayout
+                android:id="@+id/cardMale"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_80sdp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_onboarding_unselected"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/_10sdp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="♂"
+                    android:textColor="@color/color_theme_dark"
+                    android:textSize="@dimen/_22ssp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:fontFamily="@font/lato_bold"
+                    android:text="Male"
+                    android:textColor="@color/color_theme_black"
+                    android:textSize="@dimen/_10ssp" />
+
+            </LinearLayout>
+
+            <Space android:layout_width="@dimen/_8sdp" android:layout_height="match_parent" />
+
+            <LinearLayout
+                android:id="@+id/cardFemale"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_80sdp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_onboarding_unselected"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/_10sdp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="♀"
+                    android:textColor="@color/color_theme_dark"
+                    android:textSize="@dimen/_22ssp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:fontFamily="@font/lato_bold"
+                    android:text="Female"
+                    android:textColor="@color/color_theme_black"
+                    android:textSize="@dimen/_10ssp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/_8sdp">
+
+            <LinearLayout
+                android:id="@+id/cardOther"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_80sdp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_onboarding_unselected"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/_10sdp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="⚧"
+                    android:textColor="@color/color_theme_dark"
+                    android:textSize="@dimen/_22ssp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:fontFamily="@font/lato_bold"
+                    android:text="Other"
+                    android:textColor="@color/color_theme_black"
+                    android:textSize="@dimen/_10ssp" />
+
+            </LinearLayout>
+
+            <Space android:layout_width="@dimen/_8sdp" android:layout_height="match_parent" />
+
+            <LinearLayout
+                android:id="@+id/cardPreferNot"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_80sdp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_onboarding_unselected"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/_10sdp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🚫"
+                    android:textSize="@dimen/_22ssp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:fontFamily="@font/lato_bold"
+                    android:text="Prefer not to say"
+                    android:textAlignment="center"
+                    android:textColor="@color/color_theme_black"
+                    android:textSize="@dimen/_9ssp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

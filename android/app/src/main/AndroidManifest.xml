@@ -17,7 +17,7 @@
         android:usesCleartextTraffic="false">
 
         <activity
-            android:name=".ui.auth.SplashActivity"
+            android:name=".ui.welcome.SplashActivity"
             android:exported="true"
             android:label="Path Lingo"
             android:theme="@style/Theme.PathLingo">
@@ -27,6 +27,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".ui.welcome.OnboardingActivity"
+            android:exported="false"
+            android:theme="@style/Theme.PathLingo" />
 
         <activity
             android:name=".ui.auth.LoginActivity"

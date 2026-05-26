@@ -277,11 +277,12 @@
             <TextView
                 android:id="@+id/btnSignIn"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/_40sdp"
                 android:clickable="true"
                 android:focusable="true"
                 android:fontFamily="@font/lato_bold"
                 android:text="Sign In"
+                android:gravity="center_vertical"
                 android:textColor="@color/color_theme_dark"
                 android:textSize="@dimen/_10ssp" />
 
