@@ -46,7 +46,7 @@ class AudioAutomationService
         $counts = [];
         foreach (self::FIELDS as $audioField => $textField) {
             $counts[$audioField] = Vocabulary::query()
-                ->where('is_approved', true)
+                //->where('is_approved', true)
                 ->whereNull($audioField)
                 ->whereNotNull($textField)
                 ->where($textField, '!=', '')
