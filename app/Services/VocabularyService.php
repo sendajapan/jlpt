@@ -125,10 +125,10 @@ class VocabularyService
         $isSingleWordJp = $field === 'audio_jp';
 
         if ($isSingleWord) {
-            $clean = rtrim($text, " .。!?！？「」\"'");
+            $clean = rtrim(ucfirst($text), " .。!?！？「」\"'");
             $text = $isSingleWordJp ? "「{$clean}」。" : "{$clean}./";
         }elseif ($isSingleWordJp) {
-            $clean = rtrim($text, " .。!?！？「」\"'");
+            $clean = rtrim(ucfirst($text), " .。!?！？「」\"'");
             $text = $isSingleWordJp ? "「{$clean}」。" : "{$clean}./";
         }
 
