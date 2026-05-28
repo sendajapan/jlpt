@@ -56,8 +56,8 @@ class VocabularyService
     private function applyPendingAudioFilter($query)
     {
         return $query
-            ->whereAny(['sentence_audio_en_reviewed', 'sentence_audio_jp_reviewed', 'audio_en_reviewed'], '0')
-            ->whereNotNull(['sentence_audio_en', 'sentence_audio_jp', 'audio_en']);
+            ->whereAny(['sentence_audio_en_reviewed', 'sentence_audio_jp_reviewed', 'audio_en_reviewed', 'audio_jp_reviewed'], '0')
+            ->whereNotNull(['sentence_audio_en', 'sentence_audio_jp', 'audio_en', 'audio_jp']);
     }
 
     private function applyCompleteAudioFilter($query)
