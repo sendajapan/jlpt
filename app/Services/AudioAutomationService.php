@@ -15,52 +15,7 @@ class AudioAutomationService
         'sentence_audio_en' => 'sentence_en',
     ];
 
-
     public function findNextPending(): ?array
-    {
-        $vocabList = Vocabulary::query()
-            ->whereNull('audio_en')
-            ->orWhereNull('audio_jp')
-            ->orWhereNull('sentence_audio_en')
-            ->orWhereNull('sentence_audio_jp')
-            ->orderBy('id')
-            ->limit(3)
-            ->get();
-
-        foreach ($vocabList as $vocab) {
-
-            foreach (self::FIELDS as $audioField => $textField) {
-
-                // audio already exists
-                if (!empty($vocab->$audioField)) {
-                    continue;
-                }
-
-                // source text missing
-                if (empty($vocab->$textField)) {
-                    continue;
-                }
-
-                // failed too many times
-                $hasFailure = DB::table('audio_generation_failures')
-                    ->where('vocab_id', $vocab->id)
-                    ->where('field', $audioField)
-                    ->where('attempts', '>=', AudioGenerationFailure::MAX_ATTEMPTS)
-                    ->exists();
-
-                if ($hasFailure) {
-                    continue;
-                }
-
-                return [
-                    'vocab' => $vocab,
-                    'field' => $audioField,
-                ];
-            }
-        }
-    }
-
-    public function findNextPending_old(): ?array
     {
         foreach (self::FIELDS as $audioField => $textField) {
             $vocab = Vocabulary::query()
