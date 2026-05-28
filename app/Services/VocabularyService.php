@@ -30,7 +30,7 @@ class VocabularyService
             ->when(isset($filters['audio_flag']) && $filters['audio_flag'] === 'complete', fn ($q) => $this->applyCompleteAudioFilter($q))
             ->orderBy('sort_order')
             ->orderBy('word_jp')
-            ->tap(fn($q) => dd($q->toRawSql()))
+//            ->tap(fn($q) => dd($q->toRawSql()))
             ->paginate($perPage)
             ->withQueryString();
     }
