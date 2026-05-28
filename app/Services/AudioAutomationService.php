@@ -33,7 +33,7 @@ class AudioAutomationService
                 ->orderBy('id')
                 ->first();
 
-            dd($vocab->all());
+            dd($vocab);
             if ($vocab) {
                 return ['vocab' => $vocab, 'field' => $audioField];
             }
