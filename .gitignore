@@ -27,3 +27,7 @@ Thumbs.db
 fluentvox_*.wav
 .venv/
 storage/api-docs/
+pull_latest.sh
+webhook.log
+webhook.php
+
