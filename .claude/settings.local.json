@@ -116,7 +116,9 @@
       "Read(//mnt/c/Users/sulai/Herd/**)",
       "PowerShell(php artisan route:list --name=admin.vocab.words --except-vendor 2>$null)",
       "PowerShell(git add *)",
-      "PowerShell(git push *)"
+      "PowerShell(git push *)",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\sulai\\\\Herd\\\\jlpt_laravel\\\\app\\\\Http\\\\Controllers\" -Filter \"*.php\")",
+      "Bash(Select-Object Name)"
     ]
   },
   "enableAllProjectMcpServers": true,
