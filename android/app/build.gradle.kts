@@ -81,11 +81,9 @@ dependencies {
 
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.retrofit)
-    implementation(libs.retrofit.converter.moshi)
+    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
     implementation(libs.okhttp.logging.interceptor)
-    implementation(libs.moshi)
-    implementation(libs.moshi.kotlin)
-    implementation(libs.androidx.datastore.preferences)
+    implementation("com.google.code.gson:gson:2.11.0")
     implementation(libs.coil)
     implementation(libs.coil.compose)
     implementation(libs.credentials)

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Category {
+
     public String id;
     public String jp;
     public String en;

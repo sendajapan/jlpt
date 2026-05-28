@@ -30,7 +30,7 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ServiceLocator.INSTANCE.init(this);
+        ServiceLocator.init(this);
         setContentView(R.layout.activity_splash);
 
         WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
@@ -49,20 +49,20 @@ public class SplashActivity extends AppCompatActivity {
         SplashViewModel viewModel = new ViewModelProvider(this).get(SplashViewModel.class);
         viewModel.getAuthenticated().observe(this, authenticated -> {
             new Handler(Looper.getMainLooper()).postDelayed(() -> {
-                if (authenticated) {
-                    goToDashboard();
-                } else {
-                    boolean onboardingDone = getSharedPreferences(
-                            OnboardingActivity.PREFS_NAME, MODE_PRIVATE)
-                            .getBoolean(OnboardingActivity.KEY_ONBOARDING_DONE, false);
-                    //if (!onboardingDone) {
-                        startActivity(new Intent(SplashActivity.this, OnboardingActivity.class));
-//                    } else {
-//                        startActivity(new Intent(SplashActivity.this, LoginActivity.class));
-//                    }
+                boolean onboardingDone = getSharedPreferences(
+                        OnboardingActivity.PREFS_NAME, MODE_PRIVATE)
+                        .getBoolean(OnboardingActivity.KEY_ONBOARDING_DONE, false);
+                if (!onboardingDone) {
+                    startActivity(new Intent(SplashActivity.this, OnboardingActivity.class));
                     NavAnim.slideForward(SplashActivity.this);
-                    finish();
+                } else if (authenticated) {
+                    goToDashboard();
+                    return;
+                } else {
+                    startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+                    NavAnim.slideForward(SplashActivity.this);
                 }
+                finish();
             }, WAIT_DURATION);
         });
 

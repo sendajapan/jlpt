@@ -1,6 +1,7 @@
 package com.scholarlyapps.pathlingo.models;
 
 public class Word {
+
     public String kanji;
     public String reading;
     public String romaji;
@@ -17,7 +18,8 @@ public class Word {
     public boolean correct;
     public boolean favorite;
 
-    public Word() {}
+    public Word() {
+    }
 
     public Word(String kanji, String reading, String romaji, String en, String img, String jlpt, String type, int xp) {
         this.kanji = kanji;

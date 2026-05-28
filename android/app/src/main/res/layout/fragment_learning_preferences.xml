@@ -2,6 +2,7 @@
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fillViewport="true">
 
     <LinearLayout
@@ -35,7 +36,7 @@
             android:layout_marginTop="@dimen/_20sdp"
             android:fontFamily="@font/lato_bold"
             android:text="Proficiency Level"
-            android:textColor="@color/color_theme_dark"
+            android:textColor="@color/color_theme_black"
             android:textSize="@dimen/_12ssp" />
 
         <LinearLayout
@@ -175,7 +176,7 @@
             android:layout_marginTop="@dimen/_20sdp"
             android:fontFamily="@font/lato_bold"
             android:text="Learning Goal"
-            android:textColor="@color/color_theme_dark"
+            android:textColor="@color/color_theme_black"
             android:textSize="@dimen/_12ssp" />
 
         <LinearLayout
@@ -194,16 +195,16 @@
                 android:orientation="vertical"
                 android:padding="@dimen/_6sdp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="✈️"
-                    android:textSize="@dimen/_18ssp" />
+                <ImageView
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"
+                    android:src="@drawable/travel"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato"
+                    android:fontFamily="@font/lato_bold"
+                    android:layout_marginTop="@dimen/_2sdp"
                     android:text="Travel"
                     android:textColor="@color/color_theme_black"
                     android:textSize="@dimen/_9ssp" />
@@ -224,16 +225,16 @@
                 android:orientation="vertical"
                 android:padding="@dimen/_6sdp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="📚"
-                    android:textSize="@dimen/_18ssp" />
+                <ImageView
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"
+                    android:src="@drawable/education"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato"
+                    android:fontFamily="@font/lato_bold"
+                    android:layout_marginTop="@dimen/_2sdp"
                     android:text="School"
                     android:textColor="@color/color_theme_black"
                     android:textSize="@dimen/_9ssp" />
@@ -254,16 +255,16 @@
                 android:orientation="vertical"
                 android:padding="@dimen/_6sdp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="💼"
-                    android:textSize="@dimen/_18ssp" />
+                <ImageView
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"
+                    android:src="@drawable/business"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato"
+                    android:fontFamily="@font/lato_bold"
+                    android:layout_marginTop="@dimen/_2sdp"
                     android:text="Business"
                     android:textColor="@color/color_theme_black"
                     android:textSize="@dimen/_9ssp" />
@@ -284,16 +285,16 @@
                 android:orientation="vertical"
                 android:padding="@dimen/_6sdp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="🎌"
-                    android:textSize="@dimen/_18ssp" />
+                <ImageView
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"
+                    android:src="@drawable/anime"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato"
+                    android:fontFamily="@font/lato_bold"
+                    android:layout_marginTop="@dimen/_2sdp"
                     android:text="Anime"
                     android:textColor="@color/color_theme_black"
                     android:textSize="@dimen/_9ssp" />
@@ -309,7 +310,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
-                android:id="@+id/goalExam"
+                android:id="@+id/goalCulture"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/_64sdp"
                 android:layout_weight="1"
@@ -318,17 +319,17 @@
                 android:orientation="vertical"
                 android:padding="@dimen/_6sdp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="📝"
-                    android:textSize="@dimen/_18ssp" />
+                <ImageView
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"
+                    android:src="@drawable/conversation"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato"
-                    android:text="Exam"
+                    android:fontFamily="@font/lato_bold"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:text="Dialog"
                     android:textColor="@color/color_theme_black"
                     android:textSize="@dimen/_9ssp" />
 
@@ -339,7 +340,7 @@
                 android:layout_height="match_parent" />
 
             <LinearLayout
-                android:id="@+id/goalCulture"
+                android:id="@+id/goalExam"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/_64sdp"
                 android:layout_weight="1"
@@ -348,17 +349,17 @@
                 android:orientation="vertical"
                 android:padding="@dimen/_6sdp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="🏯"
-                    android:textSize="@dimen/_18ssp" />
+                <ImageView
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"
+                    android:src="@drawable/exam"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato"
-                    android:text="Culture"
+                    android:fontFamily="@font/lato_bold"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:text="Exam"
                     android:textColor="@color/color_theme_black"
                     android:textSize="@dimen/_9ssp" />
 
@@ -378,17 +379,17 @@
                 android:orientation="vertical"
                 android:padding="@dimen/_6sdp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="💬"
-                    android:textSize="@dimen/_18ssp" />
+                <ImageView
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"
+                    android:src="@drawable/hobby"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato"
-                    android:text="Social"
+                    android:fontFamily="@font/lato_bold"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:text="Hobby"
                     android:textColor="@color/color_theme_black"
                     android:textSize="@dimen/_9ssp" />
 
@@ -408,16 +409,16 @@
                 android:orientation="vertical"
                 android:padding="@dimen/_6sdp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="🎮"
-                    android:textSize="@dimen/_18ssp" />
+                <ImageView
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"
+                    android:src="@drawable/others"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato"
+                    android:fontFamily="@font/lato_bold"
+                    android:layout_marginTop="@dimen/_2sdp"
                     android:text="Other"
                     android:textColor="@color/color_theme_black"
                     android:textSize="@dimen/_9ssp" />
