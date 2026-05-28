@@ -74,7 +74,7 @@ while ($row = $result->fetch_assoc()) {
 </head>
 <body>
 
-<h2>Executing URLs In Parallel Every 12 Seconds</h2>
+<h2>Executing URLs In Parallel Every 12 Seconds.</h2>
 
 <div id="log"></div>
 
