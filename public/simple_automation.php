@@ -74,7 +74,7 @@ while ($row = $result->fetch_assoc()) {
 </head>
 <body>
 
-<h2>Executing URLs In Parallel Every 20 Seconds</h2>
+<h2>Executing URLs In Parallel Every 12 Seconds</h2>
 
 <div id="log"></div>
 
@@ -148,7 +148,7 @@ while ($row = $result->fetch_assoc()) {
 
                 executeUrl(item, index);
 
-            }, index * 20000); // 20 seconds gap between starting each URL
+            }, index * 12000); // 12 seconds gap between starting each URL
         });
     }
 
