@@ -2,12 +2,16 @@ package com.scholarlyapps.pathlingo.ui.welcome;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.view.View;
+import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.scholarlyapps.pathlingo.R;
@@ -29,9 +33,18 @@ public class SplashActivity extends AppCompatActivity {
         ServiceLocator.INSTANCE.init(this);
         setContentView(R.layout.activity_splash);
 
-        getWindow().setStatusBarColor(android.graphics.Color.TRANSPARENT);
-        getWindow().getDecorView().setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
+        getWindow().setStatusBarColor(Color.TRANSPARENT);
+        WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView())
+                .setAppearanceLightStatusBars(true);
+
+        LinearLayout splashContent = findViewById(R.id.splashContent);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.rootLayout), (v, insets) -> {
+            int top = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top;
+            int bottom = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom;
+            splashContent.setPadding(0, top, 0, bottom);
+            return insets;
+        });
 
         SplashViewModel viewModel = new ViewModelProvider(this).get(SplashViewModel.class);
         viewModel.getAuthenticated().observe(this, authenticated -> {

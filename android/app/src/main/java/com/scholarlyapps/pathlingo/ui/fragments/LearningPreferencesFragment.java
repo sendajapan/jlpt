@@ -16,12 +16,12 @@ import com.scholarlyapps.pathlingo.viewmodels.OnboardingViewModel;
 import java.util.Arrays;
 import java.util.List;
 
-public class OnboardingStep2Fragment extends Fragment {
+public class LearningPreferencesFragment extends Fragment {
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_onboarding_step2, container, false);
+        return inflater.inflate(R.layout.fragment_learning_preferences, container, false);
     }
 
     @Override

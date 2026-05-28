@@ -2,11 +2,13 @@ package com.scholarlyapps.pathlingo.ui.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,12 +21,12 @@ import com.scholarlyapps.pathlingo.viewmodels.OnboardingViewModel;
 import java.util.Arrays;
 import java.util.List;
 
-public class OnboardingStep3Fragment extends Fragment {
+public class LanguageSetupFragment extends Fragment {
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_onboarding_step3, container, false);
+        return inflater.inflate(R.layout.fragment_language_setup, container, false);
     }
 
     @Override
@@ -38,10 +40,22 @@ public class OnboardingStep3Fragment extends Fragment {
         Spinner spinnerFrom = view.findViewById(R.id.spinnerFromLanguage);
         Spinner spinnerTo = view.findViewById(R.id.spinnerToLanguage);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, languages);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(requireContext(), R.layout.item_spinner_dob, Arrays.asList(languages)) {
+            @Override
+            public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
+                if (convertView == null) {
+                    convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_spinner_dob_dropdown, parent, false);
+                }
+                ((TextView) convertView.findViewById(android.R.id.text1)).setText(getItem(position));
+                return convertView;
+            }
+        };
         spinnerFrom.setAdapter(adapter);
         spinnerTo.setAdapter(adapter);
+        spinnerFrom.setPopupBackgroundResource(R.drawable.bg_spinner_popup);
+        spinnerTo.setPopupBackgroundResource(R.drawable.bg_spinner_popup);
+        applyDropdownBelowOffset(spinnerFrom);
+        applyDropdownBelowOffset(spinnerTo);
 
         spinnerFrom.setSelection(findLanguageIndex(languages, vm.fromLanguage));
         spinnerTo.setSelection(findLanguageIndex(languages, vm.toLanguage));
@@ -81,6 +95,22 @@ public class OnboardingStep3Fragment extends Fragment {
                 cardTrophy.setVisibility(View.VISIBLE);
             });
         }
+    }
+
+    private void applyDropdownBelowOffset(Spinner spinner) {
+        spinner.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                View sample = LayoutInflater.from(requireContext())
+                        .inflate(R.layout.item_spinner_dob_dropdown, spinner, false);
+                sample.measure(
+                        View.MeasureSpec.makeMeasureSpec(spinner.getWidth(), View.MeasureSpec.AT_MOST),
+                        View.MeasureSpec.UNSPECIFIED
+                );
+                int itemHeight = sample.getMeasuredHeight();
+                spinner.setDropDownVerticalOffset(spinner.getHeight() + spinner.getSelectedItemPosition() * itemHeight);
+            }
+            return false;
+        });
     }
 
     private int findLanguageIndex(String[] languages, String name) {

@@ -2,11 +2,13 @@ package com.scholarlyapps.pathlingo.ui.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,12 +23,12 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
-public class OnboardingStep1Fragment extends Fragment {
+public class PersonalInfoFragment extends Fragment {
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_onboarding_step1, container, false);
+        return inflater.inflate(R.layout.fragment_personal_info, container, false);
     }
 
     @Override
@@ -41,6 +43,7 @@ public class OnboardingStep1Fragment extends Fragment {
                 view.findViewById(R.id.cardOther),
                 view.findViewById(R.id.cardPreferNot)
         );
+
         List<String> genderValues = Arrays.asList("Male", "Female", "Other", "Prefer not to say");
 
         for (int i = 0; i < genderCards.size(); i++) {
@@ -97,9 +100,31 @@ public class OnboardingStep1Fragment extends Fragment {
     }
 
     private void setupSpinner(Spinner spinner, List<String> items) {
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, items);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(requireContext(), R.layout.item_spinner_dob, items) {
+            @Override
+            public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
+                if (convertView == null) {
+                    convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_spinner_dob_dropdown, parent, false);
+                }
+                ((TextView) convertView.findViewById(android.R.id.text1)).setText(getItem(position));
+                return convertView;
+            }
+        };
         spinner.setAdapter(adapter);
+        spinner.setPopupBackgroundResource(R.drawable.bg_spinner_popup);
+        spinner.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                View sample = LayoutInflater.from(requireContext())
+                        .inflate(R.layout.item_spinner_dob_dropdown, spinner, false);
+                sample.measure(
+                        View.MeasureSpec.makeMeasureSpec(spinner.getWidth(), View.MeasureSpec.AT_MOST),
+                        View.MeasureSpec.UNSPECIFIED
+                );
+                int itemHeight = sample.getMeasuredHeight();
+                spinner.setDropDownVerticalOffset(spinner.getHeight() + spinner.getSelectedItemPosition() * itemHeight);
+            }
+            return false;
+        });
     }
 
     private static abstract class SimpleItemSelectedListener implements AdapterView.OnItemSelectedListener {
