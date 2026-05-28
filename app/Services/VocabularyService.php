@@ -15,58 +15,23 @@ use Illuminate\Support\Str;
 
 class VocabularyService
 {
-    public function getAll(array $filters = [], int $perPage = 50): LengthAwarePaginator
+    public function getAll(array $filters = [], int $perPage = 100): LengthAwarePaginator
     {
         return Vocabulary::query()
             ->with('subcategory.category')
             ->leftJoin('vocab_bgs', 'vocab_bgs.vocab_bg_id', '=', 'image_thumbnail_bg')
-            ->when($filters['search'] ?? null, fn ($q, $s) => $this->applySearchFilter($q, $s))
+            ->when($filters['search'] ?? null, fn ($q, $s) => $q->where('word_jp', 'like', "%{$s}%")
+                ->orWhere('word_romaji', 'like', "%{$s}%")
+                ->orWhere('word_en', 'like', "%{$s}%"))
             ->when($filters['subcategory_id'] ?? null, fn ($q, $v) => $q->where('vocab_subcategory_id', $v))
             ->when($filters['category_id'] ?? null, fn ($q, $v) => $q->whereHas('subcategory', fn ($s) => $s->where('vocab_category_id', $v)))
             ->when(isset($filters['is_approved']) && $filters['is_approved'] !== '', fn ($q) => $q->where('is_approved', $filters['is_approved']))
-            ->when(isset($filters['image_path']) && $filters['image_path'] === 'images', fn ($q) => $this->applyHasImageFilter($q))
-            ->when(isset($filters['image_path']) && $filters['image_path'] === 'pending', fn ($q) => $this->applyPendingImageFilter($q))
-            ->when(isset($filters['audio_flag']) && $filters['audio_flag'] === 'pending', fn ($q) => $this->applyPendingAudioFilter($q))
-            ->when(isset($filters['audio_flag']) && $filters['audio_flag'] === 'complete', fn ($q) => $this->applyCompleteAudioFilter($q))
+            ->when(isset($filters['image_path']) && $filters['image_path'] === 'images', fn ($q) => $q->whereNot('image_path', ''))
+            ->when(isset($filters['image_path']) && $filters['image_path'] === 'pending', fn ($q) => $q->where('image_path', null))
             ->orderBy('sort_order')
             ->orderBy('word_jp')
-            //->tap(fn($q) => dd($q->toRawSql()))
             ->paginate($perPage)
             ->withQueryString();
-    }
-
-    private function applySearchFilter($query, string $search)
-    {
-        return $query
-            ->where('word_jp', 'like', "%{$search}%")
-            ->orWhere('word_romaji', 'like', "%{$search}%")
-            ->orWhere('word_en', 'like', "%{$search}%");
-    }
-
-    private function applyHasImageFilter($query)
-    {
-        return $query->whereNot('image_path', '');
-    }
-
-    private function applyPendingImageFilter($query)
-    {
-        return $query->whereNull('image_path');
-    }
-
-    private function applyPendingAudioFilter($query)
-    {
-        return $query
-            ->whereAny(['sentence_audio_en_reviewed', 'sentence_audio_jp_reviewed', 'audio_en_reviewed', 'audio_jp_reviewed'], '0')
-            ->whereNotNull(['sentence_audio_en', 'sentence_audio_jp', 'audio_en', 'audio_jp']);
-    }
-
-    private function applyCompleteAudioFilter($query)
-    {
-        return $query
-            ->where('sentence_audio_en_reviewed', '1')
-            ->where('audio_jp_reviewed', '1')
-            ->where('sentence_audio_jp_reviewed', '1')
-            ->where('audio_en_reviewed', '1');
     }
 
     public function getAllCategories(): Collection
@@ -92,7 +57,6 @@ class VocabularyService
     public function update(Vocabulary $vocabulary, array $data): Vocabulary
     {
         $vocabulary->update($data);
-
         return $vocabulary;
     }
 
@@ -125,11 +89,8 @@ class VocabularyService
         $isSingleWordJp = $field === 'audio_jp';
 
         if ($isSingleWord) {
-            $clean = rtrim(ucfirst($text), " .。!?！？「」\"'");
-            $text = $isSingleWordJp ? "「{$clean}」。" : "{$clean}./";
-        }elseif ($isSingleWordJp) {
-            $clean = rtrim(ucfirst($text), " .。!?！？「」\"'");
-            $text = $isSingleWordJp ? "「{$clean}」。" : "{$clean}./";
+            $clean = rtrim($text, " .。!?！？「」\"'");
+            $text = $isSingleWordJp ? "「{$clean}」。" : "{$clean}.";
         }
 
         $voice = $voiceId ? Voice::find($voiceId) : Voice::default();
@@ -207,29 +168,14 @@ class VocabularyService
         // low-level noise / instrumental-sounding garbage. Trim it off before
         // saving, unless the voice config explicitly disables trimming.
         $wavBytes = file_get_contents($result->getPath());
-
-        $storagePath = 'vocab/words/audio/'.Str::uuid().'.wav';
+        //@unlink($result->getPath());
 
         if (($settings['trim_trailing_noise'] ?? true)) {
             $wavBytes = $this->trimTrailingNoise($wavBytes);
         }
 
+        $storagePath = 'vocab/words/audio/' . Str::uuid() . '.wav';
         Storage::disk('public')->put($storagePath, $wavBytes);
-
-        // Converting existing generated wav audio to mp3
-        $tts->convertAudio(
-            Storage::disk('public')->path($storagePath),
-            Storage::disk('public')->path(str_replace('.wav', '.mp3', $storagePath)),
-            'mp3',
-            [
-                'bitrate' => 64,
-            ]
-        );
-
-        // deleting original wav file from storage
-        @unlink(Storage::disk('public')->path($storagePath));
-
-        $storagePath = str_replace('.wav', '.mp3', $storagePath);
 
         if ($vocabulary->$field) {
             Storage::disk('public')->delete($vocabulary->$field);
@@ -357,7 +303,7 @@ class VocabularyService
 
         $newDataSize = strlen($newPcm);
         $header = substr($wav, 0, $dataOffset - 8);
-        $rebuilt = $header.'data'.pack('V', $newDataSize).$newPcm;
+        $rebuilt = $header . 'data' . pack('V', $newDataSize) . $newPcm;
         $rebuilt = substr_replace($rebuilt, pack('V', strlen($rebuilt) - 8), 4, 4);
 
         return $rebuilt;
