@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.ViewCompat;
@@ -14,9 +13,9 @@ import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.scholarlyapps.pathlingo.R;
 import com.scholarlyapps.pathlingo.data.DataManager;
 import com.scholarlyapps.pathlingo.data.remote.ServiceLocator;
+import com.scholarlyapps.pathlingo.databinding.ActivitySplashBinding;
 import com.scholarlyapps.pathlingo.ui.activities.MainDashboardActivity;
 import com.scholarlyapps.pathlingo.ui.auth.LoginActivity;
 import com.scholarlyapps.pathlingo.ui.auth.SplashViewModel;
@@ -31,18 +30,18 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ServiceLocator.init(this);
-        setContentView(R.layout.activity_splash);
+        ActivitySplashBinding binding = ActivitySplashBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
         getWindow().setStatusBarColor(Color.TRANSPARENT);
         WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView())
                 .setAppearanceLightStatusBars(true);
 
-        LinearLayout splashContent = findViewById(R.id.splashContent);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.rootLayout), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(binding.rootLayout, (v, insets) -> {
             int top = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top;
             int bottom = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom;
-            splashContent.setPadding(0, top, 0, bottom);
+            binding.splashContent.setPadding(0, top, 0, bottom);
             return insets;
         });
 

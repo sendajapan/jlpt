@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.scholarlyapps.pathlingo.R;
+import com.scholarlyapps.pathlingo.databinding.FragmentLearningPreferencesBinding;
 import com.scholarlyapps.pathlingo.viewmodels.OnboardingViewModel;
 
 import java.util.Arrays;
@@ -18,10 +19,13 @@ import java.util.List;
 
 public class LearningPreferencesFragment extends Fragment {
 
+    private FragmentLearningPreferencesBinding binding;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_learning_preferences, container, false);
+        binding = FragmentLearningPreferencesBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 
     @Override
@@ -31,11 +35,11 @@ public class LearningPreferencesFragment extends Fragment {
         OnboardingViewModel vm = new ViewModelProvider(requireActivity()).get(OnboardingViewModel.class);
 
         List<View> profChips = Arrays.asList(
-                view.findViewById(R.id.chipBeginner),
-                view.findViewById(R.id.chipElementary),
-                view.findViewById(R.id.chipIntermediate),
-                view.findViewById(R.id.chipAdvanced),
-                view.findViewById(R.id.chipNative)
+                binding.chipBeginner,
+                binding.chipElementary,
+                binding.chipIntermediate,
+                binding.chipAdvanced,
+                binding.chipNative
         );
         List<String> profValues = Arrays.asList("Beginner", "Elementary", "Intermediate", "Advanced", "Native-like");
 
@@ -52,14 +56,14 @@ public class LearningPreferencesFragment extends Fragment {
         if (profIdx >= 0) profChips.get(profIdx).setBackgroundResource(R.drawable.bg_onboarding_selected);
 
         List<View> goalCards = Arrays.asList(
-                view.findViewById(R.id.goalSchool),
-                view.findViewById(R.id.goalBusiness),
-                view.findViewById(R.id.goalTravel),
-                view.findViewById(R.id.goalAnime),
-                view.findViewById(R.id.goalExam),
-                view.findViewById(R.id.goalCulture),
-                view.findViewById(R.id.goalSocial),
-                view.findViewById(R.id.goalGaming)
+                binding.goalSchool,
+                binding.goalBusiness,
+                binding.goalTravel,
+                binding.goalAnime,
+                binding.goalExam,
+                binding.goalCulture,
+                binding.goalSocial,
+                binding.goalGaming
         );
         List<String> goalValues = Arrays.asList("School", "Business", "Travel", "Anime", "Exam", "Culture", "Social", "Gaming");
 
@@ -79,5 +83,11 @@ public class LearningPreferencesFragment extends Fragment {
                 }
             });
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }
