@@ -5,7 +5,7 @@ $user = "root";
 $pass = "";
 $db   = "test_db";
 
-$conn = new mysqli('127.0.0.1', 'sendajapan1', 'sulaiman007', 'jlpt_db');
+$conn = new mysqli($host, $user, $pass, $db);
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -18,7 +18,7 @@ CREATE TABLE urls (
 );
 */
 
-// DELETE REQUEST
+// DELETE URL
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])) {
 
     $id = (int) $_POST['delete_id'];
@@ -50,7 +50,7 @@ while ($row = $result->fetch_assoc()) {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>URL Queue Executor</title>
+    <title>Parallel URL Executor</title>
 
     <style>
 
@@ -75,7 +75,7 @@ while ($row = $result->fetch_assoc()) {
 </head>
 <body>
 
-<h2>Processing URLs Every 20 Seconds</h2>
+<h2>Executing URLs In Parallel Every 20 Seconds</h2>
 
 <div id="log"></div>
 
@@ -110,7 +110,7 @@ while ($row = $result->fetch_assoc()) {
         });
     }
 
-    async function runUrl(item, index) {
+    async function executeUrl(item, index) {
 
         try {
 
@@ -139,25 +139,21 @@ while ($row = $result->fetch_assoc()) {
         }
     }
 
-    async function processUrls() {
+    // RUN ALL URLS IN PARALLEL
+    function startParallelExecution() {
 
-        for (let i = 0; i < urls.length; i++) {
+        urls.forEach((item, index) => {
 
-            await runUrl(urls[i], i);
+            // Start each request with delay
+            setTimeout(() => {
 
-            // Wait 20 seconds before next request
-            if (i < urls.length - 1) {
+                executeUrl(item, index);
 
-                addLog(`Waiting 20 seconds...`);
-
-                await new Promise(resolve => setTimeout(resolve, 20000));
-            }
-        }
-
-        addLog('All URLs completed.', 'success');
+            }, index * 20000); // 20 seconds gap between starting each URL
+        });
     }
 
-    processUrls();
+    startParallelExecution();
 
 </script>
 
