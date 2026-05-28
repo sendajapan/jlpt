@@ -24,8 +24,8 @@ class AudioAutomationService
             ->orWhereNull('sentence_audio_en')
             ->orWhereNull('sentence_audio_jp')
             ->orderBy('id')
-            ->limit(3)
-            ->get();
+            //->limit(3)
+            ->first();
 
         foreach ($vocabList as $vocab) {
 
