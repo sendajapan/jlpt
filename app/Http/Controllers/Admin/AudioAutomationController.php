@@ -23,7 +23,7 @@ class AudioAutomationController extends Controller
         $pendingTotal = array_sum($pending);
         $failures = AudioGenerationFailure::with('vocabulary')
             ->orderByDesc('last_attempt_at')
-            ->paginate(200);
+            ->paginate(150);
         $next = $this->automation->findNextPending();
 
         return view('admin.audio-automation.index', compact(
