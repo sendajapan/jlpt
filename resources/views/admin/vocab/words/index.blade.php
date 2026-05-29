@@ -111,6 +111,15 @@
                     </button>
                     <a href="{{ route('admin.vocab.words.index') }}"
                        class="inline-flex items-center h-7 px-3 rounded border border-zinc-200 bg-white text-xs text-zinc-500 hover:text-zinc-800 hover:bg-zinc-50 transition-colors">Reset</a>
+
+                    <button id="play-all-sounds"
+                            class="inline-flex items-center gap-1.5 h-8 px-3 rounded-md bg-blue-600 text-white text-xs font-medium hover:bg-blue-500 active:scale-[0.98] transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-1">
+                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/>
+                        </svg>
+                        Play All
+                    </button>
+
                 </div>
             </div>
         </form>
@@ -425,5 +434,98 @@
                 }, 2100);
             }
         })();
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const btn = document.getElementById('play-all-sounds');
+            if (!btn) return;
+
+            let isPlaying = false;
+            let stopRequested = false;
+
+            btn.addEventListener('click', function() {
+                // If already playing, stop
+                if (isPlaying) {
+                    stopRequested = true;
+                    btn.innerHTML = '<svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg> Play All';
+                    btn.classList.remove('bg-red-600', 'hover:bg-red-500');
+                    btn.classList.add('bg-blue-600', 'hover:bg-blue-500');
+                    return;
+                }
+
+                // Collect all audio elements that have a valid src
+                const audios = Array.from(document.querySelectorAll('audio')).filter(function(a) {
+                    const source = a.querySelector('source');
+                    return source && source.getAttribute('src') && !source.getAttribute('src').startsWith(':');
+                });
+
+                if (audios.length === 0) return;
+
+                isPlaying = true;
+                stopRequested = false;
+
+                // Update button to "Stop"
+                btn.innerHTML = '<svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4.5 4.5A1.5 1.5 0 016 3h8a1.5 1.5 0 011.5 1.5v11A1.5 1.5 0 0114 17H6a1.5 1.5 0 01-1.5-1.5v-11z" clip-rule="evenodd"/></svg> Stop';
+                btn.classList.remove('bg-blue-600', 'hover:bg-blue-500');
+                btn.classList.add('bg-red-600', 'hover:bg-red-500');
+
+                let idx = 0;
+
+                function resetButton() {
+                    isPlaying = false;
+                    stopRequested = false;
+                    btn.innerHTML = '<svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg> Play All';
+                    btn.classList.remove('bg-red-600', 'hover:bg-red-500');
+                    btn.classList.add('bg-blue-600', 'hover:bg-blue-500');
+                }
+
+                function getRow(audioEl) {
+                    return audioEl.closest('tr[data-id]');
+                }
+
+                function playNext() {
+                    if (stopRequested || idx >= audios.length) {
+                        resetButton();
+                        return;
+                    }
+
+                    const audio = audios[idx];
+                    const row = getRow(audio);
+
+                    // Highlight the parent row
+                    if (row) {
+                        row.style.backgroundColor = '#dbeafe'; // light blue (blue-100)
+                        row.style.transition = 'background-color 0.3s ease';
+                        // Scroll into view
+                        row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+
+                    var onEnded = function() {
+                        // Revert row background
+                        if (row) {
+                            row.style.backgroundColor = '';
+                        }
+                        audio.removeEventListener('ended', onEnded);
+                        idx++;
+                        // Small delay between audio clips
+                        setTimeout(playNext, 300);
+                    };
+
+                    audio.addEventListener('ended', onEnded);
+
+                    audio.play().catch(function() {
+                        // If play fails (autoplay policy, missing file, etc.), skip to next
+                        if (row) {
+                            row.style.backgroundColor = '';
+                        }
+                        audio.removeEventListener('ended', onEnded);
+                        idx++;
+                        playNext();
+                    });
+                }
+
+                playNext();
+            });
+        });
     </script>
+
 @endpush
