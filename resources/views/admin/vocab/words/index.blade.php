@@ -493,7 +493,7 @@
 
             // Highlight closest div yellow
             if (div) {
-            div.style.backgroundColor = '#fef08a';
+            div.style.backgroundColor = '#ff0000';
             div.style.transition = 'background-color 0.3s ease';
             div.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
