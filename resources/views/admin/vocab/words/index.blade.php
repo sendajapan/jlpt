@@ -441,91 +441,92 @@
 
             let isPlaying = false;
             let stopRequested = false;
+            let currentAudio = null;
 
             btn.addEventListener('click', function() {
-                // If already playing, stop
-                if (isPlaying) {
-                    stopRequested = true;
-                    btn.innerHTML = '<svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg> Play All';
-                    btn.classList.remove('bg-red-600', 'hover:bg-red-500');
-                    btn.classList.add('bg-blue-600', 'hover:bg-blue-500');
-                    return;
-                }
+            if (isPlaying) {
+            stopRequested = true;
+            if (currentAudio) {
+            currentAudio.pause();
+            currentAudio.currentTime = 0;
+        }
+            btn.innerHTML = '<svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg> Play All';
+            btn.classList.remove('bg-red-600', 'hover:bg-red-500');
+            btn.classList.add('bg-blue-600', 'hover:bg-blue-500');
+            return;
+        }
 
-                // Collect all audio elements that have a valid src
-                const audios = Array.from(document.querySelectorAll('audio')).filter(function(a) {
-                    const source = a.querySelector('source');
-                    return source && source.getAttribute('src') && !source.getAttribute('src').startsWith(':');
-                });
+            const audios = Array.from(document.querySelectorAll('audio')).filter(function(a) {
+            var source = a.querySelector('source');
+            return source && source.getAttribute('src') && !source.getAttribute('src').startsWith(':');
+        });
 
-                if (audios.length === 0) return;
+            if (audios.length === 0) return;
 
-                isPlaying = true;
-                stopRequested = false;
+            isPlaying = true;
+            stopRequested = false;
 
-                // Update button to "Stop"
-                btn.innerHTML = '<svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4.5 4.5A1.5 1.5 0 016 3h8a1.5 1.5 0 011.5 1.5v11A1.5 1.5 0 0114 17H6a1.5 1.5 0 01-1.5-1.5v-11z" clip-rule="evenodd"/></svg> Stop';
-                btn.classList.remove('bg-blue-600', 'hover:bg-blue-500');
-                btn.classList.add('bg-red-600', 'hover:bg-red-500');
+            btn.innerHTML = '<svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4.5 4.5A1.5 1.5 0 016 3h8a1.5 1.5 0 011.5 1.5v11A1.5 1.5 0 0114 17H6a1.5 1.5 0 01-1.5-1.5v-11z" clip-rule="evenodd"/></svg> Stop';
+            btn.classList.remove('bg-blue-600', 'hover:bg-blue-500');
+            btn.classList.add('bg-red-600', 'hover:bg-red-500');
 
-                let idx = 0;
+            let idx = 0;
 
-                function resetButton() {
-                    isPlaying = false;
-                    stopRequested = false;
-                    btn.innerHTML = '<svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg> Play All';
-                    btn.classList.remove('bg-red-600', 'hover:bg-red-500');
-                    btn.classList.add('bg-blue-600', 'hover:bg-blue-500');
-                }
+            function resetButton() {
+            isPlaying = false;
+            stopRequested = false;
+            currentAudio = null;
+            btn.innerHTML = '<svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg> Play All';
+            btn.classList.remove('bg-red-600', 'hover:bg-red-500');
+            btn.classList.add('bg-blue-600', 'hover:bg-blue-500');
+        }
 
-                function getRow(audioEl) {
-                    return audioEl.closest('tr[data-id]');
-                }
+            function playNext() {
+            if (stopRequested || idx >= audios.length) {
+            resetButton();
+            return;
+        }
 
-                function playNext() {
-                    if (stopRequested || idx >= audios.length) {
-                        resetButton();
-                        return;
-                    }
+            var audio = audios[idx];
+            currentAudio = audio;
+            var div = audio.closest('div');
 
-                    const audio = audios[idx];
-                    const row = getRow(audio);
+            // Highlight closest div yellow
+            if (div) {
+            div.style.backgroundColor = '#fef08a';
+            div.style.transition = 'background-color 0.3s ease';
+            div.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
 
-                    // Highlight the parent row
-                    if (row) {
-                        row.style.backgroundColor = '#dbeafe'; // light blue (blue-100)
-                        row.style.transition = 'background-color 0.3s ease';
-                        // Scroll into view
-                        row.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }
+            var onEnded = function() {
+            // Revert background
+            if (div) {
+            div.style.backgroundColor = '';
+        }
+            audio.removeEventListener('ended', onEnded);
+            currentAudio = null;
+            idx++;
+            // 1 second pause before next
+            setTimeout(playNext, 1000);
+        };
 
-                    var onEnded = function() {
-                        // Revert row background
-                        if (row) {
-                            row.style.backgroundColor = '';
-                        }
-                        audio.removeEventListener('ended', onEnded);
-                        idx++;
-                        // Small delay between audio clips
-                        setTimeout(playNext, 300);
-                    };
+            audio.addEventListener('ended', onEnded);
 
-                    audio.addEventListener('ended', onEnded);
+            audio.play().catch(function() {
+            if (div) {
+            div.style.backgroundColor = '';
+        }
+            audio.removeEventListener('ended', onEnded);
+            currentAudio = null;
+            idx++;
+            setTimeout(playNext, 1000);
+        });
+        }
 
-                    audio.play().catch(function() {
-                        // If play fails (autoplay policy, missing file, etc.), skip to next
-                        if (row) {
-                            row.style.backgroundColor = '';
-                        }
-                        audio.removeEventListener('ended', onEnded);
-                        idx++;
-                        playNext();
-                    });
-                }
-
-                playNext();
-            });
+            playNext();
+        });
         });
     </script>
+
 
 @endpush
