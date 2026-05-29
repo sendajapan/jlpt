@@ -20,7 +20,13 @@
       "Bash(gradle wrapper *)",
       "PowerShell(Invoke-WebRequest -Uri \"https://github.com/gradle/gradle/raw/v8.13.0/gradle/wrapper/gradle-wrapper.jar\" -OutFile \"C:\\\\Users\\\\sulai\\\\Herd\\\\jlpt_laravel\\\\android\\\\gradle\\\\wrapper\\\\gradle-wrapper.jar\")",
       "PowerShell(Remove-Item *)",
-      "Bash(git commit *)"
+      "Bash(git commit *)",
+      "Bash(dir /s /b \"C:\\\\Users\\\\sulai\\\\Herd\\\\jlpt_laravel\\\\android\")",
+      "Bash(git -C \"C:\\\\Users\\\\sulai\\\\Herd\\\\jlpt_laravel\\\\android\" status)",
+      "Bash(git -C \"C:\\\\Users\\\\sulai\\\\Herd\\\\jlpt_laravel\\\\android\" diff --stat)",
+      "Bash(git -C \"C:\\\\Users\\\\sulai\\\\Herd\\\\jlpt_laravel\\\\android\" add app/src/main/java/ app/src/main/res/ app/build.gradle.kts)",
+      "Bash(git -C \"C:\\\\Users\\\\sulai\\\\Herd\\\\jlpt_laravel\\\\android\" status --short)",
+      "Bash(git *)"
     ]
   },
   "enableAllProjectMcpServers": true,

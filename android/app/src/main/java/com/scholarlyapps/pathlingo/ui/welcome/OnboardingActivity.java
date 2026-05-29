@@ -1,17 +1,20 @@
 package com.scholarlyapps.pathlingo.ui.welcome;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.google.android.material.button.MaterialButton;
 import com.scholarlyapps.pathlingo.R;
 import com.scholarlyapps.pathlingo.adapters.OnboardingPagerAdapter;
+import com.scholarlyapps.pathlingo.databinding.ActivityOnboardingBinding;
 import com.scholarlyapps.pathlingo.ui.auth.LoginActivity;
 import com.scholarlyapps.pathlingo.ui.utils.NavAnim;
 import com.scholarlyapps.pathlingo.viewmodels.OnboardingViewModel;
@@ -21,79 +24,75 @@ public class OnboardingActivity extends AppCompatActivity {
     public static final String PREFS_NAME = "pathlingo_prefs";
     public static final String KEY_ONBOARDING_DONE = "onboarding_complete";
 
-    private ViewPager2 viewPager;
-    private TextView txtStepIndicator;
-    private MaterialButton btnContinue;
-    private MaterialButton btnBack;
-    private View stepBar1, stepBar2, stepBar3;
+    private ActivityOnboardingBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_onboarding);
+        binding = ActivityOnboardingBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        getWindow().setStatusBarColor(android.graphics.Color.TRANSPARENT);
-        getWindow().getDecorView().setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
+        getWindow().setStatusBarColor(Color.TRANSPARENT);
+        WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView())
+                .setAppearanceLightStatusBars(true);
 
         new ViewModelProvider(this).get(OnboardingViewModel.class);
 
-        txtStepIndicator = findViewById(R.id.txtStepIndicator);
-        btnContinue = findViewById(R.id.btnContinue);
-        btnBack = findViewById(R.id.btnBack);
-        stepBar1 = findViewById(R.id.stepBar1);
-        stepBar2 = findViewById(R.id.stepBar2);
-        stepBar3 = findViewById(R.id.stepBar3);
-        viewPager = findViewById(R.id.viewPager);
+        ViewCompat.setOnApplyWindowInsetsListener(binding.rootLayout, (v, insets) -> {
+            int navBarBottom = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom;
+            binding.btnContainer.setPadding(0, 0, 0, navBarBottom);
+            return insets;
+        });
 
-        viewPager.setAdapter(new OnboardingPagerAdapter(this));
-        viewPager.setUserInputEnabled(false);
+        binding.viewPager.setAdapter(new OnboardingPagerAdapter(this));
+        binding.viewPager.setUserInputEnabled(false);
 
-        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+        binding.viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
                 updateStepUI(position);
             }
         });
 
-        btnContinue.setOnClickListener(v -> {
-            int current = viewPager.getCurrentItem();
+        binding.btnContinue.setOnClickListener(v -> {
+            int current = binding.viewPager.getCurrentItem();
             if (current < 2) {
-                viewPager.setCurrentItem(current + 1);
+                binding.viewPager.setCurrentItem(current + 1);
             } else {
                 finishOnboarding();
             }
         });
 
-        btnBack.setOnClickListener(v -> {
-            int current = viewPager.getCurrentItem();
+        binding.btnBack.setOnClickListener(v -> {
+            int current = binding.viewPager.getCurrentItem();
             if (current > 0) {
-                viewPager.setCurrentItem(current - 1);
+                binding.viewPager.setCurrentItem(current - 1);
             }
         });
 
-        findViewById(R.id.btnSkip).setOnClickListener(v -> finishOnboarding());
+        binding.btnSkip.setOnClickListener(v -> finishOnboarding());
     }
 
     @Override
     public void onBackPressed() {
-        int current = viewPager.getCurrentItem();
+        int current = binding.viewPager.getCurrentItem();
         if (current > 0) {
-            viewPager.setCurrentItem(current - 1);
+            binding.viewPager.setCurrentItem(current - 1);
         } else {
             super.onBackPressed();
         }
     }
 
     private void updateStepUI(int page) {
-        txtStepIndicator.setText("Step " + (page + 1) + " of 3");
+        binding.txtStepIndicator.setText("Step " + (page + 1) + " of 3");
 
-        stepBar1.setBackgroundResource(R.drawable.bg_step_bar_active);
-        stepBar2.setBackgroundResource(page >= 1 ? R.drawable.bg_step_bar_active : R.drawable.bg_step_bar_inactive);
-        stepBar3.setBackgroundResource(page >= 2 ? R.drawable.bg_step_bar_active : R.drawable.bg_step_bar_inactive);
+        binding.stepBar1.setBackgroundResource(R.drawable.bg_step_bar_active);
+        binding.stepBar2.setBackgroundResource(page >= 1 ? R.drawable.bg_step_bar_active : R.drawable.bg_step_bar_inactive);
+        binding.stepBar3.setBackgroundResource(page >= 2 ? R.drawable.bg_step_bar_active : R.drawable.bg_step_bar_inactive);
 
-        btnContinue.setText(page == 2 ? "Start Learning" : "Continue");
-        btnBack.setVisibility(page == 0 ? View.GONE : View.VISIBLE);
+        binding.btnContinue.setText(page == 2 ? "Start Learning" : "Continue");
+        binding.btnBack.setVisibility(page == 0 ? View.GONE : View.VISIBLE);
     }
 
     private void finishOnboarding() {

@@ -4,36 +4,28 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.google.android.material.button.MaterialButton;
-import com.google.android.material.textfield.TextInputEditText;
 import com.scholarlyapps.pathlingo.BuildConfig;
-import com.scholarlyapps.pathlingo.R;
 import com.scholarlyapps.pathlingo.data.DataManager;
+import com.scholarlyapps.pathlingo.databinding.ActivityRegisterBinding;
 import com.scholarlyapps.pathlingo.ui.activities.MainDashboardActivity;
 import com.scholarlyapps.pathlingo.ui.utils.NavAnim;
 import com.scholarlyapps.pathlingo.ui.utils.ToastHelper;
 
 public class RegisterActivity extends AppCompatActivity {
 
+    private ActivityRegisterBinding binding;
     private AuthViewModel viewModel;
     private GoogleAuthClient googleClient;
-
-    private TextInputEditText editName;
-    private TextInputEditText editEmail;
-    private TextInputEditText editPassword;
-    private TextInputEditText editConfirm;
-    private MaterialButton btnRegister;
-    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        binding = ActivityRegisterBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         getWindow().setStatusBarColor(android.graphics.Color.TRANSPARENT);
         getWindow().getDecorView().setSystemUiVisibility(
@@ -42,20 +34,11 @@ public class RegisterActivity extends AppCompatActivity {
         viewModel = new ViewModelProvider(this).get(AuthViewModel.class);
         googleClient = new GoogleAuthClient(this, BuildConfig.GOOGLE_WEB_CLIENT_ID);
 
-        editName = findViewById(R.id.editName);
-        editEmail = findViewById(R.id.editEmail);
-        editPassword = findViewById(R.id.editPassword);
-        editConfirm = findViewById(R.id.editConfirm);
-        btnRegister = findViewById(R.id.btnRegister);
-        progressBar = findViewById(R.id.progressBar);
+        binding.btnRegister.setOnClickListener(v -> submitRegister());
+        binding.btnGoogle.setOnClickListener(v -> signInWithGoogle());
+        binding.btnLoginAsGuest.setOnClickListener(v -> viewModel.guestLogin(deviceName()));
 
-        btnRegister.setOnClickListener(v -> submitRegister());
-
-        findViewById(R.id.btnGoogle).setOnClickListener(v -> signInWithGoogle());
-
-        findViewById(R.id.btnLoginAsGuest).setOnClickListener(v -> viewModel.guestLogin(deviceName()));
-
-        findViewById(R.id.btnSignIn).setOnClickListener(v -> {
+        binding.btnSignIn.setOnClickListener(v -> {
             Intent intent = new Intent(this, LoginActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
@@ -65,9 +48,9 @@ public class RegisterActivity extends AppCompatActivity {
 
         viewModel.getStateLiveData().observe(this, state -> {
             boolean loading = state.getLoading();
-            btnRegister.setEnabled(!loading);
-            btnRegister.setText(loading ? "Creating…" : "Register");
-            progressBar.setVisibility(loading ? View.VISIBLE : View.GONE);
+            binding.btnRegister.setEnabled(!loading);
+            binding.btnRegister.setText(loading ? "Creating…" : "Register");
+            binding.progressBar.setVisibility(loading ? View.VISIBLE : View.GONE);
 
             String error = state.getError();
             if (error != null && !error.isEmpty()) {
@@ -82,10 +65,10 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void submitRegister() {
-        String name = editName.getText() != null ? editName.getText().toString().trim() : "";
-        String email = editEmail.getText() != null ? editEmail.getText().toString().trim() : "";
-        String password = editPassword.getText() != null ? editPassword.getText().toString() : "";
-        String confirm = editConfirm.getText() != null ? editConfirm.getText().toString() : "";
+        String name = binding.editName.getText() != null ? binding.editName.getText().toString().trim() : "";
+        String email = binding.editEmail.getText() != null ? binding.editEmail.getText().toString().trim() : "";
+        String password = binding.editPassword.getText() != null ? binding.editPassword.getText().toString() : "";
+        String confirm = binding.editConfirm.getText() != null ? binding.editConfirm.getText().toString() : "";
         if (name.isEmpty() || email.isEmpty() || password.isEmpty() || confirm.isEmpty()) {
             ToastHelper.warning(this, "Please fill in all fields.");
             return;

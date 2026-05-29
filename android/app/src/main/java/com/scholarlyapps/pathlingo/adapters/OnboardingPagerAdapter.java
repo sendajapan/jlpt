@@ -5,9 +5,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.scholarlyapps.pathlingo.ui.fragments.OnboardingStep1Fragment;
-import com.scholarlyapps.pathlingo.ui.fragments.OnboardingStep2Fragment;
-import com.scholarlyapps.pathlingo.ui.fragments.OnboardingStep3Fragment;
+import com.scholarlyapps.pathlingo.ui.fragments.LanguageSetupFragment;
+import com.scholarlyapps.pathlingo.ui.fragments.LearningPreferencesFragment;
+import com.scholarlyapps.pathlingo.ui.fragments.PersonalInfoFragment;
 
 public class OnboardingPagerAdapter extends FragmentStateAdapter {
 
@@ -19,9 +19,9 @@ public class OnboardingPagerAdapter extends FragmentStateAdapter {
     @Override
     public Fragment createFragment(int position) {
         switch (position) {
-            case 1: return new OnboardingStep2Fragment();
-            case 2: return new OnboardingStep3Fragment();
-            default: return new OnboardingStep1Fragment();
+            case 1: return new LearningPreferencesFragment();
+            case 2: return new LanguageSetupFragment();
+            default: return new PersonalInfoFragment();
         }
     }
 

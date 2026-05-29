@@ -1,6 +1,7 @@
 package com.scholarlyapps.pathlingo.models;
 
 public class User {
+
     public String name;
     public String jpName;
     public int level;
@@ -11,7 +12,8 @@ public class User {
     public int accuracy;
     public String email;
 
-    public User() {}
+    public User() {
+    }
 
     public User(String name, String jpName, int level, int xp, int maxXp, int streak, int wordsKnown, int accuracy, String email) {
         this.name = name;

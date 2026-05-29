@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -100,10 +101,11 @@
 
         <!-- Bottom buttons: Back (gone on step 1) + Continue -->
         <LinearLayout
+            android:id="@+id/btnContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginVertical="@dimen/_36sdp"
+            android:layout_marginVertical="@dimen/_24sdp"
             android:layout_marginHorizontal="@dimen/_20sdp">
 
             <com.google.android.material.button.MaterialButton
@@ -138,7 +140,7 @@
                 android:textSize="@dimen/_11ssp"
                 app:backgroundTint="@color/color_theme_light"
                 app:cornerRadius="@dimen/_8sdp"
-                android:layout_marginHorizontal="@dimen/_4sdp"/>
+                android:layout_marginHorizontal="@dimen/_4sdp" />
 
         </LinearLayout>
 
