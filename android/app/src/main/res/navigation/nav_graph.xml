@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.scholarlyapps.pathlingo.ui.fragments.HomeFragment"
+        android:label="Home">
+        <action
+            android:id="@+id/action_home_to_categories"
+            app:destination="@id/categoryListFragment" />
+        <action
+            android:id="@+id/action_home_to_subcategory"
+            app:destination="@id/subcategoryFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="com.scholarlyapps.pathlingo.ui.fragments.FavoritesFragment"
+        android:label="Saved" />
+
+    <fragment
+        android:id="@+id/progressFragment"
+        android:name="com.scholarlyapps.pathlingo.ui.fragments.ProgressFragment"
+        android:label="Progress" />
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.scholarlyapps.pathlingo.ui.fragments.SettingsFragment"
+        android:label="Settings" />
+
+    <fragment
+        android:id="@+id/categoryListFragment"
+        android:name="com.scholarlyapps.pathlingo.ui.fragments.CategoryListFragment"
+        android:label="Categories">
+        <action
+            android:id="@+id/action_categories_to_subcategory"
+            app:destination="@id/subcategoryFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/subcategoryFragment"
+        android:name="com.scholarlyapps.pathlingo.ui.fragments.SubcategoryFragment"
+        android:label="Subcategory">
+        <argument
+            android:name="categoryId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_subcategory_to_word_detail"
+            app:destination="@id/wordDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/wordDetailFragment"
+        android:name="com.scholarlyapps.pathlingo.ui.fragments.WordDetailFragment"
+        android:label="Word">
+        <argument
+            android:name="categoryId"
+            app:argType="string" />
+        <argument
+            android:name="subcategoryId"
+            app:argType="string" />
+        <argument
+            android:name="wordIndex"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <action
+            android:id="@+id/action_word_to_score"
+            app:destination="@id/scoreFragment"
+            app:popUpTo="@id/scoreFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/scoreFragment"
+        android:name="com.scholarlyapps.pathlingo.ui.fragments.ScoreFragment"
+        android:label="Score">
+        <action
+            android:id="@+id/action_score_to_home"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="false"
+            app:launchSingleTop="true" />
+    </fragment>
+
+</navigation>
