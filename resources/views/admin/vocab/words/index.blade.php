@@ -137,8 +137,11 @@
                     </th>
                     <th class="px-4 py-2 text-left text-[10px] font-semibold uppercase tracking-wider text-blue-500">
                         Word
+                        <br>
+                    <!--
                     </th>
                     <th class="px-4 py-2 text-left text-[10px] font-semibold uppercase tracking-wider text-red-500">
+                    -->
                         Sentence
                     </th>
                     <th class="px-4 py-2 text-left text-[10px] font-semibold uppercase tracking-wider text-zinc-400">
@@ -252,8 +255,13 @@
                                         <div class="shrink-0">@include('admin.vocab.words._audio_cell', ['field' => 'audio_jp'])</div>
                                     </div>
                                 </div>
+
+                                <br>
+                            <!--
                             </td>
                             <td class="px-4 py-3 text-xs font-medium text-zinc-900 border-x border-zinc-100">
+                            -->
+
                                 <div class="flex flex-col divide-y divide-zinc-100">
                                     <div class="flex items-center justify-between gap-3 py-1.5">
                                         <span class="text-blue-500 whitespace-nowrap">En: {{ $vocab->sentence_en ?: '—' }}</span>
