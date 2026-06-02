@@ -9,7 +9,7 @@
     $initialVoiceId = $vocab->voice_id ?? $defaultVoiceId;
     $initialReviewed = (bool) $vocab->{$reviewedField};
     $audio_name = $existing;
-    $audio = explode($audio_name);
+    $audio = explode('/', $audio_name);
 @endphp
 
 <div x-data="{
