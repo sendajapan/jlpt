@@ -11,13 +11,20 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-/*
-CREATE TABLE urls (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    url TEXT NOT NULL
-);
-*/
+$result = $conn->query("SELECT concat('https://pathlingo.scholarlyapps.com/admin/vocab/words/',id,'/generate-audio?field=audio_en&voice=',voice_id)  FROM `vocab_words` WHERE 1 AND audio_en is NULL
+UNION
+SELECT concat('https://pathlingo.scholarlyapps.com/admin/vocab/words/',id,'/generate-audio?field=audio_jp&voice=',voice_id)  FROM `vocab_words` WHERE 1 AND audio_jp is NULL
+UNION
+SELECT concat('https://pathlingo.scholarlyapps.com/admin/vocab/words/',id,'/generate-audio?field=sentence_audio_en&voice=',voice_id)  FROM `vocab_words` WHERE 1 AND sentence_audio_en is NULL
+UNION
+SELECT concat('https://pathlingo.scholarlyapps.com/admin/vocab/words/',id,'/generate-audio?field=sentence_audio_jp&voice=',voice_id)  FROM `vocab_words` WHERE 1 AND sentence_audio_jp is NULL;
+");
 
+$urls_to_add = [];
+
+while ($row = $result->fetch_array()) {
+ echo $row[0];
+}
 // DELETE URL
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])) {
 
