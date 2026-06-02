@@ -8,7 +8,7 @@
     $toggleReviewedUrl = route('admin.vocab.words.toggle-reviewed', $vocab);
     $initialVoiceId = $vocab->voice_id ?? $defaultVoiceId;
     $initialReviewed = (bool) $vocab->{$reviewedField};
-    $audio_name = explode('/', $audio_name);
+    $audio_name = explode('/', $existing);
     $audio = end($audio_name);
 @endphp
 
