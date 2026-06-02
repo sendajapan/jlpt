@@ -11,20 +11,28 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$result = $conn->query("SELECT concat('https://pathlingo.scholarlyapps.com/admin/vocab/words/',id,'/generate-audio?field=audio_en&voice=',voice_id)  FROM `vocab_words` WHERE 1 AND audio_en is NULL
-UNION
-SELECT concat('https://pathlingo.scholarlyapps.com/admin/vocab/words/',id,'/generate-audio?field=audio_jp&voice=',voice_id)  FROM `vocab_words` WHERE 1 AND audio_jp is NULL
-UNION
-SELECT concat('https://pathlingo.scholarlyapps.com/admin/vocab/words/',id,'/generate-audio?field=sentence_audio_en&voice=',voice_id)  FROM `vocab_words` WHERE 1 AND sentence_audio_en is NULL
-UNION
-SELECT concat('https://pathlingo.scholarlyapps.com/admin/vocab/words/',id,'/generate-audio?field=sentence_audio_jp&voice=',voice_id)  FROM `vocab_words` WHERE 1 AND sentence_audio_jp is NULL;
-");
+if(isset($_GET['add'])){
 
-$urls_to_add = [];
+    $result = $conn->query("SELECT concat('https://pathlingo.scholarlyapps.com/admin/vocab/words/',id,'/generate-audio?field=audio_en&voice=',voice_id)  FROM `vocab_words` WHERE 1 AND audio_en is NULL
+    UNION
+    SELECT concat('https://pathlingo.scholarlyapps.com/admin/vocab/words/',id,'/generate-audio?field=audio_jp&voice=',voice_id)  FROM `vocab_words` WHERE 1 AND audio_jp is NULL
+    UNION
+    SELECT concat('https://pathlingo.scholarlyapps.com/admin/vocab/words/',id,'/generate-audio?field=sentence_audio_en&voice=',voice_id)  FROM `vocab_words` WHERE 1 AND sentence_audio_en is NULL
+    UNION
+    SELECT concat('https://pathlingo.scholarlyapps.com/admin/vocab/words/',id,'/generate-audio?field=sentence_audio_jp&voice=',voice_id)  FROM `vocab_words` WHERE 1 AND sentence_audio_jp is NULL;
+    ");
 
-while ($row = $result->fetch_array()) {
-    $conn->query("INSERT INTO `urls` SET url = '".$row[0]."';");
+    $urls_to_add = [];
+
+    while ($row = $result->fetch_array()) {
+        $conn->query("INSERT INTO `urls` SET url = '".$row[0]."';");
+    }
+
 }
+
+
+
+
 // DELETE URL
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])) {
 
@@ -81,6 +89,9 @@ while ($row = $result->fetch_assoc()) {
 </head>
 <body>
 
+
+<a style="padding: 5px 10px; background-color: #3b82f6; color:white; border:1px solid aqua; border-radius:10px;text-decoration:none;" href="simple_automation.php?add">Add Missing to DB</a>
+<br>
 <h2>Executing URLs In Parallel Every 20 Seconds.</h2>
 
 <div id="log"></div>
