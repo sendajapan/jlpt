@@ -1,126 +1,199 @@
 <?php
 
-$file = $_GET['audio'];
+$filename = $_GET['audio'];
 $folder = 'https://pathlingo.scholarlyapps.com/storage/vocab/words/audio/';
 
-if($file!=''){}else{
+if($filename!=''){}else{
         'No file Found';
         exit;
     }
 
+$file = $folder.$filename;
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $start = floatval($_POST['start']);
-    $end = floatval($_POST['end']);
+    header('Content-Type: application/json');
 
-    $tmpFile = $file . ".tmp.mp3";
+    $start = isset($_POST['start']) ? floatval($_POST['start']) : 0;
+    $end   = isset($_POST['end']) ? floatval($_POST['end']) : 0;
+
+    if ($end <= $start) {
+        echo json_encode([
+            'success' => false,
+            'message' => 'Invalid selection'
+        ]);
+        exit;
+    }
+
+    $tmpFile = __DIR__ . "<?=$folder?>audio_tmp.mp3";
 
     $cmd = sprintf(
-        'ffmpeg -y -i %s -ss %s -to %s -c copy %s 2>&1',
+        'ffmpeg -y -i %s -ss %s -to %s -c:a libmp3lame -q:a 2 %s 2>&1',
         escapeshellarg($file),
         escapeshellarg($start),
         escapeshellarg($end),
         escapeshellarg($tmpFile)
     );
 
-    exec($cmd, $output, $result);
+    exec($cmd, $output, $returnCode);
 
-    if ($result === 0 && file_exists($tmpFile)) {
+    if ($returnCode !== 0) {
 
-        unlink($file);
-        rename($tmpFile, $file);
-
-        echo json_encode([
-            'success' => true
-        ]);
-    } else {
         echo json_encode([
             'success' => false,
-            'error' => implode("\n", $output)
+            'message' => implode("\n", $output)
         ]);
+        exit;
     }
 
+    unlink($file);
+    rename($tmpFile, $file);
+
+    echo json_encode([
+        'success' => true
+    ]);
     exit;
 }
-
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-    <script src="https://unpkg.com/wavesurfer.js"></script>
+
+    <meta charset="utf-8">
+
+    <title>Audio Cropper</title>
+
+    <script src="https://unpkg.com/wavesurfer.js@7"></script>
     <script src="https://unpkg.com/wavesurfer.js@7/dist/plugins/regions.min.js"></script>
+
+    <style>
+
+        body{
+            font-family:Arial;
+            margin:30px;
+        }
+
+        #waveform{
+            width:100%;
+            border:1px solid #ccc;
+            margin-bottom:20px;
+        }
+
+        button{
+            padding:10px 20px;
+            margin-right:10px;
+            cursor:pointer;
+        }
+
+    </style>
+
 </head>
+
 <body>
 
-<h3>Audio Cropper</h3>
+<h2>MP3 Waveform Cropper</h2>
 
 <div id="waveform"></div>
 
-<br>
-
-<button id="play">Play/Pause</button>
-<button id="save">Crop & Save</button>
+<button id="playBtn">Play / Pause</button>
+<button id="saveBtn">Crop & Save</button>
 
 <script>
 
-    const regions = WaveSurfer.Regions.create();
-
-    const ws = WaveSurfer.create({
-        container: '#waveform',
-        waveColor: '#999',
-        progressColor: '#444',
-        height: 150,
-        url: '<?=$folder.$file?>',
-        plugins: [regions]
-    });
-
     let selectedRegion = null;
 
-    ws.on('ready', () => {
+    const regionsPlugin = WaveSurfer.Regions.create();
 
-        selectedRegion = ws.addRegion({
+    const wavesurfer = WaveSurfer.create({
+        container: '#waveform',
+        waveColor: '#999',
+        progressColor: '#333',
+        height: 150,
+        url: '<?=$folder.$file?>?' + Date.now(),
+        plugins: [regionsPlugin]
+    });
+
+    wavesurfer.on('ready', () => {
+
+        regionsPlugin.enableDragSelection({
+            color: 'rgba(0,123,255,0.3)'
+        });
+
+        selectedRegion = regionsPlugin.addRegion({
             start: 0,
-            end: 5,
+            end: Math.min(5, wavesurfer.getDuration()),
             color: 'rgba(0,123,255,0.3)',
-            resize: true,
-            drag: true
+            drag: true,
+            resize: true
         });
 
     });
 
-    document.getElementById('play').onclick = () => {
-        ws.playPause();
-    };
+    regionsPlugin.on('region-created', region => {
 
-    document.getElementById('save').onclick = () => {
+        regionsPlugin.getRegions().forEach(r => {
+
+            if (r.id !== region.id) {
+                r.remove();
+            }
+
+        });
+
+        selectedRegion = region;
+    });
+
+    regionsPlugin.on('region-updated', region => {
+        selectedRegion = region;
+    });
+
+    regionsPlugin.on('region-clicked', region => {
+        selectedRegion = region;
+    });
+
+    document.getElementById('playBtn').addEventListener('click', () => {
+        wavesurfer.playPause();
+    });
+
+    document.getElementById('saveBtn').addEventListener('click', () => {
 
         if (!selectedRegion) {
-            alert('Select an area first');
+            alert('Please select a crop area');
             return;
         }
 
-        let formData = new FormData();
+        const fd = new FormData();
 
-        formData.append('start', selectedRegion.start);
-        formData.append('end', selectedRegion.end);
+        fd.append('start', selectedRegion.start);
+        fd.append('end', selectedRegion.end);
 
-        fetch(window.location.href, {
+        fetch('', {
             method: 'POST',
-            body: formData
+            body: fd
         })
-            .then(r => r.json())
+            .then(res => res.json())
             .then(data => {
 
                 if (data.success) {
-                    alert('File cropped and saved');
+
+                    alert('Audio saved successfully');
+
                     location.reload();
+
                 } else {
-                    alert(data.error);
+
+                    alert(data.message);
                 }
 
+            })
+            .catch(err => {
+
+                console.error(err);
+                alert('Error saving audio');
+
             });
-    };
+
+    });
 
 </script>
 
