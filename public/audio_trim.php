@@ -60,37 +60,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!DOCTYPE html>
 <html>
 <head>
-
     <meta charset="utf-8">
-
     <title>Audio Cropper</title>
-
     <script src="https://unpkg.com/wavesurfer.js@7"></script>
     <script src="https://unpkg.com/wavesurfer.js@7/dist/plugins/regions.min.js"></script>
 
     <style>
-
         body{
             font-family:Arial;
             margin:30px;
         }
-
         #waveform{
             width:100%;
             border:1px solid #ccc;
             margin-bottom:20px;
         }
-
         button{
             padding:10px 20px;
             margin-right:10px;
             cursor:pointer;
         }
-
     </style>
-
 </head>
-
 <body>
 
 <h2>MP3 Waveform Cropper</h2>
@@ -101,9 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <button id="saveBtn">Crop & Save</button>
 
 <script>
-
     let selectedRegion = null;
-
     const regionsPlugin = WaveSurfer.Regions.create();
 
     const wavesurfer = WaveSurfer.create({
@@ -162,7 +151,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             alert('Please select a crop area');
             return;
         }
-
         const fd = new FormData();
 
         fd.append('start', selectedRegion.start);
@@ -176,27 +164,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             .then(data => {
 
                 if (data.success) {
-
-                    alert('Audio saved successfully');
-
-                    location.reload();
-
+                    window.close();
                 } else {
-
                     alert(data.message);
                 }
-
             })
             .catch(err => {
-
                 console.error(err);
                 alert('Error saving audio');
-
             });
-
     });
-
 </script>
-
 </body>
 </html>
