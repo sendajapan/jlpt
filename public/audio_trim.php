@@ -1,7 +1,7 @@
 <?php
 
 $file = $_GET['audio'];
-$folder = 'https://pathlingo.scholarlyapps.com/storage/';
+$folder = 'https://pathlingo.scholarlyapps.com/storage/vocab/words/audio/';
 
 if(is_file($folder.$file)){
 
