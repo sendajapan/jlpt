@@ -2,13 +2,14 @@
 
 $filename = $_GET['audio'];
 $folder = 'https://pathlingo.scholarlyapps.com/storage/vocab/words/audio/';
+$path = '/var/www/html/jlpt-laravel-vue/storage/app/public/vocab/words/audio/';
 
 if($filename!=''){}else{
         'No file Found';
         exit;
     }
 
-$file = $folder.$filename;
+$file = $path.$filename;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -25,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    $tmpFile = __DIR__ . "<?=$folder?>audio_tmp.mp3";
+    $tmpFile = "audio_tmp.mp3";
 
     $cmd = sprintf(
         'ffmpeg -y -i %s -ss %s -to %s -c:a libmp3lame -q:a 2 %s 2>&1',
