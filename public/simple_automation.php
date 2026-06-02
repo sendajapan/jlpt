@@ -23,7 +23,7 @@ SELECT concat('https://pathlingo.scholarlyapps.com/admin/vocab/words/',id,'/gene
 $urls_to_add = [];
 
 while ($row = $result->fetch_array()) {
- echo $row[0];
+    $conn->query("INSERT INTO `urls` (`url`) VALUES (".$row[0].");");
 }
 // DELETE URL
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])) {
