@@ -11,6 +11,7 @@ use App\Services\VocabularyService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
@@ -18,7 +19,7 @@ class VocabularyController extends Controller
 {
     public function __construct(private VocabularyService $service) {}
 
-    public function index(Request $request): View
+    public function index(Request $request): Response
     {
         $filters = $request->only(['search', 'category_id', 'subcategory_id', 'is_approved', 'image_path', 'audio_flag']);
         $vocabularies = $this->service->getAll($filters);
@@ -27,7 +28,20 @@ class VocabularyController extends Controller
         $voices = Voice::orderBy('sort_order')->orderBy('name')->get(['id', 'name']);
         $defaultVoiceId = Voice::default()?->id;
 
-        return view('admin.vocab.words.index', compact('vocabularies', 'categories', 'subcategories', 'voices', 'defaultVoiceId'));
+        return response()
+            ->view(
+                'admin.vocab.words.index',
+                compact(
+                    'vocabularies',
+                    'categories',
+                    'subcategories',
+                    'voices',
+                    'defaultVoiceId'
+                )
+            )
+            ->header('Cache-Control', 'no-cache, no-store, must-revalidate')
+            ->header('Pragma', 'no-cache')
+            ->header('Expires', '0');
     }
 
     public function create(): View
