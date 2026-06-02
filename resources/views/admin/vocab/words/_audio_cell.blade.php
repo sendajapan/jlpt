@@ -59,12 +59,12 @@
                 <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
                 Play
             </button>
-            <button @click="window.open('https://pathlingo.scholarlyapps.com/audio_trim.php?audio={{ $audio }}', '_blank')" class="inline-flex h-7 items-center gap-1 px-2 rounded border border-green-200 bg-white hover:bg-blue-50 text-[10px] font-medium text-green-600 transition-colors" >
-                Cut
-            </button>
 
             <template x-if="!reviewed">
                 <span class="inline-flex items-center gap-1">
+                    <button @click="window.open('https://pathlingo.scholarlyapps.com/audio_trim.php?audio={{ $audio }}', '_blank')" class="inline-flex h-7 items-center gap-1 px-2 rounded border border-green-200 bg-white hover:bg-blue-50 text-[10px] font-medium text-green-600 transition-colors" >
+                        Cut
+                    </button>
                     @include('admin.vocab.words._voice_select')
                     <span x-show="!confirm"><button @click="run('{{ $regenerateUrl }}')" class="inline-flex h-7 items-center px-2 rounded border border-amber-200 bg-white hover:bg-amber-50 text-[10px] font-medium text-amber-600 transition-all">Regenerate</button></span>
                     <span x-show="!confirm"><button @click="confirm = true" class="inline-flex h-7 items-center px-2 rounded border border-red-200 bg-white hover:bg-red-50 text-[10px] font-medium text-red-400 transition-all">Delete</button></span>
