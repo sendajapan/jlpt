@@ -3,45 +3,43 @@
 $file = $_GET['audio'];
 $folder = 'https://pathlingo.scholarlyapps.com/storage/vocab/words/audio/';
 
-if(is_file($folder.$file)){
-
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-        $start = floatval($_POST['start']);
-        $end = floatval($_POST['end']);
-
-        $tmpFile = $file . ".tmp.mp3";
-
-        $cmd = sprintf(
-            'ffmpeg -y -i %s -ss %s -to %s -c copy %s 2>&1',
-            escapeshellarg($file),
-            escapeshellarg($start),
-            escapeshellarg($end),
-            escapeshellarg($tmpFile)
-        );
-
-        exec($cmd, $output, $result);
-
-        if ($result === 0 && file_exists($tmpFile)) {
-
-            unlink($file);
-            rename($tmpFile, $file);
-
-            echo json_encode([
-                'success' => true
-            ]);
-        } else {
-            echo json_encode([
-                'success' => false,
-                'error' => implode("\n", $output)
-            ]);
-        }
-
+if($file!=''){}else{
+        'No file Found';
         exit;
     }
-}
-else{
-    'No file Found';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    $start = floatval($_POST['start']);
+    $end = floatval($_POST['end']);
+
+    $tmpFile = $file . ".tmp.mp3";
+
+    $cmd = sprintf(
+        'ffmpeg -y -i %s -ss %s -to %s -c copy %s 2>&1',
+        escapeshellarg($file),
+        escapeshellarg($start),
+        escapeshellarg($end),
+        escapeshellarg($tmpFile)
+    );
+
+    exec($cmd, $output, $result);
+
+    if ($result === 0 && file_exists($tmpFile)) {
+
+        unlink($file);
+        rename($tmpFile, $file);
+
+        echo json_encode([
+            'success' => true
+        ]);
+    } else {
+        echo json_encode([
+            'success' => false,
+            'error' => implode("\n", $output)
+        ]);
+    }
+
     exit;
 }
 
@@ -73,7 +71,7 @@ else{
         waveColor: '#999',
         progressColor: '#444',
         height: 150,
-        url: 'uploads/audio.mp3',
+        url: '<?=$folder.$file?>',
         plugins: [regions]
     });
 
