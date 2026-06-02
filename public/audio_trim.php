@@ -111,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         waveColor: '#999',
         progressColor: '#333',
         height: 150,
-        url: '<?=$file?>?' + Date.now(),
+        url: '<?=$folder.$filename?>?' + Date.now(),
         plugins: [regionsPlugin]
     });
 
