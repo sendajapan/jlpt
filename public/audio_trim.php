@@ -1,41 +1,50 @@
 <?php
 
-$file = "uploads/audio.mp3"; // original file
+$file = $_GET['audio'];
+$folder = 'https://pathlingo.scholarlyapps.com/storage/';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if(is_file($folder.$file)){
 
-    $start = floatval($_POST['start']);
-    $end = floatval($_POST['end']);
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $tmpFile = $file . ".tmp.mp3";
+        $start = floatval($_POST['start']);
+        $end = floatval($_POST['end']);
 
-    $cmd = sprintf(
-        'ffmpeg -y -i %s -ss %s -to %s -c copy %s 2>&1',
-        escapeshellarg($file),
-        escapeshellarg($start),
-        escapeshellarg($end),
-        escapeshellarg($tmpFile)
-    );
+        $tmpFile = $file . ".tmp.mp3";
 
-    exec($cmd, $output, $result);
+        $cmd = sprintf(
+            'ffmpeg -y -i %s -ss %s -to %s -c copy %s 2>&1',
+            escapeshellarg($file),
+            escapeshellarg($start),
+            escapeshellarg($end),
+            escapeshellarg($tmpFile)
+        );
 
-    if ($result === 0 && file_exists($tmpFile)) {
+        exec($cmd, $output, $result);
 
-        unlink($file);
-        rename($tmpFile, $file);
+        if ($result === 0 && file_exists($tmpFile)) {
 
-        echo json_encode([
-            'success' => true
-        ]);
-    } else {
-        echo json_encode([
-            'success' => false,
-            'error' => implode("\n", $output)
-        ]);
+            unlink($file);
+            rename($tmpFile, $file);
+
+            echo json_encode([
+                'success' => true
+            ]);
+        } else {
+            echo json_encode([
+                'success' => false,
+                'error' => implode("\n", $output)
+            ]);
+        }
+
+        exit;
     }
-
+}
+else{
+    'No file Found';
     exit;
 }
+
 ?>
 
 <!DOCTYPE html>
