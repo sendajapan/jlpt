@@ -53,7 +53,7 @@ public class HomeFragment extends Fragment {
 
         binding.rvCategories.setAdapter(adapter);
 
-        viewModel.user.observe(getViewLifecycleOwner(), user -> {
+        viewModel.getUser().observe(getViewLifecycleOwner(), user -> {
             if (user == null) return;
             binding.txtUserName.setText("Ready to learn, " + user.name + "!");
             binding.txtCoins.setText(String.valueOf(user.xp));
@@ -67,7 +67,7 @@ public class HomeFragment extends Fragment {
             binding.txtLessonFraction.setText(user.streak + "/7");
         });
 
-        viewModel.categories.observe(getViewLifecycleOwner(), categories ->
+        viewModel.getCategories().observe(getViewLifecycleOwner(), categories ->
             adapter.setData(categories != null ? categories : new ArrayList<>()));
 
         viewModel.loadData();
