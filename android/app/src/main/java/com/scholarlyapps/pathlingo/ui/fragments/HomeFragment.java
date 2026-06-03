@@ -50,6 +50,7 @@ public class HomeFragment extends Fragment {
             args.putString("categoryId", category.id);
             Navigation.findNavController(view).navigate(R.id.action_home_to_subcategory, args);
         });
+
         binding.rvCategories.setAdapter(adapter);
 
         viewModel.user.observe(getViewLifecycleOwner(), user -> {
@@ -69,7 +70,7 @@ public class HomeFragment extends Fragment {
         viewModel.categories.observe(getViewLifecycleOwner(), categories ->
             adapter.setData(categories != null ? categories : new ArrayList<>()));
 
-        viewModel.refresh();
+        viewModel.loadData();
     }
 
     @Override

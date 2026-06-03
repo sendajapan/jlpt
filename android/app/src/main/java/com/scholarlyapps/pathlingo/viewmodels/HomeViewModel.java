@@ -1,6 +1,7 @@
 package com.scholarlyapps.pathlingo.viewmodels;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.scholarlyapps.pathlingo.data.repo.CatalogRepository;
@@ -18,21 +19,29 @@ public class HomeViewModel extends ViewModel {
     private final UserRepository userRepo;
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
-    public final LiveData<User> user;
-    public final LiveData<List<Category>> categories;
+    private final MediatorLiveData<List<Category>> _categories = new MediatorLiveData<>();
+    public final LiveData<List<Category>> categories = _categories;
+
+    private final MediatorLiveData<User> _user = new MediatorLiveData<>();
+    public final LiveData<User> user = _user;
+
+    private boolean sourcesAdded = false;
 
     public HomeViewModel(CatalogRepository catalogRepo, UserRepository userRepo) {
         this.catalogRepo = catalogRepo;
         this.userRepo = userRepo;
-        this.user = userRepo.getUser();
-        this.categories = catalogRepo.getAllCategories();
     }
 
-    public void refresh() {
-        executor.execute(() -> {
-            catalogRepo.refresh();
-            userRepo.refresh();
-        });
+    public void loadData() {
+        if (!sourcesAdded) {
+            sourcesAdded = true;
+            _categories.addSource(catalogRepo.getAllCategories(), _categories::setValue);
+            _user.addSource(userRepo.getUser(), _user::setValue);
+            executor.execute(() -> {
+                catalogRepo.refresh();
+                userRepo.refresh();
+            });
+        }
     }
 
     @Override
