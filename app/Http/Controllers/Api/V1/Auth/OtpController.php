@@ -22,9 +22,9 @@ class OtpController extends Controller
         requestBody: new OA\RequestBody(
             required: true,
             content: new OA\JsonContent(
-                required: ['receiver_email'],
+                required: ['user_email'],
                 properties: [
-                    new OA\Property(property: 'receiver_email', type: 'string', format: 'email', example: 'user@example.com'),
+                    new OA\Property(property: 'user_email', type: 'string', format: 'email', example: 'user@example.com'),
                 ]
             )
         ),
@@ -42,9 +42,9 @@ class OtpController extends Controller
     )]
     public function send(Request $request): JsonResponse
     {
-        $request->validate(['receiver_email' => ['required', 'email']]);
+        $request->validate(['user_email' => ['required', 'email']]);
 
-        $user = AppUser::where('email', $request->string('receiver_email'))->first();
+        $user = AppUser::where('email', $request->string('user_email'))->first();
 
         if (! $user) {
             return response()->json(['message' => 'No account found with that email.'], 404);
@@ -62,9 +62,9 @@ class OtpController extends Controller
         requestBody: new OA\RequestBody(
             required: true,
             content: new OA\JsonContent(
-                required: ['receiver_email', 'code'],
+                required: ['user_email', 'code'],
                 properties: [
-                    new OA\Property(property: 'receiver_email', type: 'string', format: 'email', example: 'user@example.com'),
+                    new OA\Property(property: 'user_email', type: 'string', format: 'email', example: 'user@example.com'),
                     new OA\Property(property: 'code', type: 'string', minLength: 4, maxLength: 4, example: '4827', description: '4-digit numeric OTP'),
                 ]
             )
@@ -83,7 +83,7 @@ class OtpController extends Controller
     )]
     public function verify(OtpVerifyRequest $request): JsonResponse
     {
-        $user = AppUser::where('email', $request->validated('receiver_email'))->first();
+        $user = AppUser::where('email', $request->validated('user_email'))->first();
 
         if (! $user) {
             return response()->json(['message' => 'No account found with that email.'], 404);
