@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clipToPadding="true"
+    android:clipToPadding="false"
     android:paddingHorizontal="@dimen/_16sdp"
     android:paddingTop="@dimen/_24sdp"
-    android:paddingBottom="@dimen/_80sdp">
+    android:paddingBottom="@dimen/_100sdp">
 
     <LinearLayout
         android:layout_width="match_parent"

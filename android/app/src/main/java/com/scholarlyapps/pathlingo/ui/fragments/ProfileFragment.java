@@ -1,5 +1,8 @@
 package com.scholarlyapps.pathlingo.ui.fragments;
 
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.scholarlyapps.pathlingo.databinding.DialogConfirmLogoutBinding;
 import com.scholarlyapps.pathlingo.databinding.FragmentProfileBinding;
 import com.scholarlyapps.pathlingo.ui.utils.LogoutHelper;
 import com.scholarlyapps.pathlingo.viewmodels.AppViewModelFactory;
@@ -39,7 +43,7 @@ public class ProfileFragment extends Fragment {
             binding.txtXp.setText("XP: " + user.xp);
         });
 
-        binding.btnLogout.setOnClickListener(v -> LogoutHelper.logout(requireContext()));
+        binding.btnLogout.setOnClickListener(v -> showLogoutDialog());
 
         binding.rowEditProfile.setOnClickListener(v -> showToast("Edit Profile"));
         binding.rowProgress.setOnClickListener(v -> showToast("Progress"));
@@ -51,6 +55,25 @@ public class ProfileFragment extends Fragment {
         binding.rowPrivacy.setOnClickListener(v -> showToast("Privacy Policy"));
         binding.rowDeactivate.setOnClickListener(v -> showToast("Deactivate Account"));
         binding.rowDeleteAccount.setOnClickListener(v -> showToast("Delete Account"));
+    }
+
+    private void showLogoutDialog() {
+        Dialog dialog = new Dialog(requireContext());
+        DialogConfirmLogoutBinding dialogBinding = DialogConfirmLogoutBinding.inflate(LayoutInflater.from(requireContext()));
+        dialog.setContentView(dialogBinding.getRoot());
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        }
+        dialog.setCancelable(true);
+
+        dialogBinding.btnCancel.setOnClickListener(v -> dialog.dismiss());
+        dialogBinding.btnConfirmLogout.setOnClickListener(v -> {
+            dialog.dismiss();
+            LogoutHelper.logout(requireContext());
+        });
+
+        dialog.show();
     }
 
     private void showToast(String message) {
