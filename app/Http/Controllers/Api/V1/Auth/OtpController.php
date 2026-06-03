@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\OtpVerifyRequest;
+use App\Models\AppUser;
 use App\Services\AppUserOtpService;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Http\JsonResponse;
@@ -17,8 +18,16 @@ class OtpController extends Controller
     #[OA\Post(
         path: '/api/v1/auth/otp/send',
         tags: ['Auth'],
-        summary: 'Resend OTP verification code to the authenticated user\'s email',
-        security: [['sanctum' => []]],
+        summary: 'Send OTP verification code to the given email (no auth required)',
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\JsonContent(
+                required: ['receiver_email'],
+                properties: [
+                    new OA\Property(property: 'receiver_email', type: 'string', format: 'email', example: 'user@example.com'),
+                ]
+            )
+        ),
         responses: [
             new OA\Response(
                 response: 200,
@@ -27,12 +36,21 @@ class OtpController extends Controller
                     properties: [new OA\Property(property: 'message', type: 'string', example: 'OTP sent to your email.')]
                 )
             ),
-            new OA\Response(response: 401, description: 'Unauthenticated'),
+            new OA\Response(response: 404, description: 'No account found with that email'),
+            new OA\Response(response: 422, description: 'Validation error', content: new OA\JsonContent(ref: '#/components/schemas/ValidationError')),
         ]
     )]
     public function send(Request $request): JsonResponse
     {
-        $this->otpService->generateAndSend($request->user());
+        $request->validate(['receiver_email' => ['required', 'email']]);
+
+        $user = AppUser::where('email', $request->string('receiver_email'))->first();
+
+        if (! $user) {
+            return response()->json(['message' => 'No account found with that email.'], 404);
+        }
+
+        $this->otpService->generateAndSend($user);
 
         return response()->json(['message' => 'OTP sent to your email.']);
     }

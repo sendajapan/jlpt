@@ -10,6 +10,7 @@ import com.scholarlyapps.pathlingo.data.remote.dto.GoogleLoginRequest;
 import com.scholarlyapps.pathlingo.data.remote.dto.GuestLoginRequest;
 import com.scholarlyapps.pathlingo.data.remote.dto.LoginRequest;
 import com.scholarlyapps.pathlingo.data.remote.dto.MessageResponse;
+import com.scholarlyapps.pathlingo.data.remote.dto.OtpSendRequest;
 import com.scholarlyapps.pathlingo.data.remote.dto.OtpVerifyRequest;
 import com.scholarlyapps.pathlingo.data.remote.dto.RegisterRequest;
 
@@ -87,9 +88,9 @@ public class AuthRepository {
         }
     }
 
-    public ApiResult<String> sendOtp() {
+    public ApiResult<String> sendOtp(String email) {
         try {
-            Response<MessageResponse> response = api.sendOtp().execute();
+            Response<MessageResponse> response = api.sendOtp(new OtpSendRequest(email)).execute();
             if (response.isSuccessful() && response.body() != null) {
                 return ApiResult.success(response.body().message);
             }

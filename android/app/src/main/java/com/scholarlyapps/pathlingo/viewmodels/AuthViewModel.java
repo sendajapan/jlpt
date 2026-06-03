@@ -44,12 +44,12 @@ public class AuthViewModel extends ViewModel {
         launchAuth(() -> repo.loginWithGoogle(idToken, deviceName));
     }
 
-    public void sendOtp() {
+    public void sendOtp(String email) {
         stateLiveData.setValue(new AuthUiState(true, null, null, false, false));
         executor.execute(() -> {
             AuthUiState next;
             try {
-                ApiResult<String> result = repo.sendOtp();
+                ApiResult<String> result = repo.sendOtp(email);
                 next = result.isSuccess()
                         ? new AuthUiState(false, null, null, false, false)
                         : new AuthUiState(false, result.getError(), null, false, false);

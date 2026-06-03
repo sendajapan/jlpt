@@ -41,8 +41,8 @@ public class OtpActivity extends AppCompatActivity {
         getWindow().getDecorView().setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
-        String email = getIntent().getStringExtra(EXTRA_EMAIL);
-        if (email == null) email = "";
+        String emailExtra = getIntent().getStringExtra(EXTRA_EMAIL);
+        final String email = emailExtra != null ? emailExtra : "";
 
         binding.textEmail.setText(email);
 
@@ -57,7 +57,7 @@ public class OtpActivity extends AppCompatActivity {
 
         binding.btnResend.setOnClickListener(v -> {
             if (!resendEnabled) return;
-            viewModel.sendOtp();
+            viewModel.sendOtp(email);
             startResendCooldown();
             ToastHelper.success(this, "OTP resent to your email.");
         });
