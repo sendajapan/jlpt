@@ -17,7 +17,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/lato_black"
+            android:fontFamily="@font/poppins_black"
             android:text="Let's get to know you"
             android:textColor="@color/color_theme_dark"
             android:textSize="@dimen/_22ssp" />
@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_6sdp"
-            android:fontFamily="@font/lato"
+            android:fontFamily="@font/poppins"
             android:text="Tell us a bit about yourself so we can\npersonalize your learning experience."
             android:textColor="@color/color_theme_black"
             android:textSize="@dimen/_11ssp" />
@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_24sdp"
-            android:fontFamily="@font/lato_bold"
+            android:fontFamily="@font/poppins_bold"
             android:text="Date of Birth"
             android:textColor="@color/color_theme_black"
             android:textSize="@dimen/_12ssp" />
@@ -133,7 +133,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_24sdp"
-            android:fontFamily="@font/lato_bold"
+            android:fontFamily="@font/poppins_bold"
             android:text="Gender"
             android:textColor="@color/color_theme_black"
             android:textSize="@dimen/_12ssp" />
@@ -164,7 +164,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_4sdp"
-                    android:fontFamily="@font/lato_bold"
+                    android:fontFamily="@font/poppins_bold"
                     android:text="Male"
                     android:textColor="@color/color_theme_black"
                     android:textSize="@dimen/_10ssp" />
@@ -193,7 +193,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_4sdp"
-                    android:fontFamily="@font/lato_bold"
+                    android:fontFamily="@font/poppins_bold"
                     android:text="Female"
                     android:textColor="@color/color_theme_black"
                     android:textSize="@dimen/_10ssp" />
@@ -228,7 +228,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_4sdp"
-                    android:fontFamily="@font/lato_bold"
+                    android:fontFamily="@font/poppins_bold"
                     android:text="Other"
                     android:textColor="@color/color_theme_black"
                     android:textSize="@dimen/_10ssp" />
@@ -257,7 +257,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_4sdp"
-                    android:fontFamily="@font/lato_bold"
+                    android:fontFamily="@font/poppins_bold"
                     android:text="Prefer not to say"
                     android:textAlignment="center"
                     android:textColor="@color/color_theme_black"

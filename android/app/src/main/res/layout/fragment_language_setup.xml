@@ -17,7 +17,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/lato_black"
+            android:fontFamily="@font/poppins_black"
             android:text="Almost there !"
             android:textColor="@color/color_theme_dark"
             android:textSize="@dimen/_22ssp" />
@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_6sdp"
-            android:fontFamily="@font/lato"
+            android:fontFamily="@font/poppins"
             android:text="Just a few last details to personalize\nthe best for your learning path."
             android:textColor="@color/color_theme_black"
             android:textSize="@dimen/_11ssp" />
@@ -47,7 +47,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato_bold"
+                    android:fontFamily="@font/poppins_bold"
                     android:text="From Language"
                     android:textColor="@color/color_theme_black"
                     android:textSize="@dimen/_10ssp" />
@@ -75,7 +75,7 @@
                 android:layout_height="46sp"
                 android:layout_marginHorizontal="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_16sdp"
-                android:fontFamily="@font/lato_bold"
+                android:fontFamily="@font/poppins_bold"
                 android:text="→"
                 android:textColor="@color/color_theme_dark"
                 android:textSize="@dimen/_16ssp" />
@@ -89,7 +89,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato_bold"
+                    android:fontFamily="@font/poppins_bold"
                     android:text="To Language"
                     android:textColor="@color/color_theme_black"
                     android:textSize="@dimen/_10ssp" />
@@ -118,7 +118,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_24sdp"
-            android:fontFamily="@font/lato_bold"
+            android:fontFamily="@font/poppins_bold"
             android:text="Daily Goal (minutes)"
             android:textColor="@color/color_theme_black"
             android:textSize="@dimen/_12ssp" />
@@ -140,7 +140,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato_bold"
+                    android:fontFamily="@font/poppins_bold"
                     android:text="15 min"
                     android:textColor="@color/color_theme_black"
                     android:textSize="@dimen/_10ssp" />
@@ -160,7 +160,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato_bold"
+                    android:fontFamily="@font/poppins_bold"
                     android:text="30 min"
                     android:textColor="@color/color_theme_black"
                     android:textSize="@dimen/_10ssp" />
@@ -180,7 +180,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato_bold"
+                    android:fontFamily="@font/poppins_bold"
                     android:text="1 hour"
                     android:textColor="@color/color_theme_black"
                     android:textSize="@dimen/_10ssp" />
@@ -206,7 +206,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato_bold"
+                    android:fontFamily="@font/poppins_bold"
                     android:text="2 hours"
                     android:textColor="@color/color_theme_black"
                     android:textSize="@dimen/_10ssp" />
@@ -226,7 +226,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato_bold"
+                    android:fontFamily="@font/poppins_bold"
                     android:text="3 hours"
                     android:textColor="@color/color_theme_black"
                     android:textSize="@dimen/_10ssp" />
@@ -270,7 +270,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginStart="@dimen/_12sdp"
-                    android:fontFamily="@font/lato_bold"
+                    android:fontFamily="@font/poppins_bold"
                     android:text="Great choice! You're all set to start your language learning journey."
                     android:textColor="@color/color_theme_navy"
                     android:textSize="@dimen/_11ssp" />

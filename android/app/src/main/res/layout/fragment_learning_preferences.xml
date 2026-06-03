@@ -16,7 +16,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/lato_black"
+            android:fontFamily="@font/poppins_black"
             android:text="Your learning preferences"
             android:textColor="@color/color_theme_dark"
             android:textSize="@dimen/_22ssp" />
@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_6sdp"
-            android:fontFamily="@font/lato"
+            android:fontFamily="@font/poppins"
             android:text="Help us customize the best experience\nfor your language journey."
             android:textColor="@color/color_theme_black"
             android:textSize="@dimen/_11ssp" />
@@ -34,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_20sdp"
-            android:fontFamily="@font/lato_bold"
+            android:fontFamily="@font/poppins_bold"
             android:text="Proficiency Level"
             android:textColor="@color/color_theme_black"
             android:textSize="@dimen/_12ssp" />
@@ -56,7 +56,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato_bold"
+                    android:fontFamily="@font/poppins_bold"
                     android:text="Beginner"
                     android:textColor="@color/color_theme_navy"
                     android:textSize="@dimen/_11ssp" />
@@ -78,7 +78,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato_bold"
+                    android:fontFamily="@font/poppins_bold"
                     android:text="Elementary"
                     android:textColor="@color/color_theme_black"
                     android:textSize="@dimen/_11ssp" />
@@ -104,7 +104,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato_bold"
+                    android:fontFamily="@font/poppins_bold"
                     android:text="Intermediate"
                     android:textColor="@color/color_theme_black"
                     android:textSize="@dimen/_11ssp" />
@@ -126,7 +126,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato_bold"
+                    android:fontFamily="@font/poppins_bold"
                     android:text="Advanced"
                     android:textColor="@color/color_theme_black"
                     android:textSize="@dimen/_11ssp" />
@@ -152,7 +152,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato_bold"
+                    android:fontFamily="@font/poppins_bold"
                     android:text="Native-like"
                     android:textColor="@color/color_theme_black"
                     android:textSize="@dimen/_11ssp" />
@@ -174,7 +174,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_20sdp"
-            android:fontFamily="@font/lato_bold"
+            android:fontFamily="@font/poppins_bold"
             android:text="Learning Goal"
             android:textColor="@color/color_theme_black"
             android:textSize="@dimen/_12ssp" />
@@ -203,7 +203,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato_bold"
+                    android:fontFamily="@font/poppins_bold"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:text="Travel"
                     android:textColor="@color/color_theme_black"
@@ -233,7 +233,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato_bold"
+                    android:fontFamily="@font/poppins_bold"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:text="School"
                     android:textColor="@color/color_theme_black"
@@ -263,7 +263,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato_bold"
+                    android:fontFamily="@font/poppins_bold"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:text="Business"
                     android:textColor="@color/color_theme_black"
@@ -293,7 +293,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato_bold"
+                    android:fontFamily="@font/poppins_bold"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:text="Anime"
                     android:textColor="@color/color_theme_black"
@@ -327,7 +327,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato_bold"
+                    android:fontFamily="@font/poppins_bold"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:text="Dialog"
                     android:textColor="@color/color_theme_black"
@@ -357,7 +357,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato_bold"
+                    android:fontFamily="@font/poppins_bold"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:text="Exam"
                     android:textColor="@color/color_theme_black"
@@ -387,7 +387,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato_bold"
+                    android:fontFamily="@font/poppins_bold"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:text="Hobby"
                     android:textColor="@color/color_theme_black"
@@ -417,7 +417,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato_bold"
+                    android:fontFamily="@font/poppins_bold"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:text="Other"
                     android:textColor="@color/color_theme_black"
