@@ -31,7 +31,7 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         ProgressViewModel viewModel = new ViewModelProvider(this, new AppViewModelFactory()).get(ProgressViewModel.class);
 
-        viewModel.user.observe(getViewLifecycleOwner(), user -> {
+        viewModel.getUser().observe(getViewLifecycleOwner(), user -> {
             if (user == null) return;
             binding.userCard.setVisibility(View.VISIBLE);
             binding.txtUserName.setText(user.name);

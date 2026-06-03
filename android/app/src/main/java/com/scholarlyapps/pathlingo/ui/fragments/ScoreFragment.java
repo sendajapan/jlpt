@@ -52,7 +52,7 @@ public class ScoreFragment extends Fragment {
         binding.txtCorrect.setText(correctCount + "/" + totalCount);
         binding.txtTime.setText(time);
 
-        viewModel.user.observe(getViewLifecycleOwner(), user -> {
+        viewModel.getUser().observe(getViewLifecycleOwner(), user -> {
             if (user == null) return;
             int levelProgress = user.maxXp > 0 ? (user.xp * 100 / user.maxXp) : 0;
             int remaining = user.maxXp - user.xp;

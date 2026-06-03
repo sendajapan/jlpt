@@ -37,7 +37,7 @@ public class FavoritesFragment extends Fragment {
         binding.rvFavorites.setLayoutManager(new LinearLayoutManager(requireContext()));
         binding.rvFavorites.setAdapter(adapter);
 
-        viewModel.favorites.observe(getViewLifecycleOwner(), words ->
+        viewModel.getFavorites().observe(getViewLifecycleOwner(), words ->
             adapter.setData(words != null ? words : new ArrayList<>()));
     }
 

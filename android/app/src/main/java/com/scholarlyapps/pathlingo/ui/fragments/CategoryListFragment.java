@@ -44,8 +44,10 @@ public class CategoryListFragment extends Fragment {
         binding.rvCategories.setLayoutManager(new androidx.recyclerview.widget.GridLayoutManager(requireContext(), 2));
         binding.rvCategories.setAdapter(adapter);
 
-        viewModel.categories.observe(getViewLifecycleOwner(), categories ->
+        viewModel.getCategories().observe(getViewLifecycleOwner(), categories ->
             adapter.setData(categories != null ? categories : new ArrayList<>()));
+
+        viewModel.loadCategories();
     }
 
     @Override

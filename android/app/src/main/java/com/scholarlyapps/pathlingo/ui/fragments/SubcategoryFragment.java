@@ -46,7 +46,7 @@ public class SubcategoryFragment extends Fragment {
 
         binding.rvSubcategories.setLayoutManager(new LinearLayoutManager(requireContext()));
 
-        viewModel.category.observe(getViewLifecycleOwner(), category -> {
+        viewModel.getCategory().observe(getViewLifecycleOwner(), category -> {
             if (category == null) {
                 Navigation.findNavController(view).popBackStack();
                 return;

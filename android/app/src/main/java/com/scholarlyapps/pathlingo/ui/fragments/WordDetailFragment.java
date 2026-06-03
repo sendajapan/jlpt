@@ -56,7 +56,7 @@ public class WordDetailFragment extends Fragment {
                 new ImageRequest.Builder(requireContext()).data(iconUrl).target(binding.imgHero).build());
         }
 
-        viewModel.words.observe(getViewLifecycleOwner(), wordList -> {
+        viewModel.getWords().observe(getViewLifecycleOwner(), wordList -> {
             if (wordList == null || wordList.isEmpty()) return;
             words = wordList;
             showWord(currentIndex);

@@ -14,15 +14,18 @@ public class CategoryListViewModel extends ViewModel {
 
     private final CatalogRepository repo;
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
-
-    public final LiveData<List<Category>> categories;
+    private final LiveData<List<Category>> categories;
 
     public CategoryListViewModel(CatalogRepository repo) {
         this.repo = repo;
         this.categories = repo.getAllCategories();
     }
 
-    public void refresh() {
+    public LiveData<List<Category>> getCategories() {
+        return categories;
+    }
+
+    public void loadCategories() {
         executor.execute(repo::refresh);
     }
 

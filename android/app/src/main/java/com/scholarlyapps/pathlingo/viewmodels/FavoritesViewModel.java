@@ -10,9 +10,13 @@ import java.util.List;
 
 public class FavoritesViewModel extends ViewModel {
 
-    public final LiveData<List<Word>> favorites;
+    private final LiveData<List<Word>> favorites;
 
     public FavoritesViewModel(CatalogRepository repo) {
         favorites = repo.getFavoriteWords();
+    }
+
+    public LiveData<List<Word>> getFavorites() {
+        return favorites;
     }
 }

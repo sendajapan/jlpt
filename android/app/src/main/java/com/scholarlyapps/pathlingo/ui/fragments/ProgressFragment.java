@@ -37,7 +37,7 @@ public class ProgressFragment extends Fragment {
         ProgressCategoryAdapter adapter = new ProgressCategoryAdapter(new ArrayList<>());
         binding.rvProgress.setAdapter(adapter);
 
-        viewModel.user.observe(getViewLifecycleOwner(), user -> {
+        viewModel.getUser().observe(getViewLifecycleOwner(), user -> {
             if (user == null) return;
             binding.userXpCard.setVisibility(View.VISIBLE);
             binding.txtLevelLabel.setText("Level " + user.level);
@@ -47,7 +47,7 @@ public class ProgressFragment extends Fragment {
             binding.progressXp.setProgress(xpPercent);
         });
 
-        viewModel.categories.observe(getViewLifecycleOwner(), categories ->
+        viewModel.getCategories().observe(getViewLifecycleOwner(), categories ->
             adapter.setData(categories != null ? categories : new ArrayList<>()));
     }
 

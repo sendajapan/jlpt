@@ -13,10 +13,14 @@ import java.util.Objects;
 public class SubcategoryViewModel extends ViewModel {
 
     private final MutableLiveData<Long> categoryId = new MutableLiveData<>();
-    public final LiveData<Category> category;
+    private final LiveData<Category> category;
 
     public SubcategoryViewModel(CatalogRepository repo) {
         category = Transformations.switchMap(categoryId, repo::getCategoryById);
+    }
+
+    public LiveData<Category> getCategory() {
+        return category;
     }
 
     public void load(long id) {

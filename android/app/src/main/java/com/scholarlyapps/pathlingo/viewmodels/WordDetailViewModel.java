@@ -14,10 +14,14 @@ import java.util.Objects;
 public class WordDetailViewModel extends ViewModel {
 
     private final MutableLiveData<Long> subcategoryId = new MutableLiveData<>();
-    public final LiveData<List<Word>> words;
+    private final LiveData<List<Word>> words;
 
     public WordDetailViewModel(CatalogRepository repo) {
         words = Transformations.switchMap(subcategoryId, repo::getWordsForSubcategory);
+    }
+
+    public LiveData<List<Word>> getWords() {
+        return words;
     }
 
     public void load(long id) {

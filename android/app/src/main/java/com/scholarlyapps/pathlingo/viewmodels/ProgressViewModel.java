@@ -12,11 +12,19 @@ import java.util.List;
 
 public class ProgressViewModel extends ViewModel {
 
-    public final LiveData<User> user;
-    public final LiveData<List<Category>> categories;
+    private final LiveData<User> user;
+    private final LiveData<List<Category>> categories;
 
     public ProgressViewModel(CatalogRepository catalogRepo, UserRepository userRepo) {
         this.user = userRepo.getUser();
         this.categories = catalogRepo.getAllCategories();
+    }
+
+    public LiveData<User> getUser() {
+        return user;
+    }
+
+    public LiveData<List<Category>> getCategories() {
+        return categories;
     }
 }
