@@ -105,6 +105,18 @@
                 </a>
             </div>
 
+            <div class="space-y-0.5">
+                <p class="px-2 mb-2 text-[9px] font-bold uppercase tracking-[0.15em] text-zinc-400">Developer</p>
+
+                <a href="{{ route('l5-swagger.default.api') }}" target="_blank"
+                   class="relative flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-xs font-medium transition-all duration-150 text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100">
+                    <svg class="w-3.5 h-3.5 flex-shrink-0 text-zinc-400" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+                    </svg>
+                    API Docs
+                </a>
+            </div>
+
         </nav>
 
         <div class="border-t border-zinc-100 px-3 py-3">
