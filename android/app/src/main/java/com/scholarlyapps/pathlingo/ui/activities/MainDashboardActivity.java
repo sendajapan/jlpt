@@ -4,6 +4,9 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.NavOptions;
 import androidx.navigation.fragment.NavHostFragment;
@@ -22,6 +25,13 @@ public class MainDashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainDashboardBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.getRoot(), (v, insets) -> {
+            Insets bars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            binding.navHost.setPadding(0, bars.top, 0, 0);
+            binding.bottomNav.setPadding(0, 0, 0, bars.bottom);
+            return insets;
+        });
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
             .findFragmentById(R.id.navHost);
