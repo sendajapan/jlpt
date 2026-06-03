@@ -23,9 +23,6 @@ import com.scholarlyapps.pathlingo.models.Word;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 import retrofit2.Response;
 
@@ -60,24 +57,14 @@ public class CatalogRepository {
     }
 
     public void refresh() {
-        ExecutorService pool = Executors.newFixedThreadPool(3);
         try {
-            Future<List<CategoryDto>> categoriesFuture = pool.submit(() -> {
-                Response<ListResponse<CategoryDto>> response = apiService.getCategories().execute();
-                return response.isSuccessful() && response.body() != null ? response.body().getData() : Collections.emptyList();
-            });
-            Future<List<SubcategoryDto>> subcategoriesFuture = pool.submit(() -> {
-                Response<ListResponse<SubcategoryDto>> response = apiService.getSubcategories(null).execute();
-                return response.isSuccessful() && response.body() != null ? response.body().getData() : Collections.emptyList();
-            });
-            Future<List<VocabularyDto>> vocabulariesFuture = pool.submit(() -> {
-                Response<ListResponse<VocabularyDto>> response = apiService.getVocabularies(null, null, null).execute();
-                return response.isSuccessful() && response.body() != null ? response.body().getData() : Collections.emptyList();
-            });
+            Response<ListResponse<CategoryDto>> categoryResponse = apiService.getCategories().execute();
+            Response<ListResponse<SubcategoryDto>> subcategoryResponse = apiService.getSubcategories(null).execute();
+            Response<ListResponse<VocabularyDto>> vocabularyResponse = apiService.getVocabularies(null, null, null).execute();
 
-            List<CategoryDto> categoryDtos = categoriesFuture.get();
-            List<SubcategoryDto> subcategoryDtos = subcategoriesFuture.get();
-            List<VocabularyDto> vocabularyDtos = vocabulariesFuture.get();
+            List<CategoryDto> categoryDtos = categoryResponse.isSuccessful() && categoryResponse.body() != null ? categoryResponse.body().getData() : Collections.emptyList();
+            List<SubcategoryDto> subcategoryDtos = subcategoryResponse.isSuccessful() && subcategoryResponse.body() != null ? subcategoryResponse.body().getData() : Collections.emptyList();
+            List<VocabularyDto> vocabularyDtos = vocabularyResponse.isSuccessful() && vocabularyResponse.body() != null ? vocabularyResponse.body().getData() : Collections.emptyList();
 
             wordDao.deleteAll();
             subcategoryDao.deleteAll();
@@ -86,8 +73,6 @@ public class CatalogRepository {
             subcategoryDao.insertAll(toSubcategoryEntities(subcategoryDtos));
             wordDao.insertAll(toWordEntities(vocabularyDtos));
         } catch (Exception ignored) {
-        } finally {
-            pool.shutdown();
         }
     }
 
