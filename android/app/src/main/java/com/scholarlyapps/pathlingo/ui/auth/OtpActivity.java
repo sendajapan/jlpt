@@ -56,6 +56,13 @@ public class OtpActivity extends AppCompatActivity {
 
         binding.btnVerify.setOnClickListener(v -> submitOtp());
 
+        binding.btnSkip.setOnClickListener(v -> {
+            DataManager.getInstance().loadData(getApplicationContext());
+            startActivity(new Intent(this, MainDashboardActivity.class));
+            NavAnim.slideForward(this);
+            finish();
+        });
+
         binding.btnResend.setOnClickListener(v -> {
             if (!resendEnabled) return;
             viewModel.sendOtp(email);
