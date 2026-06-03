@@ -42,6 +42,9 @@ public class HomeFragment extends Fragment {
         binding.btnSeeAll.setOnClickListener(v ->
             Navigation.findNavController(v).navigate(R.id.action_home_to_categories));
 
+        binding.btnStartLesson.setOnClickListener(v ->
+            Navigation.findNavController(v).navigate(R.id.action_home_to_categories));
+
         CategoryAdapter adapter = new CategoryAdapter(new ArrayList<>(), category -> {
             Bundle args = new Bundle();
             args.putString("categoryId", category.id);
@@ -49,8 +52,19 @@ public class HomeFragment extends Fragment {
         });
         binding.rvCategories.setAdapter(adapter);
 
-        viewModel.user.observe(getViewLifecycleOwner(), user ->
-            binding.txtUserName.setText(user != null ? user.name : ""));
+        viewModel.user.observe(getViewLifecycleOwner(), user -> {
+            if (user == null) return;
+            binding.txtUserName.setText("Ready to learn, " + user.name + "!");
+            binding.txtCoins.setText(String.valueOf(user.xp));
+            binding.txtStreak.setText(String.valueOf(user.streak));
+            binding.txtWordsKnown.setText(String.valueOf(user.wordsKnown));
+            binding.txtXpDisplay.setText(String.valueOf(user.xp));
+
+            int progress = user.maxXp > 0 ? (user.xp * 100 / user.maxXp) : 0;
+            binding.progressLesson.setProgress(progress);
+            binding.txtLessonPercent.setText(progress + "% complete");
+            binding.txtLessonFraction.setText(user.streak + "/7");
+        });
 
         viewModel.categories.observe(getViewLifecycleOwner(), categories ->
             adapter.setData(categories != null ? categories : new ArrayList<>()));

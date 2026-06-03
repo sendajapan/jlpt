@@ -22,4 +22,7 @@
     <color name="sky">@color/color_theme_light</color>
     <color name="rose">@color/color_theme_light</color>
 
+    <color name="home_header_bg">#D8E8FF</color>
+    <color name="app_bg">#EEF3FF</color>
+
 </resources>
