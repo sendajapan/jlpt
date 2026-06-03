@@ -175,10 +175,10 @@
                         "application/json": {
                             "schema": {
                                 "required": [
-                                    "receiver_email"
+                                    "user_email"
                                 ],
                                 "properties": {
-                                    "receiver_email": {
+                                    "user_email": {
                                         "type": "string",
                                         "format": "email",
                                         "example": "user@example.com"
@@ -235,11 +235,11 @@
                         "application/json": {
                             "schema": {
                                 "required": [
-                                    "receiver_email",
+                                    "user_email",
                                     "code"
                                 ],
                                 "properties": {
-                                    "receiver_email": {
+                                    "user_email": {
                                         "type": "string",
                                         "format": "email",
                                         "example": "user@example.com"

@@ -118,7 +118,9 @@
       "PowerShell(git add *)",
       "PowerShell(git push *)",
       "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\sulai\\\\Herd\\\\jlpt_laravel\\\\app\\\\Http\\\\Controllers\" -Filter \"*.php\")",
-      "Bash(Select-Object Name)"
+      "Bash(Select-Object Name)",
+      "Bash(xargs cat)",
+      "Bash(xargs ls -la)"
     ]
   },
   "enableAllProjectMcpServers": true,
