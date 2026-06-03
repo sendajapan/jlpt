@@ -27,9 +27,9 @@
         android:label="Progress" />
 
     <fragment
-        android:id="@+id/settingsFragment"
-        android:name="com.scholarlyapps.pathlingo.ui.fragments.SettingsFragment"
-        android:label="Settings" />
+        android:id="@+id/profileFragment"
+        android:name="com.scholarlyapps.pathlingo.ui.fragments.ProfileFragment"
+        android:label="Profile" />
 
     <fragment
         android:id="@+id/categoryListFragment"

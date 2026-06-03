@@ -34,7 +34,7 @@ public class MainDashboardActivity extends AppCompatActivity {
             boolean isTab = id == R.id.homeFragment
                 || id == R.id.favoritesFragment
                 || id == R.id.progressFragment
-                || id == R.id.settingsFragment;
+                || id == R.id.profileFragment;
             binding.bottomNav.setVisibility(isTab ? View.VISIBLE : View.GONE);
         });
     }

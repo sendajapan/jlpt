@@ -13,7 +13,7 @@
         android:icon="@drawable/ic_chart"
         android:title="Progress" />
     <item
-        android:id="@+id/settingsFragment"
-        android:icon="@drawable/ic_settings"
-        android:title="Settings" />
+        android:id="@+id/profileFragment"
+        android:icon="@drawable/ic_user"
+        android:title="Profile" />
 </menu>
