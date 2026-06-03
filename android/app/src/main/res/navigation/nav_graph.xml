@@ -64,8 +64,8 @@
             app:argType="string" />
         <argument
             android:name="wordIndex"
-            app:argType="integer"
-            android:defaultValue="0" />
+            android:defaultValue="0"
+            app:argType="integer" />
         <action
             android:id="@+id/action_word_to_score"
             app:destination="@id/scoreFragment"
@@ -80,9 +80,9 @@
         <action
             android:id="@+id/action_score_to_home"
             app:destination="@id/homeFragment"
+            app:launchSingleTop="true"
             app:popUpTo="@id/homeFragment"
-            app:popUpToInclusive="false"
-            app:launchSingleTop="true" />
+            app:popUpToInclusive="false" />
     </fragment>
 
 </navigation>

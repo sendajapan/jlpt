@@ -26,7 +26,9 @@
       "Bash(git -C \"C:\\\\Users\\\\sulai\\\\Herd\\\\jlpt_laravel\\\\android\" diff --stat)",
       "Bash(git -C \"C:\\\\Users\\\\sulai\\\\Herd\\\\jlpt_laravel\\\\android\" add app/src/main/java/ app/src/main/res/ app/build.gradle.kts)",
       "Bash(git -C \"C:\\\\Users\\\\sulai\\\\Herd\\\\jlpt_laravel\\\\android\" status --short)",
-      "Bash(git *)"
+      "Bash(git *)",
+      "Bash(rm \"/mnt/c/Users/sulai/Herd/jlpt_laravel/android/app/src/main/java/com/scholarlyapps/pathlingo/data/DataManager.java\")",
+      "Bash(rm \"/mnt/c/Users/sulai/Herd/jlpt_laravel/android/app/src/main/java/com/scholarlyapps/pathlingo/data/repo/CatalogData.java\")"
     ]
   },
   "enableAllProjectMcpServers": true,

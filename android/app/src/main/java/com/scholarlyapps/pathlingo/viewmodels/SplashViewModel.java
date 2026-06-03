@@ -7,9 +7,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.scholarlyapps.pathlingo.data.ApiResult;
 import com.scholarlyapps.pathlingo.data.remote.ServiceLocator;
-import com.scholarlyapps.pathlingo.data.remote.dto.AppUserDto;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -32,8 +30,8 @@ public class SplashViewModel extends ViewModel {
             Destination dest = Destination.LOGIN;
 
             if (token != null && !token.isEmpty()) {
-                ApiResult<AppUserDto> me = ServiceLocator.userRepository.me();
-                if (me.isSuccess() && me.getData() != null) {
+                boolean valid = ServiceLocator.userRepository.refresh();
+                if (valid) {
                     dest = Destination.DASHBOARD;
                 } else {
                     ServiceLocator.tokenStore.clear();

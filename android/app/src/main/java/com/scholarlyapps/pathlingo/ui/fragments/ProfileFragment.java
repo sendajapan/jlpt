@@ -9,11 +9,12 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
-import com.scholarlyapps.pathlingo.data.DataManager;
 import com.scholarlyapps.pathlingo.databinding.FragmentProfileBinding;
-import com.scholarlyapps.pathlingo.models.User;
 import com.scholarlyapps.pathlingo.ui.utils.LogoutHelper;
+import com.scholarlyapps.pathlingo.viewmodels.AppViewModelFactory;
+import com.scholarlyapps.pathlingo.viewmodels.ProgressViewModel;
 
 public class ProfileFragment extends Fragment {
 
@@ -28,14 +29,15 @@ public class ProfileFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        User user = DataManager.getInstance().getUser();
+        ProgressViewModel viewModel = new ViewModelProvider(this, new AppViewModelFactory()).get(ProgressViewModel.class);
 
-        if (user != null) {
+        viewModel.user.observe(getViewLifecycleOwner(), user -> {
+            if (user == null) return;
             binding.userCard.setVisibility(View.VISIBLE);
             binding.txtUserName.setText(user.name);
             binding.txtEmail.setText(user.email);
             binding.txtXp.setText("XP: " + user.xp);
-        }
+        });
 
         binding.rowEditProfile.setOnClickListener(v -> showToast("Edit Profile"));
         binding.rowProgress.setOnClickListener(v -> showToast("Progress"));
@@ -47,7 +49,6 @@ public class ProfileFragment extends Fragment {
         binding.rowPrivacy.setOnClickListener(v -> showToast("Privacy Policy"));
         binding.rowDeactivate.setOnClickListener(v -> showToast("Deactivate Account"));
         binding.rowDeleteAccount.setOnClickListener(v -> showToast("Delete Account"));
-        binding.btnSignOut.setOnClickListener(v -> LogoutHelper.logout(requireContext()));
     }
 
     private void showToast(String message) {

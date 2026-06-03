@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.scholarlyapps.pathlingo.BuildConfig;
-import com.scholarlyapps.pathlingo.data.DataManager;
 import com.scholarlyapps.pathlingo.databinding.ActivityLoginBinding;
 import com.scholarlyapps.pathlingo.ui.utils.NavAnim;
 import com.scholarlyapps.pathlingo.ui.utils.ToastHelper;
@@ -77,7 +76,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void goToDashboard() {
-        DataManager.getInstance().loadData(getApplicationContext());
         startActivity(new Intent(this, OnboardingActivity.class));
         NavAnim.slideForward(this);
         finish();

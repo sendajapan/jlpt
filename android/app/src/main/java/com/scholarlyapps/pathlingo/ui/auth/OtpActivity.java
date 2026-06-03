@@ -12,7 +12,6 @@ import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.scholarlyapps.pathlingo.data.DataManager;
 import com.scholarlyapps.pathlingo.databinding.ActivityOtpBinding;
 import com.scholarlyapps.pathlingo.ui.activities.MainDashboardActivity;
 import com.scholarlyapps.pathlingo.ui.utils.NavAnim;
@@ -57,7 +56,6 @@ public class OtpActivity extends AppCompatActivity {
         binding.btnVerify.setOnClickListener(v -> submitOtp());
 
         binding.btnSkip.setOnClickListener(v -> {
-            DataManager.getInstance().loadData(getApplicationContext());
             startActivity(new Intent(this, MainDashboardActivity.class));
             NavAnim.slideForward(this);
             finish();
@@ -82,7 +80,6 @@ public class OtpActivity extends AppCompatActivity {
             }
 
             if (state.getOtpVerified()) {
-                DataManager.getInstance().loadData(getApplicationContext());
                 startActivity(new Intent(this, MainDashboardActivity.class));
                 NavAnim.slideForward(this);
                 finish();

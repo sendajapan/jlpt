@@ -8,14 +8,14 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.scholarlyapps.pathlingo.R;
-import com.scholarlyapps.pathlingo.data.DataManager;
 import com.scholarlyapps.pathlingo.databinding.FragmentWordDetailBinding;
-import com.scholarlyapps.pathlingo.models.Category;
-import com.scholarlyapps.pathlingo.models.Subcategory;
 import com.scholarlyapps.pathlingo.models.Word;
+import com.scholarlyapps.pathlingo.viewmodels.AppViewModelFactory;
+import com.scholarlyapps.pathlingo.viewmodels.WordDetailViewModel;
 
 import java.util.List;
 
@@ -38,33 +38,35 @@ public class WordDetailFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         Bundle args = getArguments();
-        String categoryId = args != null ? args.getString("categoryId") : null;
-        String subcategoryId = args != null ? args.getString("subcategoryId") : null;
+        String subcategoryIdStr = args != null ? args.getString("subcategoryId") : null;
+        String iconUrl = args != null ? args.getString("iconUrl", "") : "";
         currentIndex = args != null ? args.getInt("wordIndex", 0) : 0;
 
-        Category category = DataManager.getInstance().getCategoryById(categoryId);
-        Subcategory subcat = category != null
-                ? category.subcategories.stream().filter(s -> s.id.equals(subcategoryId)).findFirst().orElse(null)
-                : null;
-
-        if (subcat == null) {
+        if (subcategoryIdStr == null) {
             Navigation.findNavController(view).popBackStack();
             return;
         }
 
-        words = subcat.words;
+        WordDetailViewModel viewModel = new ViewModelProvider(this, new AppViewModelFactory()).get(WordDetailViewModel.class);
 
         binding.btnBack.setOnClickListener(v -> Navigation.findNavController(v).popBackStack());
 
-        if (!subcat.iconUrl.isEmpty()) {
+        if (!iconUrl.isEmpty()) {
             Coil.imageLoader(requireContext()).enqueue(
-                    new ImageRequest.Builder(requireContext()).data(subcat.iconUrl).target(binding.imgHero).build());
+                new ImageRequest.Builder(requireContext()).data(iconUrl).target(binding.imgHero).build());
         }
 
-        showWord(currentIndex);
+        viewModel.words.observe(getViewLifecycleOwner(), wordList -> {
+            if (wordList == null || wordList.isEmpty()) return;
+            words = wordList;
+            showWord(currentIndex);
+        });
+
+        viewModel.load(Long.parseLong(subcategoryIdStr));
     }
 
     private void showWord(int index) {
+        if (words == null || index >= words.size()) return;
         Word word = words.get(index);
 
         binding.txtKanji.setText(word.kanji);

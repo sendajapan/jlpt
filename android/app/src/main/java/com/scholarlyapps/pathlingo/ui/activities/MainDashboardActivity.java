@@ -5,8 +5,8 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.navigation.ui.NavigationUI;
 
 import com.scholarlyapps.pathlingo.R;
 import com.scholarlyapps.pathlingo.databinding.ActivityMainDashboardBinding;
@@ -27,7 +27,28 @@ public class MainDashboardActivity extends AppCompatActivity {
             .findFragmentById(R.id.navHost);
         NavController navController = Objects.requireNonNull(navHostFragment).getNavController();
 
-        NavigationUI.setupWithNavController(binding.bottomNav, navController);
+        NavOptions tabOptions = new NavOptions.Builder()
+            .setLaunchSingleTop(true)
+            .setPopUpTo(R.id.homeFragment, false)
+            .setEnterAnim(0)
+            .setExitAnim(0)
+            .setPopEnterAnim(0)
+            .setPopExitAnim(0)
+            .build();
+
+        binding.bottomNav.setOnItemSelectedListener(item -> {
+            int destId = item.getItemId();
+            if (navController.getCurrentDestination() != null
+                    && navController.getCurrentDestination().getId() == destId) {
+                return true;
+            }
+            binding.bottomNav.post(() -> {
+                try {
+                    navController.navigate(destId, null, tabOptions);
+                } catch (IllegalArgumentException ignored) {}
+            });
+            return true;
+        });
 
         navController.addOnDestinationChangedListener((controller, destination, args) -> {
             int id = destination.getId();

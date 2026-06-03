@@ -8,13 +8,16 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.scholarlyapps.pathlingo.R;
-import com.scholarlyapps.pathlingo.data.DataManager;
 import com.scholarlyapps.pathlingo.databinding.FragmentCategoryListBinding;
 import com.scholarlyapps.pathlingo.ui.adapters.CategoryAdapter;
+import com.scholarlyapps.pathlingo.viewmodels.AppViewModelFactory;
+import com.scholarlyapps.pathlingo.viewmodels.CategoryListViewModel;
+
+import java.util.ArrayList;
 
 public class CategoryListFragment extends Fragment {
 
@@ -29,14 +32,20 @@ public class CategoryListFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        CategoryListViewModel viewModel = new ViewModelProvider(this, new AppViewModelFactory()).get(CategoryListViewModel.class);
+
         binding.btnBack.setOnClickListener(v -> Navigation.findNavController(v).popBackStack());
 
-        binding.rvCategories.setLayoutManager(new GridLayoutManager(requireContext(), 2));
-        binding.rvCategories.setAdapter(new CategoryAdapter(DataManager.getInstance().getCategories(), category -> {
+        CategoryAdapter adapter = new CategoryAdapter(new ArrayList<>(), category -> {
             Bundle args = new Bundle();
             args.putString("categoryId", category.id);
             Navigation.findNavController(view).navigate(R.id.action_categories_to_subcategory, args);
-        }));
+        });
+        binding.rvCategories.setLayoutManager(new androidx.recyclerview.widget.GridLayoutManager(requireContext(), 2));
+        binding.rvCategories.setAdapter(adapter);
+
+        viewModel.categories.observe(getViewLifecycleOwner(), categories ->
+            adapter.setData(categories != null ? categories : new ArrayList<>()));
     }
 
     @Override

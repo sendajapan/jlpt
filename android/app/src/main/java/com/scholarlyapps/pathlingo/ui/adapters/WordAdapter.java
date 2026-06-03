@@ -13,10 +13,15 @@ import java.util.List;
 
 public class WordAdapter extends RecyclerView.Adapter<WordAdapter.ViewHolder> {
 
-    private final List<Word> words;
+    private List<Word> words;
 
     public WordAdapter(List<Word> words) {
         this.words = words;
+    }
+
+    public void setData(List<Word> data) {
+        this.words = data;
+        notifyDataSetChanged();
     }
 
     @NonNull

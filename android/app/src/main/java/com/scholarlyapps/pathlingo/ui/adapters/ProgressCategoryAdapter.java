@@ -13,10 +13,15 @@ import java.util.List;
 
 public class ProgressCategoryAdapter extends RecyclerView.Adapter<ProgressCategoryAdapter.ViewHolder> {
 
-    private final List<Category> categories;
+    private List<Category> categories;
 
     public ProgressCategoryAdapter(List<Category> categories) {
         this.categories = categories;
+    }
+
+    public void setData(List<Category> data) {
+        this.categories = data;
+        notifyDataSetChanged();
     }
 
     @NonNull

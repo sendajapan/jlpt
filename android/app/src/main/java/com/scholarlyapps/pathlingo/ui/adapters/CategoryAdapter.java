@@ -21,7 +21,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         void onClick(Category category);
     }
 
-    private final List<Category> categories;
+    private List<Category> categories;
     private final OnCategoryClick listener;
 
     public CategoryAdapter(List<Category> categories, OnCategoryClick listener) {
@@ -29,11 +29,16 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         this.listener = listener;
     }
 
+    public void setData(List<Category> data) {
+        this.categories = data;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         ItemCategoryCardBinding binding = ItemCategoryCardBinding.inflate(
-                LayoutInflater.from(parent.getContext()), parent, false);
+            LayoutInflater.from(parent.getContext()), parent, false);
         return new ViewHolder(binding);
     }
 
@@ -66,10 +71,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             if (!cat.bg.isEmpty()) {
                 binding.imgBackground.setVisibility(View.VISIBLE);
                 Coil.imageLoader(binding.imgBackground.getContext()).enqueue(
-                        new ImageRequest.Builder(binding.imgBackground.getContext())
-                                .data(cat.bg)
-                                .target(binding.imgBackground)
-                                .build()
+                    new ImageRequest.Builder(binding.imgBackground.getContext())
+                        .data(cat.bg)
+                        .target(binding.imgBackground)
+                        .build()
                 );
             } else {
                 binding.imgBackground.setVisibility(View.GONE);
@@ -78,10 +83,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             if (!cat.iconUrl.isEmpty()) {
                 binding.imgIcon.setVisibility(View.VISIBLE);
                 Coil.imageLoader(binding.imgIcon.getContext()).enqueue(
-                        new ImageRequest.Builder(binding.imgIcon.getContext())
-                                .data(cat.iconUrl)
-                                .target(binding.imgIcon)
-                                .build()
+                    new ImageRequest.Builder(binding.imgIcon.getContext())
+                        .data(cat.iconUrl)
+                        .target(binding.imgIcon)
+                        .build()
                 );
             } else {
                 binding.imgIcon.setVisibility(View.GONE);

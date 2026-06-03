@@ -8,15 +8,15 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.scholarlyapps.pathlingo.data.DataManager;
 import com.scholarlyapps.pathlingo.databinding.FragmentFavoritesBinding;
-import com.scholarlyapps.pathlingo.models.Word;
 import com.scholarlyapps.pathlingo.ui.adapters.WordAdapter;
+import com.scholarlyapps.pathlingo.viewmodels.AppViewModelFactory;
+import com.scholarlyapps.pathlingo.viewmodels.FavoritesViewModel;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class FavoritesFragment extends Fragment {
 
@@ -31,13 +31,14 @@ public class FavoritesFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        List<Word> favorites = new ArrayList<>();
-        DataManager.getInstance().getCategories().forEach(cat ->
-                cat.subcategories.forEach(sub ->
-                        sub.words.stream().filter(w -> w.favorite).forEach(favorites::add)));
+        FavoritesViewModel viewModel = new ViewModelProvider(this, new AppViewModelFactory()).get(FavoritesViewModel.class);
 
+        WordAdapter adapter = new WordAdapter(new ArrayList<>());
         binding.rvFavorites.setLayoutManager(new LinearLayoutManager(requireContext()));
-        binding.rvFavorites.setAdapter(new WordAdapter(favorites));
+        binding.rvFavorites.setAdapter(adapter);
+
+        viewModel.favorites.observe(getViewLifecycleOwner(), words ->
+            adapter.setData(words != null ? words : new ArrayList<>()));
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.scholarlyapps.pathlingo.data.remote;
 import android.content.Context;
 
 import com.scholarlyapps.pathlingo.data.local.TokenStore;
+import com.scholarlyapps.pathlingo.data.local.db.AppDatabase;
 import com.scholarlyapps.pathlingo.data.networking.ApiService;
 import com.scholarlyapps.pathlingo.data.networking.RetrofitClient;
 import com.scholarlyapps.pathlingo.data.repo.AuthRepository;
@@ -15,6 +16,7 @@ public class ServiceLocator {
 
     public static TokenStore tokenStore;
     public static ApiService api;
+    public static AppDatabase db;
     public static AuthRepository authRepository;
     public static CatalogRepository catalogRepository;
     public static UserRepository userRepository;
@@ -23,13 +25,13 @@ public class ServiceLocator {
         if (initialized) return;
         synchronized (ServiceLocator.class) {
             if (initialized) return;
-
             Context appContext = context.getApplicationContext();
             tokenStore = new TokenStore(appContext);
             api = RetrofitClient.create(tokenStore);
+            db = AppDatabase.getInstance(appContext);
             authRepository = new AuthRepository(api, tokenStore);
-            catalogRepository = new CatalogRepository(api);
-            userRepository = new UserRepository(api);
+            catalogRepository = new CatalogRepository(api, db.categoryDao(), db.subcategoryDao(), db.wordDao());
+            userRepository = new UserRepository(api, db.userDao());
             initialized = true;
         }
     }
