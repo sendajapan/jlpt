@@ -34,34 +34,34 @@
          x-transition:leave-end="opacity-0 scale-95"
          class="bg-white rounded-xl shadow-xl w-full max-w-sm mx-4">
 
-        <div class="px-5 pt-5 pb-4">
-            <div class="flex items-center gap-3 mb-3">
-                <div class="w-9 h-9 rounded-full bg-red-50 flex items-center justify-center flex-shrink-0">
-                    <svg class="w-4.5 h-4.5 text-red-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <div class="px-6 pt-6 pb-5">
+            <div class="flex items-start gap-4 mb-4">
+                <div class="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center flex-shrink-0">
+                    <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
                     </svg>
                 </div>
-                <div>
+                <div class="pt-0.5">
                     <p class="text-sm font-semibold text-zinc-900">Delete User</p>
-                    <p class="text-xs text-zinc-500 mt-0.5">This action cannot be undone.</p>
+                    <p class="text-xs text-zinc-500 mt-1">This action cannot be undone.</p>
                 </div>
             </div>
 
-            <p class="text-xs text-zinc-600">
+            <p class="text-xs text-zinc-600 leading-relaxed">
                 Are you sure you want to delete <span class="font-semibold text-zinc-900" x-text="userName"></span>? All their data will be permanently removed.
             </p>
         </div>
 
-        <div class="flex items-center justify-end gap-2 px-5 py-3 border-t border-zinc-100 bg-zinc-50 rounded-b-xl">
+        <div class="flex items-center justify-end gap-2 px-6 py-4 border-t border-zinc-100 bg-zinc-50 rounded-b-xl">
             <button type="button" @click="open = false"
-                    class="h-8 px-3.5 rounded-lg text-xs font-medium text-zinc-600 bg-white border border-zinc-200 hover:bg-zinc-100 transition-colors duration-150">
+                    class="h-9 px-4 rounded-lg text-xs font-medium text-zinc-600 bg-white border border-zinc-200 hover:bg-zinc-100 transition-colors duration-150">
                 Cancel
             </button>
             <form method="POST" :action="formAction">
                 @csrf
                 @method('DELETE')
                 <button type="submit"
-                        class="h-8 px-3.5 rounded-lg text-xs font-medium text-white bg-red-500 hover:bg-red-600 transition-colors duration-150">
+                        class="h-9 px-4 rounded-lg text-xs font-medium text-white bg-red-500 hover:bg-red-600 transition-colors duration-150">
                     Delete
                 </button>
             </form>
