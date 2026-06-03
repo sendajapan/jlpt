@@ -4,6 +4,69 @@
 
 @section('content')
 
+<div x-data="{
+    open: false,
+    userName: '',
+    formAction: '',
+    confirm(name, action) {
+        this.userName = name;
+        this.formAction = action;
+        this.open = true;
+    }
+}">
+
+<div x-show="open"
+     x-transition:enter="transition ease-out duration-150"
+     x-transition:enter-start="opacity-0"
+     x-transition:enter-end="opacity-100"
+     x-transition:leave="transition ease-in duration-100"
+     x-transition:leave-start="opacity-100"
+     x-transition:leave-end="opacity-0"
+     class="fixed inset-0 z-50 flex items-center justify-center bg-black/40"
+     @keydown.escape.window="open = false">
+
+    <div x-show="open"
+         x-transition:enter="transition ease-out duration-150"
+         x-transition:enter-start="opacity-0 scale-95"
+         x-transition:enter-end="opacity-100 scale-100"
+         x-transition:leave="transition ease-in duration-100"
+         x-transition:leave-start="opacity-100 scale-100"
+         x-transition:leave-end="opacity-0 scale-95"
+         class="bg-white rounded-xl shadow-xl w-full max-w-sm mx-4 p-6">
+
+        <div class="flex items-center gap-3 mb-4">
+            <div class="w-9 h-9 rounded-full bg-red-50 flex items-center justify-center flex-shrink-0">
+                <svg class="w-4.5 h-4.5 text-red-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+                </svg>
+            </div>
+            <div>
+                <p class="text-sm font-semibold text-zinc-900">Delete User</p>
+                <p class="text-xs text-zinc-500 mt-0.5">This action cannot be undone.</p>
+            </div>
+        </div>
+
+        <p class="text-xs text-zinc-600 mb-5">
+            Are you sure you want to delete <span class="font-semibold text-zinc-900" x-text="userName"></span>? All their data will be permanently removed.
+        </p>
+
+        <div class="flex items-center justify-end gap-2">
+            <button type="button" @click="open = false"
+                    class="h-8 px-3.5 rounded-lg text-xs font-medium text-zinc-600 bg-zinc-100 hover:bg-zinc-200 transition-colors duration-150">
+                Cancel
+            </button>
+            <form method="POST" :action="formAction">
+                @csrf
+                @method('DELETE')
+                <button type="submit"
+                        class="h-8 px-3.5 rounded-lg text-xs font-medium text-white bg-red-500 hover:bg-red-600 transition-colors duration-150">
+                    Delete
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
 <div class="flex items-center justify-between mb-4">
     <div>
         <h1 class="text-sm font-semibold text-zinc-900">App Users</h1>
@@ -107,15 +170,11 @@
                                    class="inline-flex items-center h-7 px-2 rounded text-xs font-medium text-zinc-400 hover:text-zinc-900 hover:bg-zinc-100 transition-colors duration-150">
                                     Edit
                                 </a>
-                                <form method="POST" action="{{ route('admin.app-users.destroy', $user) }}"
-                                      onsubmit="return confirm('Delete this user? This cannot be undone.')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit"
-                                            class="inline-flex items-center h-7 px-2 rounded text-xs font-medium text-red-400 hover:text-red-600 hover:bg-red-50 transition-colors duration-150">
-                                        Delete
-                                    </button>
-                                </form>
+                                <button type="button"
+                                        @click="confirm('{{ addslashes($user->full_name ?? $user->email) }}', '{{ route('admin.app-users.destroy', $user) }}')"
+                                        class="inline-flex items-center h-7 px-2 rounded text-xs font-medium text-red-400 hover:text-red-600 hover:bg-red-50 transition-colors duration-150">
+                                    Delete
+                                </button>
                             </div>
                         </td>
                     </tr>
@@ -135,6 +194,8 @@
             {{ $users->links() }}
         </div>
     @endif
+</div>
+
 </div>
 
 @endsection
