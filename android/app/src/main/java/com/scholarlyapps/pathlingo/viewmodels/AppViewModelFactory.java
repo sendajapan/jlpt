@@ -13,22 +13,22 @@ public class AppViewModelFactory implements ViewModelProvider.Factory {
     @SuppressWarnings("unchecked")
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         if (modelClass == HomeViewModel.class) {
-            return (T) new HomeViewModel(ServiceLocator.catalogRepository, ServiceLocator.userRepository);
+            return (T) new HomeViewModel(ServiceLocator.categoryRepository, ServiceLocator.userRepository);
         }
         if (modelClass == CategoryListViewModel.class) {
-            return (T) new CategoryListViewModel(ServiceLocator.catalogRepository);
+            return (T) new CategoryListViewModel(ServiceLocator.categoryRepository);
         }
         if (modelClass == SubcategoryViewModel.class) {
-            return (T) new SubcategoryViewModel(ServiceLocator.catalogRepository);
+            return (T) new SubcategoryViewModel(ServiceLocator.categoryRepository);
         }
         if (modelClass == WordDetailViewModel.class) {
-            return (T) new WordDetailViewModel(ServiceLocator.catalogRepository);
+            return (T) new WordDetailViewModel(ServiceLocator.categoryRepository);
         }
         if (modelClass == FavoritesViewModel.class) {
-            return (T) new FavoritesViewModel(ServiceLocator.catalogRepository);
+            return (T) new FavoritesViewModel(ServiceLocator.categoryRepository);
         }
         if (modelClass == ProgressViewModel.class) {
-            return (T) new ProgressViewModel(ServiceLocator.catalogRepository, ServiceLocator.userRepository);
+            return (T) new ProgressViewModel(ServiceLocator.categoryRepository, ServiceLocator.userRepository);
         }
         throw new IllegalArgumentException("Unknown ViewModel: " + modelClass.getName());
     }

@@ -7,7 +7,7 @@ import com.scholarlyapps.pathlingo.data.local.db.AppDatabase;
 import com.scholarlyapps.pathlingo.data.networking.ApiService;
 import com.scholarlyapps.pathlingo.data.networking.RetrofitClient;
 import com.scholarlyapps.pathlingo.data.repo.AuthRepository;
-import com.scholarlyapps.pathlingo.data.repo.CatalogRepository;
+import com.scholarlyapps.pathlingo.data.repo.CategoryRepository;
 import com.scholarlyapps.pathlingo.data.repo.UserRepository;
 
 public class ServiceLocator {
@@ -18,7 +18,7 @@ public class ServiceLocator {
     public static ApiService api;
     public static AppDatabase db;
     public static AuthRepository authRepository;
-    public static CatalogRepository catalogRepository;
+    public static CategoryRepository categoryRepository;
     public static UserRepository userRepository;
 
     public static void init(Context context) {
@@ -30,7 +30,7 @@ public class ServiceLocator {
             api = RetrofitClient.create(tokenStore);
             db = AppDatabase.getInstance(appContext);
             authRepository = new AuthRepository(api, tokenStore);
-            catalogRepository = new CatalogRepository(api, db.categoryDao(), db.subcategoryDao(), db.wordDao());
+            categoryRepository = new CategoryRepository(api, db.categoryDao(), db.subcategoryDao(), db.wordDao());
             userRepository = new UserRepository(api, db.userDao());
             initialized = true;
         }

@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
-import com.scholarlyapps.pathlingo.data.repo.CatalogRepository;
+import com.scholarlyapps.pathlingo.data.repo.CategoryRepository;
 import com.scholarlyapps.pathlingo.models.Category;
 
 import java.util.Objects;
@@ -15,7 +15,7 @@ public class SubcategoryViewModel extends ViewModel {
     private final MutableLiveData<Long> categoryId = new MutableLiveData<>();
     private final LiveData<Category> category;
 
-    public SubcategoryViewModel(CatalogRepository repo) {
+    public SubcategoryViewModel(CategoryRepository repo) {
         category = Transformations.switchMap(categoryId, repo::getCategoryById);
     }
 

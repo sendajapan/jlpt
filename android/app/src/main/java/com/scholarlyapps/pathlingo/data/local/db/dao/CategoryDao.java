@@ -15,6 +15,9 @@ import java.util.List;
 @Dao
 public interface CategoryDao {
 
+    @Query("SELECT * FROM categories")
+    LiveData<List<CategoryEntity>> getAll();
+
     @Transaction
     @Query("SELECT * FROM categories")
     LiveData<List<CategoryWithChildren>> getAllWithChildren();

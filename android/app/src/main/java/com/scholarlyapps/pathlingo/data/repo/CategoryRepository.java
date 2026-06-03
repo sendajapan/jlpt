@@ -30,7 +30,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CatalogRepository {
+public class CategoryRepository {
 
     private final ApiService apiService;
     private final CategoryDao categoryDao;
@@ -38,17 +38,15 @@ public class CatalogRepository {
     private final WordDao wordDao;
     private final ExecutorService dbExecutor = Executors.newSingleThreadExecutor();
 
-    public CatalogRepository(ApiService apiService, CategoryDao categoryDao, SubcategoryDao subcategoryDao, WordDao wordDao) {
+    public CategoryRepository(ApiService apiService, CategoryDao categoryDao, SubcategoryDao subcategoryDao, WordDao wordDao) {
         this.apiService = apiService;
         this.categoryDao = categoryDao;
         this.subcategoryDao = subcategoryDao;
         this.wordDao = wordDao;
     }
 
-    // ─── Queries ────────────────────────────────────────────────────────────────
-
     public LiveData<List<Category>> getAllCategories() {
-        return Transformations.map(categoryDao.getAllWithChildren(), this::mapCategories);
+        return Transformations.map(categoryDao.getAll(), this::mapCategoryEntities);
     }
 
     public LiveData<Category> getCategoryById(long id) {
@@ -62,8 +60,6 @@ public class CatalogRepository {
     public LiveData<List<Word>> getFavoriteWords() {
         return Transformations.map(wordDao.getFavorites(), this::mapWords);
     }
-
-    // ─── Refresh ─────────────────────────────────────────────────────────────────
 
     public void refresh() {
         apiService.getCategories().enqueue(new Callback<>() {
@@ -112,8 +108,6 @@ public class CatalogRepository {
         });
     }
 
-    // ─── Favorites ───────────────────────────────────────────────────────────────
-
     public void addFavorite(long wordId) {
         try {
             apiService.addFavorite(wordId).execute();
@@ -128,14 +122,34 @@ public class CatalogRepository {
         } catch (Exception ignored) {}
     }
 
-    // ─── Mapping: entities → models ──────────────────────────────────────────────
+    private List<Category> mapCategoryEntities(List<CategoryEntity> entities) {
+        List<Category> categories = new ArrayList<>();
+        if (entities == null) return categories;
+
+        for (CategoryEntity entity : entities) {
+            Category category = new Category();
+            category.id = String.valueOf(entity.id);
+            category.jp = orEmpty(entity.nameJp);
+            category.en = orEmpty(entity.nameEn);
+            category.ch = orEmpty(entity.nameRomaji);
+            category.bg = orEmpty(entity.bgUrl);
+            category.iconUrl = orEmpty(entity.iconUrl);
+            category.img = orEmpty(entity.iconThumbnailUrl);
+            category.locked = entity.isPremium;
+            categories.add(category);
+        }
+
+        return categories;
+    }
 
     private List<Category> mapCategories(List<CategoryWithChildren> rows) {
         List<Category> categories = new ArrayList<>();
         if (rows == null) return categories;
+
         for (CategoryWithChildren row : rows) {
             categories.add(mapCategory(row));
         }
+
         return categories;
     }
 
@@ -179,6 +193,7 @@ public class CatalogRepository {
     private List<Word> mapWords(List<WordEntity> entities) {
         List<Word> words = new ArrayList<>();
         if (entities == null) return words;
+
         for (WordEntity entity : entities) {
             Word word = new Word();
             word.kanji = orEmpty(entity.wordJp);
@@ -197,13 +212,13 @@ public class CatalogRepository {
 
             words.add(word);
         }
+
         return words;
     }
 
-    // ─── Mapping: DTOs → entities ─────────────────────────────────────────────────
-
     private List<CategoryEntity> toCategoryEntities(List<CategoryDto> dtos) {
         List<CategoryEntity> entities = new ArrayList<>();
+
         for (CategoryDto dto : dtos) {
             CategoryEntity entity = new CategoryEntity();
             entity.id = dto.id;
@@ -217,11 +232,13 @@ public class CatalogRepository {
 
             entities.add(entity);
         }
+
         return entities;
     }
 
     private List<SubcategoryEntity> toSubcategoryEntities(List<SubcategoryDto> dtos) {
         List<SubcategoryEntity> entities = new ArrayList<>();
+
         for (SubcategoryDto dto : dtos) {
             SubcategoryEntity entity = new SubcategoryEntity();
             entity.id = dto.id;
@@ -236,11 +253,13 @@ public class CatalogRepository {
 
             entities.add(entity);
         }
+
         return entities;
     }
 
     private List<WordEntity> toWordEntities(List<VocabularyDto> dtos) {
         List<WordEntity> entities = new ArrayList<>();
+
         for (VocabularyDto dto : dtos) {
             WordEntity entity = new WordEntity();
             entity.id = dto.id;
@@ -257,10 +276,9 @@ public class CatalogRepository {
 
             entities.add(entity);
         }
+
         return entities;
     }
-
-    // ─── Helpers ──────────────────────────────────────────────────────────────────
 
     private String orEmpty(String value) {
         return value != null ? value : "";

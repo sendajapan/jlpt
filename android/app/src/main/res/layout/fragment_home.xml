@@ -16,14 +16,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_home_header"
             android:orientation="vertical"
             android:padding="@dimen/_16sdp">
 
             <!-- Top bar: date + coins + bell -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp"
+                android:layout_height="@dimen/_48sdp"
                 android:weightSum="3"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
@@ -36,8 +35,8 @@
                     android:orientation="horizontal">
 
                     <FrameLayout
-                        android:layout_width="@dimen/_40sdp"
-                        android:layout_height="@dimen/_40sdp"
+                        android:layout_width="@dimen/_48sdp"
+                        android:layout_height="@dimen/_48sdp"
                         android:background="@drawable/bg_step_bar_inactive">
 
                         <ImageView
@@ -50,7 +49,7 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_12sdp"
+                        android:layout_marginStart="@dimen/_8sdp"
                         android:layout_weight="1"
                         android:orientation="vertical">
 
@@ -58,24 +57,27 @@
                             android:id="@+id/txtDate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/ink"
-                            android:textSize="@dimen/_13ssp" />
+                            android:text="Saturday, May 13"
+                            android:textColor="@color/color_theme_black"
+                            android:textSize="@dimen/_9ssp"
+                            android:fontFamily="@font/poppins"
+                            android:includeFontPadding="false"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="こんにちは！"
                             android:textColor="@color/ink"
-                            android:textSize="@dimen/_12ssp"
-                            android:textStyle="bold" />
+                            android:textSize="@dimen/_10ssp"
+                            android:textStyle="bold"
+                            android:includeFontPadding="false"/>
 
                         <TextView
-                            android:id="@+id/txtUserName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_4sdp"
+                            android:text="Ready to learn 5\nnew words today?"
                             android:textColor="@color/ink_soft"
-                            android:textSize="@dimen/_13ssp" />
+                            android:textSize="@dimen/_7ssp" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -401,6 +403,14 @@
                 android:textColor="@color/sage_deep"
                 android:textSize="@dimen/_14ssp" />
         </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/loadingCategories"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:visibility="gone" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvCategories"

@@ -1,6 +1,9 @@
 package com.scholarlyapps.pathlingo.ui.fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +36,7 @@ public class HomeFragment extends Fragment {
         return binding.getRoot();
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         HomeViewModel viewModel = new ViewModelProvider(this, new AppViewModelFactory()).get(HomeViewModel.class);
@@ -68,9 +72,20 @@ public class HomeFragment extends Fragment {
         });
 
         viewModel.getCategories().observe(getViewLifecycleOwner(), categories ->
-            adapter.setData(categories != null ? categories : new ArrayList<>()));
+            adapter.setData(categories != null ? categories : new ArrayList<>())
+        );
 
-        viewModel.loadData();
+        viewModel.isLoading().observe(getViewLifecycleOwner(), isLoading -> {
+            binding.loadingCategories.setVisibility(isLoading ? View.VISIBLE : View.GONE);
+            binding.rvCategories.setVisibility(isLoading ? View.GONE : View.VISIBLE);
+        });
+
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                viewModel.loadData();
+            }
+        });
     }
 
     @Override
