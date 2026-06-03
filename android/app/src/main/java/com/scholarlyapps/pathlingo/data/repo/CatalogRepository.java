@@ -20,10 +20,15 @@ import com.scholarlyapps.pathlingo.models.Category;
 import com.scholarlyapps.pathlingo.models.Subcategory;
 import com.scholarlyapps.pathlingo.models.Word;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import androidx.annotation.NonNull;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
 public class CatalogRepository {
@@ -32,6 +37,7 @@ public class CatalogRepository {
     private final CategoryDao categoryDao;
     private final SubcategoryDao subcategoryDao;
     private final WordDao wordDao;
+    private final ExecutorService dbExecutor = Executors.newSingleThreadExecutor();
 
     public CatalogRepository(ApiService apiService, CategoryDao categoryDao, SubcategoryDao subcategoryDao, WordDao wordDao) {
         this.apiService = apiService;
@@ -57,23 +63,47 @@ public class CatalogRepository {
     }
 
     public void refresh() {
-        try {
-            Response<ListResponse<CategoryDto>> categoryResponse = apiService.getCategories().execute();
-            Response<ListResponse<SubcategoryDto>> subcategoryResponse = apiService.getSubcategories(null).execute();
-            Response<ListResponse<VocabularyDto>> vocabularyResponse = apiService.getVocabularies(null, null, null).execute();
+        apiService.getCategories().enqueue(new Callback<ListResponse<CategoryDto>>() {
+            @Override
+            public void onResponse(Call<ListResponse<CategoryDto>> call, Response<ListResponse<CategoryDto>> response) {
+                if (!response.isSuccessful() || response.body() == null) return;
+                List<CategoryDto> dtos = response.body().getData();
+                dbExecutor.execute(() -> {
+                    categoryDao.deleteAll();
+                    categoryDao.insertAll(toCategoryEntities(dtos));
+                });
+            }
+            @Override
+            public void onFailure(Call<ListResponse<CategoryDto>> call, Throwable throwable) {}
+        });
 
-            List<CategoryDto> categoryDtos = categoryResponse.isSuccessful() && categoryResponse.body() != null ? categoryResponse.body().getData() : Collections.emptyList();
-            List<SubcategoryDto> subcategoryDtos = subcategoryResponse.isSuccessful() && subcategoryResponse.body() != null ? subcategoryResponse.body().getData() : Collections.emptyList();
-            List<VocabularyDto> vocabularyDtos = vocabularyResponse.isSuccessful() && vocabularyResponse.body() != null ? vocabularyResponse.body().getData() : Collections.emptyList();
+        apiService.getSubcategories(null).enqueue(new Callback<ListResponse<SubcategoryDto>>() {
+            @Override
+            public void onResponse(Call<ListResponse<SubcategoryDto>> call, Response<ListResponse<SubcategoryDto>> response) {
+                if (!response.isSuccessful() || response.body() == null) return;
+                List<SubcategoryDto> dtos = response.body().getData();
+                dbExecutor.execute(() -> {
+                    subcategoryDao.deleteAll();
+                    subcategoryDao.insertAll(toSubcategoryEntities(dtos));
+                });
+            }
+            @Override
+            public void onFailure(Call<ListResponse<SubcategoryDto>> call, Throwable throwable) {}
+        });
 
-            wordDao.deleteAll();
-            subcategoryDao.deleteAll();
-            categoryDao.deleteAll();
-            categoryDao.insertAll(toCategoryEntities(categoryDtos));
-            subcategoryDao.insertAll(toSubcategoryEntities(subcategoryDtos));
-            wordDao.insertAll(toWordEntities(vocabularyDtos));
-        } catch (Exception ignored) {
-        }
+        apiService.getVocabularies(null, null, null).enqueue(new Callback<ListResponse<VocabularyDto>>() {
+            @Override
+            public void onResponse(Call<ListResponse<VocabularyDto>> call, Response<ListResponse<VocabularyDto>> response) {
+                if (!response.isSuccessful() || response.body() == null) return;
+                List<VocabularyDto> dtos = response.body().getData();
+                dbExecutor.execute(() -> {
+                    wordDao.deleteAll();
+                    wordDao.insertAll(toWordEntities(dtos));
+                });
+            }
+            @Override
+            public void onFailure(Call<ListResponse<VocabularyDto>> call, Throwable throwable) {}
+        });
     }
 
     public void addFavorite(long wordId) {
