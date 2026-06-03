@@ -29,7 +29,8 @@
                 android:text="OTP VERIFICATION"
                 android:textAllCaps="true"
                 android:textColor="@color/color_theme_dark"
-                android:textSize="@dimen/_28ssp" />
+                android:textSize="@dimen/_32ssp"
+                android:includeFontPadding="false" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -37,7 +38,8 @@
                 android:fontFamily="@font/poppins_bold"
                 android:text="Enter the 4-digit verification code we just sent to your email address."
                 android:textColor="@color/color_theme_black"
-                android:textSize="@dimen/_12ssp"
+                android:textSize="@dimen/_11ssp"
+                android:includeFontPadding="false"
                 android:layout_marginTop="@dimen/_4sdp" />
 
             <TextView
