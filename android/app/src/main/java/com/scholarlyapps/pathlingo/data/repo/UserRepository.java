@@ -14,54 +14,54 @@ import retrofit2.Response;
 
 public class UserRepository {
 
-    private final ApiService api;
+    private final ApiService apiService;
     private final UserDao userDao;
 
-    public UserRepository(ApiService api, UserDao userDao) {
-        this.api = api;
+    public UserRepository(ApiService apiService, UserDao userDao) {
+        this.apiService = apiService;
         this.userDao = userDao;
     }
 
     public LiveData<User> getUser() {
         return Transformations.map(userDao.getUser(), entity -> {
             if (entity == null) return null;
-            User u = new User();
-            u.name = orEmpty(entity.name);
-            u.jpName = orEmpty(entity.username);
-            u.level = entity.currentLevel;
-            u.xp = entity.xpPoints;
-            u.maxXp = 100;
-            u.streak = entity.currentStreak;
-            u.wordsKnown = entity.learnedWords;
-            u.email = orEmpty(entity.email);
-            return u;
+            User user = new User();
+            user.name = orEmpty(entity.name);
+            user.jpName = orEmpty(entity.username);
+            user.level = entity.currentLevel;
+            user.xp = entity.xpPoints;
+            user.maxXp = 100;
+            user.streak = entity.currentStreak;
+            user.wordsKnown = entity.learnedWords;
+            user.email = orEmpty(entity.email);
+            return user;
         });
     }
 
     public boolean refresh() {
         try {
-            Response<WrappedResponse<AppUserDto>> response = api.me().execute();
-            if (response.isSuccessful() && response.body() != null && response.body().getData() != null) {
-                AppUserDto dto = response.body().getData();
-                UserEntity entity = new UserEntity();
-                entity.id = dto.id;
-                entity.name = dto.name;
-                entity.username = dto.username;
-                entity.email = dto.email;
-                entity.currentLevel = dto.currentLevel;
-                entity.xpPoints = dto.xpPoints;
-                entity.currentStreak = dto.currentStreak;
-                entity.learnedWords = dto.learnedWords;
-                userDao.insert(entity);
-                return true;
+            Response<WrappedResponse<AppUserDto>> response = apiService.me().execute();
+            if (!response.isSuccessful() || response.body() == null || response.body().getData() == null) {
+                return false;
             }
-            return false;
-        } catch (Exception e) {
+            AppUserDto dto = response.body().getData();
+            UserEntity entity = new UserEntity();
+            entity.id = dto.id;
+            entity.name = dto.name;
+            entity.username = dto.username;
+            entity.email = dto.email;
+            entity.currentLevel = dto.currentLevel;
+            entity.xpPoints = dto.xpPoints;
+            entity.currentStreak = dto.currentStreak;
+            entity.learnedWords = dto.learnedWords;
+            userDao.insert(entity);
+            return true;
+        } catch (Exception ignored) {
             return false;
         }
     }
 
-    private String orEmpty(String s) {
-        return s != null ? s : "";
+    private String orEmpty(String value) {
+        return value != null ? value : "";
     }
 }
