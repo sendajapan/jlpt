@@ -19,6 +19,7 @@
         <activity
             android:name=".ui.welcome.SplashActivity"
             android:exported="true"
+            android:screenOrientation="portrait"
             android:label="Path Lingo"
             android:theme="@style/Theme.PathLingo">
             <intent-filter>
@@ -31,26 +32,31 @@
         <activity
             android:name=".ui.welcome.OnboardingActivity"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.PathLingo" />
 
         <activity
             android:name=".ui.auth.LoginActivity"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.PathLingo" />
 
         <activity
             android:name=".ui.auth.RegisterActivity"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.PathLingo" />
 
         <activity
             android:name=".ui.auth.OtpActivity"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.PathLingo" />
 
         <activity
             android:name=".ui.activities.MainDashboardActivity"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.PathLingo" />
 
         <meta-data
