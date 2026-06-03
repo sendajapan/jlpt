@@ -18,7 +18,6 @@ import com.scholarlyapps.pathlingo.data.remote.ServiceLocator;
 import com.scholarlyapps.pathlingo.databinding.ActivitySplashBinding;
 import com.scholarlyapps.pathlingo.ui.activities.MainDashboardActivity;
 import com.scholarlyapps.pathlingo.ui.auth.LoginActivity;
-import com.scholarlyapps.pathlingo.ui.auth.OtpActivity;
 import com.scholarlyapps.pathlingo.viewmodels.SplashViewModel;
 import com.scholarlyapps.pathlingo.ui.utils.NavAnim;
 
@@ -26,8 +25,6 @@ import com.scholarlyapps.pathlingo.ui.utils.NavAnim;
 public class SplashActivity extends AppCompatActivity {
 
     public static final long WAIT_DURATION = 3_000L;
-
-    private String resolvedEmail = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +36,7 @@ public class SplashActivity extends AppCompatActivity {
         WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
         getWindow().setStatusBarColor(Color.TRANSPARENT);
         WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView())
-                .setAppearanceLightStatusBars(true);
+            .setAppearanceLightStatusBars(true);
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.rootLayout, (v, insets) -> {
             int top = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top;
@@ -50,13 +47,11 @@ public class SplashActivity extends AppCompatActivity {
 
         SplashViewModel viewModel = new ViewModelProvider(this).get(SplashViewModel.class);
 
-        viewModel.getPendingEmail().observe(this, email -> resolvedEmail = email);
-
         viewModel.getDestination().observe(this, dest -> {
             new Handler(Looper.getMainLooper()).postDelayed(() -> {
                 boolean onboardingDone = getSharedPreferences(
-                        OnboardingActivity.PREFS_NAME, MODE_PRIVATE)
-                        .getBoolean(OnboardingActivity.KEY_ONBOARDING_DONE, false);
+                    OnboardingActivity.PREFS_NAME, MODE_PRIVATE)
+                    .getBoolean(OnboardingActivity.KEY_ONBOARDING_DONE, false);
 
                 if (!onboardingDone) {
                     startActivity(new Intent(SplashActivity.this, OnboardingActivity.class));
@@ -64,11 +59,6 @@ public class SplashActivity extends AppCompatActivity {
                 } else if (dest == SplashViewModel.Destination.DASHBOARD) {
                     goToDashboard();
                     return;
-                } else if (dest == SplashViewModel.Destination.OTP_VERIFY) {
-                    Intent intent = new Intent(SplashActivity.this, OtpActivity.class);
-                    intent.putExtra(OtpActivity.EXTRA_EMAIL, resolvedEmail != null ? resolvedEmail : "");
-                    startActivity(intent);
-                    NavAnim.slideForward(SplashActivity.this);
                 } else {
                     startActivity(new Intent(SplashActivity.this, LoginActivity.class));
                     NavAnim.slideForward(SplashActivity.this);
