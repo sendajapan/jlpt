@@ -30,6 +30,7 @@ public class OtpActivity extends AppCompatActivity {
     private AuthViewModel viewModel;
     private CountDownTimer resendTimer;
     private boolean resendEnabled = false;
+    private String email = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +43,7 @@ public class OtpActivity extends AppCompatActivity {
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
         String emailExtra = getIntent().getStringExtra(EXTRA_EMAIL);
-        final String email = emailExtra != null ? emailExtra : "";
+        email = emailExtra != null ? emailExtra : "";
 
         binding.textEmail.setText(email);
 
@@ -95,7 +96,7 @@ public class OtpActivity extends AppCompatActivity {
             return;
         }
 
-        viewModel.verifyOtp(d1 + d2 + d3 + d4);
+        viewModel.verifyOtp(email, d1 + d2 + d3 + d4);
     }
 
     private void wireDigitBox(EditText current, EditText prev, EditText next) {

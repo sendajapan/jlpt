@@ -100,9 +100,9 @@ public class AuthRepository {
         }
     }
 
-    public ApiResult<String> verifyOtp(String code) {
+    public ApiResult<String> verifyOtp(String email, String code) {
         try {
-            Response<MessageResponse> response = api.verifyOtp(new OtpVerifyRequest(code)).execute();
+            Response<MessageResponse> response = api.verifyOtp(new OtpVerifyRequest(email, code)).execute();
             if (response.isSuccessful() && response.body() != null) {
                 return ApiResult.success(response.body().message);
             }

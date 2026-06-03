@@ -58,13 +58,13 @@ class OtpController extends Controller
     #[OA\Post(
         path: '/api/v1/auth/otp/verify',
         tags: ['Auth'],
-        summary: 'Verify the 4-digit OTP code to confirm email ownership',
-        security: [['sanctum' => []]],
+        summary: 'Verify the 4-digit OTP code to confirm email ownership (no auth required)',
         requestBody: new OA\RequestBody(
             required: true,
             content: new OA\JsonContent(
-                required: ['code'],
+                required: ['receiver_email', 'code'],
                 properties: [
+                    new OA\Property(property: 'receiver_email', type: 'string', format: 'email', example: 'user@example.com'),
                     new OA\Property(property: 'code', type: 'string', minLength: 4, maxLength: 4, example: '4827', description: '4-digit numeric OTP'),
                 ]
             )
@@ -77,13 +77,17 @@ class OtpController extends Controller
                     properties: [new OA\Property(property: 'message', type: 'string', example: 'Email verified successfully.')]
                 )
             ),
-            new OA\Response(response: 401, description: 'Unauthenticated'),
+            new OA\Response(response: 404, description: 'No account found with that email'),
             new OA\Response(response: 422, description: 'Invalid or expired OTP', content: new OA\JsonContent(ref: '#/components/schemas/ValidationError')),
         ]
     )]
     public function verify(OtpVerifyRequest $request): JsonResponse
     {
-        $user = $request->user();
+        $user = AppUser::where('email', $request->validated('receiver_email'))->first();
+
+        if (! $user) {
+            return response()->json(['message' => 'No account found with that email.'], 404);
+        }
 
         if (! $this->otpService->verify($user, $request->validated('code'))) {
             return response()->json([

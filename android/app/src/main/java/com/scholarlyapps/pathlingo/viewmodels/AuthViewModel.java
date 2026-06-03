@@ -61,12 +61,12 @@ public class AuthViewModel extends ViewModel {
         });
     }
 
-    public void verifyOtp(String code) {
+    public void verifyOtp(String email, String code) {
         stateLiveData.setValue(new AuthUiState(true, null, null, false, false));
         executor.execute(() -> {
             AuthUiState next;
             try {
-                ApiResult<String> result = repo.verifyOtp(code);
+                ApiResult<String> result = repo.verifyOtp(email, code);
                 next = result.isSuccess()
                         ? new AuthUiState(false, null, null, false, true)
                         : new AuthUiState(false, result.getError(), null, false, false);

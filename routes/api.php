@@ -30,6 +30,7 @@ Route::prefix('auth')->group(function () {
     Route::post('forgot-password', [PasswordResetController::class, 'forgot']);
     Route::post('reset-password', [PasswordResetController::class, 'reset']);
     Route::post('otp/send', [OtpController::class, 'send']);
+    Route::post('otp/verify', [OtpController::class, 'verify']);
 
     Route::get('email/verify/{id}/{hash}', [EmailVerificationController::class, 'verify'])
         ->middleware('signed')
@@ -38,7 +39,6 @@ Route::prefix('auth')->group(function () {
 
 Route::middleware('auth:app_users')->group(function () {
     Route::post('auth/logout', LogoutController::class);
-    Route::post('auth/otp/verify', [OtpController::class, 'verify']);
     Route::post('auth/email/verify-send', [EmailVerificationController::class, 'send']);
 
     Route::get('me', [ProfileController::class, 'show']);
