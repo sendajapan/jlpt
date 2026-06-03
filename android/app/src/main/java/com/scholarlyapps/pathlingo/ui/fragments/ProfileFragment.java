@@ -63,7 +63,8 @@ public class ProfileFragment extends Fragment {
         dialog.setContentView(dialogBinding.getRoot());
         if (dialog.getWindow() != null) {
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.82);
+            dialog.getWindow().setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT);
         }
         dialog.setCancelable(true);
 
