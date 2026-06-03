@@ -9,9 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.scholarlyapps.pathlingo.BuildConfig;
-import com.scholarlyapps.pathlingo.data.DataManager;
 import com.scholarlyapps.pathlingo.databinding.ActivityRegisterBinding;
-import com.scholarlyapps.pathlingo.ui.activities.MainDashboardActivity;
 import com.scholarlyapps.pathlingo.ui.utils.NavAnim;
 import com.scholarlyapps.pathlingo.ui.utils.ToastHelper;
 
@@ -58,8 +56,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
 
             if (state.getSuccess()) {
-                ToastHelper.success(this, "Account created successfully!");
-                goToDashboard();
+                goToOtpVerification();
             }
         });
     }
@@ -84,9 +81,11 @@ public class RegisterActivity extends AppCompatActivity {
         googleClient.signIn(idToken -> viewModel.loginWithGoogle(idToken, deviceName()));
     }
 
-    private void goToDashboard() {
-        DataManager.getInstance().loadData(getApplicationContext());
-        startActivity(new Intent(this, MainDashboardActivity.class));
+    private void goToOtpVerification() {
+        String email = binding.editEmail.getText() != null ? binding.editEmail.getText().toString().trim() : "";
+        Intent intent = new Intent(this, OtpActivity.class);
+        intent.putExtra(OtpActivity.EXTRA_EMAIL, email);
+        startActivity(intent);
         NavAnim.slideForward(this);
         finish();
     }

@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\V1\Auth\EmailVerificationController;
 use App\Http\Controllers\Api\V1\Auth\GuestLoginController;
 use App\Http\Controllers\Api\V1\Auth\LoginController;
 use App\Http\Controllers\Api\V1\Auth\LogoutController;
+use App\Http\Controllers\Api\V1\Auth\OtpController;
 use App\Http\Controllers\Api\V1\Auth\PasswordResetController;
 use App\Http\Controllers\Api\V1\Auth\RegisterController;
 use App\Http\Controllers\Api\V1\Auth\SocialLoginController;
@@ -36,6 +37,8 @@ Route::prefix('auth')->group(function () {
 
 Route::middleware('auth:app_users')->group(function () {
     Route::post('auth/logout', LogoutController::class);
+    Route::post('auth/otp/send', [OtpController::class, 'send']);
+    Route::post('auth/otp/verify', [OtpController::class, 'verify']);
     Route::post('auth/email/verify-send', [EmailVerificationController::class, 'send']);
 
     Route::get('me', [ProfileController::class, 'show']);

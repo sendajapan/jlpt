@@ -10,6 +10,7 @@ import com.scholarlyapps.pathlingo.data.remote.dto.GuestLoginRequest;
 import com.scholarlyapps.pathlingo.data.remote.dto.ListResponse;
 import com.scholarlyapps.pathlingo.data.remote.dto.LoginRequest;
 import com.scholarlyapps.pathlingo.data.remote.dto.MessageResponse;
+import com.scholarlyapps.pathlingo.data.remote.dto.OtpVerifyRequest;
 import com.scholarlyapps.pathlingo.data.remote.dto.RegisterRequest;
 import com.scholarlyapps.pathlingo.data.remote.dto.SubcategoryDto;
 import com.scholarlyapps.pathlingo.data.remote.dto.VocabularyDto;
@@ -51,6 +52,12 @@ public interface ApiService {
 
     @POST("auth/social/google")
     Call<AuthResponse> loginWithGoogle(@Body GoogleLoginRequest body);
+
+    @POST("auth/otp/send")
+    Call<MessageResponse> sendOtp();
+
+    @POST("auth/otp/verify")
+    Call<MessageResponse> verifyOtp(@Body OtpVerifyRequest body);
 
     @POST("auth/forgot-password")
     Call<MessageResponse> forgotPassword(@Body ForgotPasswordRequest body);

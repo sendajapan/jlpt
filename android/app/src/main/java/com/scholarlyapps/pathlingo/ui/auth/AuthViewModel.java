@@ -43,17 +43,51 @@ public class AuthViewModel extends ViewModel {
         launchAuth(() -> repo.loginWithGoogle(idToken, deviceName));
     }
 
+    public void sendOtp() {
+        stateLiveData.setValue(new AuthUiState(true, null, null, false, false));
+        executor.execute(() -> {
+            AuthUiState next;
+            try {
+                ApiResult<String> result = repo.sendOtp();
+                next = result.isSuccess()
+                        ? new AuthUiState(false, null, null, false, false)
+                        : new AuthUiState(false, result.getError(), null, false, false);
+            } catch (Exception e) {
+                next = new AuthUiState(false, e.getMessage() != null ? e.getMessage() : "Something went wrong.", null, false, false);
+            }
+            AuthUiState finalNext = next;
+            mainHandler.post(() -> stateLiveData.setValue(finalNext));
+        });
+    }
+
+    public void verifyOtp(String code) {
+        stateLiveData.setValue(new AuthUiState(true, null, null, false, false));
+        executor.execute(() -> {
+            AuthUiState next;
+            try {
+                ApiResult<String> result = repo.verifyOtp(code);
+                next = result.isSuccess()
+                        ? new AuthUiState(false, null, null, false, true)
+                        : new AuthUiState(false, result.getError(), null, false, false);
+            } catch (Exception e) {
+                next = new AuthUiState(false, e.getMessage() != null ? e.getMessage() : "Something went wrong.", null, false, false);
+            }
+            AuthUiState finalNext = next;
+            mainHandler.post(() -> stateLiveData.setValue(finalNext));
+        });
+    }
+
     private void launchAuth(Callable<ApiResult<AppUserDto>> block) {
-        stateLiveData.setValue(new AuthUiState(true, null, null, false));
+        stateLiveData.setValue(new AuthUiState(true, null, null, false, false));
         executor.execute(() -> {
             AuthUiState next;
             try {
                 ApiResult<AppUserDto> result = block.call();
                 next = result.isSuccess()
-                        ? new AuthUiState(false, null, result.getData(), true)
-                        : new AuthUiState(false, result.getError(), null, false);
+                        ? new AuthUiState(false, null, result.getData(), true, false)
+                        : new AuthUiState(false, result.getError(), null, false, false);
             } catch (Exception e) {
-                next = new AuthUiState(false, e.getMessage() != null ? e.getMessage() : "Something went wrong.", null, false);
+                next = new AuthUiState(false, e.getMessage() != null ? e.getMessage() : "Something went wrong.", null, false, false);
             }
             AuthUiState finalNext = next;
             mainHandler.post(() -> stateLiveData.setValue(finalNext));

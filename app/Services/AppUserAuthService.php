@@ -23,7 +23,6 @@ class AppUserAuthService
         ]);
 
         $user->refresh();
-        $user->sendEmailVerificationNotification();
 
         return $user;
     }

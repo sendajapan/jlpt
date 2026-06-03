@@ -9,6 +9,8 @@ import com.scholarlyapps.pathlingo.data.remote.dto.ForgotPasswordRequest;
 import com.scholarlyapps.pathlingo.data.remote.dto.GoogleLoginRequest;
 import com.scholarlyapps.pathlingo.data.remote.dto.GuestLoginRequest;
 import com.scholarlyapps.pathlingo.data.remote.dto.LoginRequest;
+import com.scholarlyapps.pathlingo.data.remote.dto.MessageResponse;
+import com.scholarlyapps.pathlingo.data.remote.dto.OtpVerifyRequest;
 import com.scholarlyapps.pathlingo.data.remote.dto.RegisterRequest;
 
 import java.io.IOException;
@@ -78,6 +80,30 @@ public class AuthRepository {
             if (response.isSuccessful() && response.body() != null) {
                 tokenStore.save(response.body().token);
                 return ApiResult.success(response.body().user);
+            }
+            return ApiResult.failure(parseError(response));
+        } catch (IOException e) {
+            return ApiResult.failure(e.getMessage());
+        }
+    }
+
+    public ApiResult<String> sendOtp() {
+        try {
+            Response<MessageResponse> response = api.sendOtp().execute();
+            if (response.isSuccessful() && response.body() != null) {
+                return ApiResult.success(response.body().message);
+            }
+            return ApiResult.failure(parseError(response));
+        } catch (IOException e) {
+            return ApiResult.failure(e.getMessage());
+        }
+    }
+
+    public ApiResult<String> verifyOtp(String code) {
+        try {
+            Response<MessageResponse> response = api.verifyOtp(new OtpVerifyRequest(code)).execute();
+            if (response.isSuccessful() && response.body() != null) {
+                return ApiResult.success(response.body().message);
             }
             return ApiResult.failure(parseError(response));
         } catch (IOException e) {

@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\V1\Auth\Concerns\IssuesAuthResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\RegisterRequest;
 use App\Services\AppUserAuthService;
+use App\Services\AppUserOtpService;
 use Illuminate\Http\JsonResponse;
 use OpenApi\Attributes as OA;
 
@@ -13,7 +14,10 @@ class RegisterController extends Controller
 {
     use IssuesAuthResponse;
 
-    public function __construct(private AppUserAuthService $auth) {}
+    public function __construct(
+        private AppUserAuthService $auth,
+        private AppUserOtpService $otpService,
+    ) {}
 
     #[OA\Post(
         path: '/api/v1/auth/register',
@@ -45,6 +49,8 @@ class RegisterController extends Controller
         if ($request->filled('guest_token')) {
             $this->auth->mergeGuestAccount($user, $request->string('guest_token'));
         }
+
+        $this->otpService->generateAndSend($user);
 
         return $this->authResponse($user, $request->string('device_name'), 201);
     }
