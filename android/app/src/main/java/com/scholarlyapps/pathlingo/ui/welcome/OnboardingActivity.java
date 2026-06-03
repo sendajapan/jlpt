@@ -1,5 +1,6 @@
 package com.scholarlyapps.pathlingo.ui.welcome;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.scholarlyapps.pathlingo.R;
 import com.scholarlyapps.pathlingo.adapters.OnboardingPagerAdapter;
 import com.scholarlyapps.pathlingo.databinding.ActivityOnboardingBinding;
+import com.scholarlyapps.pathlingo.ui.activities.MainDashboardActivity;
 import com.scholarlyapps.pathlingo.ui.auth.LoginActivity;
 import com.scholarlyapps.pathlingo.ui.utils.NavAnim;
 import com.scholarlyapps.pathlingo.viewmodels.OnboardingViewModel;
@@ -74,6 +76,7 @@ public class OnboardingActivity extends AppCompatActivity {
         binding.btnSkip.setOnClickListener(v -> finishOnboarding());
     }
 
+    @SuppressLint("GestureBackNavigation")
     @Override
     public void onBackPressed() {
         int current = binding.viewPager.getCurrentItem();
@@ -100,7 +103,7 @@ public class OnboardingActivity extends AppCompatActivity {
                 .edit()
                 .putBoolean(KEY_ONBOARDING_DONE, true)
                 .apply();
-        startActivity(new Intent(this, LoginActivity.class));
+        startActivity(new Intent(this, MainDashboardActivity.class));
         NavAnim.slideForward(this);
         finish();
     }
