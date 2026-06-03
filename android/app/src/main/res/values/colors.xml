@@ -4,7 +4,8 @@
     <color name="color_theme_dark_black">#15559A</color>
     <color name="color_theme_dark">#57A4F6</color>
     <color name="color_theme_light">#B0D4FB</color>
-    <color name="color_theme_black">#1D1D1D</color>
+    <color name="color_theme_black">#2D2D2D</color>
+    <color name="color_theme_black_light">#662D2D2D</color>
     <color name="color_theme_navy">#225692</color>
 
     <!-- Aliases for app screens — all map to the 4 theme colors -->
@@ -21,6 +22,8 @@
     <color name="lav">@color/color_theme_light</color>
     <color name="sky">@color/color_theme_light</color>
     <color name="rose">@color/color_theme_light</color>
+
+    <color name="color_error">#E53935</color>
 
     <color name="home_header_bg">#D8E8FF</color>
     <color name="app_bg">#EEF3FF</color>

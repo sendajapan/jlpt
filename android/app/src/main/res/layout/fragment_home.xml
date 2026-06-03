@@ -17,31 +17,32 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="@dimen/_16sdp">
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginHorizontal="@dimen/_16sdp">
 
             <!-- Top bar: date + coins + bell -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_48sdp"
-                android:weightSum="3"
+                android:layout_height="@dimen/_50sdp"
+                android:weightSum="4"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2"
+                    android:layout_weight="2.5"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <FrameLayout
-                        android:layout_width="@dimen/_48sdp"
-                        android:layout_height="@dimen/_48sdp"
+                        android:layout_width="@dimen/_50sdp"
+                        android:layout_height="@dimen/_50sdp"
                         android:background="@drawable/bg_step_bar_inactive">
 
                         <ImageView
-                            android:layout_width="@dimen/_36sdp"
-                            android:layout_height="@dimen/_36sdp"
+                            android:layout_width="@dimen/_46sdp"
+                            android:layout_height="@dimen/_46sdp"
                             android:layout_gravity="center"
                             android:src="@drawable/patka"/>
                     </FrameLayout>
@@ -67,8 +68,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="こんにちは！"
+                            android:fontFamily="@font/noto_sans_jp_bold"
                             android:textColor="@color/ink"
-                            android:textSize="@dimen/_10ssp"
+                            android:textSize="@dimen/_12ssp"
                             android:textStyle="bold"
                             android:includeFontPadding="false"/>
 
@@ -76,28 +78,30 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Ready to learn 5\nnew words today?"
-                            android:textColor="@color/ink_soft"
-                            android:textSize="@dimen/_7ssp" />
+                            android:fontFamily="@font/poppins_light"
+                            android:textColor="@color/color_theme_black"
+                            android:textSize="@dimen/_7ssp"
+                            android:textStyle="italic"
+                            android:letterSpacing=".1"/>
                     </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                    android:layout_height="@dimen/_36sdp"
+                    android:layout_weight="1.5"
+                    android:gravity="center|end">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/_60sdp"
+                        android:layout_height="@dimen/_32sdp"
                         android:background="@drawable/bg_round_white"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingHorizontal="@dimen/_10sdp"
-                        android:paddingVertical="@dimen/_6sdp">
+                        android:gravity="center"
+                        android:orientation="horizontal">
 
                         <ImageView
-                            android:layout_width="@dimen/_18sdp"
-                            android:layout_height="@dimen/_18sdp"
+                            android:layout_width="@dimen/_16sdp"
+                            android:layout_height="@dimen/_16sdp"
                             android:src="@drawable/ic_star"
                             app:tint="#F5A623" />
 
@@ -106,17 +110,18 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_4sdp"
-                            android:text="0"
+                            android:text="2145"
                             android:textColor="@color/ink"
-                            android:textSize="@dimen/_13ssp"
-                            android:textStyle="bold" />
+                            android:textSize="@dimen/_11ssp"
+                            android:textStyle="bold"
+                            android:includeFontPadding="false"/>
                     </LinearLayout>
 
                     <FrameLayout
                         android:id="@+id/btnBell"
-                        android:layout_width="@dimen/_36sdp"
-                        android:layout_height="@dimen/_36sdp"
-                        android:layout_marginStart="@dimen/_8sdp"
+                        android:layout_width="@dimen/_32sdp"
+                        android:layout_height="@dimen/_32sdp"
+                        android:layout_marginStart="@dimen/_4sdp"
                         android:background="@drawable/bg_round_white">
 
                         <ImageView
@@ -130,7 +135,7 @@
                             android:layout_width="@dimen/_8sdp"
                             android:layout_height="@dimen/_8sdp"
                             android:layout_gravity="top|end"
-                            android:layout_margin="@dimen/_5sdp"
+                            android:layout_margin="@dimen/_4sdp"
                             android:background="@drawable/bg_badge_red" />
                     </FrameLayout>
                 </LinearLayout>
@@ -154,30 +159,31 @@
                 android:background="@drawable/bg_round_white"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:paddingVertical="@dimen/_12sdp">
+                android:paddingVertical="@dimen/_8sdp">
 
                 <ImageView
                     android:layout_width="@dimen/_24sdp"
                     android:layout_height="@dimen/_24sdp"
-                    android:src="@drawable/ic_trophy"
-                    app:tint="#FF7043" />
+                    android:src="@drawable/ic_day_streak"
+                    app:tint="@color/color_theme_light" />
 
                 <TextView
                     android:id="@+id/txtStreak"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_4sdp"
-                    android:text="0"
+                    android:text="7"
+                    android:fontFamily="@font/poppins_bold"
                     android:textColor="@color/ink"
-                    android:textSize="@dimen/_18ssp"
-                    android:textStyle="bold" />
+                    android:textSize="@dimen/_16ssp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="DAY STREAK"
-                    android:textColor="@color/ink_soft"
-                    android:textSize="@dimen/_10ssp" />
+                    android:fontFamily="@font/poppins"
+                    android:textColor="@color/color_theme_black"
+                    android:textSize="@dimen/_10ssp"
+                    android:includeFontPadding="false"/>
             </LinearLayout>
 
             <View
@@ -191,30 +197,31 @@
                 android:background="@drawable/bg_round_white"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:paddingVertical="@dimen/_12sdp">
+                android:paddingVertical="@dimen/_8sdp">
 
                 <ImageView
                     android:layout_width="@dimen/_24sdp"
                     android:layout_height="@dimen/_24sdp"
-                    android:src="@drawable/ic_school"
-                    app:tint="@color/color_theme_dark" />
+                    android:src="@drawable/ic_badge"
+                    app:tint="@color/color_theme_light" />
 
                 <TextView
                     android:id="@+id/txtWordsKnown"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_4sdp"
-                    android:text="0"
+                    android:text="42"
+                    android:fontFamily="@font/poppins_bold"
                     android:textColor="@color/ink"
-                    android:textSize="@dimen/_18ssp"
-                    android:textStyle="bold" />
+                    android:textSize="@dimen/_16sdp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="WORDS"
-                    android:textColor="@color/ink_soft"
-                    android:textSize="@dimen/_10ssp" />
+                    android:fontFamily="@font/poppins"
+                    android:textColor="@color/color_theme_black"
+                    android:textSize="@dimen/_10ssp"
+                    android:includeFontPadding="false"/>
             </LinearLayout>
 
             <View
@@ -228,30 +235,31 @@
                 android:background="@drawable/bg_round_white"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:paddingVertical="@dimen/_12sdp">
+                android:paddingVertical="@dimen/_8sdp">
 
                 <ImageView
                     android:layout_width="@dimen/_24sdp"
                     android:layout_height="@dimen/_24sdp"
-                    android:src="@drawable/ic_chart"
-                    app:tint="#7B61FF" />
+                    android:src="@drawable/ic_clock"
+                    app:tint="@color/color_theme_light" />
 
                 <TextView
                     android:id="@+id/txtXpDisplay"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_4sdp"
-                    android:text="0"
+                    android:text="12m"
+                    android:fontFamily="@font/poppins_bold"
                     android:textColor="@color/ink"
-                    android:textSize="@dimen/_18ssp"
-                    android:textStyle="bold" />
+                    android:textSize="@dimen/_16ssp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="XP"
-                    android:textColor="@color/ink_soft"
-                    android:textSize="@dimen/_10ssp" />
+                    android:fontFamily="@font/poppins"
+                    android:textColor="@color/color_theme_black"
+                    android:textSize="@dimen/_10ssp"
+                    android:includeFontPadding="false"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -262,8 +270,8 @@
             android:layout_marginHorizontal="@dimen/_16sdp"
             android:layout_marginTop="@dimen/_16sdp"
             app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="@dimen/_16sdp"
-            app:cardElevation="@dimen/_4sdp">
+            app:cardCornerRadius="@dimen/_8sdp"
+            app:cardElevation="0dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -288,8 +296,9 @@
                             android:layout_height="wrap_content"
                             android:text="Learn Japanese Daily"
                             android:textColor="@color/ink"
-                            android:textSize="@dimen/_16ssp"
-                            android:textStyle="bold" />
+                            android:textSize="@dimen/_14ssp"
+                            android:textStyle="bold"
+                            android:includeFontPadding="false"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -311,22 +320,24 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="0% complete"
+                                android:fontFamily="@font/poppins_bold"
                                 android:textColor="@color/ink"
                                 android:textSize="@dimen/_20ssp"
-                                android:textStyle="bold" />
+                                android:includeFontPadding="false"/>
 
-                            <TextView
+                            <com.google.android.material.textview.MaterialTextView
                                 android:id="@+id/txtLessonFraction"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/_8sdp"
                                 android:background="@drawable/bg_pill_blue"
+                                android:backgroundTint="@color/color_theme_light"
                                 android:paddingHorizontal="@dimen/_10sdp"
                                 android:paddingVertical="@dimen/_4sdp"
-                                android:text="0/7"
-                                android:textColor="@color/white"
-                                android:textSize="@dimen/_12ssp"
-                                android:textStyle="bold" />
+                                android:text="0 / 5"
+                                android:fontFamily="@font/poppins_bold"
+                                android:textSize="@dimen/_10ssp"
+                                android:includeFontPadding="false"/>
                         </LinearLayout>
                     </LinearLayout>
 
@@ -363,16 +374,19 @@
                     android:textColor="@color/ink_soft"
                     android:textSize="@dimen/_12ssp" />
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnStartLesson"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_44sdp"
+                    android:layout_height="@dimen/_46sdp"
                     android:layout_marginTop="@dimen/_16sdp"
-                    android:background="@drawable/bg_btn_blue"
-                    android:text="Start Lesson  ›"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_15ssp"
-                    android:textStyle="bold" />
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="Start Lesson"
+                    android:textColor="@color/color_theme_navy"
+                    android:textSize="@dimen/_14ssp"
+                    android:textAllCaps="false"
+                    android:letterSpacing="0"
+                    app:backgroundTint="@color/color_theme_light"
+                    app:cornerRadius="@dimen/_8sdp" />
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>

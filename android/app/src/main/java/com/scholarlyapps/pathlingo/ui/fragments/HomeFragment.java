@@ -59,7 +59,6 @@ public class HomeFragment extends Fragment {
 
         viewModel.getUser().observe(getViewLifecycleOwner(), user -> {
             if (user == null) return;
-            binding.txtUserName.setText("Ready to learn, " + user.name + "!");
             binding.txtCoins.setText(String.valueOf(user.xp));
             binding.txtStreak.setText(String.valueOf(user.streak));
             binding.txtWordsKnown.setText(String.valueOf(user.wordsKnown));

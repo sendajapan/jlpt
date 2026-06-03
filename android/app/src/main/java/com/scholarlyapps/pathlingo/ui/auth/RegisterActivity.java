@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.scholarlyapps.pathlingo.BuildConfig;
 import com.scholarlyapps.pathlingo.databinding.ActivityRegisterBinding;
 import com.scholarlyapps.pathlingo.ui.utils.NavAnim;
+import com.scholarlyapps.pathlingo.ui.welcome.OnboardingActivity;
 import com.scholarlyapps.pathlingo.ui.utils.ToastHelper;
 import com.scholarlyapps.pathlingo.viewmodels.AuthViewModel;
 
@@ -19,6 +20,7 @@ public class RegisterActivity extends AppCompatActivity {
     private ActivityRegisterBinding binding;
     private AuthViewModel viewModel;
     private GoogleAuthClient googleClient;
+    private boolean isGuestLogin = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +37,10 @@ public class RegisterActivity extends AppCompatActivity {
 
         binding.btnRegister.setOnClickListener(v -> submitRegister());
         binding.btnGoogle.setOnClickListener(v -> signInWithGoogle());
-        binding.btnLoginAsGuest.setOnClickListener(v -> viewModel.guestLogin(deviceName()));
+        binding.btnLoginAsGuest.setOnClickListener(v -> {
+            isGuestLogin = true;
+            viewModel.guestLogin(deviceName());
+        });
 
         binding.btnSignIn.setOnClickListener(v -> {
             Intent intent = new Intent(this, LoginActivity.class);
@@ -57,7 +62,11 @@ public class RegisterActivity extends AppCompatActivity {
             }
 
             if (state.getSuccess()) {
-                goToOtpVerification();
+                if (isGuestLogin) {
+                    goToDashboard();
+                } else {
+                    goToOtpVerification();
+                }
             }
         });
     }
@@ -80,6 +89,12 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void signInWithGoogle() {
         googleClient.signIn(idToken -> viewModel.loginWithGoogle(idToken, deviceName()));
+    }
+
+    private void goToDashboard() {
+        startActivity(new Intent(this, OnboardingActivity.class));
+        NavAnim.slideForward(this);
+        finish();
     }
 
     private void goToOtpVerification() {

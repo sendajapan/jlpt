@@ -35,9 +35,11 @@ public class ProfileFragment extends Fragment {
             if (user == null) return;
             binding.userCard.setVisibility(View.VISIBLE);
             binding.txtUserName.setText(user.name);
-            binding.txtEmail.setText(user.email);
+//            binding.txtEmail.setText(user.email);
             binding.txtXp.setText("XP: " + user.xp);
         });
+
+        binding.btnLogout.setOnClickListener(v -> LogoutHelper.logout(requireContext()));
 
         binding.rowEditProfile.setOnClickListener(v -> showToast("Edit Profile"));
         binding.rowProgress.setOnClickListener(v -> showToast("Progress"));

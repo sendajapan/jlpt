@@ -27,6 +27,7 @@
         <item name="colorPrimary">@color/color_theme_dark</item>
         <item name="colorSecondary">@color/color_theme_dark_black</item>
         <item name="android:colorBackground">#FFFFFF</item>
+        <item name="android:fontFamily">@font/poppins</item>
         <item name="android:textColor">@color/color_theme_black</item>
         <item name="android:textColorPrimary">@color/color_theme_black</item>
         <item name="android:textColorSecondary">@color/color_theme_dark</item>
