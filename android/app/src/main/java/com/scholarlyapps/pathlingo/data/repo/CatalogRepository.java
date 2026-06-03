@@ -31,13 +31,13 @@ import retrofit2.Response;
 
 public class CatalogRepository {
 
-    private final ApiService api;
+    private final ApiService apiService;
     private final CategoryDao categoryDao;
     private final SubcategoryDao subcategoryDao;
     private final WordDao wordDao;
 
-    public CatalogRepository(ApiService api, CategoryDao categoryDao, SubcategoryDao subcategoryDao, WordDao wordDao) {
-        this.api = api;
+    public CatalogRepository(ApiService apiService, CategoryDao categoryDao, SubcategoryDao subcategoryDao, WordDao wordDao) {
+        this.apiService = apiService;
         this.categoryDao = categoryDao;
         this.subcategoryDao = subcategoryDao;
         this.wordDao = wordDao;
@@ -62,29 +62,29 @@ public class CatalogRepository {
     public void refresh() {
         ExecutorService pool = Executors.newFixedThreadPool(3);
         try {
-            Future<List<CategoryDto>> catFuture = pool.submit(() -> {
-                Response<ListResponse<CategoryDto>> r = api.getCategories().execute();
-                return r.isSuccessful() && r.body() != null ? r.body().getData() : Collections.emptyList();
+            Future<List<CategoryDto>> categoriesFuture = pool.submit(() -> {
+                Response<ListResponse<CategoryDto>> response = apiService.getCategories().execute();
+                return response.isSuccessful() && response.body() != null ? response.body().getData() : Collections.emptyList();
             });
-            Future<List<SubcategoryDto>> subFuture = pool.submit(() -> {
-                Response<ListResponse<SubcategoryDto>> r = api.getSubcategories(null).execute();
-                return r.isSuccessful() && r.body() != null ? r.body().getData() : Collections.emptyList();
+            Future<List<SubcategoryDto>> subcategoriesFuture = pool.submit(() -> {
+                Response<ListResponse<SubcategoryDto>> response = apiService.getSubcategories(null).execute();
+                return response.isSuccessful() && response.body() != null ? response.body().getData() : Collections.emptyList();
             });
-            Future<List<VocabularyDto>> vocabFuture = pool.submit(() -> {
-                Response<ListResponse<VocabularyDto>> r = api.getVocabularies(null, null, null).execute();
-                return r.isSuccessful() && r.body() != null ? r.body().getData() : Collections.emptyList();
+            Future<List<VocabularyDto>> vocabulariesFuture = pool.submit(() -> {
+                Response<ListResponse<VocabularyDto>> response = apiService.getVocabularies(null, null, null).execute();
+                return response.isSuccessful() && response.body() != null ? response.body().getData() : Collections.emptyList();
             });
 
-            List<CategoryDto> cats = catFuture.get();
-            List<SubcategoryDto> subs = subFuture.get();
-            List<VocabularyDto> vocabs = vocabFuture.get();
+            List<CategoryDto> categoryDtos = categoriesFuture.get();
+            List<SubcategoryDto> subcategoryDtos = subcategoriesFuture.get();
+            List<VocabularyDto> vocabularyDtos = vocabulariesFuture.get();
 
             wordDao.deleteAll();
             subcategoryDao.deleteAll();
             categoryDao.deleteAll();
-            categoryDao.insertAll(toCategoryEntities(cats));
-            subcategoryDao.insertAll(toSubcategoryEntities(subs));
-            wordDao.insertAll(toWordEntities(vocabs));
+            categoryDao.insertAll(toCategoryEntities(categoryDtos));
+            subcategoryDao.insertAll(toSubcategoryEntities(subcategoryDtos));
+            wordDao.insertAll(toWordEntities(vocabularyDtos));
         } catch (Exception ignored) {
         } finally {
             pool.shutdown();
@@ -93,139 +93,139 @@ public class CatalogRepository {
 
     public void addFavorite(long wordId) {
         try {
-            api.addFavorite(wordId).execute();
+            apiService.addFavorite(wordId).execute();
             wordDao.setFavorite(wordId, true);
         } catch (Exception ignored) {}
     }
 
     public void removeFavorite(long wordId) {
         try {
-            api.removeFavorite(wordId).execute();
+            apiService.removeFavorite(wordId).execute();
             wordDao.setFavorite(wordId, false);
         } catch (Exception ignored) {}
     }
 
     private List<Category> mapCategories(List<CategoryWithChildren> rows) {
-        if (rows == null) return new ArrayList<>();
-        List<Category> result = new ArrayList<>();
+        List<Category> categories = new ArrayList<>();
+        if (rows == null) return categories;
         for (CategoryWithChildren row : rows) {
-            result.add(mapCategory(row));
+            categories.add(mapCategory(row));
         }
-        return result;
+        return categories;
     }
 
     private Category mapCategory(CategoryWithChildren row) {
         if (row == null) return null;
-        Category cat = new Category();
-        cat.id = String.valueOf(row.category.id);
-        cat.jp = orEmpty(row.category.nameJp);
-        cat.en = orEmpty(row.category.nameEn);
-        cat.ch = orEmpty(row.category.nameRomaji);
-        cat.bg = orEmpty(row.category.bgUrl);
-        cat.iconUrl = orEmpty(row.category.iconUrl);
-        cat.img = orEmpty(row.category.iconThumbnailUrl);
-        cat.locked = row.category.isPremium;
-        for (SubcategoryWithWords subRow : row.subcategories) {
-            Subcategory sub = mapSubcategory(subRow);
-            cat.subcategories.add(sub);
-            cat.count += sub.total;
+        Category category = new Category();
+        category.id = String.valueOf(row.category.id);
+        category.jp = orEmpty(row.category.nameJp);
+        category.en = orEmpty(row.category.nameEn);
+        category.ch = orEmpty(row.category.nameRomaji);
+        category.bg = orEmpty(row.category.bgUrl);
+        category.iconUrl = orEmpty(row.category.iconUrl);
+        category.img = orEmpty(row.category.iconThumbnailUrl);
+        category.locked = row.category.isPremium;
+        for (SubcategoryWithWords subcategoryRow : row.subcategories) {
+            Subcategory subcategory = mapSubcategory(subcategoryRow);
+            category.subcategories.add(subcategory);
+            category.count += subcategory.total;
         }
-        return cat;
+        return category;
     }
 
     private Subcategory mapSubcategory(SubcategoryWithWords row) {
-        Subcategory sub = new Subcategory();
-        sub.id = String.valueOf(row.subcategory.id);
-        sub.jp = orEmpty(row.subcategory.nameJp);
-        sub.en = orEmpty(row.subcategory.nameEn);
-        sub.bg = orEmpty(row.subcategory.iconThumbnailBg);
-        sub.img = orEmpty(row.subcategory.iconThumbnailUrl);
-        sub.iconUrl = orEmpty(row.subcategory.iconUrl);
-        sub.locked = row.subcategory.isPremium;
-        sub.words = mapWords(row.words);
-        sub.total = sub.words.size();
-        return sub;
+        Subcategory subcategory = new Subcategory();
+        subcategory.id = String.valueOf(row.subcategory.id);
+        subcategory.jp = orEmpty(row.subcategory.nameJp);
+        subcategory.en = orEmpty(row.subcategory.nameEn);
+        subcategory.bg = orEmpty(row.subcategory.iconThumbnailBg);
+        subcategory.img = orEmpty(row.subcategory.iconThumbnailUrl);
+        subcategory.iconUrl = orEmpty(row.subcategory.iconUrl);
+        subcategory.locked = row.subcategory.isPremium;
+        subcategory.words = mapWords(row.words);
+        subcategory.total = subcategory.words.size();
+        return subcategory;
     }
 
     private List<Word> mapWords(List<WordEntity> entities) {
-        if (entities == null) return new ArrayList<>();
-        List<Word> result = new ArrayList<>();
-        for (WordEntity e : entities) {
-            Word w = new Word();
-            w.kanji = orEmpty(e.wordJp);
-            w.reading = orEmpty(e.wordJp);
-            w.romaji = orEmpty(e.wordRomaji);
-            w.en = orEmpty(e.wordEn);
-            w.img = orEmpty(e.imageUrl);
-            w.example_jp = orEmpty(e.sentenceJp);
-            w.example_romaji = orEmpty(e.sentenceRomaji);
-            w.example_en = orEmpty(e.sentenceEn);
-            w.jlpt = "";
-            w.type = "";
-            w.xp = 0;
-            w.maxMastery = 5;
-            w.favorite = e.isFavorite;
-            result.add(w);
+        List<Word> words = new ArrayList<>();
+        if (entities == null) return words;
+        for (WordEntity entity : entities) {
+            Word word = new Word();
+            word.kanji = orEmpty(entity.wordJp);
+            word.reading = orEmpty(entity.wordJp);
+            word.romaji = orEmpty(entity.wordRomaji);
+            word.en = orEmpty(entity.wordEn);
+            word.img = orEmpty(entity.imageUrl);
+            word.example_jp = orEmpty(entity.sentenceJp);
+            word.example_romaji = orEmpty(entity.sentenceRomaji);
+            word.example_en = orEmpty(entity.sentenceEn);
+            word.jlpt = "";
+            word.type = "";
+            word.xp = 0;
+            word.maxMastery = 5;
+            word.favorite = entity.isFavorite;
+            words.add(word);
         }
-        return result;
+        return words;
     }
 
     private List<CategoryEntity> toCategoryEntities(List<CategoryDto> dtos) {
-        List<CategoryEntity> result = new ArrayList<>();
+        List<CategoryEntity> entities = new ArrayList<>();
         for (CategoryDto dto : dtos) {
-            CategoryEntity e = new CategoryEntity();
-            e.id = dto.id;
-            e.nameJp = dto.nameJp;
-            e.nameEn = dto.nameEn;
-            e.nameRomaji = dto.nameRomaji;
-            e.iconUrl = dto.iconUrl;
-            e.iconThumbnailUrl = dto.iconThumbnailUrl;
-            e.bgUrl = dto.bgUrl;
-            e.isPremium = dto.isPremium;
-            result.add(e);
+            CategoryEntity entity = new CategoryEntity();
+            entity.id = dto.id;
+            entity.nameJp = dto.nameJp;
+            entity.nameEn = dto.nameEn;
+            entity.nameRomaji = dto.nameRomaji;
+            entity.iconUrl = dto.iconUrl;
+            entity.iconThumbnailUrl = dto.iconThumbnailUrl;
+            entity.bgUrl = dto.bgUrl;
+            entity.isPremium = dto.isPremium;
+            entities.add(entity);
         }
-        return result;
+        return entities;
     }
 
     private List<SubcategoryEntity> toSubcategoryEntities(List<SubcategoryDto> dtos) {
-        List<SubcategoryEntity> result = new ArrayList<>();
+        List<SubcategoryEntity> entities = new ArrayList<>();
         for (SubcategoryDto dto : dtos) {
-            SubcategoryEntity e = new SubcategoryEntity();
-            e.id = dto.id;
-            e.categoryId = dto.vocabCategoryId;
-            e.nameJp = dto.nameJp;
-            e.nameEn = dto.nameEn;
-            e.nameRomaji = dto.nameRomaji;
-            e.iconUrl = dto.iconUrl;
-            e.iconThumbnailUrl = dto.iconThumbnailUrl;
-            e.iconThumbnailBg = dto.iconThumbnailBg;
-            e.isPremium = dto.isPremium;
-            result.add(e);
+            SubcategoryEntity entity = new SubcategoryEntity();
+            entity.id = dto.id;
+            entity.categoryId = dto.vocabCategoryId;
+            entity.nameJp = dto.nameJp;
+            entity.nameEn = dto.nameEn;
+            entity.nameRomaji = dto.nameRomaji;
+            entity.iconUrl = dto.iconUrl;
+            entity.iconThumbnailUrl = dto.iconThumbnailUrl;
+            entity.iconThumbnailBg = dto.iconThumbnailBg;
+            entity.isPremium = dto.isPremium;
+            entities.add(entity);
         }
-        return result;
+        return entities;
     }
 
     private List<WordEntity> toWordEntities(List<VocabularyDto> dtos) {
-        List<WordEntity> result = new ArrayList<>();
+        List<WordEntity> entities = new ArrayList<>();
         for (VocabularyDto dto : dtos) {
-            WordEntity e = new WordEntity();
-            e.id = dto.id;
-            e.subcategoryId = dto.vocabSubcategoryId;
-            e.wordJp = dto.wordJp;
-            e.wordRomaji = dto.wordRomaji;
-            e.wordEn = dto.wordEn;
-            e.sentenceJp = dto.sentenceJp;
-            e.sentenceRomaji = dto.sentenceRomaji;
-            e.sentenceEn = dto.sentenceEn;
-            e.audioJpUrl = dto.audioJpUrl;
-            e.imageUrl = dto.imageUrl;
-            e.isPremium = dto.isPremium;
-            result.add(e);
+            WordEntity entity = new WordEntity();
+            entity.id = dto.id;
+            entity.subcategoryId = dto.vocabSubcategoryId;
+            entity.wordJp = dto.wordJp;
+            entity.wordRomaji = dto.wordRomaji;
+            entity.wordEn = dto.wordEn;
+            entity.sentenceJp = dto.sentenceJp;
+            entity.sentenceRomaji = dto.sentenceRomaji;
+            entity.sentenceEn = dto.sentenceEn;
+            entity.audioJpUrl = dto.audioJpUrl;
+            entity.imageUrl = dto.imageUrl;
+            entity.isPremium = dto.isPremium;
+            entities.add(entity);
         }
-        return result;
+        return entities;
     }
 
-    private String orEmpty(String s) {
-        return s != null ? s : "";
+    private String orEmpty(String value) {
+        return value != null ? value : "";
     }
 }
