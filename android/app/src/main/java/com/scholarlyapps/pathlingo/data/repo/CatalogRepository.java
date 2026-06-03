@@ -1,5 +1,6 @@
 package com.scholarlyapps.pathlingo.data.repo;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Transformations;
 
@@ -19,8 +20,6 @@ import com.scholarlyapps.pathlingo.data.remote.dto.VocabularyDto;
 import com.scholarlyapps.pathlingo.models.Category;
 import com.scholarlyapps.pathlingo.models.Subcategory;
 import com.scholarlyapps.pathlingo.models.Word;
-
-import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +45,8 @@ public class CatalogRepository {
         this.wordDao = wordDao;
     }
 
+    // ─── Queries ────────────────────────────────────────────────────────────────
+
     public LiveData<List<Category>> getAllCategories() {
         return Transformations.map(categoryDao.getAllWithChildren(), this::mapCategories);
     }
@@ -62,10 +63,12 @@ public class CatalogRepository {
         return Transformations.map(wordDao.getFavorites(), this::mapWords);
     }
 
+    // ─── Refresh ─────────────────────────────────────────────────────────────────
+
     public void refresh() {
-        apiService.getCategories().enqueue(new Callback<ListResponse<CategoryDto>>() {
+        apiService.getCategories().enqueue(new Callback<>() {
             @Override
-            public void onResponse(Call<ListResponse<CategoryDto>> call, Response<ListResponse<CategoryDto>> response) {
+            public void onResponse(@NonNull Call<ListResponse<CategoryDto>> call, @NonNull Response<ListResponse<CategoryDto>> response) {
                 if (!response.isSuccessful() || response.body() == null) return;
                 List<CategoryDto> dtos = response.body().getData();
                 dbExecutor.execute(() -> {
@@ -73,13 +76,14 @@ public class CatalogRepository {
                     categoryDao.insertAll(toCategoryEntities(dtos));
                 });
             }
+
             @Override
-            public void onFailure(Call<ListResponse<CategoryDto>> call, Throwable throwable) {}
+            public void onFailure(@NonNull Call<ListResponse<CategoryDto>> call, @NonNull Throwable throwable) {}
         });
 
-        apiService.getSubcategories(null).enqueue(new Callback<ListResponse<SubcategoryDto>>() {
+        apiService.getSubcategories(null).enqueue(new Callback<>() {
             @Override
-            public void onResponse(Call<ListResponse<SubcategoryDto>> call, Response<ListResponse<SubcategoryDto>> response) {
+            public void onResponse(@NonNull Call<ListResponse<SubcategoryDto>> call, @NonNull Response<ListResponse<SubcategoryDto>> response) {
                 if (!response.isSuccessful() || response.body() == null) return;
                 List<SubcategoryDto> dtos = response.body().getData();
                 dbExecutor.execute(() -> {
@@ -87,13 +91,14 @@ public class CatalogRepository {
                     subcategoryDao.insertAll(toSubcategoryEntities(dtos));
                 });
             }
+
             @Override
-            public void onFailure(Call<ListResponse<SubcategoryDto>> call, Throwable throwable) {}
+            public void onFailure(@NonNull Call<ListResponse<SubcategoryDto>> call, @NonNull Throwable throwable) {}
         });
 
-        apiService.getVocabularies(null, null, null).enqueue(new Callback<ListResponse<VocabularyDto>>() {
+        apiService.getVocabularies(null, null, null).enqueue(new Callback<>() {
             @Override
-            public void onResponse(Call<ListResponse<VocabularyDto>> call, Response<ListResponse<VocabularyDto>> response) {
+            public void onResponse(@NonNull Call<ListResponse<VocabularyDto>> call, @NonNull Response<ListResponse<VocabularyDto>> response) {
                 if (!response.isSuccessful() || response.body() == null) return;
                 List<VocabularyDto> dtos = response.body().getData();
                 dbExecutor.execute(() -> {
@@ -101,10 +106,13 @@ public class CatalogRepository {
                     wordDao.insertAll(toWordEntities(dtos));
                 });
             }
+
             @Override
-            public void onFailure(Call<ListResponse<VocabularyDto>> call, Throwable throwable) {}
+            public void onFailure(@NonNull Call<ListResponse<VocabularyDto>> call, @NonNull Throwable throwable) {}
         });
     }
+
+    // ─── Favorites ───────────────────────────────────────────────────────────────
 
     public void addFavorite(long wordId) {
         try {
@@ -120,6 +128,8 @@ public class CatalogRepository {
         } catch (Exception ignored) {}
     }
 
+    // ─── Mapping: entities → models ──────────────────────────────────────────────
+
     private List<Category> mapCategories(List<CategoryWithChildren> rows) {
         List<Category> categories = new ArrayList<>();
         if (rows == null) return categories;
@@ -131,6 +141,7 @@ public class CatalogRepository {
 
     private Category mapCategory(CategoryWithChildren row) {
         if (row == null) return null;
+
         Category category = new Category();
         category.id = String.valueOf(row.category.id);
         category.jp = orEmpty(row.category.nameJp);
@@ -140,11 +151,13 @@ public class CatalogRepository {
         category.iconUrl = orEmpty(row.category.iconUrl);
         category.img = orEmpty(row.category.iconThumbnailUrl);
         category.locked = row.category.isPremium;
+
         for (SubcategoryWithWords subcategoryRow : row.subcategories) {
             Subcategory subcategory = mapSubcategory(subcategoryRow);
             category.subcategories.add(subcategory);
             category.count += subcategory.total;
         }
+
         return category;
     }
 
@@ -159,6 +172,7 @@ public class CatalogRepository {
         subcategory.locked = row.subcategory.isPremium;
         subcategory.words = mapWords(row.words);
         subcategory.total = subcategory.words.size();
+
         return subcategory;
     }
 
@@ -180,10 +194,13 @@ public class CatalogRepository {
             word.xp = 0;
             word.maxMastery = 5;
             word.favorite = entity.isFavorite;
+
             words.add(word);
         }
         return words;
     }
+
+    // ─── Mapping: DTOs → entities ─────────────────────────────────────────────────
 
     private List<CategoryEntity> toCategoryEntities(List<CategoryDto> dtos) {
         List<CategoryEntity> entities = new ArrayList<>();
@@ -197,6 +214,7 @@ public class CatalogRepository {
             entity.iconThumbnailUrl = dto.iconThumbnailUrl;
             entity.bgUrl = dto.bgUrl;
             entity.isPremium = dto.isPremium;
+
             entities.add(entity);
         }
         return entities;
@@ -215,6 +233,7 @@ public class CatalogRepository {
             entity.iconThumbnailUrl = dto.iconThumbnailUrl;
             entity.iconThumbnailBg = dto.iconThumbnailBg;
             entity.isPremium = dto.isPremium;
+
             entities.add(entity);
         }
         return entities;
@@ -235,10 +254,13 @@ public class CatalogRepository {
             entity.audioJpUrl = dto.audioJpUrl;
             entity.imageUrl = dto.imageUrl;
             entity.isPremium = dto.isPremium;
+
             entities.add(entity);
         }
         return entities;
     }
+
+    // ─── Helpers ──────────────────────────────────────────────────────────────────
 
     private String orEmpty(String value) {
         return value != null ? value : "";
