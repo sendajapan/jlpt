@@ -19,7 +19,7 @@ import com.scholarlyapps.pathlingo.databinding.ActivitySplashBinding;
 import com.scholarlyapps.pathlingo.ui.activities.MainDashboardActivity;
 import com.scholarlyapps.pathlingo.ui.auth.LoginActivity;
 import com.scholarlyapps.pathlingo.ui.auth.OtpActivity;
-import com.scholarlyapps.pathlingo.ui.auth.SplashViewModel;
+import com.scholarlyapps.pathlingo.viewmodels.SplashViewModel;
 import com.scholarlyapps.pathlingo.ui.utils.NavAnim;
 
 @SuppressLint("CustomSplashScreen")

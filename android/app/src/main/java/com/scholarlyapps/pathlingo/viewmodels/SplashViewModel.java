@@ -1,4 +1,4 @@
-package com.scholarlyapps.pathlingo.ui.auth;
+package com.scholarlyapps.pathlingo.viewmodels;
 
 import android.os.Handler;
 import android.os.Looper;

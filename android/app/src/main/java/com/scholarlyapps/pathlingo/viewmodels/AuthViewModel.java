@@ -1,4 +1,4 @@
-package com.scholarlyapps.pathlingo.ui.auth;
+package com.scholarlyapps.pathlingo.viewmodels;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -11,6 +11,7 @@ import com.scholarlyapps.pathlingo.data.ApiResult;
 import com.scholarlyapps.pathlingo.data.remote.ServiceLocator;
 import com.scholarlyapps.pathlingo.data.remote.dto.AppUserDto;
 import com.scholarlyapps.pathlingo.data.repo.AuthRepository;
+import com.scholarlyapps.pathlingo.ui.auth.AuthUiState;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;

@@ -1,9 +1,10 @@
-package com.scholarlyapps.pathlingo.ui.auth;
+package com.scholarlyapps.pathlingo.ui.utils;
 
 import android.content.Context;
 import android.content.Intent;
 
 import com.scholarlyapps.pathlingo.data.remote.ServiceLocator;
+import com.scholarlyapps.pathlingo.ui.auth.LoginActivity;
 
 import java.util.concurrent.Executors;
 

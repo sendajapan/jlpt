@@ -17,6 +17,7 @@ import com.scholarlyapps.pathlingo.databinding.ActivityOtpBinding;
 import com.scholarlyapps.pathlingo.ui.activities.MainDashboardActivity;
 import com.scholarlyapps.pathlingo.ui.utils.NavAnim;
 import com.scholarlyapps.pathlingo.ui.utils.ToastHelper;
+import com.scholarlyapps.pathlingo.viewmodels.AuthViewModel;
 
 import java.util.Locale;
 

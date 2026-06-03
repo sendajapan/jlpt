@@ -17,7 +17,6 @@ import com.scholarlyapps.pathlingo.R;
 import com.scholarlyapps.pathlingo.adapters.OnboardingPagerAdapter;
 import com.scholarlyapps.pathlingo.databinding.ActivityOnboardingBinding;
 import com.scholarlyapps.pathlingo.ui.activities.MainDashboardActivity;
-import com.scholarlyapps.pathlingo.ui.auth.LoginActivity;
 import com.scholarlyapps.pathlingo.ui.utils.NavAnim;
 import com.scholarlyapps.pathlingo.viewmodels.OnboardingViewModel;
 

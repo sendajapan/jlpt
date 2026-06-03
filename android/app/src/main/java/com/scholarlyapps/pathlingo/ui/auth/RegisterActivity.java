@@ -12,6 +12,7 @@ import com.scholarlyapps.pathlingo.BuildConfig;
 import com.scholarlyapps.pathlingo.databinding.ActivityRegisterBinding;
 import com.scholarlyapps.pathlingo.ui.utils.NavAnim;
 import com.scholarlyapps.pathlingo.ui.utils.ToastHelper;
+import com.scholarlyapps.pathlingo.viewmodels.AuthViewModel;
 
 public class RegisterActivity extends AppCompatActivity {
 

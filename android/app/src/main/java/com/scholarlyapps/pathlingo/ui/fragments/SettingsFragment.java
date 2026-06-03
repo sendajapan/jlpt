@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 import com.scholarlyapps.pathlingo.data.DataManager;
 import com.scholarlyapps.pathlingo.databinding.FragmentSettingsBinding;
 import com.scholarlyapps.pathlingo.models.User;
-import com.scholarlyapps.pathlingo.ui.auth.LogoutHelper;
+import com.scholarlyapps.pathlingo.ui.utils.LogoutHelper;
 
 public class SettingsFragment extends Fragment {
 
