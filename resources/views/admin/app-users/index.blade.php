@@ -107,6 +107,15 @@
                                    class="inline-flex items-center h-7 px-2 rounded text-xs font-medium text-zinc-400 hover:text-zinc-900 hover:bg-zinc-100 transition-colors duration-150">
                                     Edit
                                 </a>
+                                <form method="POST" action="{{ route('admin.app-users.destroy', $user) }}"
+                                      onsubmit="return confirm('Delete this user? This cannot be undone.')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                            class="inline-flex items-center h-7 px-2 rounded text-xs font-medium text-red-400 hover:text-red-600 hover:bg-red-50 transition-colors duration-150">
+                                        Delete
+                                    </button>
+                                </form>
                             </div>
                         </td>
                     </tr>

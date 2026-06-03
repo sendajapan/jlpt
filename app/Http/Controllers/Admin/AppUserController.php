@@ -38,4 +38,13 @@ class AppUserController extends Controller
 
         return redirect()->route('admin.app-users.index');
     }
+
+    public function destroy(AppUser $appUser): RedirectResponse
+    {
+        $appUser->delete();
+
+        notify()->success()->title('User deleted successfully.')->send();
+
+        return redirect()->route('admin.app-users.index');
+    }
 }

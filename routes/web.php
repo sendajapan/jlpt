@@ -17,7 +17,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::resource('app-users', AppUserController::class)
-        ->only(['index', 'edit', 'update'])
+        ->only(['index', 'edit', 'update', 'destroy'])
         ->parameters(['app-users' => 'appUser']);
 
     Route::prefix('vocab')->name('vocab.')->group(function () {
