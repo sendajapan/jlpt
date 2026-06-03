@@ -139,7 +139,7 @@ class VocabularyService
         $voiceRef = $voice?->referenceAbsolutePath();
         $settings = $voice?->settings ?? [];
 
-        $tts = FluentVox::make()->text($text);
+        $tts = FluentVox::make()->text($text.".. hmm is for test");
 
         if ($voiceRef && file_exists($voiceRef)) {
             $tts = $tts->voiceFrom($voiceRef);
