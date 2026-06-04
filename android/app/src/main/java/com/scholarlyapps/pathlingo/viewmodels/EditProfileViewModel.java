@@ -30,6 +30,10 @@ public class EditProfileViewModel extends ViewModel {
         return stateLiveData;
     }
 
+    public void refreshProfile() {
+        executor.execute(userRepo::refresh);
+    }
+
     public void loadProfile() {
         stateLiveData.setValue(new EditProfileUiState(true, null, false, null));
         executor.execute(() -> {

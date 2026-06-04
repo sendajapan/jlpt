@@ -31,6 +31,7 @@ import com.scholarlyapps.pathlingo.viewmodels.ProgressViewModel;
 public class ProfileFragment extends Fragment {
 
     private FragmentProfileBinding binding;
+    private ProgressViewModel viewModel;
 
     @Nullable
     @Override
@@ -41,22 +42,24 @@ public class ProfileFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        ProgressViewModel viewModel = new ViewModelProvider(this, new AppViewModelFactory()).get(ProgressViewModel.class);
+        viewModel = new ViewModelProvider(this, new AppViewModelFactory()).get(ProgressViewModel.class);
 
         viewModel.getUser().observe(getViewLifecycleOwner(), user -> {
             if (user == null) return;
             binding.userCard.setVisibility(View.VISIBLE);
             binding.txtUserName.setText(user.name);
             binding.txtXp.setText("XP: " + user.xp);
-            if (user.avatarUrl != null && !user.avatarUrl.isEmpty()) {
-                ImageViewCompat.setImageTintList(binding.imgAvatar, null);
-                Coil.imageLoader(requireContext()).enqueue(
-                        new ImageRequest.Builder(requireContext())
-                                .data(user.avatarUrl)
-                                .target(binding.imgAvatar)
-                                .build()
-                );
-            }
+        });
+
+        viewModel.getAvatarUrl().observe(getViewLifecycleOwner(), url -> {
+            if (url == null || url.isEmpty()) return;
+            ImageViewCompat.setImageTintList(binding.imgAvatar, null);
+            Coil.imageLoader(requireContext()).enqueue(
+                    new ImageRequest.Builder(requireContext())
+                            .data(url)
+                            .target(binding.imgAvatar)
+                            .build()
+            );
         });
 
         binding.btnLogout.setOnClickListener(v -> showLogoutDialog());
@@ -77,6 +80,14 @@ public class ProfileFragment extends Fragment {
         binding.rowPrivacy.setOnClickListener(v -> showToast("Privacy Policy"));
         binding.rowDeactivate.setOnClickListener(v -> showToast("Deactivate Account"));
         binding.rowDeleteAccount.setOnClickListener(v -> showToast("Delete Account"));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (viewModel != null) {
+            viewModel.refresh();
+        }
     }
 
     private void showLogoutDialog() {
