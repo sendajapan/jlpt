@@ -44,9 +44,10 @@ class RegisterController extends Controller
     )]
     public function __invoke(RegisterRequest $request): JsonResponse
     {
-        $user = $this->auth->register($request->validated());
+        $isGuestConversion = $request->filled('guest_token');
+        $user = $this->auth->register($request->validated(), $isGuestConversion);
 
-        if ($request->filled('guest_token')) {
+        if ($isGuestConversion) {
             $this->auth->mergeGuestAccount($user, $request->string('guest_token'));
         }
 

@@ -6,14 +6,18 @@ use App\Models\AppUser;
 use App\Models\AppUserWordRead;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Laravel\Sanctum\PersonalAccessToken;
 
 class AppUserAuthService
 {
-    public function __construct(private AvatarService $avatarService) {}
+    public function __construct(
+        private AvatarService $avatarService,
+        private CoinService $coinService,
+    ) {}
 
-    public function register(array $data): AppUser
+    public function register(array $data, bool $isGuestConversion = false): AppUser
     {
         $user = AppUser::create([
             'full_name' => $data['name'],
@@ -27,6 +31,10 @@ class AppUserAuthService
         $freeAvatar = $this->avatarService->randomFree();
         if ($freeAvatar) {
             $user->update(['active_avatar_id' => $freeAvatar->id]);
+        }
+
+        if (! $isGuestConversion) {
+            $this->coinService->award($user, 500, 'welcome_bonus');
         }
 
         $user->refresh();
@@ -47,14 +55,36 @@ class AppUserAuthService
 
     public function loginAsGuest(string $guestName, string $deviceName): AppUser
     {
-        $name = $guestName ?: 'Guest '.rand(1000, 9999);
+        $username = $this->generateUniqueGuestUsername();
 
-        return AppUser::create([
-            'full_name' => $name,
+        $user = AppUser::create([
+            'full_name' => $guestName ?: 'Guest User',
+            'username' => $username,
+            'email' => $username.'@scholarlyapps.com',
             'login_provider' => 'guest',
             'native_language_code' => 'en',
             'learning_language_code' => 'ja',
         ]);
+
+        $freeAvatar = $this->avatarService->randomFree();
+        if ($freeAvatar) {
+            $user->update(['active_avatar_id' => $freeAvatar->id]);
+        }
+
+        $this->coinService->award($user, 100, 'guest_welcome_bonus');
+
+        $user->refresh();
+
+        return $user;
+    }
+
+    private function generateUniqueGuestUsername(): string
+    {
+        do {
+            $username = 'user_'.Str::lower(Str::random(6));
+        } while (AppUser::where('username', $username)->exists());
+
+        return $username;
     }
 
     public function mergeGuestAccount(AppUser $realUser, string $guestToken): void
@@ -95,6 +125,8 @@ class AppUserAuthService
             $guest->tokens()->delete();
             $guest->delete();
         });
+
+        $this->coinService->award($realUser, 400, 'guest_conversion_bonus');
     }
 
     public function issueToken(AppUser $user, string $deviceName): string

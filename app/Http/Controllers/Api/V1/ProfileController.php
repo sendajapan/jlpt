@@ -70,9 +70,8 @@ class ProfileController extends Controller
     {
         $user = $request->user();
 
-        $validated = $request->validate([
+        $rules = [
             'name' => ['sometimes', 'string', 'max:100'],
-            'username' => ['sometimes', 'nullable', 'string', 'max:50', 'unique:app_users,username,'.$user->id],
             'avatar' => ['sometimes', 'file', 'image', 'max:4096'],
             'bio' => ['sometimes', 'nullable', 'string', 'max:1000'],
             'gender' => ['sometimes', 'nullable', 'in:male,female,other,prefer_not_to_say'],
@@ -85,7 +84,13 @@ class ProfileController extends Controller
             'timezone' => ['sometimes', 'nullable', 'string', 'max:100'],
             'reminder_time' => ['sometimes', 'nullable', 'date_format:H:i'],
             'notifications_enabled' => ['sometimes', 'boolean'],
-        ]);
+        ];
+
+        if ($user->login_provider !== 'guest') {
+            $rules['username'] = ['sometimes', 'nullable', 'string', 'max:50', 'unique:app_users,username,'.$user->id];
+        }
+
+        $validated = $request->validate($rules);
 
         if (array_key_exists('name', $validated)) {
             $validated['full_name'] = $validated['name'];
