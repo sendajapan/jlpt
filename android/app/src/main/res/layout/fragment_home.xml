@@ -12,137 +12,11 @@
         android:orientation="vertical"
         android:paddingBottom="@dimen/_100sdp">
 
-        <!-- HEADER -->
-        <LinearLayout
+        <com.scholarlyapps.pathlingo.ui.views.HeaderView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_height="@dimen/_62sdp"
             android:layout_marginTop="@dimen/_16sdp"
-            android:layout_marginHorizontal="@dimen/_16sdp">
-
-            <!-- Top bar: date + coins + bell -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_50sdp"
-                android:weightSum="4"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2.5"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <FrameLayout
-                        android:layout_width="@dimen/_50sdp"
-                        android:layout_height="@dimen/_50sdp"
-                        android:background="@drawable/bg_step_bar_inactive">
-
-                        <ImageView
-                            android:layout_width="@dimen/_46sdp"
-                            android:layout_height="@dimen/_46sdp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/patka"/>
-                    </FrameLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_8sdp"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/txtDate"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Saturday, May 13"
-                            android:textColor="@color/color_theme_black"
-                            android:textSize="@dimen/_9ssp"
-                            android:fontFamily="@font/poppins"
-                            android:includeFontPadding="false"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="こんにちは！"
-                            android:fontFamily="@font/noto_sans_jp_bold"
-                            android:textColor="@color/ink"
-                            android:textSize="@dimen/_12ssp"
-                            android:textStyle="bold"
-                            android:includeFontPadding="false"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Ready to learn 5\nnew words today?"
-                            android:fontFamily="@font/poppins_light"
-                            android:textColor="@color/color_theme_black"
-                            android:textSize="@dimen/_7ssp"
-                            android:textStyle="italic"
-                            android:letterSpacing=".1"/>
-                    </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/_36sdp"
-                    android:layout_weight="1.5"
-                    android:gravity="center|end">
-
-                    <LinearLayout
-                        android:layout_width="@dimen/_60sdp"
-                        android:layout_height="@dimen/_32sdp"
-                        android:background="@drawable/bg_round_white"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="@dimen/_16sdp"
-                            android:layout_height="@dimen/_16sdp"
-                            android:src="@drawable/ic_star"
-                            app:tint="#F5A623" />
-
-                        <TextView
-                            android:id="@+id/txtCoins"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/_4sdp"
-                            android:text="2145"
-                            android:textColor="@color/ink"
-                            android:textSize="@dimen/_11ssp"
-                            android:textStyle="bold"
-                            android:includeFontPadding="false"/>
-                    </LinearLayout>
-
-                    <FrameLayout
-                        android:id="@+id/btnBell"
-                        android:layout_width="@dimen/_32sdp"
-                        android:layout_height="@dimen/_32sdp"
-                        android:layout_marginStart="@dimen/_4sdp"
-                        android:background="@drawable/bg_round_white">
-
-                        <ImageView
-                            android:layout_width="@dimen/_18sdp"
-                            android:layout_height="@dimen/_18sdp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_bell"
-                            app:tint="@color/ink" />
-
-                        <View
-                            android:layout_width="@dimen/_8sdp"
-                            android:layout_height="@dimen/_8sdp"
-                            android:layout_gravity="top|end"
-                            android:layout_margin="@dimen/_4sdp"
-                            android:background="@drawable/bg_badge_red" />
-                    </FrameLayout>
-                </LinearLayout>
-
-                </LinearLayout>
-
-        </LinearLayout>
+            android:layout_marginHorizontal="@dimen/_16sdp" />
 
         <!-- STATS ROW -->
         <LinearLayout
@@ -162,10 +36,10 @@
                 android:paddingVertical="@dimen/_8sdp">
 
                 <ImageView
-                    android:layout_width="@dimen/_24sdp"
-                    android:layout_height="@dimen/_24sdp"
+                    android:layout_width="@dimen/_18sdp"
+                    android:layout_height="@dimen/_18sdp"
                     android:src="@drawable/ic_day_streak"
-                    app:tint="@color/color_theme_light" />
+                    app:tint="@color/color_theme_navy" />
 
                 <TextView
                     android:id="@+id/txtStreak"
@@ -174,15 +48,16 @@
                     android:text="7"
                     android:fontFamily="@font/poppins_bold"
                     android:textColor="@color/ink"
-                    android:textSize="@dimen/_16ssp"/>
+                    android:textSize="@dimen/_16ssp"
+                    android:includeFontPadding="false"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="DAY STREAK"
-                    android:fontFamily="@font/poppins"
+                    android:fontFamily="@font/poppins_semibold"
                     android:textColor="@color/color_theme_black"
-                    android:textSize="@dimen/_10ssp"
+                    android:textSize="@dimen/_9ssp"
                     android:includeFontPadding="false"/>
             </LinearLayout>
 
@@ -200,10 +75,10 @@
                 android:paddingVertical="@dimen/_8sdp">
 
                 <ImageView
-                    android:layout_width="@dimen/_24sdp"
-                    android:layout_height="@dimen/_24sdp"
+                    android:layout_width="@dimen/_18sdp"
+                    android:layout_height="@dimen/_18sdp"
                     android:src="@drawable/ic_badge"
-                    app:tint="@color/color_theme_light" />
+                    app:tint="@color/color_theme_navy" />
 
                 <TextView
                     android:id="@+id/txtWordsKnown"
@@ -212,15 +87,16 @@
                     android:text="42"
                     android:fontFamily="@font/poppins_bold"
                     android:textColor="@color/ink"
-                    android:textSize="@dimen/_16sdp" />
+                    android:textSize="@dimen/_16sdp"
+                    android:includeFontPadding="false"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="WORDS"
-                    android:fontFamily="@font/poppins"
+                    android:fontFamily="@font/poppins_semibold"
                     android:textColor="@color/color_theme_black"
-                    android:textSize="@dimen/_10ssp"
+                    android:textSize="@dimen/_9ssp"
                     android:includeFontPadding="false"/>
             </LinearLayout>
 
@@ -238,10 +114,10 @@
                 android:paddingVertical="@dimen/_8sdp">
 
                 <ImageView
-                    android:layout_width="@dimen/_24sdp"
-                    android:layout_height="@dimen/_24sdp"
+                    android:layout_width="@dimen/_18sdp"
+                    android:layout_height="@dimen/_18sdp"
                     android:src="@drawable/ic_clock"
-                    app:tint="@color/color_theme_light" />
+                    app:tint="@color/color_theme_navy" />
 
                 <TextView
                     android:id="@+id/txtXpDisplay"
@@ -250,15 +126,16 @@
                     android:text="12m"
                     android:fontFamily="@font/poppins_bold"
                     android:textColor="@color/ink"
-                    android:textSize="@dimen/_16ssp" />
+                    android:textSize="@dimen/_16ssp"
+                    android:includeFontPadding="false"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="XP"
-                    android:fontFamily="@font/poppins"
+                    android:fontFamily="@font/poppins_semibold"
                     android:textColor="@color/color_theme_black"
-                    android:textSize="@dimen/_10ssp"
+                    android:textSize="@dimen/_9ssp"
                     android:includeFontPadding="false"/>
             </LinearLayout>
         </LinearLayout>
@@ -296,7 +173,7 @@
                             android:layout_height="wrap_content"
                             android:text="Learn Japanese Daily"
                             android:textColor="@color/ink"
-                            android:textSize="@dimen/_14ssp"
+                            android:textSize="@dimen/_12ssp"
                             android:textStyle="bold"
                             android:includeFontPadding="false"/>
 
@@ -350,7 +227,6 @@
                             android:layout_width="@dimen/_40sdp"
                             android:layout_height="@dimen/_40sdp"
                             android:layout_gravity="center"
-                            android:src="@drawable/ic_owl"
                             app:tint="@color/white" />
                     </FrameLayout>
                 </LinearLayout>

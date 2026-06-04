@@ -20,10 +20,7 @@ import com.scholarlyapps.pathlingo.ui.adapters.CategoryAdapter;
 import com.scholarlyapps.pathlingo.viewmodels.AppViewModelFactory;
 import com.scholarlyapps.pathlingo.viewmodels.HomeViewModel;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
 
 public class HomeFragment extends Fragment {
 
@@ -41,8 +38,6 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         HomeViewModel viewModel = new ViewModelProvider(this, new AppViewModelFactory()).get(HomeViewModel.class);
 
-        binding.txtDate.setText(new SimpleDateFormat("EEEE, d MMM", Locale.getDefault()).format(new Date()));
-
         binding.btnSeeAll.setOnClickListener(v ->
             Navigation.findNavController(v).navigate(R.id.action_home_to_categories));
 
@@ -59,7 +54,6 @@ public class HomeFragment extends Fragment {
 
         viewModel.getUser().observe(getViewLifecycleOwner(), user -> {
             if (user == null) return;
-            binding.txtCoins.setText(String.valueOf(user.xp));
             binding.txtStreak.setText(String.valueOf(user.streak));
             binding.txtWordsKnown.setText(String.valueOf(user.wordsKnown));
             binding.txtXpDisplay.setText(String.valueOf(user.xp));

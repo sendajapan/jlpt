@@ -25,6 +25,7 @@ public class ProgressViewModel extends ViewModel {
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
     private final Handler mainHandler = new Handler(Looper.getMainLooper());
     private final MutableLiveData<String> avatarUrl = new MutableLiveData<>();
+    private final MutableLiveData<String> email = new MutableLiveData<>();
 
     public ProgressViewModel(CategoryRepository catalogRepo, UserRepository userRepo) {
         this.userRepo = userRepo;
@@ -37,7 +38,12 @@ public class ProgressViewModel extends ViewModel {
             AppUserDto dto = userRepo.fetchAndSave();
             if (dto != null) {
                 String url = dto.avatarUrl != null ? dto.avatarUrl : dto.avatar;
-                mainHandler.post(() -> avatarUrl.setValue(url));
+                mainHandler.post(() -> {
+                    avatarUrl.setValue(url);
+                    if (dto.email != null && !dto.email.isEmpty()) {
+                        email.setValue(dto.email);
+                    }
+                });
             }
         });
     }
@@ -48,6 +54,10 @@ public class ProgressViewModel extends ViewModel {
 
     public LiveData<String> getAvatarUrl() {
         return avatarUrl;
+    }
+
+    public LiveData<String> getEmail() {
+        return email;
     }
 
     public LiveData<List<Category>> getCategories() {

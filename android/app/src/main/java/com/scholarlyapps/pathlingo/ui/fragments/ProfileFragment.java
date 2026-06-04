@@ -48,7 +48,14 @@ public class ProfileFragment extends Fragment {
             if (user == null) return;
             binding.userCard.setVisibility(View.VISIBLE);
             binding.txtUserName.setText(user.name);
+            binding.txtEmail.setText(user.email);
             binding.txtXp.setText("XP: " + user.xp);
+        });
+
+        viewModel.getEmail().observe(getViewLifecycleOwner(), emailValue -> {
+            if (emailValue != null && !emailValue.isEmpty()) {
+                binding.txtEmail.setText(emailValue);
+            }
         });
 
         viewModel.getAvatarUrl().observe(getViewLifecycleOwner(), url -> {

@@ -28,19 +28,17 @@
                 android:orientation="horizontal">
 
                 <com.google.android.material.card.MaterialCardView
-                    android:layout_width="@dimen/_46sdp"
-                    android:layout_height="@dimen/_46sdp"
+                    android:layout_width="@dimen/_72sdp"
+                    android:layout_height="@dimen/_72sdp"
                     app:cardBackgroundColor="@color/color_theme_light"
-                    app:cardCornerRadius="16dp"
+                    app:cardCornerRadius="@dimen/_8sdp"
                     app:cardElevation="0dp">
 
                     <ImageView
                         android:id="@+id/imgAvatar"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/ic_user"
-                        app:tint="@color/color_theme_navy" />
+                        android:scaleType="fitCenter"/>
 
                 </com.google.android.material.card.MaterialCardView>
 
