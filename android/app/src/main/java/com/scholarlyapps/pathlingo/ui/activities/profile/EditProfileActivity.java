@@ -12,8 +12,17 @@ import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.core.widget.ImageViewCompat;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.scholarlyapps.pathlingo.data.remote.ServiceLocator;
+import com.scholarlyapps.pathlingo.data.remote.dto.AvatarDto;
+import com.scholarlyapps.pathlingo.data.remote.dto.ListResponse;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import com.scholarlyapps.pathlingo.data.remote.dto.AppUserDto;
 import com.scholarlyapps.pathlingo.databinding.ActivityEditProfileBinding;
@@ -144,8 +153,32 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     private void openAvatarPicker() {
+        binding.imgAvatar.setEnabled(false);
+        ServiceLocator.api.getAvatars().enqueue(new Callback<ListResponse<AvatarDto>>() {
+            @Override
+            public void onResponse(@NonNull Call<ListResponse<AvatarDto>> call, @NonNull Response<ListResponse<AvatarDto>> response) {
+                binding.imgAvatar.setEnabled(true);
+                if (!isFinishing()) {
+                    showAvatarSheet(response.isSuccessful() && response.body() != null
+                            ? response.body().getData()
+                            : java.util.Collections.emptyList());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ListResponse<AvatarDto>> call, @NonNull Throwable t) {
+                binding.imgAvatar.setEnabled(true);
+                if (!isFinishing()) {
+                    showAvatarSheet(java.util.Collections.emptyList());
+                }
+            }
+        });
+    }
+
+    private void showAvatarSheet(java.util.List<AvatarDto> avatars) {
         AvatarPickerBottomSheet sheet = new AvatarPickerBottomSheet();
         sheet.setUserCoins(currentUserCoins);
+        sheet.setAvatars(avatars);
         sheet.setOnAvatarSelectedListener(updatedUser -> {
             currentUserCoins = updatedUser.coins;
             loadAvatarImage(updatedUser.avatarUrl != null ? updatedUser.avatarUrl : updatedUser.avatar);

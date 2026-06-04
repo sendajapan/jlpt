@@ -45,6 +45,7 @@ public class AvatarPickerBottomSheet extends BottomSheetDialogFragment {
     private OnAvatarSelectedListener listener;
     private int userCoins = 0;
     private AvatarDto selectedAvatar = null;
+    private List<AvatarDto> preloadedAvatars = null;
 
     public void setOnAvatarSelectedListener(OnAvatarSelectedListener listener) {
         this.listener = listener;
@@ -52,6 +53,10 @@ public class AvatarPickerBottomSheet extends BottomSheetDialogFragment {
 
     public void setUserCoins(int coins) {
         this.userCoins = coins;
+    }
+
+    public void setAvatars(List<AvatarDto> avatars) {
+        this.preloadedAvatars = avatars;
     }
 
     @NonNull
@@ -99,13 +104,27 @@ public class AvatarPickerBottomSheet extends BottomSheetDialogFragment {
             }
         });
 
-        loadAvatars();
+        if (preloadedAvatars != null) {
+            showAvatars(preloadedAvatars);
+        } else {
+            loadAvatars();
+        }
     }
 
     private void onAvatarClicked(AvatarDto avatar) {
         selectedAvatar = avatar;
         adapter.setSelected(avatar.id);
         binding.btnChoose.setEnabled(true);
+    }
+
+    private void showAvatars(List<AvatarDto> avatars) {
+        binding.progressBar.setVisibility(View.GONE);
+        if (avatars.isEmpty()) {
+            binding.txtEmpty.setVisibility(View.VISIBLE);
+        } else {
+            binding.recyclerAvatars.setVisibility(View.VISIBLE);
+            adapter.setData(avatars);
+        }
     }
 
     private void loadAvatars() {
@@ -117,18 +136,10 @@ public class AvatarPickerBottomSheet extends BottomSheetDialogFragment {
             @Override
             public void onResponse(@NonNull Call<ListResponse<AvatarDto>> call, @NonNull Response<ListResponse<AvatarDto>> response) {
                 if (!isAdded()) return;
-                binding.progressBar.setVisibility(View.GONE);
-
                 List<AvatarDto> avatars = response.isSuccessful() && response.body() != null
                         ? response.body().getData()
                         : Collections.emptyList();
-
-                if (avatars.isEmpty()) {
-                    binding.txtEmpty.setVisibility(View.VISIBLE);
-                } else {
-                    binding.recyclerAvatars.setVisibility(View.VISIBLE);
-                    adapter.setData(avatars);
-                }
+                showAvatars(avatars);
             }
 
             @Override
