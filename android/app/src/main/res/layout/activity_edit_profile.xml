@@ -136,35 +136,6 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:hint="Bio"
-                app:boxBackgroundColor="@color/paper"
-                app:boxCornerRadiusBottomEnd="@dimen/_8sdp"
-                app:boxCornerRadiusBottomStart="@dimen/_8sdp"
-                app:boxCornerRadiusTopEnd="@dimen/_8sdp"
-                app:boxCornerRadiusTopStart="@dimen/_8sdp"
-                app:boxStrokeColor="@color/auth_field_stroke"
-                app:hintEnabled="true"
-                app:startIconDrawable="@drawable/ic_edit"
-                app:startIconTint="@color/color_theme_dark">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editBio"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="top"
-                    android:inputType="textMultiLine"
-                    android:minLines="3"
-                    android:paddingStart="@dimen/_32sdp"
-                    android:textColor="@color/color_theme_black"
-                    android:textColorHint="@color/color_theme_dark"
-                    android:textSize="@dimen/_12ssp" />
-
-            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"

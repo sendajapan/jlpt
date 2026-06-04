@@ -205,7 +205,6 @@ public class EditProfileActivity extends AppCompatActivity {
 
         if (profile.name != null) binding.editName.setText(profile.name);
         if (profile.username != null) binding.editUsername.setText(profile.username);
-        if (profile.bio != null) binding.editBio.setText(profile.bio);
 
         if (profile.birthDate != null && !profile.birthDate.isEmpty()) {
             selectedBirthDate = profile.birthDate;
@@ -247,9 +246,8 @@ public class EditProfileActivity extends AppCompatActivity {
     private void submitSave() {
         String name = binding.editName.getText() != null ? binding.editName.getText().toString().trim() : "";
         String username = binding.editUsername.getText() != null ? binding.editUsername.getText().toString().trim() : "";
-        String bio = binding.editBio.getText() != null ? binding.editBio.getText().toString().trim() : "";
         String dailyGoal = selectedDailyGoalMinutes > 0 ? String.valueOf(selectedDailyGoalMinutes) : "";
-        viewModel.save(name, username, bio, selectedGenderValue, selectedBirthDate,
+        viewModel.save(name, username, "", selectedGenderValue, selectedBirthDate,
                 selectedProficiencyValue, selectedLearningGoalValue, dailyGoal);
     }
 
