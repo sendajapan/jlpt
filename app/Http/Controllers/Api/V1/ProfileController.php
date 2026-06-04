@@ -26,7 +26,7 @@ class ProfileController extends Controller
     public function show(Request $request): AppUserResource
     {
         return new AppUserResource(
-            $request->user()->loadCount(['favorites', 'reads'])
+            $request->user()->loadCount(['favorites', 'reads'])->load('activeAvatar')
         );
     }
 
@@ -101,6 +101,6 @@ class ProfileController extends Controller
 
         $user->fill($validated)->save();
 
-        return new AppUserResource($user->loadCount(['favorites', 'reads']));
+        return new AppUserResource($user->loadCount(['favorites', 'reads'])->load('activeAvatar'));
     }
 }

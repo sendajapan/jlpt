@@ -1,6 +1,7 @@
 package com.scholarlyapps.pathlingo.data.networking;
 
 import com.scholarlyapps.pathlingo.data.remote.dto.AppUserDto;
+import com.scholarlyapps.pathlingo.data.remote.dto.AvatarDto;
 import com.scholarlyapps.pathlingo.data.remote.dto.AuthResponse;
 import com.scholarlyapps.pathlingo.data.remote.dto.CategoryDto;
 import com.scholarlyapps.pathlingo.data.remote.dto.CoinsBalanceResponse;
@@ -25,6 +26,7 @@ import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PartMap;
 import retrofit2.http.Path;
@@ -96,4 +98,13 @@ public interface ApiService {
 
     @GET("me/coins/transactions")
     Call<Map<String, Object>> coinsTransactions();
+
+    @GET("avatars")
+    Call<ListResponse<AvatarDto>> getAvatars();
+
+    @POST("avatars/{id}/purchase")
+    Call<WrappedResponse<CoinsBalanceResponse>> purchaseAvatar(@Path("id") long avatarId);
+
+    @PATCH("me/avatar")
+    Call<WrappedResponse<AppUserDto>> setActiveAvatar(@Body Map<String, Long> body);
 }

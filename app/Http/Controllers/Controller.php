@@ -51,14 +51,13 @@ abstract class Controller
         return $this->saveImageFile($request->file($field), $folder);
     }
 
-
     protected function storeThumbnail(?UploadedFile $file, string $folder, int $size = 256): ?string
     {
         if (! $file) {
             return null;
         }
 
-        $path = $folder . '/thumb_' . Str::uuid() . '.jpg';
+        $path = $folder.'/thumb_'.Str::uuid().'.jpg';
         Storage::disk('public')->put($path, Image::decode($file)->cover($size, $size)->encode(new JpegEncoder(85)));
 
         return $path;
@@ -85,9 +84,36 @@ abstract class Controller
     protected function saveImageFile(UploadedFile $file, string $folder): string
     {
         $ext = $file->getClientOriginalExtension();
-        $path = $folder . '/image_' . Str::uuid() . '.' . $ext;
+        $path = $folder.'/image_'.Str::uuid().'.'.$ext;
         Storage::disk('public')->put($path, file_get_contents($file->getRealPath()));
 
         return $path;
+    }
+
+    protected function saveAvatarImage(UploadedFile $file, string $folder): string
+    {
+        $path = $folder.'/avatar_'.Str::uuid().'.jpg';
+        $image = Image::decode($file)->cover(512, 512);
+
+        $quality = 85;
+        do {
+            $encoded = $image->encode(new JpegEncoder($quality));
+            $quality -= 5;
+        } while (strlen((string) $encoded) > 262144 && $quality >= 20);
+
+        Storage::disk('public')->put($path, (string) $encoded);
+
+        return $path;
+    }
+
+    protected function replaceAvatarImage(Request $request, string $field, string $folder, ?string $existing): ?string
+    {
+        if (! $request->hasFile($field)) {
+            return $existing;
+        }
+
+        $this->deleteFile($existing);
+
+        return $this->saveAvatarImage($request->file($field), $folder);
     }
 }

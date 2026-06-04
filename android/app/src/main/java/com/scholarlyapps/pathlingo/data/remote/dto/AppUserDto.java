@@ -10,6 +10,10 @@ public class AppUserDto {
     @SerializedName("email_verified")
     public boolean emailVerified;
     public String avatar;
+    @SerializedName("avatar_url")
+    public String avatarUrl;
+    @SerializedName("active_avatar_id")
+    public long activeAvatarId;
     @SerializedName("login_provider")
     public String loginProvider;
     @SerializedName("is_guest")

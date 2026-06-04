@@ -11,6 +11,8 @@ use Laravel\Sanctum\PersonalAccessToken;
 
 class AppUserAuthService
 {
+    public function __construct(private AvatarService $avatarService) {}
+
     public function register(array $data): AppUser
     {
         $user = AppUser::create([
@@ -21,6 +23,11 @@ class AppUserAuthService
             'native_language_code' => 'en',
             'learning_language_code' => 'ja',
         ]);
+
+        $freeAvatar = $this->avatarService->randomFree();
+        if ($freeAvatar) {
+            $user->update(['active_avatar_id' => $freeAvatar->id]);
+        }
 
         $user->refresh();
 

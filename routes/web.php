@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AppUserController;
 use App\Http\Controllers\Admin\AudioAutomationController;
+use App\Http\Controllers\Admin\AvatarController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\VocabCategoryController;
 use App\Http\Controllers\Admin\VocabSubcategoryController;
@@ -44,6 +45,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
         Route::get('words/{vocabulary}/generate-audio', [VocabularyController::class, 'generateAudio'])->name('words.generate-audio');
         Route::get('words/{vocabulary}/regenerate-audio', [VocabularyController::class, 'regenerateAudio'])->name('words.regenerate-audio');
     });
+
+    Route::resource('avatars', AvatarController::class)->except(['show']);
 
     Route::patch('voices/{voice}/toggle-default', [VoiceController::class, 'toggleDefault'])->name('voices.toggle-default');
     Route::resource('voices', VoiceController::class)->except(['show']);

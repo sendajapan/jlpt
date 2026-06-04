@@ -16,10 +16,14 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.scholarlyapps.pathlingo.data.remote.dto.AppUserDto;
 import com.scholarlyapps.pathlingo.databinding.ActivityEditProfileBinding;
+import com.scholarlyapps.pathlingo.ui.AvatarPickerBottomSheet;
 import com.scholarlyapps.pathlingo.ui.utils.NavAnim;
 import com.scholarlyapps.pathlingo.ui.utils.ToastHelper;
 import com.scholarlyapps.pathlingo.viewmodels.AppViewModelFactory;
 import com.scholarlyapps.pathlingo.viewmodels.EditProfileViewModel;
+
+import coil.Coil;
+import coil.request.ImageRequest;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -28,6 +32,8 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private ActivityEditProfileBinding binding;
     private EditProfileViewModel viewModel;
+
+    private int currentUserCoins = 0;
 
     private static final String[] GENDER_LABELS = {"Male", "Female", "Other", "Prefer not to say"};
     private static final String[] GENDER_VALUES = {"male", "female", "other", "prefer_not_to_say"};
@@ -74,6 +80,7 @@ public class EditProfileActivity extends AppCompatActivity {
         });
 
         binding.btnSave.setOnClickListener(v -> submitSave());
+        binding.imgAvatar.setOnClickListener(v -> openAvatarPicker());
 
         viewModel.getState().observe(this, state -> {
             boolean loading = state.getLoading();
@@ -135,7 +142,33 @@ public class EditProfileActivity extends AppCompatActivity {
         }, year, month, day).show();
     }
 
+    private void openAvatarPicker() {
+        AvatarPickerBottomSheet sheet = new AvatarPickerBottomSheet();
+        sheet.setUserCoins(currentUserCoins);
+        sheet.setOnAvatarSelectedListener(updatedUser -> {
+            currentUserCoins = updatedUser.coins;
+            loadAvatarImage(updatedUser.avatarUrl != null ? updatedUser.avatarUrl : updatedUser.avatar);
+        });
+        sheet.show(getSupportFragmentManager(), "avatar_picker");
+    }
+
+    private void loadAvatarImage(String url) {
+        if (url == null || url.isEmpty()) return;
+        binding.imgAvatar.clearColorFilter();
+        Coil.imageLoader(this).enqueue(
+                new ImageRequest.Builder(this)
+                        .data(url)
+                        .target(binding.imgAvatar)
+                        .build()
+        );
+    }
+
     private void prefillForm(AppUserDto profile) {
+        currentUserCoins = profile.coins;
+
+        String avatarUrl = profile.avatarUrl != null ? profile.avatarUrl : profile.avatar;
+        loadAvatarImage(avatarUrl);
+
         if (profile.name != null) binding.editName.setText(profile.name);
         if (profile.username != null) binding.editUsername.setText(profile.username);
         if (profile.bio != null) binding.editBio.setText(profile.bio);

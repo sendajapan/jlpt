@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
 class AppUserResource extends JsonResource
 {
@@ -15,6 +16,10 @@ class AppUserResource extends JsonResource
             'email' => $this->email,
             'email_verified' => (bool) $this->email_verified_at,
             'avatar' => $this->avatar ? asset('storage/'.$this->avatar) : null,
+            'avatar_url' => $this->active_avatar_id && $this->activeAvatar
+                ? Storage::disk('public')->url($this->activeAvatar->image_path)
+                : ($this->avatar ? asset('storage/'.$this->avatar) : null),
+            'active_avatar_id' => $this->active_avatar_id,
             'login_provider' => $this->login_provider,
             'is_guest' => $this->login_provider === 'guest',
             'created_at' => $this->created_at?->toIso8601String(),

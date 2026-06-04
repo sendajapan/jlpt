@@ -6,6 +6,7 @@ use App\Notifications\AppUserResetPasswordNotification;
 use App\Notifications\AppUserVerifyEmailNotification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -44,6 +45,7 @@ class AppUser extends Authenticatable implements MustVerifyEmail
         'notifications_enabled',
         'is_banned',
         'banned_reason',
+        'active_avatar_id',
     ];
 
     protected $hidden = [
@@ -85,6 +87,16 @@ class AppUser extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(CoinTransaction::class);
     }
 
+    public function activeAvatar(): BelongsTo
+    {
+        return $this->belongsTo(Avatar::class, 'active_avatar_id');
+    }
+
+    public function avatarPurchases(): HasMany
+    {
+        return $this->hasMany(AvatarPurchase::class);
+    }
+
     public function sendPasswordResetNotification($token): void
     {
         $this->notify(new AppUserResetPasswordNotification($token));
@@ -92,6 +104,6 @@ class AppUser extends Authenticatable implements MustVerifyEmail
 
     public function sendEmailVerificationNotification(): void
     {
-        $this->notify(new AppUserVerifyEmailNotification());
+        $this->notify(new AppUserVerifyEmailNotification);
     }
 }
