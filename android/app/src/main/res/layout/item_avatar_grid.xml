@@ -7,25 +7,51 @@
     android:orientation="vertical"
     android:padding="@dimen/_6sdp">
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardAvatar"
+    <FrameLayout
         android:layout_width="@dimen/_72sdp"
-        android:layout_height="@dimen/_72sdp"
-        app:cardBackgroundColor="@color/color_theme_light"
-        app:cardCornerRadius="@dimen/_18sdp"
-        app:cardElevation="0dp"
-        app:strokeColor="@color/color_theme_dark"
-        app:strokeWidth="0dp">
+        android:layout_height="@dimen/_72sdp">
 
-        <ImageView
-            android:id="@+id/imgAvatar"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardAvatar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_user"
-            app:tint="@color/color_theme_navy" />
+            app:cardBackgroundColor="@color/color_theme_light"
+            app:cardCornerRadius="@dimen/_18sdp"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/color_theme_dark"
+            app:strokeWidth="0dp">
 
-    </com.google.android.material.card.MaterialCardView>
+            <ImageView
+                android:id="@+id/imgAvatar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_user"
+                app:tint="@color/color_theme_navy" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardTick"
+            android:layout_width="@dimen/_22sdp"
+            android:layout_height="@dimen/_22sdp"
+            android:layout_gravity="bottom|end"
+            android:visibility="gone"
+            app:cardBackgroundColor="@color/color_theme_dark"
+            app:cardCornerRadius="@dimen/_11sdp"
+            app:cardElevation="2dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/_4sdp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_check"
+                app:tint="@color/white" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </FrameLayout>
 
     <TextView
         android:id="@+id/txtAvatarName"

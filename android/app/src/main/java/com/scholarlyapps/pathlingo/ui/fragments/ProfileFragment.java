@@ -12,8 +12,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.widget.ImageViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+
+import coil.Coil;
+import coil.request.ImageRequest;
 
 import com.scholarlyapps.pathlingo.databinding.DialogConfirmLogoutBinding;
 import com.scholarlyapps.pathlingo.databinding.FragmentProfileBinding;
@@ -43,8 +47,16 @@ public class ProfileFragment extends Fragment {
             if (user == null) return;
             binding.userCard.setVisibility(View.VISIBLE);
             binding.txtUserName.setText(user.name);
-//            binding.txtEmail.setText(user.email);
             binding.txtXp.setText("XP: " + user.xp);
+            if (user.avatarUrl != null && !user.avatarUrl.isEmpty()) {
+                ImageViewCompat.setImageTintList(binding.imgAvatar, null);
+                Coil.imageLoader(requireContext()).enqueue(
+                        new ImageRequest.Builder(requireContext())
+                                .data(user.avatarUrl)
+                                .target(binding.imgAvatar)
+                                .build()
+                );
+            }
         });
 
         binding.btnLogout.setOnClickListener(v -> showLogoutDialog());

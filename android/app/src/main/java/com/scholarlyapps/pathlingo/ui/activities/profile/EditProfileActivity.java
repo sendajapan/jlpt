@@ -10,6 +10,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.core.widget.ImageViewCompat;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -154,7 +155,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private void loadAvatarImage(String url) {
         if (url == null || url.isEmpty()) return;
-        binding.imgAvatar.clearColorFilter();
+        ImageViewCompat.setImageTintList(binding.imgAvatar, null);
         Coil.imageLoader(this).enqueue(
                 new ImageRequest.Builder(this)
                         .data(url)

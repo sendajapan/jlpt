@@ -43,6 +43,7 @@ public class UserRepository {
             user.streak = entity.currentStreak;
             user.wordsKnown = entity.learnedWords;
             user.email = orEmpty(entity.email);
+            user.avatarUrl = entity.avatarUrl;
             return user;
         });
     }
@@ -59,6 +60,7 @@ public class UserRepository {
             entity.name = dto.name;
             entity.username = dto.username;
             entity.email = dto.email;
+            entity.avatarUrl = dto.avatarUrl != null ? dto.avatarUrl : dto.avatar;
             entity.currentLevel = dto.currentLevel;
             entity.xpPoints = dto.xpPoints;
             entity.currentStreak = dto.currentStreak;
@@ -118,6 +120,7 @@ public class UserRepository {
             entity.name = dto.name;
             entity.username = dto.username;
             entity.email = dto.email;
+            entity.avatarUrl = dto.avatarUrl != null ? dto.avatarUrl : dto.avatar;
             entity.currentLevel = dto.currentLevel;
             entity.xpPoints = dto.xpPoints;
             entity.currentStreak = dto.currentStreak;

@@ -10,6 +10,7 @@ public class UserEntity {
     public String name;
     public String username;
     public String email;
+    public String avatarUrl;
     public int currentLevel;
     public int xpPoints;
     public int currentStreak;

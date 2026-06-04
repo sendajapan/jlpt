@@ -11,6 +11,7 @@ public class User {
     public int wordsKnown;
     public int accuracy;
     public String email;
+    public String avatarUrl;
 
     public User() {
     }

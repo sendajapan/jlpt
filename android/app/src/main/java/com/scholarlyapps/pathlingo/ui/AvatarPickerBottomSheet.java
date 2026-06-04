@@ -1,16 +1,20 @@
 package com.scholarlyapps.pathlingo.ui;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-import com.scholarlyapps.pathlingo.data.networking.RetrofitClient;
+import com.scholarlyapps.pathlingo.data.remote.ServiceLocator;
 import com.scholarlyapps.pathlingo.data.remote.dto.AppUserDto;
 import com.scholarlyapps.pathlingo.data.remote.dto.AvatarDto;
 import com.scholarlyapps.pathlingo.data.remote.dto.CoinsBalanceResponse;
@@ -40,6 +44,7 @@ public class AvatarPickerBottomSheet extends BottomSheetDialogFragment {
     private AvatarAdapter adapter;
     private OnAvatarSelectedListener listener;
     private int userCoins = 0;
+    private AvatarDto selectedAvatar = null;
 
     public void setOnAvatarSelectedListener(OnAvatarSelectedListener listener) {
         this.listener = listener;
@@ -47,6 +52,23 @@ public class AvatarPickerBottomSheet extends BottomSheetDialogFragment {
 
     public void setUserCoins(int coins) {
         this.userCoins = coins;
+    }
+
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+        BottomSheetDialog dialog = (BottomSheetDialog) super.onCreateDialog(savedInstanceState);
+        dialog.setOnShowListener(d -> {
+            FrameLayout sheet = ((BottomSheetDialog) d).findViewById(
+                    com.google.android.material.R.id.design_bottom_sheet);
+            if (sheet != null) {
+                sheet.setBackgroundResource(android.R.color.transparent);
+                BottomSheetBehavior<FrameLayout> behavior = BottomSheetBehavior.from(sheet);
+                behavior.setSkipCollapsed(true);
+                behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            }
+        });
+        return dialog;
     }
 
     @Nullable
@@ -66,7 +88,24 @@ public class AvatarPickerBottomSheet extends BottomSheetDialogFragment {
         binding.recyclerAvatars.setLayoutManager(new GridLayoutManager(requireContext(), 3));
         binding.recyclerAvatars.setAdapter(adapter);
 
+        binding.btnClose.setOnClickListener(v -> dismiss());
+
+        binding.btnChoose.setOnClickListener(v -> {
+            if (selectedAvatar == null) return;
+            if (selectedAvatar.isOwned || selectedAvatar.coinPrice == 0) {
+                selectAvatar(selectedAvatar.id);
+            } else {
+                purchaseThenSelect(selectedAvatar);
+            }
+        });
+
         loadAvatars();
+    }
+
+    private void onAvatarClicked(AvatarDto avatar) {
+        selectedAvatar = avatar;
+        adapter.setSelected(avatar.id);
+        binding.btnChoose.setEnabled(true);
     }
 
     private void loadAvatars() {
@@ -74,7 +113,7 @@ public class AvatarPickerBottomSheet extends BottomSheetDialogFragment {
         binding.recyclerAvatars.setVisibility(View.GONE);
         binding.txtEmpty.setVisibility(View.GONE);
 
-        RetrofitClient.getInstance().getApiService().getAvatars().enqueue(new Callback<ListResponse<AvatarDto>>() {
+        ServiceLocator.api.getAvatars().enqueue(new Callback<ListResponse<AvatarDto>>() {
             @Override
             public void onResponse(@NonNull Call<ListResponse<AvatarDto>> call, @NonNull Response<ListResponse<AvatarDto>> response) {
                 if (!isAdded()) return;
@@ -101,35 +140,27 @@ public class AvatarPickerBottomSheet extends BottomSheetDialogFragment {
         });
     }
 
-    private void onAvatarClicked(AvatarDto avatar) {
-        if (avatar.isOwned || avatar.coinPrice == 0) {
-            selectAvatar(avatar.id);
-        } else {
-            purchaseThenSelect(avatar);
-        }
-    }
-
     private void purchaseThenSelect(AvatarDto avatar) {
         if (userCoins < avatar.coinPrice) {
-            ToastHelper.error(requireContext(), "Not enough coins. Need " + avatar.coinPrice + " coins.");
+            ToastHelper.error(requireActivity(), "Not enough coins. Need " + avatar.coinPrice + " coins.");
             return;
         }
 
         binding.progressBar.setVisibility(View.VISIBLE);
+        binding.btnChoose.setEnabled(false);
 
-        RetrofitClient.getInstance().getApiService().purchaseAvatar(avatar.id).enqueue(new Callback<WrappedResponse<CoinsBalanceResponse>>() {
+        ServiceLocator.api.purchaseAvatar(avatar.id).enqueue(new Callback<WrappedResponse<CoinsBalanceResponse>>() {
             @Override
             public void onResponse(@NonNull Call<WrappedResponse<CoinsBalanceResponse>> call, @NonNull Response<WrappedResponse<CoinsBalanceResponse>> response) {
                 if (!isAdded()) return;
-                if (response.isSuccessful()) {
-                    if (response.body() != null && response.body().data != null) {
-                        userCoins = response.body().data.coins;
-                        binding.txtCoinBalance.setText(userCoins + " coins");
-                    }
+                if (response.isSuccessful() && response.body() != null && response.body().data != null) {
+                    userCoins = response.body().data.coins;
+                    binding.txtCoinBalance.setText(userCoins + " coins");
                     selectAvatar(avatar.id);
                 } else {
                     binding.progressBar.setVisibility(View.GONE);
-                    ToastHelper.error(requireContext(), "Purchase failed. Please try again.");
+                    binding.btnChoose.setEnabled(true);
+                    ToastHelper.error(requireActivity(), "Purchase failed. Please try again.");
                 }
             }
 
@@ -137,30 +168,33 @@ public class AvatarPickerBottomSheet extends BottomSheetDialogFragment {
             public void onFailure(@NonNull Call<WrappedResponse<CoinsBalanceResponse>> call, @NonNull Throwable t) {
                 if (!isAdded()) return;
                 binding.progressBar.setVisibility(View.GONE);
-                ToastHelper.error(requireContext(), "Network error. Please try again.");
+                binding.btnChoose.setEnabled(true);
+                ToastHelper.error(requireActivity(), "Network error. Please try again.");
             }
         });
     }
 
     private void selectAvatar(long avatarId) {
+        binding.progressBar.setVisibility(View.VISIBLE);
+        binding.btnChoose.setEnabled(false);
+
         Map<String, Long> body = new HashMap<>();
         body.put("avatar_id", avatarId);
 
-        RetrofitClient.getInstance().getApiService().setActiveAvatar(body).enqueue(new Callback<WrappedResponse<AppUserDto>>() {
+        ServiceLocator.api.setActiveAvatar(body).enqueue(new Callback<WrappedResponse<AppUserDto>>() {
             @Override
             public void onResponse(@NonNull Call<WrappedResponse<AppUserDto>> call, @NonNull Response<WrappedResponse<AppUserDto>> response) {
                 if (!isAdded()) return;
                 binding.progressBar.setVisibility(View.GONE);
 
                 if (response.isSuccessful() && response.body() != null && response.body().data != null) {
-                    AppUserDto updatedUser = response.body().data;
                     if (listener != null) {
-                        listener.onAvatarSelected(updatedUser);
+                        listener.onAvatarSelected(response.body().data);
                     }
                     dismiss();
                 } else {
-                    ToastHelper.error(requireContext(), "Failed to set avatar.");
-                    loadAvatars();
+                    binding.btnChoose.setEnabled(true);
+                    ToastHelper.error(requireActivity(), "Failed to set avatar.");
                 }
             }
 
@@ -168,7 +202,8 @@ public class AvatarPickerBottomSheet extends BottomSheetDialogFragment {
             public void onFailure(@NonNull Call<WrappedResponse<AppUserDto>> call, @NonNull Throwable t) {
                 if (!isAdded()) return;
                 binding.progressBar.setVisibility(View.GONE);
-                ToastHelper.error(requireContext(), "Network error. Please try again.");
+                binding.btnChoose.setEnabled(true);
+                ToastHelper.error(requireActivity(), "Network error. Please try again.");
             }
         });
     }

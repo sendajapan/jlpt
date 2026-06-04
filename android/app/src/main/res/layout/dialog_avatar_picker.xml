@@ -33,7 +33,7 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@drawable/bg_pill_blue"
             android:gravity="center_vertical"
             android:orientation="horizontal"
@@ -47,7 +47,8 @@
                 android:fontFamily="@font/poppins_bold"
                 android:text="0 coins"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_10ssp" />
+                android:textSize="@dimen/_10ssp"
+                android:includeFontPadding="false"/>
 
         </LinearLayout>
 
@@ -64,23 +65,63 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerAvatars"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:maxHeight="@dimen/_360sdp"
+        android:layout_height="@dimen/_320sdp"
         android:nestedScrollingEnabled="true"
         android:paddingHorizontal="@dimen/_8sdp"
-        android:paddingBottom="@dimen/_16sdp"
+        android:paddingTop="@dimen/_4sdp"
+        android:clipToPadding="false"
         android:visibility="gone" />
 
     <TextView
         android:id="@+id/txtEmpty"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="@dimen/_32sdp"
+        android:layout_height="@dimen/_160sdp"
         android:fontFamily="@font/poppins_regular"
         android:gravity="center"
         android:text="No avatars available"
         android:textColor="@color/ink_soft"
         android:textSize="@dimen/_12ssp"
         android:visibility="gone" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/_16sdp"
+        android:paddingTop="@dimen/_12sdp"
+        android:paddingBottom="@dimen/_24sdp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnClose"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_44sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:layout_weight="1"
+            android:fontFamily="@font/poppins_semibold"
+            android:letterSpacing="0"
+            android:text="Close"
+            android:textAllCaps="false"
+            android:textColor="@color/ink"
+            android:textSize="@dimen/_12ssp"
+            app:cornerRadius="@dimen/_8sdp"
+            app:strokeColor="@color/ink_soft" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnChoose"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_44sdp"
+            android:layout_weight="1"
+            android:enabled="false"
+            android:fontFamily="@font/poppins_semibold"
+            android:letterSpacing="0"
+            android:text="Choose"
+            android:textAllCaps="false"
+            android:textColor="@color/color_theme_navy"
+            android:textSize="@dimen/_12ssp"
+            app:backgroundTint="@color/color_theme_light"
+            app:cornerRadius="@dimen/_8sdp" />
+
+    </LinearLayout>
 
 </LinearLayout>

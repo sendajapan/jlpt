@@ -1,10 +1,11 @@
 package com.scholarlyapps.pathlingo.ui.adapters;
 
-import android.graphics.Color;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.core.widget.ImageViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.scholarlyapps.pathlingo.data.remote.dto.AvatarDto;
@@ -23,6 +24,7 @@ public class AvatarAdapter extends RecyclerView.Adapter<AvatarAdapter.ViewHolder
 
     private List<AvatarDto> avatars;
     private final OnAvatarClick listener;
+    private long selectedId = -1;
 
     public AvatarAdapter(List<AvatarDto> avatars, OnAvatarClick listener) {
         this.avatars = avatars;
@@ -31,6 +33,11 @@ public class AvatarAdapter extends RecyclerView.Adapter<AvatarAdapter.ViewHolder
 
     public void setData(List<AvatarDto> data) {
         this.avatars = data;
+        notifyDataSetChanged();
+    }
+
+    public void setSelected(long id) {
+        selectedId = id;
         notifyDataSetChanged();
     }
 
@@ -44,7 +51,7 @@ public class AvatarAdapter extends RecyclerView.Adapter<AvatarAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.bind(avatars.get(position), listener);
+        holder.bind(avatars.get(position), listener, selectedId);
     }
 
     @Override
@@ -61,17 +68,15 @@ public class AvatarAdapter extends RecyclerView.Adapter<AvatarAdapter.ViewHolder
             this.binding = binding;
         }
 
-        void bind(AvatarDto avatar, OnAvatarClick listener) {
+        void bind(AvatarDto avatar, OnAvatarClick listener, long selectedId) {
             binding.txtAvatarName.setText(avatar.name);
 
-            if (avatar.isActive) {
-                binding.cardAvatar.setStrokeWidth(3);
-            } else {
-                binding.cardAvatar.setStrokeWidth(0);
-            }
+            boolean isSelected = avatar.id == selectedId;
+            binding.cardAvatar.setStrokeWidth(isSelected || avatar.isActive ? 3 : 0);
+            binding.cardTick.setVisibility(isSelected ? View.VISIBLE : View.GONE);
 
             if (avatar.isOwned) {
-                binding.txtAvatarPrice.setText(avatar.isActive ? "Selected" : "Select");
+                binding.txtAvatarPrice.setText(avatar.isActive ? "Active" : "Select");
                 binding.txtAvatarPrice.setBackgroundResource(com.scholarlyapps.pathlingo.R.drawable.bg_chip_sage);
             } else if (avatar.coinPrice == 0) {
                 binding.txtAvatarPrice.setText("FREE");
@@ -82,7 +87,7 @@ public class AvatarAdapter extends RecyclerView.Adapter<AvatarAdapter.ViewHolder
             }
 
             if (avatar.imageUrl != null && !avatar.imageUrl.isEmpty()) {
-                binding.imgAvatar.setColorFilter(null);
+                ImageViewCompat.setImageTintList(binding.imgAvatar, null);
                 Coil.imageLoader(binding.imgAvatar.getContext()).enqueue(
                         new ImageRequest.Builder(binding.imgAvatar.getContext())
                                 .data(avatar.imageUrl)
