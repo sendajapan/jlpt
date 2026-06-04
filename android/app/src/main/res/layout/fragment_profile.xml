@@ -17,7 +17,7 @@
             android:id="@+id/userCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_16sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
             app:cardBackgroundColor="@android:color/transparent"
             app:cardElevation="0dp">
 
@@ -28,8 +28,8 @@
                 android:orientation="horizontal">
 
                 <com.google.android.material.card.MaterialCardView
-                    android:layout_width="@dimen/_56sdp"
-                    android:layout_height="@dimen/_56sdp"
+                    android:layout_width="@dimen/_46sdp"
+                    android:layout_height="@dimen/_46sdp"
                     app:cardBackgroundColor="@color/color_theme_light"
                     app:cardCornerRadius="16dp"
                     app:cardElevation="0dp">
@@ -59,16 +59,16 @@
                         android:includeFontPadding="false"
                         android:text="Kenji Sato"
                         android:textColor="@color/ink"
-                        android:textSize="@dimen/_12ssp" />
+                        android:textSize="@dimen/_11ssp" />
 
                     <TextView
                         android:id="@+id/txtEmail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_2sdp"
                         android:fontFamily="@font/poppins_regular"
                         android:text="kenji.sato@gmail.com"
-                        android:textSize="@dimen/_11ssp" />
+                        android:textSize="@dimen/_10ssp"
+                        android:includeFontPadding="false"/>
 
                     <TextView
                         android:id="@+id/txtXp"
@@ -79,7 +79,7 @@
                         android:includeFontPadding="false"
                         android:text="XP: 158"
                         android:textColor="@color/color_theme_dark"
-                        android:textSize="@dimen/_11ssp" />
+                        android:textSize="@dimen/_10ssp" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -90,16 +90,16 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_bold"
             android:includeFontPadding="false"
-            android:paddingHorizontal="@dimen/_4sdp"
-            android:paddingVertical="@dimen/_8sdp"
             android:text="ACCOUNT"
-            android:textColor="@color/ink_soft"
-            android:textSize="@dimen/_11ssp" />
+            android:textColor="@color/color_theme_black"
+            android:textSize="@dimen/_10ssp"
+            android:layout_marginStart="@dimen/_4sdp"
+            android:layout_marginTop="@dimen/_8sdp"/>
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_4sdp"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="@dimen/_8sdp"
             app:cardElevation="0dp"
@@ -110,7 +110,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="@dimen/_8sdp">
+                android:padding="@dimen/_4sdp">
 
                 <LinearLayout
                     android:id="@+id/rowEditProfile"
@@ -361,17 +361,17 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_bold"
             android:includeFontPadding="false"
-            android:paddingHorizontal="@dimen/_4sdp"
-            android:paddingVertical="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_16sdp"
             android:text="OTHER SETTING"
-            android:textColor="@color/ink_soft"
-            android:textSize="@dimen/_11ssp" />
+            android:textColor="@color/color_theme_black"
+            android:textSize="@dimen/_10ssp"
+            android:layout_marginStart="@dimen/_4sdp"/>
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_20sdp"
             app:cardBackgroundColor="@color/white"
+            android:layout_marginTop="@dimen/_4sdp"
             app:cardCornerRadius="@dimen/_8sdp"
             app:cardElevation="0dp"
             app:strokeColor="@color/color_theme_dark"
@@ -543,7 +543,7 @@
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_46sdp"
-            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_16sdp"
             android:fontFamily="@font/poppins_bold"
             android:insetBottom="0dp"
             android:insetTop="0dp"

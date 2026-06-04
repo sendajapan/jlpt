@@ -30,6 +30,12 @@ public class AppViewModelFactory implements ViewModelProvider.Factory {
         if (modelClass == ProgressViewModel.class) {
             return (T) new ProgressViewModel(ServiceLocator.categoryRepository, ServiceLocator.userRepository);
         }
+        if (modelClass == EditProfileViewModel.class) {
+            return (T) new EditProfileViewModel(ServiceLocator.userRepository);
+        }
+        if (modelClass == ChangePasswordViewModel.class) {
+            return (T) new ChangePasswordViewModel(ServiceLocator.authRepository, ServiceLocator.userRepository);
+        }
         throw new IllegalArgumentException("Unknown ViewModel: " + modelClass.getName());
     }
 }

@@ -59,6 +59,18 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.PathLingo" />
 
+        <activity
+            android:name=".ui.activities.profile.EditProfileActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.PathLingo" />
+
+        <activity
+            android:name=".ui.activities.profile.ChangePasswordActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.PathLingo" />
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
