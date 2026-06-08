@@ -21,10 +21,12 @@ class VocabSubcategory extends Model
         'audio_path',
         'sort_order',
         'is_premium',
+        'coin_price',
     ];
 
     protected $casts = [
         'is_premium' => 'boolean',
+        'coin_price' => 'integer',
         'sort_order' => 'integer',
     ];
 

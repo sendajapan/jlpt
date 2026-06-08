@@ -3,9 +3,15 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Models\AppUser;
+use App\Models\AppUserCategoryUnlock;
+use App\Models\AppUserWordUnlock;
+use App\Models\VocabCategory;
+use App\Models\VocabSubcategory;
 use App\Models\Vocabulary;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use OpenApi\Attributes as OA;
 
@@ -57,6 +63,7 @@ class VocabularyController extends Controller
     public function index(Request $request): JsonResponse
     {
         $search = $request->string('search')->toString();
+        $user = $request->user('app_users');
 
         $vocabularies = Vocabulary::query()
             ->where('is_approved', true)
@@ -66,32 +73,81 @@ class VocabularyController extends Controller
                 ->where('word_jp', 'like', "%{$search}%")
                 ->orWhere('word_romaji', 'like', "%{$search}%")
                 ->orWhere('word_en', 'like', "%{$search}%")))
-            ->with('background')
+            ->with(['background', 'subcategory.category'])
             ->orderBy('sort_order')
             ->orderBy('word_jp')
-            ->get()
-            ->map(fn (Vocabulary $v) => [
-                'id'                   => $v->id,
-                'vocab_subcategory_id' => $v->vocab_subcategory_id,
-                'word_jp'              => $v->word_jp,
-                'word_romaji'          => $v->word_romaji,
-                'word_en'              => $v->word_en,
-                'sentence_jp'          => $v->sentence_jp,
-                'sentence_romaji'      => $v->sentence_romaji,
-                'sentence_en'          => $v->sentence_en,
-                'audio_jp_url'         => $this->url($v->audio_jp),
-                'audio_en_url'         => $this->url($v->audio_en),
-                'sentence_audio_jp_url'=> $this->url($v->sentence_audio_jp),
-                'sentence_audio_en_url'=> $this->url($v->sentence_audio_en),
-                'image_url'            => $this->url($v->image_path),
-                'image_thumbnail_url'  => $this->url($v->image_thumbnail_path),
-                'image_thumbnail_bg'   => $v->image_thumbnail_bg,
-                'bg_url'               => $v->background ? asset($v->background->vocab_bg_path) : null,
-                'sort_order'           => $v->sort_order,
-                'is_premium'           => $v->is_premium,
-            ]);
+            ->get();
 
-        return response()->json(['data' => $vocabularies]);
+        [$unlockedWordIds, $categoryUnlocks] = $this->loadUserUnlocks($user);
+
+        $data = $vocabularies->map(fn (Vocabulary $v) => $this->formatVocab($v, $user, $unlockedWordIds, $categoryUnlocks));
+
+        return response()->json(['data' => $data]);
+    }
+
+    private function loadUserUnlocks(?AppUser $user): array
+    {
+        if (! $user) {
+            return [collect(), collect()];
+        }
+
+        $unlockedWordIds = AppUserWordUnlock::where('app_user_id', $user->id)->pluck('vocab_id')->flip();
+        $categoryUnlocks = AppUserCategoryUnlock::where('app_user_id', $user->id)->get();
+
+        return [$unlockedWordIds, $categoryUnlocks];
+    }
+
+    private function isLocked(Vocabulary $v, ?AppUser $user, Collection $unlockedWordIds, Collection $categoryUnlocks): bool
+    {
+        if (! $user) {
+            return $v->is_premium
+                || ($v->subcategory?->is_premium ?? false)
+                || ($v->subcategory?->category?->is_premium ?? false);
+        }
+
+        if ($unlockedWordIds->has($v->id)) {
+            return false;
+        }
+
+        return ! $categoryUnlocks->contains(function (AppUserCategoryUnlock $u) use ($v) {
+            if ($u->unlockable_type === VocabSubcategory::class && $u->unlockable_id === $v->vocab_subcategory_id) {
+                return true;
+            }
+
+            if ($u->unlockable_type === VocabCategory::class && $u->unlockable_id === ($v->subcategory?->vocab_category_id)) {
+                return true;
+            }
+
+            return false;
+        });
+    }
+
+    private function formatVocab(Vocabulary $v, ?AppUser $user, Collection $unlockedWordIds, Collection $categoryUnlocks): array
+    {
+        $locked = $this->isLocked($v, $user, $unlockedWordIds, $categoryUnlocks);
+
+        return [
+            'id' => $v->id,
+            'vocab_subcategory_id' => $v->vocab_subcategory_id,
+            'word_jp' => $v->word_jp,
+            'word_romaji' => $v->word_romaji,
+            'word_en' => $v->word_en,
+            'sentence_jp' => $locked ? null : $v->sentence_jp,
+            'sentence_romaji' => $locked ? null : $v->sentence_romaji,
+            'sentence_en' => $locked ? null : $v->sentence_en,
+            'audio_jp_url' => $locked ? null : $this->url($v->audio_jp),
+            'audio_en_url' => $locked ? null : $this->url($v->audio_en),
+            'sentence_audio_jp_url' => $locked ? null : $this->url($v->sentence_audio_jp),
+            'sentence_audio_en_url' => $locked ? null : $this->url($v->sentence_audio_en),
+            'image_url' => $locked ? null : $this->url($v->image_path),
+            'image_thumbnail_url' => $this->url($v->image_thumbnail_path),
+            'image_thumbnail_bg' => $v->image_thumbnail_bg,
+            'bg_url' => $v->background ? asset($v->background->vocab_bg_path) : null,
+            'sort_order' => $v->sort_order,
+            'is_premium' => $v->is_premium,
+            'coin_price' => $v->coin_price,
+            'is_locked' => $locked,
+        ];
     }
 
     private function url(?string $path): ?string

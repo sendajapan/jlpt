@@ -10,12 +10,14 @@ use App\Http\Controllers\Api\V1\Auth\RegisterController;
 use App\Http\Controllers\Api\V1\Auth\SocialLoginController;
 use App\Http\Controllers\Api\V1\AvatarController;
 use App\Http\Controllers\Api\V1\CategoryController;
+use App\Http\Controllers\Api\V1\CategoryUnlockController;
 use App\Http\Controllers\Api\V1\CoinController;
 use App\Http\Controllers\Api\V1\FavoriteController;
 use App\Http\Controllers\Api\V1\ProfileController;
 use App\Http\Controllers\Api\V1\SubcategoryController;
 use App\Http\Controllers\Api\V1\VocabularyController;
 use App\Http\Controllers\Api\V1\WordReadController;
+use App\Http\Controllers\Api\V1\WordUnlockController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('avatars', [AvatarController::class, 'index']);
@@ -59,4 +61,8 @@ Route::middleware('auth:app_users')->group(function () {
 
     Route::post('avatars/{avatar}/purchase', [AvatarController::class, 'purchase']);
     Route::patch('me/avatar', [AvatarController::class, 'setActive']);
+
+    Route::post('words/{vocabulary}/unlock', [WordUnlockController::class, 'store']);
+    Route::post('categories/{category}/unlock', [CategoryUnlockController::class, 'unlockCategory']);
+    Route::post('subcategories/{subcategory}/unlock', [CategoryUnlockController::class, 'unlockSubcategory']);
 });

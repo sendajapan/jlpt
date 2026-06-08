@@ -97,6 +97,16 @@ class AppUser extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(AvatarPurchase::class);
     }
 
+    public function wordUnlocks(): HasMany
+    {
+        return $this->hasMany(AppUserWordUnlock::class);
+    }
+
+    public function categoryUnlocks(): HasMany
+    {
+        return $this->hasMany(AppUserCategoryUnlock::class);
+    }
+
     public function sendPasswordResetNotification($token): void
     {
         $this->notify(new AppUserResetPasswordNotification($token));

@@ -26,6 +26,7 @@ class Vocabulary extends Model
         'image_thumbnail_bg',
         'sort_order',
         'is_premium',
+        'coin_price',
         'is_approved',
         'level',
         'voice_id',
@@ -38,6 +39,7 @@ class Vocabulary extends Model
     protected $casts = [
         'sort_order' => 'integer',
         'is_premium' => 'boolean',
+        'coin_price' => 'integer',
         'is_approved' => 'boolean',
         'audio_jp_reviewed' => 'boolean',
         'audio_en_reviewed' => 'boolean',

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Models\AppUserCategoryUnlock;
+use App\Models\VocabCategory;
 use App\Models\VocabSubcategory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -42,6 +44,17 @@ class SubcategoryController extends Controller
     )]
     public function index(Request $request): JsonResponse
     {
+        $user = $request->user('app_users');
+
+        $unlockedSubIds = collect();
+        $unlockedCatIds = collect();
+
+        if ($user) {
+            $categoryUnlocks = AppUserCategoryUnlock::where('app_user_id', $user->id)->get();
+            $unlockedSubIds = $categoryUnlocks->where('unlockable_type', VocabSubcategory::class)->pluck('unlockable_id')->flip();
+            $unlockedCatIds = $categoryUnlocks->where('unlockable_type', VocabCategory::class)->pluck('unlockable_id')->flip();
+        }
+
         $subcategories = VocabSubcategory::query()
             ->with('background')
             ->when($request->filled('category_id'), fn ($q) => $q->where('vocab_category_id', $request->integer('category_id')))
@@ -49,18 +62,22 @@ class SubcategoryController extends Controller
             ->orderBy('name_en')
             ->get()
             ->map(fn (VocabSubcategory $s) => [
-                'id'                   => $s->id,
-                'vocab_category_id'    => $s->vocab_category_id,
-                'name_en'              => $s->name_en,
-                'name_jp'              => $s->name_jp,
-                'name_romaji'          => $s->name_romaji,
-                'icon_url'             => $this->url($s->icon_path),
-                'icon_thumbnail_url'   => $this->url($s->icon_thumbnail_path),
-                'icon_thumbnail_bg'    => $s->icon_thumbnail_bg,
-                'bg_url'               => $s->background ? asset($s->background->vocab_bg_path) : null,
-                'audio_url'            => $this->url($s->audio_path),
-                'sort_order'           => $s->sort_order,
-                'is_premium'           => $s->is_premium,
+                'id' => $s->id,
+                'vocab_category_id' => $s->vocab_category_id,
+                'name_en' => $s->name_en,
+                'name_jp' => $s->name_jp,
+                'name_romaji' => $s->name_romaji,
+                'icon_url' => $this->url($s->icon_path),
+                'icon_thumbnail_url' => $this->url($s->icon_thumbnail_path),
+                'icon_thumbnail_bg' => $s->icon_thumbnail_bg,
+                'bg_url' => $s->background ? asset($s->background->vocab_bg_path) : null,
+                'audio_url' => $this->url($s->audio_path),
+                'sort_order' => $s->sort_order,
+                'is_premium' => $s->is_premium,
+                'coin_price' => $s->coin_price,
+                'is_locked' => $s->is_premium
+                    && ! $unlockedSubIds->has($s->id)
+                    && ! $unlockedCatIds->has($s->vocab_category_id),
             ]);
 
         return response()->json(['data' => $subcategories]);
