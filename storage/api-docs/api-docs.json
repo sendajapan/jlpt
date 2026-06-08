@@ -14,63 +14,33 @@
     "paths": {
         "/api/v1/auth/email/verify-send": {
             "post": {
-                "tags": [
-                    "Auth"
-                ],
+                "tags": ["Auth"],
                 "summary": "Resend the email verification link to the authenticated user",
                 "operationId": "5d032c70d8c86f3619b9d0b7f9d6dcf4",
                 "responses": {
-                    "200": {
-                        "description": "Verification email sent"
-                    }
+                    "200": { "description": "Verification email sent" }
                 },
-                "security": [
-                    {
-                        "sanctum": []
-                    }
-                ]
+                "security": [{ "sanctum": [] }]
             }
         },
         "/api/v1/auth/email/verify/{id}/{hash}": {
             "get": {
-                "tags": [
-                    "Auth"
-                ],
+                "tags": ["Auth"],
                 "summary": "Confirm email via the signed link sent over email",
                 "operationId": "d3488e1ddfc474c63037c03f7700c4e3",
                 "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "hash",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
+                    { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } },
+                    { "name": "hash", "in": "path", "required": true, "schema": { "type": "string" } }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "Email verified"
-                    },
-                    "403": {
-                        "description": "Invalid verification link"
-                    }
+                    "200": { "description": "Email verified" },
+                    "403": { "description": "Invalid verification link" }
                 }
             }
         },
         "/api/v1/auth/login": {
             "post": {
-                "tags": [
-                    "Auth"
-                ],
+                "tags": ["Auth"],
                 "summary": "Login with email and password",
                 "operationId": "02f6ee354f76eb020df20e4d9b68bbb0",
                 "requestBody": {
@@ -78,26 +48,11 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "required": [
-                                    "email",
-                                    "password",
-                                    "device_name"
-                                ],
+                                "required": ["email", "password", "device_name"],
                                 "properties": {
-                                    "email": {
-                                        "type": "string",
-                                        "format": "email",
-                                        "example": "sulaiman@sendajapan.com"
-                                    },
-                                    "password": {
-                                        "type": "string",
-                                        "format": "password",
-                                        "example": "p@ssword"
-                                    },
-                                    "device_name": {
-                                        "type": "string",
-                                        "example": "iphone-15"
-                                    }
+                                    "email": { "type": "string", "format": "email", "example": "sulaiman@sendajapan.com" },
+                                    "password": { "type": "string", "format": "password", "example": "p@ssword" },
+                                    "device_name": { "type": "string", "example": "iphone-15" }
                                 },
                                 "type": "object"
                             }
@@ -107,32 +62,18 @@
                 "responses": {
                     "200": {
                         "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/AuthResponse"
-                                }
-                            }
-                        }
+                        "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AuthResponse" } } }
                     },
                     "422": {
                         "description": "Invalid credentials",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ValidationError"
-                                }
-                            }
-                        }
+                        "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationError" } } }
                     }
                 }
             }
         },
         "/api/v1/auth/logout": {
             "post": {
-                "tags": [
-                    "Auth"
-                ],
+                "tags": ["Auth"],
                 "summary": "Revoke the current Sanctum token",
                 "operationId": "1fcdff85716dc0d10e8a019b9817a86d",
                 "responses": {
@@ -140,33 +81,46 @@
                         "description": "OK",
                         "content": {
                             "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
+                                "schema": { "properties": { "message": { "type": "string" } }, "type": "object" }
                             }
                         }
                     },
-                    "401": {
-                        "description": "Unauthenticated"
+                    "401": { "description": "Unauthenticated" }
+                },
+                "security": [{ "sanctum": [] }]
+            }
+        },
+        "/api/v1/auth/guest": {
+            "post": {
+                "tags": ["Auth"],
+                "summary": "Create or resume a guest session",
+                "description": "Returns a Sanctum token for a guest account. Pass device_name to resume the same guest account on subsequent calls from the same device.",
+                "operationId": "auth_guest",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": ["device_name"],
+                                "properties": {
+                                    "device_name": { "type": "string", "example": "pixel-8" }
+                                },
+                                "type": "object"
+                            }
+                        }
                     }
                 },
-                "security": [
-                    {
-                        "sanctum": []
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AuthResponse" } } }
                     }
-                ]
+                }
             }
         },
         "/api/v1/auth/otp/send": {
             "post": {
-                "tags": [
-                    "Auth"
-                ],
+                "tags": ["Auth"],
                 "summary": "Send OTP verification code to the given email (no auth required)",
                 "operationId": "b11663e801f876d78c53563e1c3a6c2f",
                 "requestBody": {
@@ -174,15 +128,9 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "required": [
-                                    "user_email"
-                                ],
+                                "required": ["user_email"],
                                 "properties": {
-                                    "user_email": {
-                                        "type": "string",
-                                        "format": "email",
-                                        "example": "user@example.com"
-                                    }
+                                    "user_email": { "type": "string", "format": "email", "example": "user@example.com" }
                                 },
                                 "type": "object"
                             }
@@ -195,38 +143,23 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "OTP sent to your email."
-                                        }
-                                    },
+                                    "properties": { "message": { "type": "string", "example": "OTP sent to your email." } },
                                     "type": "object"
                                 }
                             }
                         }
                     },
-                    "404": {
-                        "description": "No account found with that email"
-                    },
+                    "404": { "description": "No account found with that email" },
                     "422": {
                         "description": "Validation error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ValidationError"
-                                }
-                            }
-                        }
+                        "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationError" } } }
                     }
                 }
             }
         },
         "/api/v1/auth/otp/verify": {
             "post": {
-                "tags": [
-                    "Auth"
-                ],
+                "tags": ["Auth"],
                 "summary": "Verify the 4-digit OTP code to confirm email ownership (no auth required)",
                 "operationId": "2109c1568ae0184daa57791e1e0bf5a7",
                 "requestBody": {
@@ -234,23 +167,10 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "required": [
-                                    "user_email",
-                                    "code"
-                                ],
+                                "required": ["user_email", "code"],
                                 "properties": {
-                                    "user_email": {
-                                        "type": "string",
-                                        "format": "email",
-                                        "example": "user@example.com"
-                                    },
-                                    "code": {
-                                        "description": "4-digit numeric OTP",
-                                        "type": "string",
-                                        "example": "4827",
-                                        "maxLength": 4,
-                                        "minLength": 4
-                                    }
+                                    "user_email": { "type": "string", "format": "email", "example": "user@example.com" },
+                                    "code": { "description": "4-digit numeric OTP", "type": "string", "example": "4827", "maxLength": 4, "minLength": 4 }
                                 },
                                 "type": "object"
                             }
@@ -263,38 +183,23 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Email verified successfully."
-                                        }
-                                    },
+                                    "properties": { "message": { "type": "string", "example": "Email verified successfully." } },
                                     "type": "object"
                                 }
                             }
                         }
                     },
-                    "404": {
-                        "description": "No account found with that email"
-                    },
+                    "404": { "description": "No account found with that email" },
                     "422": {
                         "description": "Invalid or expired OTP",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ValidationError"
-                                }
-                            }
-                        }
+                        "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationError" } } }
                     }
                 }
             }
         },
         "/api/v1/auth/forgot-password": {
             "post": {
-                "tags": [
-                    "Auth"
-                ],
+                "tags": ["Auth"],
                 "summary": "Email a password reset link",
                 "operationId": "0a7dba788c42aa3703b2233c4340cbd2",
                 "requestBody": {
@@ -302,35 +207,22 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "required": [
-                                    "email"
-                                ],
-                                "properties": {
-                                    "email": {
-                                        "type": "string",
-                                        "format": "email"
-                                    }
-                                },
+                                "required": ["email"],
+                                "properties": { "email": { "type": "string", "format": "email" } },
                                 "type": "object"
                             }
                         }
                     }
                 },
                 "responses": {
-                    "200": {
-                        "description": "Reset link sent"
-                    },
-                    "422": {
-                        "description": "Validation error"
-                    }
+                    "200": { "description": "Reset link sent" },
+                    "422": { "description": "Validation error" }
                 }
             }
         },
         "/api/v1/auth/reset-password": {
             "post": {
-                "tags": [
-                    "Auth"
-                ],
+                "tags": ["Auth"],
                 "summary": "Reset password using the emailed token",
                 "operationId": "8287fc6f8bbb43dd0b1932319b713607",
                 "requestBody": {
@@ -338,29 +230,12 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "required": [
-                                    "token",
-                                    "email",
-                                    "password",
-                                    "password_confirmation"
-                                ],
+                                "required": ["token", "email", "password", "password_confirmation"],
                                 "properties": {
-                                    "token": {
-                                        "type": "string"
-                                    },
-                                    "email": {
-                                        "type": "string",
-                                        "format": "email"
-                                    },
-                                    "password": {
-                                        "type": "string",
-                                        "format": "password",
-                                        "minLength": 8
-                                    },
-                                    "password_confirmation": {
-                                        "type": "string",
-                                        "format": "password"
-                                    }
+                                    "token": { "type": "string" },
+                                    "email": { "type": "string", "format": "email" },
+                                    "password": { "type": "string", "format": "password", "minLength": 8 },
+                                    "password_confirmation": { "type": "string", "format": "password" }
                                 },
                                 "type": "object"
                             }
@@ -368,20 +243,14 @@
                     }
                 },
                 "responses": {
-                    "200": {
-                        "description": "Password reset"
-                    },
-                    "422": {
-                        "description": "Invalid token or password"
-                    }
+                    "200": { "description": "Password reset" },
+                    "422": { "description": "Invalid token or password" }
                 }
             }
         },
         "/api/v1/auth/register": {
             "post": {
-                "tags": [
-                    "Auth"
-                ],
+                "tags": ["Auth"],
                 "summary": "Register a new app user with email and password",
                 "operationId": "b3e30f5d550777b9cf8cddeceaf2c986",
                 "requestBody": {
@@ -389,40 +258,14 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "required": [
-                                    "name",
-                                    "email",
-                                    "password",
-                                    "password_confirmation",
-                                    "device_name"
-                                ],
+                                "required": ["name", "email", "password", "password_confirmation", "device_name"],
                                 "properties": {
-                                    "name": {
-                                        "type": "string",
-                                        "example": "Sulaiman MD"
-                                    },
-                                    "display_name": {
-                                        "type": "string",
-                                        "example": "smensulaiman",
-                                        "nullable": true
-                                    },
-                                    "email": {
-                                        "type": "string",
-                                        "format": "email"
-                                    },
-                                    "password": {
-                                        "type": "string",
-                                        "format": "password",
-                                        "minLength": 8
-                                    },
-                                    "password_confirmation": {
-                                        "type": "string",
-                                        "format": "password"
-                                    },
-                                    "device_name": {
-                                        "type": "string",
-                                        "example": "iphone-15"
-                                    }
+                                    "name": { "type": "string", "example": "Sulaiman MD" },
+                                    "display_name": { "type": "string", "example": "smensulaiman", "nullable": true },
+                                    "email": { "type": "string", "format": "email" },
+                                    "password": { "type": "string", "format": "password", "minLength": 8 },
+                                    "password_confirmation": { "type": "string", "format": "password" },
+                                    "device_name": { "type": "string", "example": "iphone-15" }
                                 },
                                 "type": "object"
                             }
@@ -432,32 +275,18 @@
                 "responses": {
                     "201": {
                         "description": "Created",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/AuthResponse"
-                                }
-                            }
-                        }
+                        "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AuthResponse" } } }
                     },
                     "422": {
                         "description": "Validation error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ValidationError"
-                                }
-                            }
-                        }
+                        "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationError" } } }
                     }
                 }
             }
         },
         "/api/v1/auth/social/google": {
             "post": {
-                "tags": [
-                    "Auth"
-                ],
+                "tags": ["Auth"],
                 "summary": "Login or register via Google ID token",
                 "description": "Mobile app performs native Google sign-in and posts the resulting id_token here.",
                 "operationId": "9b6a6db911a3ed210100276defc16b4c",
@@ -466,17 +295,10 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "required": [
-                                    "id_token",
-                                    "device_name"
-                                ],
+                                "required": ["id_token", "device_name"],
                                 "properties": {
-                                    "id_token": {
-                                        "type": "string"
-                                    },
-                                    "device_name": {
-                                        "type": "string"
-                                    }
+                                    "id_token": { "type": "string" },
+                                    "device_name": { "type": "string" }
                                 },
                                 "type": "object"
                             }
@@ -486,25 +308,15 @@
                 "responses": {
                     "200": {
                         "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/AuthResponse"
-                                }
-                            }
-                        }
+                        "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AuthResponse" } } }
                     },
-                    "422": {
-                        "description": "Invalid Google token"
-                    }
+                    "422": { "description": "Invalid Google token" }
                 }
             }
         },
         "/api/v1/auth/social/facebook": {
             "post": {
-                "tags": [
-                    "Auth"
-                ],
+                "tags": ["Auth"],
                 "summary": "Login or register via Facebook access token",
                 "operationId": "9e0fd167bad1d9f16c2c0d6f7a15e21b",
                 "requestBody": {
@@ -512,17 +324,10 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "required": [
-                                    "access_token",
-                                    "device_name"
-                                ],
+                                "required": ["access_token", "device_name"],
                                 "properties": {
-                                    "access_token": {
-                                        "type": "string"
-                                    },
-                                    "device_name": {
-                                        "type": "string"
-                                    }
+                                    "access_token": { "type": "string" },
+                                    "device_name": { "type": "string" }
                                 },
                                 "type": "object"
                             }
@@ -532,197 +337,15 @@
                 "responses": {
                     "200": {
                         "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/AuthResponse"
-                                }
-                            }
-                        }
+                        "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AuthResponse" } } }
                     },
-                    "422": {
-                        "description": "Invalid Facebook token"
-                    }
+                    "422": { "description": "Invalid Facebook token" }
                 }
-            }
-        },
-        "/api/v1/categories": {
-            "get": {
-                "tags": [
-                    "Public"
-                ],
-                "summary": "List all vocab categories",
-                "operationId": "e225c2b7eb5daf7fb16e00f4f07ff030",
-                "responses": {
-                    "200": {
-                        "description": "List of vocab categories ordered by sort_order then name_en",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "data": {
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/components/schemas/VocabCategory"
-                                            }
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/me/coins": {
-            "get": {
-                "tags": [
-                    "Coins"
-                ],
-                "summary": "Get current coin balance",
-                "operationId": "765e507e033a489f36108b0a9ed6b820",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "coins": {
-                                            "type": "integer"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "sanctum": []
-                    }
-                ]
-            }
-        },
-        "/api/v1/me/coins/transactions": {
-            "get": {
-                "tags": [
-                    "Coins"
-                ],
-                "summary": "Paginated coin transaction ledger",
-                "operationId": "e64be1fb82fa08ea1a032dedc2e6454a",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "data": {
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/components/schemas/CoinTransaction"
-                                            }
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "sanctum": []
-                    }
-                ]
-            }
-        },
-        "/api/v1/favorites": {
-            "get": {
-                "tags": [
-                    "Favorites"
-                ],
-                "summary": "List the authenticated user's favorite vocab words (paginated)",
-                "operationId": "8d2bd7cabe6dbeca723fdd10fb66150d",
-                "responses": {
-                    "200": {
-                        "description": "OK"
-                    }
-                },
-                "security": [
-                    {
-                        "sanctum": []
-                    }
-                ]
-            }
-        },
-        "/api/v1/favorites/{vocabulary}": {
-            "post": {
-                "tags": [
-                    "Favorites"
-                ],
-                "summary": "Add a vocab word to favorites",
-                "operationId": "83c8e4f26e91e47e80468e20a90c3faa",
-                "parameters": [
-                    {
-                        "name": "vocabulary",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "201": {
-                        "description": "Added"
-                    },
-                    "404": {
-                        "description": "Vocab not found"
-                    }
-                },
-                "security": [
-                    {
-                        "sanctum": []
-                    }
-                ]
-            },
-            "delete": {
-                "tags": [
-                    "Favorites"
-                ],
-                "summary": "Remove a vocab word from favorites",
-                "operationId": "c1c7ea2765ba4686c45772d1374dcbb4",
-                "parameters": [
-                    {
-                        "name": "vocabulary",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Removed"
-                    }
-                },
-                "security": [
-                    {
-                        "sanctum": []
-                    }
-                ]
             }
         },
         "/api/v1/me": {
             "get": {
-                "tags": [
-                    "Profile"
-                ],
+                "tags": ["Profile"],
                 "summary": "Get the authenticated user's profile",
                 "operationId": "df361bae9ea631d3912cb371ff33ecb3",
                 "responses": {
@@ -730,28 +353,15 @@
                         "description": "OK",
                         "content": {
                             "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "data": {
-                                            "$ref": "#/components/schemas/AppUser"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
+                                "schema": { "properties": { "data": { "$ref": "#/components/schemas/AppUser" } }, "type": "object" }
                             }
                         }
                     }
                 },
-                "security": [
-                    {
-                        "sanctum": []
-                    }
-                ]
+                "security": [{ "sanctum": [] }]
             },
             "patch": {
-                "tags": [
-                    "Profile"
-                ],
+                "tags": ["Profile"],
                 "summary": "Update profile fields (POST also accepted)",
                 "operationId": "e4650f49869ff84cd1e70055573fd8a9",
                 "requestBody": {
@@ -759,83 +369,20 @@
                         "multipart/form-data": {
                             "schema": {
                                 "properties": {
-                                    "name": {
-                                        "type": "string",
-                                        "maxLength": 100
-                                    },
-                                    "username": {
-                                        "type": "string",
-                                        "nullable": true,
-                                        "maxLength": 50
-                                    },
-                                    "avatar": {
-                                        "type": "string",
-                                        "format": "binary"
-                                    },
-                                    "bio": {
-                                        "type": "string",
-                                        "nullable": true
-                                    },
-                                    "gender": {
-                                        "type": "string",
-                                        "nullable": true,
-                                        "enum": [
-                                            "male",
-                                            "female",
-                                            "other",
-                                            "prefer_not_to_say"
-                                        ]
-                                    },
-                                    "birth_date": {
-                                        "type": "string",
-                                        "format": "date",
-                                        "nullable": true
-                                    },
-                                    "native_language_code": {
-                                        "type": "string"
-                                    },
-                                    "learning_language_code": {
-                                        "type": "string"
-                                    },
-                                    "proficiency_level": {
-                                        "type": "string",
-                                        "enum": [
-                                            "beginner",
-                                            "elementary",
-                                            "intermediate",
-                                            "upper_intermediate",
-                                            "advanced",
-                                            "native_like"
-                                        ]
-                                    },
-                                    "learning_goal": {
-                                        "type": "string",
-                                        "enum": [
-                                            "travel",
-                                            "school",
-                                            "business",
-                                            "anime",
-                                            "conversation",
-                                            "exam",
-                                            "hobby",
-                                            "other"
-                                        ]
-                                    },
-                                    "daily_goal_minutes": {
-                                        "type": "integer"
-                                    },
-                                    "timezone": {
-                                        "type": "string",
-                                        "nullable": true
-                                    },
-                                    "reminder_time": {
-                                        "type": "string",
-                                        "example": "09:00",
-                                        "nullable": true
-                                    },
-                                    "notifications_enabled": {
-                                        "type": "boolean"
-                                    }
+                                    "name": { "type": "string", "maxLength": 100 },
+                                    "username": { "type": "string", "nullable": true, "maxLength": 50 },
+                                    "avatar": { "type": "string", "format": "binary" },
+                                    "bio": { "type": "string", "nullable": true },
+                                    "gender": { "type": "string", "nullable": true, "enum": ["male", "female", "other", "prefer_not_to_say"] },
+                                    "birth_date": { "type": "string", "format": "date", "nullable": true },
+                                    "native_language_code": { "type": "string" },
+                                    "learning_language_code": { "type": "string" },
+                                    "proficiency_level": { "type": "string", "enum": ["beginner", "elementary", "intermediate", "upper_intermediate", "advanced", "native_like"] },
+                                    "learning_goal": { "type": "string", "enum": ["travel", "school", "business", "anime", "conversation", "exam", "hobby", "other"] },
+                                    "daily_goal_minutes": { "type": "integer" },
+                                    "timezone": { "type": "string", "nullable": true },
+                                    "reminder_time": { "type": "string", "example": "09:00", "nullable": true },
+                                    "notifications_enabled": { "type": "boolean" }
                                 },
                                 "type": "object"
                             }
@@ -847,11 +394,100 @@
                         "description": "Updated",
                         "content": {
                             "application/json": {
+                                "schema": { "properties": { "data": { "$ref": "#/components/schemas/AppUser" } }, "type": "object" }
+                            }
+                        }
+                    }
+                },
+                "security": [{ "sanctum": [] }]
+            }
+        },
+        "/api/v1/me/coins": {
+            "get": {
+                "tags": ["Coins"],
+                "summary": "Get current coin balance",
+                "operationId": "765e507e033a489f36108b0a9ed6b820",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": { "properties": { "coins": { "type": "integer" } }, "type": "object" }
+                            }
+                        }
+                    }
+                },
+                "security": [{ "sanctum": [] }]
+            }
+        },
+        "/api/v1/me/coins/transactions": {
+            "get": {
+                "tags": ["Coins"],
+                "summary": "Paginated coin transaction ledger",
+                "operationId": "e64be1fb82fa08ea1a032dedc2e6454a",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": { "data": { "type": "array", "items": { "$ref": "#/components/schemas/CoinTransaction" } } },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [{ "sanctum": [] }]
+            }
+        },
+        "/api/v1/me/reads": {
+            "get": {
+                "tags": ["Reads"],
+                "summary": "List vocab words the authenticated user has marked read (paginated)",
+                "operationId": "3284b73fc88743b59aec2cd2cc315080",
+                "responses": { "200": { "description": "OK" } },
+                "security": [{ "sanctum": [] }]
+            }
+        },
+        "/api/v1/me/avatar": {
+            "patch": {
+                "tags": ["Avatars"],
+                "summary": "Set one of the user's owned avatars as their active avatar",
+                "operationId": "me_avatar_set_active",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": ["avatar_id"],
+                                "properties": { "avatar_id": { "type": "integer", "example": 3 } },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": { "description": "Active avatar updated" },
+                    "403": { "description": "Avatar not owned by user" },
+                    "404": { "description": "Avatar not found" }
+                },
+                "security": [{ "sanctum": [] }]
+            }
+        },
+        "/api/v1/avatars": {
+            "get": {
+                "tags": ["Avatars"],
+                "summary": "List all avatars with ownership status for the authenticated user",
+                "operationId": "avatars_index",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "data": {
-                                            "$ref": "#/components/schemas/AppUser"
-                                        }
+                                        "data": { "type": "array", "items": { "$ref": "#/components/schemas/Avatar" } }
                                     },
                                     "type": "object"
                                 }
@@ -859,19 +495,78 @@
                         }
                     }
                 },
-                "security": [
-                    {
-                        "sanctum": []
+                "security": [{ "sanctum": [] }]
+            }
+        },
+        "/api/v1/avatars/{avatar}/purchase": {
+            "post": {
+                "tags": ["Avatars"],
+                "summary": "Purchase an avatar with coins",
+                "operationId": "avatars_purchase",
+                "parameters": [
+                    { "name": "avatar", "in": "path", "required": true, "schema": { "type": "integer" } }
+                ],
+                "responses": {
+                    "200": { "description": "Avatar purchased" },
+                    "402": { "description": "Insufficient coins" },
+                    "409": { "description": "Already owned" }
+                },
+                "security": [{ "sanctum": [] }]
+            }
+        },
+        "/api/v1/categories": {
+            "get": {
+                "tags": ["Public"],
+                "summary": "List all vocab categories",
+                "description": "When a valid Sanctum token is provided, `is_locked` reflects whether the authenticated user has unlocked that category.",
+                "operationId": "e225c2b7eb5daf7fb16e00f4f07ff030",
+                "responses": {
+                    "200": {
+                        "description": "List of vocab categories ordered by sort_order then name_en",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": { "data": { "type": "array", "items": { "$ref": "#/components/schemas/VocabCategory" } } },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
-                ]
+                }
+            }
+        },
+        "/api/v1/categories/{category}/unlock": {
+            "post": {
+                "tags": ["Unlocks"],
+                "summary": "Unlock a premium category with coins",
+                "description": "Deducts `coin_price` coins from the user and records an unlock for the category and all its current words.",
+                "operationId": "categories_unlock",
+                "parameters": [
+                    { "name": "category", "in": "path", "required": true, "schema": { "type": "integer" } }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Unlocked",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": { "message": { "type": "string" }, "coins_remaining": { "type": "integer" } },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": { "description": "Category is not premium or already unlocked" },
+                    "402": { "description": "Insufficient coins" }
+                },
+                "security": [{ "sanctum": [] }]
             }
         },
         "/api/v1/subcategories": {
             "get": {
-                "tags": [
-                    "Public"
-                ],
+                "tags": ["Public"],
                 "summary": "List subcategories, optionally filtered by category",
+                "description": "When a valid Sanctum token is provided, `is_locked` reflects whether the authenticated user has unlocked that subcategory.",
                 "operationId": "3d35744905e4257c1e844a788b5fb31c",
                 "parameters": [
                     {
@@ -879,10 +574,7 @@
                         "in": "query",
                         "description": "Filter by parent category ID",
                         "required": false,
-                        "schema": {
-                            "type": "integer",
-                            "example": 1
-                        }
+                        "schema": { "type": "integer", "example": 1 }
                     }
                 ],
                 "responses": {
@@ -891,14 +583,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "properties": {
-                                        "data": {
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/components/schemas/VocabSubcategory"
-                                            }
-                                        }
-                                    },
+                                    "properties": { "data": { "type": "array", "items": { "$ref": "#/components/schemas/VocabSubcategory" } } },
                                     "type": "object"
                                 }
                             }
@@ -907,44 +592,43 @@
                 }
             }
         },
+        "/api/v1/subcategories/{subcategory}/unlock": {
+            "post": {
+                "tags": ["Unlocks"],
+                "summary": "Unlock a premium subcategory with coins",
+                "description": "Deducts `coin_price` coins from the user and records an unlock for the subcategory and all its current words.",
+                "operationId": "subcategories_unlock",
+                "parameters": [
+                    { "name": "subcategory", "in": "path", "required": true, "schema": { "type": "integer" } }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Unlocked",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": { "message": { "type": "string" }, "coins_remaining": { "type": "integer" } },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": { "description": "Subcategory is not premium or already unlocked" },
+                    "402": { "description": "Insufficient coins" }
+                },
+                "security": [{ "sanctum": [] }]
+            }
+        },
         "/api/v1/vocabularies": {
             "get": {
-                "tags": [
-                    "Public"
-                ],
+                "tags": ["Public"],
                 "summary": "List approved vocab words with optional search and filters",
+                "description": "When a valid Sanctum token is provided, locked words have their audio, sentences, and images nulled out and `is_locked` is true.",
                 "operationId": "fee18a2abb523870482563179db17f1b",
                 "parameters": [
-                    {
-                        "name": "search",
-                        "in": "query",
-                        "description": "Search across word_jp, word_romaji, and word_en",
-                        "required": false,
-                        "schema": {
-                            "type": "string",
-                            "example": "neko"
-                        }
-                    },
-                    {
-                        "name": "category_id",
-                        "in": "query",
-                        "description": "Filter words that belong to subcategories of this category",
-                        "required": false,
-                        "schema": {
-                            "type": "integer",
-                            "example": 1
-                        }
-                    },
-                    {
-                        "name": "subcategory_id",
-                        "in": "query",
-                        "description": "Filter words that belong to this subcategory",
-                        "required": false,
-                        "schema": {
-                            "type": "integer",
-                            "example": 3
-                        }
-                    }
+                    { "name": "search", "in": "query", "description": "Search across word_jp, word_romaji, and word_en", "required": false, "schema": { "type": "string", "example": "neko" } },
+                    { "name": "category_id", "in": "query", "description": "Filter words that belong to subcategories of this category", "required": false, "schema": { "type": "integer", "example": 1 } },
+                    { "name": "subcategory_id", "in": "query", "description": "Filter words that belong to this subcategory", "required": false, "schema": { "type": "integer", "example": 3 } }
                 ],
                 "responses": {
                     "200": {
@@ -952,14 +636,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "properties": {
-                                        "data": {
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/components/schemas/VocabWord"
-                                            }
-                                        }
-                                    },
+                                    "properties": { "data": { "type": "array", "items": { "$ref": "#/components/schemas/VocabWord" } } },
                                     "type": "object"
                                 }
                             }
@@ -968,41 +645,13 @@
                 }
             }
         },
-        "/api/v1/me/reads": {
-            "get": {
-                "tags": [
-                    "Reads"
-                ],
-                "summary": "List vocab words the authenticated user has marked read (paginated)",
-                "operationId": "3284b73fc88743b59aec2cd2cc315080",
-                "responses": {
-                    "200": {
-                        "description": "OK"
-                    }
-                },
-                "security": [
-                    {
-                        "sanctum": []
-                    }
-                ]
-            }
-        },
         "/api/v1/words/{vocabulary}/read": {
             "post": {
-                "tags": [
-                    "Reads"
-                ],
+                "tags": ["Reads"],
                 "summary": "Mark a vocab word as read (first read awards coins)",
                 "operationId": "e7a5b4118da9c49c8d6c2ffed05443cc",
                 "parameters": [
-                    {
-                        "name": "vocabulary",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
+                    { "name": "vocabulary", "in": "path", "required": true, "schema": { "type": "integer" } }
                 ],
                 "responses": {
                     "201": {
@@ -1010,25 +659,75 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "properties": {
-                                        "read": {
-                                            "type": "object"
-                                        },
-                                        "coins": {
-                                            "type": "integer"
-                                        }
-                                    },
+                                    "properties": { "read": { "type": "object" }, "coins": { "type": "integer" } },
                                     "type": "object"
                                 }
                             }
                         }
                     }
                 },
-                "security": [
-                    {
-                        "sanctum": []
-                    }
-                ]
+                "security": [{ "sanctum": [] }]
+            }
+        },
+        "/api/v1/words/{vocabulary}/unlock": {
+            "post": {
+                "tags": ["Unlocks"],
+                "summary": "Unlock a premium word with coins",
+                "description": "Deducts `coin_price` coins from the user and records an unlock for the individual word. If the word's category or subcategory is already unlocked, returns 400.",
+                "operationId": "words_unlock",
+                "parameters": [
+                    { "name": "vocabulary", "in": "path", "required": true, "schema": { "type": "integer" } }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Unlocked",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": { "message": { "type": "string" }, "coins_remaining": { "type": "integer" } },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": { "description": "Word is not premium or already unlocked" },
+                    "402": { "description": "Insufficient coins" }
+                },
+                "security": [{ "sanctum": [] }]
+            }
+        },
+        "/api/v1/favorites": {
+            "get": {
+                "tags": ["Favorites"],
+                "summary": "List the authenticated user's favorite vocab words (paginated)",
+                "operationId": "8d2bd7cabe6dbeca723fdd10fb66150d",
+                "responses": { "200": { "description": "OK" } },
+                "security": [{ "sanctum": [] }]
+            }
+        },
+        "/api/v1/favorites/{vocabulary}": {
+            "post": {
+                "tags": ["Favorites"],
+                "summary": "Add a vocab word to favorites",
+                "operationId": "83c8e4f26e91e47e80468e20a90c3faa",
+                "parameters": [
+                    { "name": "vocabulary", "in": "path", "required": true, "schema": { "type": "integer" } }
+                ],
+                "responses": {
+                    "201": { "description": "Added" },
+                    "404": { "description": "Vocab not found" }
+                },
+                "security": [{ "sanctum": [] }]
+            },
+            "delete": {
+                "tags": ["Favorites"],
+                "summary": "Remove a vocab word from favorites",
+                "operationId": "c1c7ea2765ba4686c45772d1374dcbb4",
+                "parameters": [
+                    { "name": "vocabulary", "in": "path", "required": true, "schema": { "type": "integer" } }
+                ],
+                "responses": { "200": { "description": "Removed" } },
+                "security": [{ "sanctum": [] }]
             }
         }
     },
@@ -1036,411 +735,135 @@
         "schemas": {
             "AppUser": {
                 "properties": {
-                    "id": {
-                        "type": "integer",
-                        "example": 5
-                    },
-                    "name": {
-                        "type": "string",
-                        "example": "Sulaiman MD"
-                    },
-                    "username": {
-                        "type": "string",
-                        "example": "smensulaiman",
-                        "nullable": true
-                    },
-                    "email": {
-                        "type": "string",
-                        "format": "email"
-                    },
-                    "email_verified": {
-                        "type": "boolean"
-                    },
-                    "avatar": {
-                        "type": "string",
-                        "nullable": true
-                    },
-                    "login_provider": {
-                        "type": "string",
-                        "enum": [
-                            "email",
-                            "google",
-                            "apple",
-                            "facebook",
-                            "guest"
-                        ]
-                    },
-                    "created_at": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "bio": {
-                        "type": "string",
-                        "nullable": true
-                    },
-                    "gender": {
-                        "type": "string",
-                        "nullable": true,
-                        "enum": [
-                            "male",
-                            "female",
-                            "other",
-                            "prefer_not_to_say"
-                        ]
-                    },
-                    "birth_date": {
-                        "type": "string",
-                        "format": "date",
-                        "nullable": true
-                    },
-                    "native_language_code": {
-                        "type": "string"
-                    },
-                    "learning_language_code": {
-                        "type": "string"
-                    },
-                    "proficiency_level": {
-                        "type": "string",
-                        "enum": [
-                            "beginner",
-                            "elementary",
-                            "intermediate",
-                            "upper_intermediate",
-                            "advanced",
-                            "native_like"
-                        ]
-                    },
-                    "learning_goal": {
-                        "type": "string",
-                        "enum": [
-                            "travel",
-                            "school",
-                            "business",
-                            "anime",
-                            "conversation",
-                            "exam",
-                            "hobby",
-                            "other"
-                        ]
-                    },
-                    "daily_goal_minutes": {
-                        "type": "integer"
-                    },
-                    "timezone": {
-                        "type": "string",
-                        "nullable": true
-                    },
-                    "reminder_time": {
-                        "type": "string",
-                        "nullable": true
-                    },
-                    "notifications_enabled": {
-                        "type": "boolean"
-                    },
-                    "coins": {
-                        "type": "integer"
-                    },
-                    "xp_points": {
-                        "type": "integer"
-                    },
-                    "current_level": {
-                        "type": "integer"
-                    },
-                    "current_streak": {
-                        "type": "integer"
-                    },
-                    "longest_streak": {
-                        "type": "integer"
-                    },
-                    "learned_words": {
-                        "type": "integer"
-                    },
-                    "completed_lessons": {
-                        "type": "integer"
-                    },
-                    "total_study_minutes": {
-                        "type": "integer"
-                    },
-                    "last_streak_at": {
-                        "type": "string",
-                        "format": "date-time",
-                        "nullable": true
-                    },
-                    "last_seen_at": {
-                        "type": "string",
-                        "format": "date-time",
-                        "nullable": true
-                    },
-                    "last_lesson_at": {
-                        "type": "string",
-                        "format": "date-time",
-                        "nullable": true
-                    },
-                    "favorites_count": {
-                        "type": "integer"
-                    },
-                    "reads_count": {
-                        "type": "integer"
-                    }
+                    "id": { "type": "integer", "example": 5 },
+                    "name": { "type": "string", "example": "Sulaiman MD" },
+                    "username": { "type": "string", "example": "smensulaiman", "nullable": true },
+                    "email": { "type": "string", "format": "email" },
+                    "email_verified": { "type": "boolean" },
+                    "avatar": { "type": "string", "nullable": true },
+                    "login_provider": { "type": "string", "enum": ["email", "google", "apple", "facebook", "guest"] },
+                    "created_at": { "type": "string", "format": "date-time" },
+                    "bio": { "type": "string", "nullable": true },
+                    "gender": { "type": "string", "nullable": true, "enum": ["male", "female", "other", "prefer_not_to_say"] },
+                    "birth_date": { "type": "string", "format": "date", "nullable": true },
+                    "native_language_code": { "type": "string" },
+                    "learning_language_code": { "type": "string" },
+                    "proficiency_level": { "type": "string", "enum": ["beginner", "elementary", "intermediate", "upper_intermediate", "advanced", "native_like"] },
+                    "learning_goal": { "type": "string", "enum": ["travel", "school", "business", "anime", "conversation", "exam", "hobby", "other"] },
+                    "daily_goal_minutes": { "type": "integer" },
+                    "timezone": { "type": "string", "nullable": true },
+                    "reminder_time": { "type": "string", "nullable": true },
+                    "notifications_enabled": { "type": "boolean" },
+                    "coins": { "type": "integer" },
+                    "xp_points": { "type": "integer" },
+                    "current_level": { "type": "integer" },
+                    "current_streak": { "type": "integer" },
+                    "longest_streak": { "type": "integer" },
+                    "learned_words": { "type": "integer" },
+                    "completed_lessons": { "type": "integer" },
+                    "total_study_minutes": { "type": "integer" },
+                    "last_streak_at": { "type": "string", "format": "date-time", "nullable": true },
+                    "last_seen_at": { "type": "string", "format": "date-time", "nullable": true },
+                    "last_lesson_at": { "type": "string", "format": "date-time", "nullable": true },
+                    "favorites_count": { "type": "integer" },
+                    "reads_count": { "type": "integer" }
                 },
                 "type": "object"
             },
             "AuthResponse": {
                 "properties": {
-                    "user": {
-                        "$ref": "#/components/schemas/AppUser"
-                    },
-                    "token": {
-                        "type": "string"
-                    }
+                    "user": { "$ref": "#/components/schemas/AppUser" },
+                    "token": { "type": "string" }
                 },
                 "type": "object"
             },
             "ValidationError": {
                 "properties": {
-                    "message": {
-                        "type": "string"
-                    },
-                    "errors": {
-                        "type": "object"
-                    }
+                    "message": { "type": "string" },
+                    "errors": { "type": "object" }
                 },
                 "type": "object"
             },
             "CoinTransaction": {
                 "properties": {
-                    "id": {
-                        "type": "integer"
-                    },
-                    "amount": {
-                        "type": "integer"
-                    },
-                    "reason": {
-                        "type": "string"
-                    },
-                    "reference_type": {
-                        "type": "string",
-                        "nullable": true
-                    },
-                    "reference_id": {
-                        "type": "integer",
-                        "nullable": true
-                    },
-                    "created_at": {
-                        "type": "string",
-                        "format": "date-time"
-                    }
+                    "id": { "type": "integer" },
+                    "amount": { "type": "integer" },
+                    "reason": { "type": "string" },
+                    "reference_type": { "type": "string", "nullable": true },
+                    "reference_id": { "type": "integer", "nullable": true },
+                    "created_at": { "type": "string", "format": "date-time" }
+                },
+                "type": "object"
+            },
+            "Avatar": {
+                "properties": {
+                    "id": { "type": "integer", "example": 3 },
+                    "name": { "type": "string", "example": "Sakura" },
+                    "image_url": { "type": "string", "format": "uri" },
+                    "coin_price": { "type": "integer", "example": 200 },
+                    "is_owned": { "type": "boolean", "example": false }
                 },
                 "type": "object"
             },
             "VocabCategory": {
                 "properties": {
-                    "id": {
-                        "type": "integer",
-                        "example": 1
-                    },
-                    "name_en": {
-                        "type": "string",
-                        "example": "Animals",
-                        "nullable": true
-                    },
-                    "name_jp": {
-                        "type": "string",
-                        "example": "どうぶつ",
-                        "nullable": true
-                    },
-                    "name_romaji": {
-                        "type": "string",
-                        "example": "doubutsu",
-                        "nullable": true
-                    },
-                    "icon_url": {
-                        "type": "string",
-                        "format": "uri",
-                        "nullable": true
-                    },
-                    "icon_thumbnail_url": {
-                        "type": "string",
-                        "format": "uri",
-                        "nullable": true
-                    },
-                    "category_bg_path": {
-                        "type": "integer",
-                        "example": 1,
-                        "nullable": true
-                    },
-                    "bg_url": {
-                        "type": "string",
-                        "format": "uri",
-                        "nullable": true
-                    },
-                    "audio_url": {
-                        "type": "string",
-                        "format": "uri",
-                        "nullable": true
-                    },
-                    "sort_order": {
-                        "type": "integer",
-                        "example": 10,
-                        "nullable": true
-                    },
-                    "is_premium": {
-                        "type": "boolean",
-                        "example": false
-                    }
+                    "id": { "type": "integer", "example": 1 },
+                    "name_en": { "type": "string", "example": "Animals", "nullable": true },
+                    "name_jp": { "type": "string", "example": "どうぶつ", "nullable": true },
+                    "name_romaji": { "type": "string", "example": "doubutsu", "nullable": true },
+                    "icon_url": { "type": "string", "format": "uri", "nullable": true },
+                    "icon_thumbnail_url": { "type": "string", "format": "uri", "nullable": true },
+                    "category_bg_path": { "type": "integer", "example": 1, "nullable": true },
+                    "bg_url": { "type": "string", "format": "uri", "nullable": true },
+                    "audio_url": { "type": "string", "format": "uri", "nullable": true },
+                    "sort_order": { "type": "integer", "example": 10, "nullable": true },
+                    "is_premium": { "type": "boolean", "example": false },
+                    "coin_price": { "type": "integer", "example": 100, "description": "Coins required to unlock this category (0 if not premium)" },
+                    "is_locked": { "type": "boolean", "example": false, "description": "True when the authenticated user has not unlocked this premium category. Always false for unauthenticated requests." }
                 },
                 "type": "object"
             },
             "VocabSubcategory": {
                 "properties": {
-                    "id": {
-                        "type": "integer",
-                        "example": 3
-                    },
-                    "vocab_category_id": {
-                        "type": "integer",
-                        "example": 1
-                    },
-                    "name_en": {
-                        "type": "string",
-                        "example": "Farm Animals",
-                        "nullable": true
-                    },
-                    "name_jp": {
-                        "type": "string",
-                        "example": "のうじょうのどうぶつ",
-                        "nullable": true
-                    },
-                    "name_romaji": {
-                        "type": "string",
-                        "example": "noujou no doubutsu",
-                        "nullable": true
-                    },
-                    "icon_url": {
-                        "type": "string",
-                        "format": "uri",
-                        "nullable": true
-                    },
-                    "icon_thumbnail_url": {
-                        "type": "string",
-                        "format": "uri",
-                        "nullable": true
-                    },
-                    "icon_thumbnail_bg": {
-                        "type": "integer",
-                        "example": 3,
-                        "nullable": true
-                    },
-                    "bg_url": {
-                        "type": "string",
-                        "format": "uri",
-                        "nullable": true
-                    },
-                    "audio_url": {
-                        "type": "string",
-                        "format": "uri",
-                        "nullable": true
-                    },
-                    "sort_order": {
-                        "type": "integer",
-                        "example": 10,
-                        "nullable": true
-                    },
-                    "is_premium": {
-                        "type": "boolean",
-                        "example": false
-                    }
+                    "id": { "type": "integer", "example": 3 },
+                    "vocab_category_id": { "type": "integer", "example": 1 },
+                    "name_en": { "type": "string", "example": "Farm Animals", "nullable": true },
+                    "name_jp": { "type": "string", "example": "のうじょうのどうぶつ", "nullable": true },
+                    "name_romaji": { "type": "string", "example": "noujou no doubutsu", "nullable": true },
+                    "icon_url": { "type": "string", "format": "uri", "nullable": true },
+                    "icon_thumbnail_url": { "type": "string", "format": "uri", "nullable": true },
+                    "icon_thumbnail_bg": { "type": "integer", "example": 3, "nullable": true },
+                    "bg_url": { "type": "string", "format": "uri", "nullable": true },
+                    "audio_url": { "type": "string", "format": "uri", "nullable": true },
+                    "sort_order": { "type": "integer", "example": 10, "nullable": true },
+                    "is_premium": { "type": "boolean", "example": false },
+                    "coin_price": { "type": "integer", "example": 100, "description": "Coins required to unlock this subcategory (0 if not premium)" },
+                    "is_locked": { "type": "boolean", "example": false, "description": "True when the authenticated user has not unlocked this premium subcategory. Always false for unauthenticated requests." }
                 },
                 "type": "object"
             },
             "VocabWord": {
                 "properties": {
-                    "id": {
-                        "type": "integer",
-                        "example": 42
-                    },
-                    "vocab_subcategory_id": {
-                        "type": "integer",
-                        "example": 3
-                    },
-                    "word_jp": {
-                        "type": "string",
-                        "example": "ねこ"
-                    },
-                    "word_romaji": {
-                        "type": "string",
-                        "example": "neko",
-                        "nullable": true
-                    },
-                    "word_en": {
-                        "type": "string",
-                        "example": "cat",
-                        "nullable": true
-                    },
-                    "sentence_jp": {
-                        "type": "string",
-                        "example": "ねこがいます。",
-                        "nullable": true
-                    },
-                    "sentence_romaji": {
-                        "type": "string",
-                        "example": "Neko ga imasu.",
-                        "nullable": true
-                    },
-                    "sentence_en": {
-                        "type": "string",
-                        "example": "There is a cat.",
-                        "nullable": true
-                    },
-                    "audio_jp_url": {
-                        "type": "string",
-                        "format": "uri",
-                        "nullable": true
-                    },
-                    "audio_en_url": {
-                        "type": "string",
-                        "format": "uri",
-                        "nullable": true
-                    },
-                    "sentence_audio_jp_url": {
-                        "type": "string",
-                        "format": "uri",
-                        "nullable": true
-                    },
-                    "sentence_audio_en_url": {
-                        "type": "string",
-                        "format": "uri",
-                        "nullable": true
-                    },
-                    "image_url": {
-                        "type": "string",
-                        "format": "uri",
-                        "nullable": true
-                    },
-                    "image_thumbnail_url": {
-                        "type": "string",
-                        "format": "uri",
-                        "nullable": true
-                    },
-                    "image_thumbnail_bg": {
-                        "type": "integer",
-                        "example": 5,
-                        "nullable": true
-                    },
-                    "bg_url": {
-                        "type": "string",
-                        "format": "uri",
-                        "nullable": true
-                    },
-                    "sort_order": {
-                        "type": "integer",
-                        "example": 10,
-                        "nullable": true
-                    },
-                    "is_premium": {
-                        "type": "boolean",
-                        "example": false
-                    }
+                    "id": { "type": "integer", "example": 42 },
+                    "vocab_subcategory_id": { "type": "integer", "example": 3 },
+                    "word_jp": { "type": "string", "example": "ねこ" },
+                    "word_romaji": { "type": "string", "example": "neko", "nullable": true },
+                    "word_en": { "type": "string", "example": "cat", "nullable": true },
+                    "sentence_jp": { "type": "string", "example": "ねこがいます。", "nullable": true, "description": "Null when the word is locked" },
+                    "sentence_romaji": { "type": "string", "example": "Neko ga imasu.", "nullable": true, "description": "Null when the word is locked" },
+                    "sentence_en": { "type": "string", "example": "There is a cat.", "nullable": true, "description": "Null when the word is locked" },
+                    "audio_jp_url": { "type": "string", "format": "uri", "nullable": true, "description": "Null when the word is locked" },
+                    "audio_en_url": { "type": "string", "format": "uri", "nullable": true, "description": "Null when the word is locked" },
+                    "sentence_audio_jp_url": { "type": "string", "format": "uri", "nullable": true, "description": "Null when the word is locked" },
+                    "sentence_audio_en_url": { "type": "string", "format": "uri", "nullable": true, "description": "Null when the word is locked" },
+                    "image_url": { "type": "string", "format": "uri", "nullable": true, "description": "Null when the word is locked" },
+                    "image_thumbnail_url": { "type": "string", "format": "uri", "nullable": true, "description": "Null when the word is locked" },
+                    "image_thumbnail_bg": { "type": "integer", "example": 5, "nullable": true },
+                    "bg_url": { "type": "string", "format": "uri", "nullable": true },
+                    "sort_order": { "type": "integer", "example": 10, "nullable": true },
+                    "is_premium": { "type": "boolean", "example": false },
+                    "coin_price": { "type": "integer", "example": 100, "description": "Coins required to unlock this word (0 if not premium)" },
+                    "is_locked": { "type": "boolean", "example": false, "description": "True when the authenticated user has not unlocked this premium word. Always false for unauthenticated requests." }
                 },
                 "type": "object"
             }
@@ -1454,29 +877,13 @@
         }
     },
     "tags": [
-        {
-            "name": "Auth",
-            "description": "Registration, login, social login, password reset, email verification"
-        },
-        {
-            "name": "Profile",
-            "description": "Authenticated user profile"
-        },
-        {
-            "name": "Favorites",
-            "description": "Vocabulary favorites"
-        },
-        {
-            "name": "Reads",
-            "description": "Mark vocab words as read, list read history"
-        },
-        {
-            "name": "Coins",
-            "description": "Coin balance and transaction history"
-        },
-        {
-            "name": "Public",
-            "description": "Public catalog endpoints (no auth)"
-        }
+        { "name": "Auth", "description": "Registration, login, social login, guest, password reset, email verification" },
+        { "name": "Profile", "description": "Authenticated user profile" },
+        { "name": "Avatars", "description": "Avatar catalog, purchase, and active avatar management" },
+        { "name": "Favorites", "description": "Vocabulary favorites" },
+        { "name": "Reads", "description": "Mark vocab words as read, list read history" },
+        { "name": "Coins", "description": "Coin balance and transaction history" },
+        { "name": "Unlocks", "description": "Purchase access to premium words, subcategories, and categories using coins" },
+        { "name": "Public", "description": "Public catalog endpoints (no auth required; auth optional for lock status)" }
     ]
 }
