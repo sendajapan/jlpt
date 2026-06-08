@@ -1,8 +1,8 @@
 @props([
     'name',
-    'en',
-    'jp',
-    'rm',
+    'en' => '',
+    'jp' => '',
+    'rm' => '',
     'current' => null,
     'hint' => 'JPG, PNG, SVG, WebP',
 ])
