@@ -2,6 +2,7 @@ package com.scholarlyapps.pathlingo.ui.activities;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -19,6 +20,7 @@ import java.util.Objects;
 public class MainDashboardActivity extends AppCompatActivity {
 
     private ActivityMainDashboardBinding binding;
+    private int statusBarInset = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +30,13 @@ public class MainDashboardActivity extends AppCompatActivity {
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.getRoot(), (v, insets) -> {
             Insets bars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            binding.navHost.setPadding(0, bars.top, 0, 0);
+            statusBarInset = bars.top;
+
+            int dp16 = (int) (16 * getResources().getDisplayMetrics().density);
+            ViewGroup.MarginLayoutParams headerParams = (ViewGroup.MarginLayoutParams) binding.header.getLayoutParams();
+            headerParams.topMargin = bars.top + dp16;
+            binding.header.requestLayout();
+
             binding.bottomNav.setPadding(0, 0, 0, bars.bottom);
             return insets;
         });
@@ -63,10 +71,15 @@ public class MainDashboardActivity extends AppCompatActivity {
         navController.addOnDestinationChangedListener((controller, destination, args) -> {
             int id = destination.getId();
             boolean isTab = id == R.id.homeFragment
-                || id == R.id.favoritesFragment
+                || id == R.id.vocabularyFragment
                 || id == R.id.progressFragment
+                || id == R.id.notificationFragment
                 || id == R.id.profileFragment;
             binding.bottomNav.setVisibility(isTab ? View.VISIBLE : View.GONE);
+
+            boolean showHeader = id != R.id.profileFragment;
+            binding.appBar.setVisibility(showHeader ? View.VISIBLE : View.GONE);
+            binding.navHost.setPadding(0, showHeader ? 0 : statusBarInset, 0, 0);
         });
     }
 }

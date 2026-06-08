@@ -28,8 +28,8 @@
                 android:orientation="horizontal">
 
                 <com.google.android.material.card.MaterialCardView
-                    android:layout_width="@dimen/_72sdp"
-                    android:layout_height="@dimen/_72sdp"
+                    android:layout_width="@dimen/_62sdp"
+                    android:layout_height="@dimen/_62sdp"
                     app:cardBackgroundColor="@color/color_theme_light"
                     app:cardCornerRadius="@dimen/_8sdp"
                     app:cardElevation="0dp">

@@ -39,10 +39,10 @@ public class HomeFragment extends Fragment {
         HomeViewModel viewModel = new ViewModelProvider(this, new AppViewModelFactory()).get(HomeViewModel.class);
 
         binding.btnSeeAll.setOnClickListener(v ->
-            Navigation.findNavController(v).navigate(R.id.action_home_to_categories));
+            Navigation.findNavController(v).navigate(R.id.vocabularyFragment));
 
         binding.btnStartLesson.setOnClickListener(v ->
-            Navigation.findNavController(v).navigate(R.id.action_home_to_categories));
+            Navigation.findNavController(v).navigate(R.id.vocabularyFragment));
 
         CategoryAdapter adapter = new CategoryAdapter(new ArrayList<>(), category -> {
             Bundle args = new Bundle();
@@ -73,12 +73,7 @@ public class HomeFragment extends Fragment {
             binding.rvCategories.setVisibility(isLoading ? View.GONE : View.VISIBLE);
         });
 
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                viewModel.loadData();
-            }
-        });
+        new Handler(Looper.getMainLooper()).post(viewModel::loadData);
     }
 
     @Override

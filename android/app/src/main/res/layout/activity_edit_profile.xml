@@ -32,31 +32,30 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
             android:orientation="vertical"
             android:paddingHorizontal="@dimen/_24sdp"
-            android:paddingTop="@dimen/_16sdp"
+            android:paddingTop="@dimen/_8sdp"
             android:paddingBottom="@dimen/_32sdp">
 
             <FrameLayout
-                android:layout_width="@dimen/_72sdp"
-                android:layout_height="@dimen/_72sdp"
+                android:layout_width="@dimen/_62sdp"
+                android:layout_height="@dimen/_62sdp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/_16sdp">
+                android:layout_marginBottom="@dimen/_8sdp">
 
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:cardBackgroundColor="@color/color_theme_light"
                     app:cardCornerRadius="24dp"
-                    app:cardElevation="0dp">
+                    app:cardElevation="0dp"
+                    android:layout_margin="@dimen/_4sdp">
 
                     <ImageView
                         android:id="@+id/imgAvatar"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/ic_user"
+                        android:scaleType="fitCenter"
                         app:tint="@color/color_theme_navy" />
 
                 </com.google.android.material.card.MaterialCardView>
@@ -64,10 +63,10 @@
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="@dimen/_22sdp"
                     android:layout_height="@dimen/_22sdp"
-                    android:layout_gravity="bottom|end"
-                    app:cardBackgroundColor="@color/color_theme_dark"
-                    app:cardCornerRadius="@dimen/_11sdp"
-                    app:cardElevation="2dp">
+                    android:layout_gravity="top|end"
+                    app:cardBackgroundColor="@color/color_theme_navy"
+                    app:cardCornerRadius="@dimen/_4sdp"
+                    app:cardElevation="0dp">
 
                     <ImageView
                         android:layout_width="match_parent"

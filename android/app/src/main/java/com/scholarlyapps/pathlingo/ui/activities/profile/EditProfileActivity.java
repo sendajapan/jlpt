@@ -181,7 +181,9 @@ public class EditProfileActivity extends AppCompatActivity {
         sheet.setAvatars(avatars);
         sheet.setOnAvatarSelectedListener(updatedUser -> {
             currentUserCoins = updatedUser.coins;
-            loadAvatarImage(updatedUser.avatarUrl != null ? updatedUser.avatarUrl : updatedUser.avatar);
+            String url = updatedUser.avatarUrl != null ? updatedUser.avatarUrl : updatedUser.avatar;
+            loadAvatarImage(url);
+            viewModel.refreshProfile();
         });
         sheet.show(getSupportFragmentManager(), "avatar_picker");
     }

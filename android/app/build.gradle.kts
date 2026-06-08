@@ -72,6 +72,7 @@ dependencies {
     implementation(libs.credentials.play.services.auth)
     implementation(libs.googleid)
 
+    implementation("com.airbnb.android:lottie:6.4.0")
     implementation("androidx.room:room-runtime:2.6.1")
     annotationProcessor("androidx.room:room-compiler:2.6.1")
     implementation("androidx.lifecycle:lifecycle-livedata:2.8.7")

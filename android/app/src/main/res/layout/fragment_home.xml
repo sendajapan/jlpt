@@ -12,12 +12,6 @@
         android:orientation="vertical"
         android:paddingBottom="@dimen/_100sdp">
 
-        <com.scholarlyapps.pathlingo.ui.views.HeaderView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_62sdp"
-            android:layout_marginTop="@dimen/_16sdp"
-            android:layout_marginHorizontal="@dimen/_16sdp" />
-
         <!-- STATS ROW -->
         <LinearLayout
             android:layout_width="match_parent"

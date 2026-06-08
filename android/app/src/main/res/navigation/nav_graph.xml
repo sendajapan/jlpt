@@ -9,17 +9,18 @@
         android:name="com.scholarlyapps.pathlingo.ui.fragments.HomeFragment"
         android:label="Home">
         <action
-            android:id="@+id/action_home_to_categories"
-            app:destination="@id/categoryListFragment" />
-        <action
             android:id="@+id/action_home_to_subcategory"
             app:destination="@id/subcategoryFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/favoritesFragment"
-        android:name="com.scholarlyapps.pathlingo.ui.fragments.FavoritesFragment"
-        android:label="Saved" />
+        android:id="@+id/vocabularyFragment"
+        android:name="com.scholarlyapps.pathlingo.ui.fragments.VocabularyFragment"
+        android:label="Vocabulary">
+        <action
+            android:id="@+id/action_vocabulary_to_subcategory"
+            app:destination="@id/subcategoryFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/progressFragment"
@@ -27,18 +28,14 @@
         android:label="Progress" />
 
     <fragment
+        android:id="@+id/notificationFragment"
+        android:name="com.scholarlyapps.pathlingo.ui.fragments.NotificationFragment"
+        android:label="Notification" />
+
+    <fragment
         android:id="@+id/profileFragment"
         android:name="com.scholarlyapps.pathlingo.ui.fragments.ProfileFragment"
         android:label="Profile" />
-
-    <fragment
-        android:id="@+id/categoryListFragment"
-        android:name="com.scholarlyapps.pathlingo.ui.fragments.CategoryListFragment"
-        android:label="Categories">
-        <action
-            android:id="@+id/action_categories_to_subcategory"
-            app:destination="@id/subcategoryFragment" />
-    </fragment>
 
     <fragment
         android:id="@+id/subcategoryFragment"

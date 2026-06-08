@@ -6,24 +6,13 @@
     android:background="@color/paper"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="@dimen/_20sdp"
-        android:paddingTop="@dimen/_24sdp"
-        android:paddingBottom="@dimen/_4sdp"
-        android:text="Progress"
-        android:textColor="@color/ink"
-        android:textSize="@dimen/_22ssp"
-        android:textStyle="bold" />
-
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/userXpCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_16sdp"
         android:layout_marginVertical="@dimen/_8sdp"
-        android:visibility="gone"
+        android:visibility="visible"
         app:cardBackgroundColor="@color/sage_deep"
         app:cardCornerRadius="20dp"
         app:cardElevation="0dp"

@@ -8,15 +8,15 @@
     android:padding="@dimen/_6sdp">
 
     <FrameLayout
-        android:layout_width="@dimen/_72sdp"
-        android:layout_height="@dimen/_72sdp">
+        android:layout_width="@dimen/_62sdp"
+        android:layout_height="@dimen/_62sdp">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardAvatar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:cardBackgroundColor="@color/color_theme_light"
-            app:cardCornerRadius="@dimen/_18sdp"
+            app:cardCornerRadius="@dimen/_8sdp"
             app:cardElevation="0dp"
             app:strokeColor="@color/color_theme_dark"
             app:strokeWidth="0dp">
@@ -26,7 +26,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_user"
                 app:tint="@color/color_theme_navy" />
 
         </com.google.android.material.card.MaterialCardView>
@@ -73,9 +72,10 @@
         android:background="@drawable/bg_pill_blue"
         android:fontFamily="@font/poppins_bold"
         android:gravity="center"
-        android:paddingHorizontal="@dimen/_6sdp"
+        android:paddingHorizontal="@dimen/_8sdp"
         android:paddingVertical="@dimen/_2sdp"
         android:textColor="@color/white"
-        android:textSize="@dimen/_8ssp" />
+        android:textSize="@dimen/_8ssp"
+        android:includeFontPadding="false"/>
 
 </LinearLayout>

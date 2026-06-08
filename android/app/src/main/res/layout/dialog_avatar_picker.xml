@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/bg_dialog"
     android:orientation="vertical">
 
@@ -29,7 +30,8 @@
             android:fontFamily="@font/poppins_bold"
             android:text="Choose Avatar"
             android:textColor="@color/ink"
-            android:textSize="@dimen/_14ssp" />
+            android:textSize="@dimen/_14ssp"
+            android:includeFontPadding="false"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -38,13 +40,13 @@
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingHorizontal="@dimen/_8sdp"
-            android:paddingVertical="@dimen/_4sdp">
+            android:paddingVertical="@dimen/_2sdp">
 
             <TextView
                 android:id="@+id/txtCoinBalance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_bold"
+                android:fontFamily="@font/poppins_semibold"
                 android:text="0 coins"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_10ssp"
@@ -70,7 +72,9 @@
         android:paddingHorizontal="@dimen/_8sdp"
         android:paddingTop="@dimen/_4sdp"
         android:clipToPadding="false"
-        android:visibility="gone" />
+        tools:listitem="@layout/item_avatar_grid"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="3"/>
 
     <TextView
         android:id="@+id/txtEmpty"

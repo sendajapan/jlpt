@@ -1,6 +1,5 @@
 package com.scholarlyapps.pathlingo.ui.views;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.ImageView;
@@ -21,14 +20,10 @@ import com.scholarlyapps.pathlingo.R;
 import com.scholarlyapps.pathlingo.viewmodels.AppViewModelFactory;
 import com.scholarlyapps.pathlingo.viewmodels.ProgressViewModel;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
 public class HeaderView extends LinearLayout {
 
     private ImageView imgAvatar;
-    private TextView txtDate;
+    private TextView txtName;
     private TextView txtCoins;
 
     public HeaderView(Context context) {
@@ -49,18 +44,15 @@ public class HeaderView extends LinearLayout {
     private void init(Context context) {
         setOrientation(VERTICAL);
         inflate(context, R.layout.layout_home_header, this);
-        imgAvatar = findViewById(R.id.imgAvatar);
-        txtDate = findViewById(R.id.txtDate);
-        txtCoins = findViewById(R.id.txtCoins);
-        setCurrentDate();
-        if (isInEditMode()) {
-            txtCoins.setText("2145");
-        }
-    }
 
-    @SuppressLint("SetTextI18n")
-    private void setCurrentDate() {
-        txtDate.setText(new SimpleDateFormat("EEEE, d MMM", Locale.getDefault()).format(new Date()));
+        imgAvatar = findViewById(R.id.imgAvatar);
+        txtName = findViewById(R.id.txtName);
+        txtCoins = findViewById(R.id.txtCoins);
+
+//        if (isInEditMode()) {
+            txtCoins.setText("2145");
+            txtName.setText("Sulaiman");
+//        }
     }
 
     @Override
@@ -76,6 +68,7 @@ public class HeaderView extends LinearLayout {
         viewModel.getUser().observe(lcOwner, user -> {
             if (user != null) {
                 txtCoins.setText(String.valueOf(user.xp));
+                txtName.setText(user.name);
             }
         });
 

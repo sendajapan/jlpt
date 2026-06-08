@@ -28,7 +28,13 @@
       "Bash(git -C \"C:\\\\Users\\\\sulai\\\\Herd\\\\jlpt_laravel\\\\android\" status --short)",
       "Bash(git *)",
       "Bash(rm \"/mnt/c/Users/sulai/Herd/jlpt_laravel/android/app/src/main/java/com/scholarlyapps/pathlingo/data/DataManager.java\")",
-      "Bash(rm \"/mnt/c/Users/sulai/Herd/jlpt_laravel/android/app/src/main/java/com/scholarlyapps/pathlingo/data/repo/CatalogData.java\")"
+      "Bash(rm \"/mnt/c/Users/sulai/Herd/jlpt_laravel/android/app/src/main/java/com/scholarlyapps/pathlingo/data/repo/CatalogData.java\")",
+      "Bash(Remove-Item *)",
+      "PowerShell(Get-ChildItem \"C:\\\\Users\\\\sulai\\\\Herd\\\\jlpt_laravel\\\\android\\\\app\\\\src\\\\main\" -Recurse | Where-Object { $_.Name -match \"ProfileFragment|fragment_profile|menu_profile\" })",
+      "Bash(curl -s \"https://pathlingo.scholarlyapps.com/docs?api-docs.json\")",
+      "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); paths={k:v for k,v in d['paths'].items\\(\\) if 'me' in k or 'profile' in k or 'user' in k}; print\\(json.dumps\\(paths, indent=2\\)\\)\")",
+      "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); paths={k:v for k,v in d['paths'].items\\(\\) if 'password' in k.lower\\(\\)}; print\\(json.dumps\\(paths, indent=2\\)\\)\")",
+      "PowerShell(Get-ChildItem \"C:\\\\Users\\\\sulai\\\\Herd\\\\jlpt_laravel\\\\android\\\\app\\\\src\\\\main\\\\res\\\\drawable\\\\\" | Where-Object { $_.Name -match \"check|tick|done\" } | Select-Object Name)"
     ]
   },
   "enableAllProjectMcpServers": true,

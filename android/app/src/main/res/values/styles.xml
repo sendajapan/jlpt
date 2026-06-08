@@ -91,6 +91,10 @@
         <item name="android:minHeight">56dp</item>
     </style>
 
+    <style name="ShapeOverlay.Avatar" parent="">
+        <item name="cornerSize">@dimen/_8sdp</item>
+    </style>
+
     <style name="Hajime.Button.Secondary" parent="Widget.MaterialComponents.Button">
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textSize">16sp</item>

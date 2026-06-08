@@ -24,7 +24,6 @@
                 android:layout_height="@dimen/_100sdp"
                 android:layout_marginTop="@dimen/_16sdp"
                 android:layout_marginBottom="@dimen/_16sdp"
-                android:src="@drawable/ic_owl"
                 android:scaleType="fitCenter" />
 
             <TextView
