@@ -14,6 +14,8 @@ public class Subcategory {
     public int total;
     public int mastered;
     public boolean locked;
+    public int coinPrice;
+    public boolean isLocked;
 
     public List<Word> words = new ArrayList<>();
 

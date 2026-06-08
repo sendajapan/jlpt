@@ -23,6 +23,7 @@ public class SubcategoryAdapter extends RecyclerView.Adapter<SubcategoryAdapter.
 
     public interface OnSubcategoryClick {
         void onClick(Subcategory subcategory);
+        void onUnlockClick(Subcategory subcategory);
     }
 
     private final List<Subcategory> subcategories;
@@ -63,7 +64,13 @@ public class SubcategoryAdapter extends RecyclerView.Adapter<SubcategoryAdapter.
         void bind(Subcategory sub, OnSubcategoryClick listener) {
             binding.txtJp.setText(sub.jp);
             binding.txtEn.setText(sub.en);
-            binding.txtLock.setVisibility(sub.locked ? View.VISIBLE : View.GONE);
+
+            if (sub.isLocked) {
+                binding.txtLock.setVisibility(View.VISIBLE);
+                binding.txtLock.setText("🔒 " + sub.coinPrice + " coins");
+            } else {
+                binding.txtLock.setVisibility(View.GONE);
+            }
 
             int accentColor = accentColor(sub.bg, binding.accentBar);
             GradientDrawable barBg = new GradientDrawable();
@@ -89,9 +96,16 @@ public class SubcategoryAdapter extends RecyclerView.Adapter<SubcategoryAdapter.
                 binding.imgIcon.setVisibility(View.GONE);
             }
 
-            boolean enabled = !sub.locked && !sub.words.isEmpty();
-            itemView.setAlpha(enabled ? 1f : 0.5f);
-            itemView.setOnClickListener(enabled ? v -> listener.onClick(sub) : null);
+            if (sub.isLocked) {
+                itemView.setAlpha(0.7f);
+                itemView.setOnClickListener(v -> listener.onUnlockClick(sub));
+            } else if (sub.words.isEmpty()) {
+                itemView.setAlpha(0.5f);
+                itemView.setOnClickListener(null);
+            } else {
+                itemView.setAlpha(1f);
+                itemView.setOnClickListener(v -> listener.onClick(sub));
+            }
         }
 
         private int accentColor(String bg, View view) {

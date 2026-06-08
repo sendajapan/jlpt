@@ -14,4 +14,6 @@ public class CategoryEntity {
     public String iconThumbnailUrl;
     public String bgUrl;
     public boolean isPremium;
+    public int coinPrice;
+    public boolean isLocked;
 }

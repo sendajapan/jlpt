@@ -15,4 +15,6 @@ public class SubcategoryEntity {
     public String iconThumbnailUrl;
     public String iconThumbnailBg;
     public boolean isPremium;
+    public int coinPrice;
+    public boolean isLocked;
 }

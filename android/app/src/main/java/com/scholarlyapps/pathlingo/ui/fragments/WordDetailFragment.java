@@ -12,8 +12,11 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.scholarlyapps.pathlingo.R;
+import com.scholarlyapps.pathlingo.data.remote.ServiceLocator;
+import com.scholarlyapps.pathlingo.data.remote.dto.CoinsBalanceResponse;
 import com.scholarlyapps.pathlingo.databinding.FragmentWordDetailBinding;
 import com.scholarlyapps.pathlingo.models.Word;
+import com.scholarlyapps.pathlingo.ui.UnlockBottomSheet;
 import com.scholarlyapps.pathlingo.viewmodels.AppViewModelFactory;
 import com.scholarlyapps.pathlingo.viewmodels.WordDetailViewModel;
 
@@ -21,6 +24,9 @@ import java.util.List;
 
 import coil.Coil;
 import coil.request.ImageRequest;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class WordDetailFragment extends Fragment {
 
@@ -73,9 +79,20 @@ public class WordDetailFragment extends Fragment {
         binding.txtReading.setText(word.reading);
         binding.txtRomaji.setText(word.romaji);
         binding.txtEn.setText(word.en);
-        binding.txtExampleJp.setText(word.example_jp);
-        binding.txtExampleRomaji.setText(word.example_romaji);
-        binding.txtExampleEn.setText(word.example_en);
+
+        if (word.isLocked) {
+            binding.cardExample.setVisibility(View.GONE);
+            binding.cardLocked.setVisibility(View.VISIBLE);
+            binding.txtLockCost.setText("Unlock for " + word.coinPrice + " coins");
+            binding.btnUnlockWord.setOnClickListener(v -> fetchCoinsAndUnlock(word));
+        } else {
+            binding.cardExample.setVisibility(View.VISIBLE);
+            binding.cardLocked.setVisibility(View.GONE);
+            binding.txtExampleJp.setText(word.example_jp);
+            binding.txtExampleRomaji.setText(word.example_romaji);
+            binding.txtExampleEn.setText(word.example_en);
+        }
+
         binding.chipType.setText(word.type.isEmpty() ? "—" : word.type);
         binding.chipJlpt.setText(word.jlpt.isEmpty() ? "JLPT" : word.jlpt);
         binding.chipXp.setText("+" + word.xp + " XP");
@@ -90,6 +107,35 @@ public class WordDetailFragment extends Fragment {
                 Navigation.findNavController(v).navigate(R.id.action_word_to_score);
             }
         });
+    }
+
+    private void fetchCoinsAndUnlock(Word word) {
+        ServiceLocator.api.coinsBalance().enqueue(new Callback<CoinsBalanceResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<CoinsBalanceResponse> call, @NonNull Response<CoinsBalanceResponse> response) {
+                if (!isAdded()) return;
+                int coins = response.isSuccessful() && response.body() != null ? response.body().coins : 0;
+                showUnlockSheet(word, coins);
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<CoinsBalanceResponse> call, @NonNull Throwable t) {
+                if (!isAdded()) return;
+                showUnlockSheet(word, 0);
+            }
+        });
+    }
+
+    private void showUnlockSheet(Word word, int userCoins) {
+        UnlockBottomSheet sheet = UnlockBottomSheet.create(
+                UnlockBottomSheet.Type.WORD,
+                word.id,
+                word.kanji + " · " + word.en,
+                word.coinPrice,
+                userCoins
+        );
+        sheet.setOnUnlockListener(() -> ServiceLocator.categoryRepository.refresh());
+        sheet.show(getChildFragmentManager(), "unlock");
     }
 
     @Override

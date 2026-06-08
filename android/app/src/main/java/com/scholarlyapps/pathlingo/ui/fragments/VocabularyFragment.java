@@ -34,10 +34,17 @@ public class VocabularyFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         CategoryListViewModel viewModel = new ViewModelProvider(this, new AppViewModelFactory()).get(CategoryListViewModel.class);
 
-        CategoryAdapter adapter = new CategoryAdapter(new ArrayList<>(), category -> {
-            Bundle args = new Bundle();
-            args.putString("categoryId", category.id);
-            Navigation.findNavController(view).navigate(R.id.action_vocabulary_to_subcategory, args);
+        CategoryAdapter adapter = new CategoryAdapter(new ArrayList<>(), new CategoryAdapter.OnCategoryClick() {
+            @Override
+            public void onClick(com.scholarlyapps.pathlingo.models.Category category) {
+                Bundle args = new Bundle();
+                args.putString("categoryId", category.id);
+                Navigation.findNavController(view).navigate(R.id.action_vocabulary_to_subcategory, args);
+            }
+
+            @Override
+            public void onUnlockClick(com.scholarlyapps.pathlingo.models.Category category) {
+            }
         });
         binding.rvCategories.setLayoutManager(new androidx.recyclerview.widget.GridLayoutManager(requireContext(), 2));
         binding.rvCategories.setAdapter(adapter);

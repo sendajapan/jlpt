@@ -19,6 +19,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
     public interface OnCategoryClick {
         void onClick(Category category);
+        void onUnlockClick(Category category);
     }
 
     private List<Category> categories;
@@ -66,7 +67,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             binding.txtCh.setText(cat.ch);
             binding.txtEn.setText(cat.en);
             binding.txtWordCount.setText(cat.count + " words");
-            binding.txtLock.setVisibility(cat.locked ? View.VISIBLE : View.GONE);
+
+            if (cat.isLocked) {
+                binding.txtLock.setVisibility(View.VISIBLE);
+                binding.txtLock.setText("🔒 " + cat.coinPrice + " coins");
+            } else {
+                binding.txtLock.setVisibility(View.GONE);
+            }
 
             if (!cat.bg.isEmpty()) {
                 binding.imgBackground.setVisibility(View.VISIBLE);
@@ -92,7 +99,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
                 binding.imgIcon.setVisibility(View.GONE);
             }
 
-            binding.cardRoot.setOnClickListener(v -> listener.onClick(cat));
+            if (cat.isLocked) {
+                binding.cardRoot.setOnClickListener(v -> listener.onUnlockClick(cat));
+            } else {
+                binding.cardRoot.setOnClickListener(v -> listener.onClick(cat));
+            }
         }
     }
 }

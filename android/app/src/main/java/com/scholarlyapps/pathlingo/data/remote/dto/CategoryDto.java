@@ -24,4 +24,10 @@ public class CategoryDto {
     public Integer sortOrder;
     @SerializedName("is_premium")
     public boolean isPremium;
+
+    @SerializedName("coin_price")
+    public int coinPrice;
+
+    @SerializedName("is_locked")
+    public boolean isLocked;
 }

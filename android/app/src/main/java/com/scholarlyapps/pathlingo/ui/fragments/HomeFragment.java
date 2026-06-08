@@ -44,10 +44,17 @@ public class HomeFragment extends Fragment {
         binding.btnStartLesson.setOnClickListener(v ->
             Navigation.findNavController(v).navigate(R.id.vocabularyFragment));
 
-        CategoryAdapter adapter = new CategoryAdapter(new ArrayList<>(), category -> {
-            Bundle args = new Bundle();
-            args.putString("categoryId", category.id);
-            Navigation.findNavController(view).navigate(R.id.action_home_to_subcategory, args);
+        CategoryAdapter adapter = new CategoryAdapter(new ArrayList<>(), new CategoryAdapter.OnCategoryClick() {
+            @Override
+            public void onClick(com.scholarlyapps.pathlingo.models.Category category) {
+                Bundle args = new Bundle();
+                args.putString("categoryId", category.id);
+                Navigation.findNavController(view).navigate(R.id.action_home_to_subcategory, args);
+            }
+
+            @Override
+            public void onUnlockClick(com.scholarlyapps.pathlingo.models.Category category) {
+            }
         });
 
         binding.rvCategories.setAdapter(adapter);

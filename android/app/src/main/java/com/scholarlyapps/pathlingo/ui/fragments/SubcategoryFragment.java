@@ -13,10 +13,18 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.scholarlyapps.pathlingo.R;
+import com.scholarlyapps.pathlingo.data.remote.ServiceLocator;
+import com.scholarlyapps.pathlingo.data.remote.dto.CoinsBalanceResponse;
 import com.scholarlyapps.pathlingo.databinding.FragmentSubcategoryBinding;
+import com.scholarlyapps.pathlingo.models.Subcategory;
+import com.scholarlyapps.pathlingo.ui.UnlockBottomSheet;
 import com.scholarlyapps.pathlingo.ui.adapters.SubcategoryAdapter;
 import com.scholarlyapps.pathlingo.viewmodels.AppViewModelFactory;
 import com.scholarlyapps.pathlingo.viewmodels.SubcategoryViewModel;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import coil.Coil;
 import coil.request.ImageRequest;
@@ -65,16 +73,53 @@ public class SubcategoryFragment extends Fragment {
                     new ImageRequest.Builder(requireContext()).data(category.iconUrl).target(binding.imgCategoryIcon).build());
             }
 
-            binding.rvSubcategories.setAdapter(new SubcategoryAdapter(category.subcategories, subcat -> {
-                Bundle args = new Bundle();
-                args.putString("subcategoryId", subcat.id);
-                args.putString("iconUrl", subcat.iconUrl);
-                args.putInt("wordIndex", 0);
-                Navigation.findNavController(view).navigate(R.id.action_subcategory_to_word_detail, args);
+            binding.rvSubcategories.setAdapter(new SubcategoryAdapter(category.subcategories, new SubcategoryAdapter.OnSubcategoryClick() {
+                @Override
+                public void onClick(Subcategory subcat) {
+                    Bundle args = new Bundle();
+                    args.putString("subcategoryId", subcat.id);
+                    args.putString("iconUrl", subcat.iconUrl);
+                    args.putInt("wordIndex", 0);
+                    Navigation.findNavController(view).navigate(R.id.action_subcategory_to_word_detail, args);
+                }
+
+                @Override
+                public void onUnlockClick(Subcategory subcat) {
+                    fetchCoinsAndUnlock(subcat);
+                }
             }));
         });
 
         viewModel.load(Long.parseLong(categoryIdStr));
+    }
+
+    private void fetchCoinsAndUnlock(Subcategory subcat) {
+        ServiceLocator.api.coinsBalance().enqueue(new Callback<CoinsBalanceResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<CoinsBalanceResponse> call, @NonNull Response<CoinsBalanceResponse> response) {
+                if (!isAdded()) return;
+                int coins = response.isSuccessful() && response.body() != null ? response.body().coins : 0;
+                showUnlockSheet(subcat, coins);
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<CoinsBalanceResponse> call, @NonNull Throwable t) {
+                if (!isAdded()) return;
+                showUnlockSheet(subcat, 0);
+            }
+        });
+    }
+
+    private void showUnlockSheet(Subcategory subcat, int userCoins) {
+        UnlockBottomSheet sheet = UnlockBottomSheet.create(
+                UnlockBottomSheet.Type.SUBCATEGORY,
+                Long.parseLong(subcat.id),
+                subcat.jp + " · " + subcat.en,
+                subcat.coinPrice,
+                userCoins
+        );
+        sheet.setOnUnlockListener(() -> ServiceLocator.categoryRepository.refresh());
+        sheet.show(getChildFragmentManager(), "unlock");
     }
 
     @Override

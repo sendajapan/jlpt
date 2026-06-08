@@ -17,5 +17,7 @@ public class WordEntity {
     public String audioJpUrl;
     public String imageUrl;
     public boolean isPremium;
+    public int coinPrice;
+    public boolean isLocked;
     public boolean isFavorite;
 }

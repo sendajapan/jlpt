@@ -20,7 +20,7 @@ import com.scholarlyapps.pathlingo.data.local.db.entity.WordEntity;
 
 @Database(
     entities = {CategoryEntity.class, SubcategoryEntity.class, WordEntity.class, UserEntity.class},
-    version = 2,
+    version = 3,
     exportSchema = false
 )
 public abstract class AppDatabase extends RoomDatabase {
@@ -37,6 +37,18 @@ public abstract class AppDatabase extends RoomDatabase {
         }
     };
 
+    private static final Migration MIGRATION_2_3 = new Migration(2, 3) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase db) {
+            db.execSQL("ALTER TABLE categories ADD COLUMN coinPrice INTEGER NOT NULL DEFAULT 0");
+            db.execSQL("ALTER TABLE categories ADD COLUMN isLocked INTEGER NOT NULL DEFAULT 0");
+            db.execSQL("ALTER TABLE subcategories ADD COLUMN coinPrice INTEGER NOT NULL DEFAULT 0");
+            db.execSQL("ALTER TABLE subcategories ADD COLUMN isLocked INTEGER NOT NULL DEFAULT 0");
+            db.execSQL("ALTER TABLE words ADD COLUMN coinPrice INTEGER NOT NULL DEFAULT 0");
+            db.execSQL("ALTER TABLE words ADD COLUMN isLocked INTEGER NOT NULL DEFAULT 0");
+        }
+    };
+
     private static volatile AppDatabase instance;
 
     public static AppDatabase getInstance(Context context) {
@@ -47,7 +59,7 @@ public abstract class AppDatabase extends RoomDatabase {
                         context.getApplicationContext(),
                         AppDatabase.class,
                         "pathlingo.db"
-                    ).addMigrations(MIGRATION_1_2).build();
+                    ).addMigrations(MIGRATION_1_2, MIGRATION_2_3).build();
                 }
             }
         }

@@ -107,4 +107,13 @@ public interface ApiService {
 
     @PATCH("me/avatar")
     Call<WrappedResponse<AppUserDto>> setActiveAvatar(@Body Map<String, Long> body);
+
+    @POST("words/{id}/unlock")
+    Call<MessageResponse> unlockWord(@Path("id") long wordId);
+
+    @POST("categories/{id}/unlock")
+    Call<MessageResponse> unlockCategory(@Path("id") long categoryId);
+
+    @POST("subcategories/{id}/unlock")
+    Call<MessageResponse> unlockSubcategory(@Path("id") long subcategoryId);
 }

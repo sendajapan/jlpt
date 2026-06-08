@@ -136,6 +136,8 @@ public class CategoryRepository {
             category.iconUrl = orEmpty(entity.iconUrl);
             category.img = orEmpty(entity.iconThumbnailUrl);
             category.locked = entity.isPremium;
+            category.coinPrice = entity.coinPrice;
+            category.isLocked = entity.isLocked;
             categories.add(category);
         }
 
@@ -165,6 +167,8 @@ public class CategoryRepository {
         category.iconUrl = orEmpty(row.category.iconUrl);
         category.img = orEmpty(row.category.iconThumbnailUrl);
         category.locked = row.category.isPremium;
+        category.coinPrice = row.category.coinPrice;
+        category.isLocked = row.category.isLocked;
 
         for (SubcategoryWithWords subcategoryRow : row.subcategories) {
             Subcategory subcategory = mapSubcategory(subcategoryRow);
@@ -184,6 +188,8 @@ public class CategoryRepository {
         subcategory.img = orEmpty(row.subcategory.iconThumbnailUrl);
         subcategory.iconUrl = orEmpty(row.subcategory.iconUrl);
         subcategory.locked = row.subcategory.isPremium;
+        subcategory.coinPrice = row.subcategory.coinPrice;
+        subcategory.isLocked = row.subcategory.isLocked;
         subcategory.words = mapWords(row.words);
         subcategory.total = subcategory.words.size();
 
@@ -196,6 +202,7 @@ public class CategoryRepository {
 
         for (WordEntity entity : entities) {
             Word word = new Word();
+            word.id = entity.id;
             word.kanji = orEmpty(entity.wordJp);
             word.reading = orEmpty(entity.wordJp);
             word.romaji = orEmpty(entity.wordRomaji);
@@ -209,6 +216,8 @@ public class CategoryRepository {
             word.xp = 0;
             word.maxMastery = 5;
             word.favorite = entity.isFavorite;
+            word.coinPrice = entity.coinPrice;
+            word.isLocked = entity.isLocked;
 
             words.add(word);
         }
@@ -229,6 +238,8 @@ public class CategoryRepository {
             entity.iconThumbnailUrl = dto.iconThumbnailUrl;
             entity.bgUrl = dto.bgUrl;
             entity.isPremium = dto.isPremium;
+            entity.coinPrice = dto.coinPrice;
+            entity.isLocked = dto.isLocked;
 
             entities.add(entity);
         }
@@ -250,6 +261,8 @@ public class CategoryRepository {
             entity.iconThumbnailUrl = dto.iconThumbnailUrl;
             entity.iconThumbnailBg = dto.iconThumbnailBg;
             entity.isPremium = dto.isPremium;
+            entity.coinPrice = dto.coinPrice;
+            entity.isLocked = dto.isLocked;
 
             entities.add(entity);
         }
@@ -273,6 +286,8 @@ public class CategoryRepository {
             entity.audioJpUrl = dto.audioJpUrl;
             entity.imageUrl = dto.imageUrl;
             entity.isPremium = dto.isPremium;
+            entity.coinPrice = dto.coinPrice;
+            entity.isLocked = dto.isLocked;
 
             entities.add(entity);
         }

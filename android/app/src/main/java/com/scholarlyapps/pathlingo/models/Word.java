@@ -2,6 +2,7 @@ package com.scholarlyapps.pathlingo.models;
 
 public class Word {
 
+    public long id;
     public String kanji;
     public String reading;
     public String romaji;
@@ -17,6 +18,8 @@ public class Word {
     public int maxMastery;
     public boolean correct;
     public boolean favorite;
+    public int coinPrice;
+    public boolean isLocked;
 
     public Word() {
     }

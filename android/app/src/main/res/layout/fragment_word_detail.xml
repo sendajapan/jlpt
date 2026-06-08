@@ -121,6 +121,7 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardExample"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/_16sdp"
@@ -166,6 +167,62 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_12ssp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardLocked"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_16sdp"
+                android:visibility="gone"
+                app:cardBackgroundColor="@color/ink_mute"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_24sdp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🔒"
+                        android:textSize="@dimen/_28ssp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:fontFamily="@font/poppins_bold"
+                        android:gravity="center"
+                        android:text="Premium Word"
+                        android:textColor="@color/ink"
+                        android:textSize="@dimen/_14ssp" />
+
+                    <TextView
+                        android:id="@+id/txtLockCost"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:gravity="center"
+                        android:textColor="@color/ink_soft"
+                        android:textSize="@dimen/_12ssp" />
+
+                    <Button
+                        android:id="@+id/btnUnlockWord"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:background="@drawable/bg_btn_terra"
+                        android:paddingHorizontal="@dimen/_24sdp"
+                        android:text="Unlock Word"
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
+
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
