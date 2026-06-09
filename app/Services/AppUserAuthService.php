@@ -56,9 +56,10 @@ class AppUserAuthService
     public function loginAsGuest(string $guestName, string $deviceName): AppUser
     {
         $username = $this->generateUniqueGuestUsername();
+        $suffix = Str::upper(Str::after($username, 'guest_'));
 
         $user = AppUser::create([
-            'full_name' => $guestName ?: 'Guest User',
+            'full_name' => $guestName ?: 'Guest '.$suffix,
             'username' => $username,
             'email' => $username.'@scholarlyapps.com',
             'login_provider' => 'guest',
@@ -81,7 +82,7 @@ class AppUserAuthService
     private function generateUniqueGuestUsername(): string
     {
         do {
-            $username = 'user_'.Str::lower(Str::random(6));
+            $username = 'guest_'.Str::lower(Str::random(6));
         } while (AppUser::where('username', $username)->exists());
 
         return $username;

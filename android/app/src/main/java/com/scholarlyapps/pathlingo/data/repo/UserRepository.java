@@ -99,6 +99,21 @@ public class UserRepository {
         }
     }
 
+    public void saveUser(AppUserDto dto) {
+        UserEntity entity = new UserEntity();
+        entity.id = dto.id;
+        entity.name = dto.name;
+        entity.username = dto.username;
+        entity.email = dto.email;
+        entity.avatarUrl = dto.avatarUrl != null ? dto.avatarUrl : dto.avatar;
+        entity.currentLevel = dto.currentLevel;
+        entity.xpPoints = dto.xpPoints;
+        entity.currentStreak = dto.currentStreak;
+        entity.learnedWords = dto.learnedWords;
+        entity.coins = dto.coins;
+        userDao.insert(entity);
+    }
+
     public ApiResult<AppUserDto> fetchProfile() {
         try {
             Response<WrappedResponse<AppUserDto>> response = apiService.me().execute();
@@ -152,6 +167,7 @@ public class UserRepository {
             entity.xpPoints = dto.xpPoints;
             entity.currentStreak = dto.currentStreak;
             entity.learnedWords = dto.learnedWords;
+            entity.coins = dto.coins;
             userDao.insert(entity);
             return ApiResult.success(dto);
         } catch (Exception e) {

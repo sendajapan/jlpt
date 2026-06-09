@@ -22,10 +22,12 @@ public class AuthRepository {
 
     private final ApiService api;
     private final TokenStore tokenStore;
+    private final UserRepository userRepository;
 
-    public AuthRepository(ApiService api, TokenStore tokenStore) {
+    public AuthRepository(ApiService api, TokenStore tokenStore, UserRepository userRepository) {
         this.api = api;
         this.tokenStore = tokenStore;
+        this.userRepository = userRepository;
     }
 
     public ApiResult<AppUserDto> guestLogin(String deviceName) {
@@ -37,6 +39,7 @@ public class AuthRepository {
             Response<AuthResponse> response = api.guestLogin(new GuestLoginRequest(deviceName, guestName)).execute();
             if (response.isSuccessful() && response.body() != null) {
                 tokenStore.save(response.body().token);
+                userRepository.saveUser(response.body().user);
                 return ApiResult.success(response.body().user);
             }
             return ApiResult.failure(parseError(response));
@@ -51,6 +54,7 @@ public class AuthRepository {
             Response<AuthResponse> response = api.login(new LoginRequest(email, password, deviceName, guestToken)).execute();
             if (response.isSuccessful() && response.body() != null) {
                 tokenStore.save(response.body().token);
+                userRepository.saveUser(response.body().user);
                 return ApiResult.success(response.body().user);
             }
             return ApiResult.failure(parseError(response));
@@ -67,6 +71,7 @@ public class AuthRepository {
             ).execute();
             if (response.isSuccessful() && response.body() != null) {
                 tokenStore.save(response.body().token);
+                userRepository.saveUser(response.body().user);
                 return ApiResult.success(response.body().user);
             }
             return ApiResult.failure(parseError(response));
@@ -80,6 +85,7 @@ public class AuthRepository {
             Response<AuthResponse> response = api.loginWithGoogle(new GoogleLoginRequest(idToken, deviceName)).execute();
             if (response.isSuccessful() && response.body() != null) {
                 tokenStore.save(response.body().token);
+                userRepository.saveUser(response.body().user);
                 return ApiResult.success(response.body().user);
             }
             return ApiResult.failure(parseError(response));

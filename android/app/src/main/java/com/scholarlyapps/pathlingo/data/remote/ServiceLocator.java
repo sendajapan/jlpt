@@ -29,9 +29,9 @@ public class ServiceLocator {
             tokenStore = new TokenStore(appContext);
             api = RetrofitClient.create(tokenStore);
             db = AppDatabase.getInstance(appContext);
-            authRepository = new AuthRepository(api, tokenStore);
-            categoryRepository = new CategoryRepository(api, db.categoryDao(), db.subcategoryDao(), db.wordDao());
             userRepository = new UserRepository(api, db.userDao());
+            authRepository = new AuthRepository(api, tokenStore, userRepository);
+            categoryRepository = new CategoryRepository(api, db.categoryDao(), db.subcategoryDao(), db.wordDao());
             initialized = true;
         }
     }
