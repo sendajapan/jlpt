@@ -111,6 +111,7 @@ public class UserRepository {
         entity.currentStreak = dto.currentStreak;
         entity.learnedWords = dto.learnedWords;
         entity.coins = dto.coins;
+        userDao.deleteAll();
         userDao.insert(entity);
     }
 
