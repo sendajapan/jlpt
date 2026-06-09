@@ -22,7 +22,7 @@ class UpdateVocabularyRequest extends FormRequest
             'word_romaji' => ['required', 'string', 'max:255'],
             'sentence_romaji' => ['nullable', 'string'],
             'word_en' => ['required', 'string', 'max:500'],
-            'pos' => ['nullable', 'string', 'in:noun,verb,i-adjective,na-adjective,adverb,particle,conjunction,interjection,pronoun,expression,counter,prefix,suffix'],
+            'pos' => ['nullable', 'string', 'in:noun,pronoun,adjective,verb,adverb,preposition,conjunction,interjection'],
             'audio_en' => ['nullable', 'file', 'mimes:mp3,wav,ogg,aac,m4a', 'max:20480'],
             'sentence_en' => ['nullable', 'string'],
             'sentence_audio_en' => ['nullable', 'file', 'mimes:mp3,wav,ogg,aac,m4a', 'max:20480'],

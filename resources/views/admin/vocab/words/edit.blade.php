@@ -58,26 +58,27 @@
                         </select>
                         @error('vocab_subcategory_id') <p class="mt-1 text-[10px] text-red-500">{{ $message }}</p> @enderror
                     </div>
+
+                    <div>
+                        <label class="block text-xs font-medium text-zinc-700 mb-1.5">Part of Speech</label>
+                        <select name="pos" class="{{ $errors->has('pos') ? 'flex h-8 w-full rounded-md border border-red-400 bg-white px-3 text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-0 transition-shadow duration-150' : 'flex h-8 w-full rounded-md border border-zinc-200 bg-white px-3 text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:ring-offset-0 transition-shadow duration-150' }}">
+                            <option value="">— none —</option>
+                            @foreach(['noun','pronoun','adjective','verb','adverb','preposition','conjunction','interjection'] as $posOption)
+                                <option value="{{ $posOption }}" {{ old('pos', $vocabulary->pos) === $posOption ? 'selected' : '' }}>{{ ucfirst($posOption) }}</option>
+                            @endforeach
+                        </select>
+                        @error('pos') <p class="mt-1 text-[10px] text-red-500">{{ $message }}</p> @enderror
+                    </div>
                 </div>
 
                 <div class="pl-3 border-l-2 border-blue-500">
                     <span class="text-[9px] font-bold uppercase tracking-[0.18em] text-blue-500 block mb-2.5">English</span>
-                    <div class="grid grid-cols-3 gap-3 mb-2.5">
+                    <div class="grid grid-cols-2 gap-3 mb-2.5">
                         <div>
                             <label class="block text-[10px] font-medium text-zinc-500 mb-1">Word <span class="text-red-400">*</span></label>
                             <input type="text" name="word_en" value="{{ old('word_en', $vocabulary->word_en) }}"
                                    class="{{ $errors->has('word_en') ? 'flex h-8 w-full rounded-md border border-red-400 bg-white px-3 text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-0 transition-shadow duration-150' : 'flex h-8 w-full rounded-md border border-zinc-200 bg-white px-3 text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:ring-offset-0 transition-shadow duration-150' }}">
                             @error('word_en') <p class="mt-1 text-[10px] text-red-500">{{ $message }}</p> @enderror
-                        </div>
-                        <div>
-                            <label class="block text-[10px] font-medium text-zinc-500 mb-1">Part of Speech</label>
-                            <select name="pos" class="{{ $errors->has('pos') ? 'flex h-8 w-full rounded-md border border-red-400 bg-white px-3 text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-0 transition-shadow duration-150' : 'flex h-8 w-full rounded-md border border-zinc-200 bg-white px-3 text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:ring-offset-0 transition-shadow duration-150' }}">
-                                <option value="">— none —</option>
-                                @foreach(['noun','verb','i-adjective','na-adjective','adverb','particle','conjunction','interjection','pronoun','expression','counter','prefix','suffix'] as $posOption)
-                                    <option value="{{ $posOption }}" {{ old('pos', $vocabulary->pos) === $posOption ? 'selected' : '' }}>{{ $posOption }}</option>
-                                @endforeach
-                            </select>
-                            @error('pos') <p class="mt-1 text-[10px] text-red-500">{{ $message }}</p> @enderror
                         </div>
                         <div x-data="{ src: @js($vocabulary->audio_en ? Storage::url($vocabulary->audio_en) : null) }">
                             <label class="block text-[10px] font-medium text-zinc-500 mb-1">Word Audio</label>

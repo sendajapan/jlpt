@@ -281,7 +281,7 @@
                             </td>
                             <td class="px-4 py-3 text-xs text-zinc-500 text-center">
                                 @if($vocab->pos)
-                                    <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-zinc-100 text-zinc-600">{{ $vocab->pos }}</span>
+                                    <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-zinc-100 text-zinc-600">{{ ucfirst($vocab->pos) }}</span>
                                 @else
                                     —
                                 @endif
