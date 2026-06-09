@@ -121,6 +121,14 @@
                     </svg>
                     API Docs
                 </a>
+
+                <a href="/laravel-erd" target="_blank"
+                   class="relative flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-xs font-medium transition-all duration-150 text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100">
+                    <svg class="w-3.5 h-3.5 flex-shrink-0 text-zinc-400" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM14 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 15a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1v-4zM17 14a1 1 0 100 2h.01a1 1 0 100-2H17zM11 15a1 1 0 011-1h.01a1 1 0 010 2H12a1 1 0 01-1-1zM21 15a1 1 0 01-1 1h-.01a1 1 0 010-2H20a1 1 0 011 1zM17 20a1 1 0 100-2h.01a1 1 0 100 2H17zM11 19a1 1 0 011-1h.01a1 1 0 010 2H12a1 1 0 01-1-1zM21 19a1 1 0 01-1 1h-.01a1 1 0 010-2H20a1 1 0 011 1z"/>
+                    </svg>
+                    ERD
+                </a>
             </div>
 
         </nav>
