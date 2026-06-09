@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -8,9 +7,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:weightSum="2"
         android:orientation="vertical"
-        android:paddingBottom="@dimen/_100sdp">
+        android:paddingBottom="@dimen/_100sdp"
+        android:weightSum="2">
 
         <!-- STATS ROW -->
         <LinearLayout
@@ -39,20 +38,20 @@
                     android:id="@+id/txtStreak"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="7"
                     android:fontFamily="@font/poppins_bold"
+                    android:includeFontPadding="false"
+                    android:text="7"
                     android:textColor="@color/ink"
-                    android:textSize="@dimen/_16ssp"
-                    android:includeFontPadding="false"/>
+                    android:textSize="@dimen/_16ssp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="DAY STREAK"
                     android:fontFamily="@font/poppins_semibold"
+                    android:includeFontPadding="false"
+                    android:text="DAY STREAK"
                     android:textColor="@color/color_theme_black"
-                    android:textSize="@dimen/_9ssp"
-                    android:includeFontPadding="false"/>
+                    android:textSize="@dimen/_9ssp" />
             </LinearLayout>
 
             <View
@@ -78,20 +77,20 @@
                     android:id="@+id/txtWordsKnown"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="42"
                     android:fontFamily="@font/poppins_bold"
+                    android:includeFontPadding="false"
+                    android:text="42"
                     android:textColor="@color/ink"
-                    android:textSize="@dimen/_16sdp"
-                    android:includeFontPadding="false"/>
+                    android:textSize="@dimen/_16sdp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="WORDS"
                     android:fontFamily="@font/poppins_semibold"
+                    android:includeFontPadding="false"
+                    android:text="WORDS"
                     android:textColor="@color/color_theme_black"
-                    android:textSize="@dimen/_9ssp"
-                    android:includeFontPadding="false"/>
+                    android:textSize="@dimen/_9ssp" />
             </LinearLayout>
 
             <View
@@ -117,20 +116,20 @@
                     android:id="@+id/txtXpDisplay"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="12m"
                     android:fontFamily="@font/poppins_bold"
+                    android:includeFontPadding="false"
+                    android:text="12m"
                     android:textColor="@color/ink"
-                    android:textSize="@dimen/_16ssp"
-                    android:includeFontPadding="false"/>
+                    android:textSize="@dimen/_16ssp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="XP"
                     android:fontFamily="@font/poppins_semibold"
+                    android:includeFontPadding="false"
+                    android:text="TODAY"
                     android:textColor="@color/color_theme_black"
-                    android:textSize="@dimen/_9ssp"
-                    android:includeFontPadding="false"/>
+                    android:textSize="@dimen/_9ssp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -141,48 +140,54 @@
             android:layout_marginHorizontal="@dimen/_16sdp"
             android:layout_marginTop="@dimen/_16sdp"
             app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="@dimen/_8sdp"
-            app:cardElevation="0dp">
+            app:cardCornerRadius="@dimen/_12sdp"
+            app:cardUseCompatPadding="true"
+            android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="@dimen/_16sdp">
+                android:padding="@dimen/_12sdp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:includeFontPadding="false"
+                    android:text="Learn Japanese Daily"
+                    android:textColor="@color/ink"
+                    android:textSize="@dimen/_14ssp"
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:layout_height="@dimen/_100sdp"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:background="@drawable/bg_learning_streak"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/_8sdp">
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Learn Japanese Daily"
-                            android:textColor="@color/ink"
-                            android:textSize="@dimen/_12ssp"
-                            android:textStyle="bold"
-                            android:includeFontPadding="false"/>
+                        android:orientation="vertical"
+                        android:paddingHorizontal="@dimen/_8sdp">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_2sdp"
                             android:text="DAY STREAK"
-                            android:textColor="@color/color_theme_dark"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:textColor="@color/color_theme_black_light"
                             android:textSize="@dimen/_11ssp" />
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_6sdp"
                             android:gravity="center_vertical"
                             android:orientation="horizontal">
 
@@ -190,11 +195,11 @@
                                 android:id="@+id/txtLessonPercent"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="0% complete"
                                 android:fontFamily="@font/poppins_bold"
+                                android:includeFontPadding="false"
+                                android:text="0% complete"
                                 android:textColor="@color/ink"
-                                android:textSize="@dimen/_20ssp"
-                                android:includeFontPadding="false"/>
+                                android:textSize="@dimen/_14ssp" />
 
                             <com.google.android.material.textview.MaterialTextView
                                 android:id="@+id/txtLessonFraction"
@@ -203,109 +208,333 @@
                                 android:layout_marginStart="@dimen/_8sdp"
                                 android:background="@drawable/bg_pill_blue"
                                 android:backgroundTint="@color/color_theme_light"
+                                android:fontFamily="@font/poppins_bold"
+                                android:includeFontPadding="false"
                                 android:paddingHorizontal="@dimen/_10sdp"
                                 android:paddingVertical="@dimen/_4sdp"
                                 android:text="0 / 5"
-                                android:fontFamily="@font/poppins_bold"
-                                android:textSize="@dimen/_10ssp"
-                                android:includeFontPadding="false"/>
+                                android:textSize="@dimen/_10ssp" />
+
                         </LinearLayout>
+
+                        <ProgressBar
+                            android:id="@+id/progressLesson"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_8sdp"
+                            android:layout_marginTop="@dimen/_4sdp"
+                            android:max="100"
+                            android:progress="80"
+                            android:progressBackgroundTint="@color/color_theme_light"
+                            android:progressTint="@color/color_theme_dark" />
                     </LinearLayout>
 
-                    <FrameLayout
-                        android:layout_width="@dimen/_60sdp"
-                        android:layout_height="@dimen/_60sdp"
-                        android:background="@drawable/bg_circle_sage">
+                    <ImageView
+                        android:layout_width="@dimen/_50sdp"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/pagla" />
 
-                        <ImageView
-                            android:layout_width="@dimen/_40sdp"
-                            android:layout_height="@dimen/_40sdp"
-                            android:layout_gravity="center"
-                            app:tint="@color/white" />
-                    </FrameLayout>
                 </LinearLayout>
 
-                <ProgressBar
-                    android:id="@+id/progressLesson"
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_8sdp"
-                    android:layout_marginTop="@dimen/_12sdp"
-                    android:max="100"
-                    android:progress="0"
-                    android:progressBackgroundTint="@color/color_theme_light"
-                    android:progressTint="@color/color_theme_dark" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:text="keep it up! almost there 👏"
-                    android:textColor="@color/ink_soft"
-                    android:textSize="@dimen/_12ssp" />
-
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnStartLesson"
+                    android:id="@+id/btnStartQuiz"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_46sdp"
-                    android:layout_marginTop="@dimen/_16sdp"
-                    android:fontFamily="@font/poppins_bold"
-                    android:text="Start Lesson"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:letterSpacing="0"
+                    android:text="Start Quiz"
+                    android:textAllCaps="false"
                     android:textColor="@color/color_theme_navy"
                     android:textSize="@dimen/_14ssp"
-                    android:textAllCaps="false"
-                    android:letterSpacing="0"
                     app:backgroundTint="@color/color_theme_light"
                     app:cornerRadius="@dimen/_8sdp" />
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- CATEGORIES SECTION -->
-        <LinearLayout
+        <GridLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_16sdp"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:layout_marginHorizontal="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:columnCount="2">
 
-            <TextView
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/menuVocabulary"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Categories"
-                android:textColor="@color/ink"
-                android:textSize="@dimen/_18ssp"
-                android:textStyle="bold" />
+                android:layout_columnWeight="1"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/_12sdp"
+                app:cardUseCompatPadding="true">
 
-            <TextView
-                android:id="@+id/btnSeeAll"
-                android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_8sdp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/imgVocabulary"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/icon_vocabulary"
+                            app:layout_constraintDimensionRatio="1:1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_6sdp"
+                        android:fontFamily="@font/poppins_bold"
+                        android:includeFontPadding="false"
+                        android:text="Vocabulary"
+                        android:textColor="@color/ink"
+                        android:textSize="@dimen/_12ssp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/menuGrammar"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="See All"
-                android:textColor="@color/sage_deep"
-                android:textSize="@dimen/_14ssp" />
-        </LinearLayout>
+                android:layout_columnWeight="1"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/_12sdp"
+                app:cardUseCompatPadding="true">
 
-        <ProgressBar
-            android:id="@+id/loadingCategories"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/_16sdp"
-            android:visibility="gone" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_8sdp">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvCategories"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_16sdp"
-            android:layout_marginTop="@dimen/_12sdp"
-            android:nestedScrollingEnabled="false"
-            android:overScrollMode="never"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:spanCount="2" />
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/imgGrammar"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/icon_grammar"
+                            app:layout_constraintDimensionRatio="1:1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_6sdp"
+                        android:fontFamily="@font/poppins_bold"
+                        android:includeFontPadding="false"
+                        android:text="Grammar"
+                        android:textColor="@color/ink"
+                        android:textSize="@dimen/_12ssp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/menuKatakana"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/_12sdp"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_8sdp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/imgKatakana"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/icon_katakana"
+                            app:layout_constraintDimensionRatio="1:1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_6sdp"
+                        android:fontFamily="@font/poppins_bold"
+                        android:includeFontPadding="false"
+                        android:text="Katakana"
+                        android:textColor="@color/ink"
+                        android:textSize="@dimen/_12ssp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/menuHiragana"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/_12sdp"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_8sdp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/imgHiragana"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/icon_hiragana"
+                            app:layout_constraintDimensionRatio="1:1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_6sdp"
+                        android:fontFamily="@font/poppins_bold"
+                        android:includeFontPadding="false"
+                        android:text="Hiragana"
+                        android:textColor="@color/ink"
+                        android:textSize="@dimen/_12ssp" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/menuReading"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/_12sdp"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_8sdp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/imgReading"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/icon_reading"
+                            app:layout_constraintDimensionRatio="1:1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_6sdp"
+                        android:fontFamily="@font/poppins_bold"
+                        android:includeFontPadding="false"
+                        android:text="Reading"
+                        android:textColor="@color/ink"
+                        android:textSize="@dimen/_12ssp" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/menuKanji"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/_12sdp"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_8sdp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/imgKanji"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/icon_kanji"
+                            app:layout_constraintDimensionRatio="1:1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_6sdp"
+                        android:fontFamily="@font/poppins_bold"
+                        android:includeFontPadding="false"
+                        android:text="Kanji"
+                        android:textColor="@color/ink"
+                        android:textSize="@dimen/_12ssp" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </GridLayout>
 
     </LinearLayout>
 

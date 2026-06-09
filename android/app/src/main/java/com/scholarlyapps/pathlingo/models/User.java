@@ -12,6 +12,7 @@ public class User {
     public int accuracy;
     public String email;
     public String avatarUrl;
+    public int coins;
 
     public User() {
     }

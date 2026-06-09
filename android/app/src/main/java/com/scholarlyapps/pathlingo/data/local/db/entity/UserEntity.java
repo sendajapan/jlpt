@@ -15,4 +15,5 @@ public class UserEntity {
     public int xpPoints;
     public int currentStreak;
     public int learnedWords;
+    public int coins;
 }

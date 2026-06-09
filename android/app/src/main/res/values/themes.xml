@@ -32,6 +32,7 @@
         <item name="android:textColorPrimary">@color/color_theme_black</item>
         <item name="android:textColorSecondary">@color/color_theme_dark</item>
         <item name="android:windowBackground">#FFFFFF</item>
+        <item name="android:statusBarColor">@color/color_theme_light</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowLightNavigationBar">true</item>
     </style>

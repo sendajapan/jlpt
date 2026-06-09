@@ -10,7 +10,11 @@
         android:label="Home">
         <action
             android:id="@+id/action_home_to_subcategory"
-            app:destination="@id/subcategoryFragment" />
+            app:destination="@id/subcategoryFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -19,7 +23,11 @@
         android:label="Vocabulary">
         <action
             android:id="@+id/action_vocabulary_to_subcategory"
-            app:destination="@id/subcategoryFragment" />
+            app:destination="@id/subcategoryFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -46,7 +54,11 @@
             app:argType="string" />
         <action
             android:id="@+id/action_subcategory_to_word_detail"
-            app:destination="@id/wordDetailFragment" />
+            app:destination="@id/wordDetailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -67,7 +79,11 @@
             android:id="@+id/action_word_to_score"
             app:destination="@id/scoreFragment"
             app:popUpTo="@id/scoreFragment"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -79,7 +95,11 @@
             app:destination="@id/homeFragment"
             app:launchSingleTop="true"
             app:popUpTo="@id/homeFragment"
-            app:popUpToInclusive="false" />
+            app:popUpToInclusive="false"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
     </fragment>
 
 </navigation>

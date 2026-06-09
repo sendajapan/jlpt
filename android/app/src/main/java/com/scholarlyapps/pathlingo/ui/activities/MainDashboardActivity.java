@@ -2,25 +2,30 @@ package com.scholarlyapps.pathlingo.ui.activities;
 
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.core.widget.ImageViewCompat;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavOptions;
 import androidx.navigation.fragment.NavHostFragment;
 
+import coil.Coil;
+import coil.request.ImageRequest;
+
 import com.scholarlyapps.pathlingo.R;
 import com.scholarlyapps.pathlingo.databinding.ActivityMainDashboardBinding;
+import com.scholarlyapps.pathlingo.viewmodels.AppViewModelFactory;
+import com.scholarlyapps.pathlingo.viewmodels.ProgressViewModel;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
 
 public class MainDashboardActivity extends AppCompatActivity {
 
     private ActivityMainDashboardBinding binding;
-    private int statusBarInset = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,17 +33,42 @@ public class MainDashboardActivity extends AppCompatActivity {
         binding = ActivityMainDashboardBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        ViewCompat.setOnApplyWindowInsetsListener(binding.getRoot(), (v, insets) -> {
-            Insets bars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            statusBarInset = bars.top;
+        float density = getResources().getDisplayMetrics().density;
+        float maxElevationPx = 8f * density;
+        float maxTranslatePx = 10f * density;
+        binding.appBar.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> {
+            float fraction = Math.abs(verticalOffset) / (float) appBarLayout.getTotalScrollRange();
+            float eased = fraction * fraction * (3f - 2f * fraction);
 
-            int dp16 = (int) (16 * getResources().getDisplayMetrics().density);
-            ViewGroup.MarginLayoutParams headerParams = (ViewGroup.MarginLayoutParams) binding.header.getLayoutParams();
-            headerParams.topMargin = bars.top + dp16;
-            binding.header.requestLayout();
+            binding.expandedHeader.setAlpha(1f - eased);
+            binding.expandedHeader.setScaleX(1f - 0.05f * eased);
+            binding.expandedHeader.setScaleY(1f - 0.05f * eased);
+            binding.expandedHeader.setTranslationY(-maxTranslatePx * eased);
 
-            binding.bottomNav.setPadding(0, 0, 0, bars.bottom);
-            return insets;
+            binding.header.setAlpha(eased);
+            binding.header.setScaleX(0.95f + 0.05f * eased);
+            binding.header.setScaleY(0.95f + 0.05f * eased);
+            binding.header.setElevation(eased * maxElevationPx);
+        });
+
+        binding.txtExpandedDate.setText(new SimpleDateFormat("EEEE, MMM d", Locale.ENGLISH).format(new Date()));
+
+        ProgressViewModel viewModel = new ViewModelProvider(this, new AppViewModelFactory()).get(ProgressViewModel.class);
+        viewModel.getUser().observe(this, user -> {
+            if (user != null) {
+                binding.txtExpandedName.setText(user.name);
+                binding.txtExpandedCoins.setText(formatCoins(user.coins));
+            }
+        });
+        viewModel.getAvatarUrl().observe(this, url -> {
+            if (url == null || url.isEmpty()) return;
+            ImageViewCompat.setImageTintList(binding.imgExpandedAvatar, null);
+            Coil.imageLoader(this).enqueue(
+                new ImageRequest.Builder(this)
+                    .data(url)
+                    .target(binding.imgExpandedAvatar)
+                    .build()
+            );
         });
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
@@ -48,10 +78,10 @@ public class MainDashboardActivity extends AppCompatActivity {
         NavOptions tabOptions = new NavOptions.Builder()
             .setLaunchSingleTop(true)
             .setPopUpTo(R.id.homeFragment, false)
-            .setEnterAnim(0)
-            .setExitAnim(0)
-            .setPopEnterAnim(0)
-            .setPopExitAnim(0)
+            .setEnterAnim(R.anim.fade_in)
+            .setExitAnim(R.anim.fade_out)
+            .setPopEnterAnim(R.anim.fade_in)
+            .setPopExitAnim(R.anim.fade_out)
             .build();
 
         binding.bottomNav.setOnItemSelectedListener(item -> {
@@ -79,7 +109,15 @@ public class MainDashboardActivity extends AppCompatActivity {
 
             boolean showHeader = id != R.id.profileFragment;
             binding.appBar.setVisibility(showHeader ? View.VISIBLE : View.GONE);
-            binding.navHost.setPadding(0, showHeader ? 0 : statusBarInset, 0, 0);
+            if (showHeader) {
+                binding.appBar.setExpanded(id == R.id.homeFragment, false);
+            }
         });
+    }
+
+    private static String formatCoins(int coins) {
+        if (coins >= 1_000_000) return String.format(Locale.US, "%.1fM", coins / 1_000_000f);
+        if (coins >= 1_000) return String.format(Locale.US, "%.1fK", coins / 1_000f);
+        return String.valueOf(coins);
     }
 }

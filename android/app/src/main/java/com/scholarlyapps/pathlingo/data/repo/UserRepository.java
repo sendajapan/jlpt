@@ -42,6 +42,7 @@ public class UserRepository {
             user.maxXp = 100;
             user.streak = entity.currentStreak;
             user.wordsKnown = entity.learnedWords;
+            user.coins = entity.coins;
             user.email = orEmpty(entity.email);
             user.avatarUrl = entity.avatarUrl;
             return user;
@@ -65,6 +66,7 @@ public class UserRepository {
             entity.xpPoints = dto.xpPoints;
             entity.currentStreak = dto.currentStreak;
             entity.learnedWords = dto.learnedWords;
+            entity.coins = dto.coins;
             userDao.insert(entity);
             return true;
         } catch (Exception ignored) {
@@ -89,6 +91,7 @@ public class UserRepository {
             entity.xpPoints = dto.xpPoints;
             entity.currentStreak = dto.currentStreak;
             entity.learnedWords = dto.learnedWords;
+            entity.coins = dto.coins;
             userDao.insert(entity);
             return dto;
         } catch (Exception ignored) {

@@ -2,13 +2,8 @@ package com.scholarlyapps.pathlingo.ui.activities.profile;
 
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.scholarlyapps.pathlingo.databinding.ActivityChangePasswordBinding;
@@ -27,16 +22,6 @@ public class ChangePasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityChangePasswordBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
-        ViewCompat.setOnApplyWindowInsetsListener(binding.getRoot(), (v, insets) -> {
-            Insets bars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) binding.toolbar.getLayoutParams();
-            params.topMargin = bars.top;
-            binding.toolbar.setLayoutParams(params);
-            binding.scrollView.setPadding(0, 0, 0, bars.bottom);
-            return insets;
-        });
 
         viewModel = new ViewModelProvider(this, new AppViewModelFactory()).get(ChangePasswordViewModel.class);
 

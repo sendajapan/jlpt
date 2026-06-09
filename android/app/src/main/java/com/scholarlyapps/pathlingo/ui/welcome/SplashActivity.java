@@ -24,7 +24,7 @@ import com.scholarlyapps.pathlingo.ui.utils.NavAnim;
 @SuppressLint("CustomSplashScreen")
 public class SplashActivity extends AppCompatActivity {
 
-    public static final long WAIT_DURATION = 3_000L;
+    public static final long WAIT_DURATION = 1_000L;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

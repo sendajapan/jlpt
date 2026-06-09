@@ -5,32 +5,43 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="?attr/actionBarSize"
         android:gravity="center_vertical"
+        android:layout_marginHorizontal="@dimen/_8sdp"
         android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="@dimen/_32sdp"
+            android:layout_height="@dimen/_32sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:padding="@dimen/_5sdp"
+            android:src="@drawable/ic_arrow_back"
+            android:visibility="gone"
+            app:tint="@color/ink" />
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/imgAvatar"
-            android:layout_width="@dimen/_42sdp"
-            android:layout_height="@dimen/_42sdp"
+            android:layout_width="@dimen/_36sdp"
+            android:layout_height="@dimen/_36sdp"
             android:scaleType="centerCrop"
-            android:background="@drawable/bg_round_white"
+            android:background="@drawable/bg_step_bar_inactive"
             app:shapeAppearanceOverlay="@style/ShapeOverlay.Avatar" />
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_8sdp"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Hello,"
-                android:fontFamily="@font/poppins_regular"
+                android:text="こんにちは！"
+                android:fontFamily="@font/noto_sans_jp"
                 android:textColor="@color/ink"
-                android:textSize="@dimen/_11ssp"
+                android:textSize="@dimen/_9ssp"
                 android:includeFontPadding="false" />
 
             <TextView
@@ -40,28 +51,29 @@
                 android:fontFamily="@font/poppins_semibold"
                 android:textColor="@color/ink"
                 android:text="Solaiman"
-                android:textSize="@dimen/_12ssp"
+                android:textSize="@dimen/_11ssp"
                 android:includeFontPadding="false" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/_36sdp"
-            android:gravity="center|end">
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:id="@+id/layoutCoin"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/_32sdp"
-                android:paddingHorizontal="@dimen/_8sdp"
+                android:paddingHorizontal="@dimen/_7sdp"
                 android:background="@drawable/bg_round_white"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <com.airbnb.lottie.LottieAnimationView
-                    android:layout_width="@dimen/_20sdp"
-                    android:layout_height="@dimen/_20sdp"
+                    android:layout_width="@dimen/_16sdp"
+                    android:layout_height="@dimen/_16sdp"
                     app:lottie_rawRes="@raw/dollar_coin"
                     app:lottie_autoPlay="true"
                     app:lottie_loop="true" />
@@ -70,9 +82,10 @@
                     android:id="@+id/txtCoins"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_4sdp"
+                    android:layout_marginStart="@dimen/_3sdp"
                     android:textColor="@color/ink"
-                    android:textSize="@dimen/_11ssp"
+                    android:textSize="@dimen/_10ssp"
+                    android:text="1250"
                     android:fontFamily="@font/poppins_semibold"
                     android:includeFontPadding="false" />
 
@@ -82,21 +95,22 @@
                 android:id="@+id/btnBell"
                 android:layout_width="@dimen/_32sdp"
                 android:layout_height="@dimen/_32sdp"
-                android:layout_marginStart="@dimen/_4sdp"
-                android:background="@drawable/bg_round_white">
+                android:layout_marginStart="@dimen/_6sdp"
+                android:background="@drawable/bg_round_white"
+                android:backgroundTint="#FDF5E5">
 
                 <ImageView
                     android:layout_width="@dimen/_18sdp"
                     android:layout_height="@dimen/_18sdp"
                     android:layout_gravity="center"
                     android:src="@drawable/ic_bell"
-                    app:tint="@color/ink" />
+                    app:tint="#EFA238" />
 
                 <View
-                    android:layout_width="@dimen/_8sdp"
-                    android:layout_height="@dimen/_8sdp"
+                    android:layout_width="@dimen/_6sdp"
+                    android:layout_height="@dimen/_6sdp"
                     android:layout_gravity="top|end"
-                    android:layout_margin="@dimen/_4sdp"
+                    android:layout_margin="@dimen/_8sdp"
                     android:background="@drawable/bg_badge_red" />
 
             </FrameLayout>

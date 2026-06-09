@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.PathLingo" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/color_theme_dark</item>
+        <item name="colorSecondary">@color/color_theme_dark_black</item>
+        <item name="android:colorBackground">#FFFFFF</item>
+        <item name="android:fontFamily">@font/poppins</item>
+        <item name="android:textColor">@color/color_theme_black</item>
+        <item name="android:textColorPrimary">@color/color_theme_black</item>
+        <item name="android:textColorSecondary">@color/color_theme_dark</item>
+        <item name="android:windowBackground">#FFFFFF</item>
+        <item name="android:statusBarColor">@color/color_theme_light</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="android:windowOptOutEdgeToEdgeEnforcement">true</item>
+    </style>
+</resources>

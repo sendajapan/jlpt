@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:clipToPadding="false"
     android:paddingHorizontal="@dimen/_16sdp"
-    android:paddingTop="@dimen/_24sdp"
     android:paddingBottom="@dimen/_100sdp">
 
     <LinearLayout
