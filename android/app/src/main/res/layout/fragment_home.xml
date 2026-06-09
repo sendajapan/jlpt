@@ -446,20 +446,21 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            android:padding="@dimen/_16sdp"/>
+                            android:padding="@dimen/_8sdp"/>
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_6sdp"
                         android:fontFamily="@font/poppins_bold"
                         android:includeFontPadding="false"
                         android:text="Vocabulary"
                         android:textColor="@color/ink"
                         android:textSize="@dimen/_12ssp" />
+
                 </LinearLayout>
+
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
@@ -486,7 +487,8 @@
                             android:id="@+id/imgGrammar"
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:scaleType="fitCenter"
+                            android:scaleType="centerInside"
+                            android:padding="@dimen/_8sdp"
                             android:src="@drawable/icon_grammar"
                             app:layout_constraintDimensionRatio="1:1"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -497,7 +499,6 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_6sdp"
                         android:fontFamily="@font/poppins_bold"
                         android:includeFontPadding="false"
                         android:text="Grammar"
@@ -530,7 +531,8 @@
                             android:id="@+id/imgKatakana"
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:scaleType="fitCenter"
+                            android:scaleType="centerInside"
+                            android:padding="@dimen/_8sdp"
                             android:src="@drawable/icon_katakana"
                             app:layout_constraintDimensionRatio="1:1"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -541,7 +543,6 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_6sdp"
                         android:fontFamily="@font/poppins_bold"
                         android:includeFontPadding="false"
                         android:text="Katakana"
@@ -574,7 +575,8 @@
                             android:id="@+id/imgHiragana"
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:scaleType="fitCenter"
+                            android:scaleType="centerInside"
+                            android:padding="@dimen/_8sdp"
                             android:src="@drawable/icon_hiragana"
                             app:layout_constraintDimensionRatio="1:1"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -586,7 +588,6 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_6sdp"
                         android:fontFamily="@font/poppins_bold"
                         android:includeFontPadding="false"
                         android:text="Hiragana"
@@ -621,7 +622,8 @@
                             android:id="@+id/imgReading"
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:scaleType="fitCenter"
+                            android:scaleType="centerInside"
+                            android:padding="@dimen/_8sdp"
                             android:src="@drawable/icon_reading"
                             app:layout_constraintDimensionRatio="1:1"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -633,7 +635,6 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_6sdp"
                         android:fontFamily="@font/poppins_bold"
                         android:includeFontPadding="false"
                         android:text="Reading"
@@ -668,7 +669,8 @@
                             android:id="@+id/imgKanji"
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:scaleType="fitCenter"
+                            android:scaleType="centerInside"
+                            android:padding="@dimen/_8sdp"
                             android:src="@drawable/icon_kanji"
                             app:layout_constraintDimensionRatio="1:1"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -680,7 +682,6 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_6sdp"
                         android:fontFamily="@font/poppins_bold"
                         android:includeFontPadding="false"
                         android:text="Kanji"
