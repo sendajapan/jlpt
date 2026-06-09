@@ -1,6 +1,5 @@
 package com.scholarlyapps.pathlingo.ui.fragments;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -18,6 +16,8 @@ import com.scholarlyapps.pathlingo.R;
 import com.scholarlyapps.pathlingo.databinding.FragmentHomeBinding;
 import com.scholarlyapps.pathlingo.viewmodels.AppViewModelFactory;
 import com.scholarlyapps.pathlingo.viewmodels.HomeViewModel;
+
+import java.util.Calendar;
 
 public class HomeFragment extends Fragment {
 
@@ -30,13 +30,9 @@ public class HomeFragment extends Fragment {
         return binding.getRoot();
     }
 
-    @SuppressLint("SetTextI18n")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         HomeViewModel viewModel = new ViewModelProvider(this, new AppViewModelFactory()).get(HomeViewModel.class);
-
-        binding.btnStartQuiz.setOnClickListener(v ->
-            Navigation.findNavController(v).navigate(R.id.vocabularyFragment));
 
         BottomNavigationView bottomNav = requireActivity().findViewById(R.id.bottomNav);
         binding.menuVocabulary.setOnClickListener(v -> bottomNav.setSelectedItemId(R.id.vocabularyFragment));
@@ -51,12 +47,38 @@ public class HomeFragment extends Fragment {
             binding.txtStreak.setText(String.valueOf(user.streak));
             binding.txtWordsKnown.setText(String.valueOf(user.wordsKnown));
             binding.txtXpDisplay.setText(String.valueOf(user.xp));
-
-            int progress = user.maxXp > 0 ? (user.xp * 100 / user.maxXp) : 0;
-            binding.progressLesson.setProgress(progress);
-            binding.txtLessonPercent.setText(progress + "% complete");
-            binding.txtLessonFraction.setText(user.streak + "/7");
+            updateStreakCard(user.streak);
         });
+
+        viewModel.loadData();
+    }
+
+    private void updateStreakCard(int streak) {
+        binding.txtStreakCount.setText(String.valueOf(streak));
+
+        int todayIndex = Calendar.getInstance().get(Calendar.DAY_OF_WEEK) - 1;
+        int cappedStreak = Math.min(streak, 7);
+
+        int[] circleIds = {
+            R.id.day0Circle, R.id.day1Circle, R.id.day2Circle, R.id.day3Circle,
+            R.id.day4Circle, R.id.day5Circle, R.id.day6Circle
+        };
+
+        for (int i = 0; i < 7; i++) {
+            View circle = binding.getRoot().findViewById(circleIds[i]);
+            if (i > todayIndex) {
+                circle.setBackgroundResource(R.drawable.bg_streak_day_pending);
+            } else if (i == todayIndex) {
+                circle.setBackgroundResource(cappedStreak > 0
+                    ? R.drawable.bg_streak_day_today
+                    : R.drawable.bg_streak_day_pending);
+            } else {
+                int daysAgo = todayIndex - i;
+                circle.setBackgroundResource(daysAgo < cappedStreak
+                    ? R.drawable.bg_streak_day_done
+                    : R.drawable.bg_streak_day_pending);
+            }
+        }
     }
 
     @Override
