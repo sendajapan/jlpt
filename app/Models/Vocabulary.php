@@ -18,6 +18,7 @@ class Vocabulary extends Model
         'word_romaji',
         'sentence_romaji',
         'word_en',
+        'pos',
         'audio_en',
         'sentence_en',
         'sentence_audio_en',

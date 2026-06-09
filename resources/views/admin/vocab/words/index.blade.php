@@ -144,6 +144,9 @@
                     -->
                         Sentence
                     </th>
+                    <th class="px-4 py-2 text-center text-[10px] font-semibold uppercase tracking-wider text-zinc-400">
+                        POS
+                    </th>
                     <th class="px-4 py-2 text-left text-[10px] font-semibold uppercase tracking-wider text-zinc-400">
                         Category
                     </th>
@@ -276,6 +279,13 @@
                                     </div>
                                 </div>
                             </td>
+                            <td class="px-4 py-3 text-xs text-zinc-500 text-center">
+                                @if($vocab->pos)
+                                    <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-zinc-100 text-zinc-600">{{ $vocab->pos }}</span>
+                                @else
+                                    —
+                                @endif
+                            </td>
                             <td class="px-4 py-3 text-xs text-zinc-600">
                                 @if($vocab->subcategory?->category)
                                     <a href="{{ route('admin.vocab.words.index', ['category_id' => $vocab->subcategory->category->id]) }}"
@@ -335,7 +345,7 @@
                 @empty
                     <tbody>
                     <tr>
-                        <td colspan="12" class="px-4 py-10 text-center">
+                        <td colspan="13" class="px-4 py-10 text-center">
                             <p class="text-xs text-zinc-400">No entries found.</p>
                             <a href="{{ route('admin.vocab.words.create') }}"
                                class="mt-1 inline-flex text-xs text-zinc-900 underline underline-offset-2">Create the
