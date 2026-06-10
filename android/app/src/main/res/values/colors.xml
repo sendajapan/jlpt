@@ -4,6 +4,9 @@
     <color name="color_theme_dark_black">#15559A</color>
     <color name="color_theme_dark">#57A4F6</color>
     <color name="color_theme_light">#B0D4FB</color>
+    <color name="color_theme_extra_light">#EAF5FF</color>
+    <color name="color_theme_extra_white">#FEFEFE</color>
+
     <color name="color_theme_black">#2D2D2D</color>
     <color name="color_theme_black_light">#662D2D2D</color>
     <color name="color_theme_navy">#225692</color>
@@ -27,5 +30,13 @@
 
     <color name="home_header_bg">#D8E8FF</color>
     <color name="app_bg">#EEF3FF</color>
+
+    <!-- Card palette surfaces — amber / blush / mint -->
+    <color name="color_card_amber">#FFF4E5</color>
+    <color name="color_card_amber_border">#BEA583</color>
+    <color name="color_card_blush">#FFEAF1</color>
+    <color name="color_card_blush_border">#B98898</color>
+    <color name="color_card_mint">#E8F8F0</color>
+    <color name="color_card_mint_border">#97D1B4</color>
 
 </resources>
