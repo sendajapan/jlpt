@@ -63,11 +63,15 @@ public class ScoreFragment extends Fragment {
         });
 
         binding.btnContinue.setOnClickListener(v -> {
-            NavOptions options = new NavOptions.Builder()
-                .setPopUpTo(R.id.homeFragment, false)
-                .setLaunchSingleTop(true)
-                .build();
-            Navigation.findNavController(v).navigate(R.id.action_score_to_home, null, options);
+            try {
+                NavOptions options = new NavOptions.Builder()
+                    .setPopUpTo(R.id.homeFragment, false)
+                    .setLaunchSingleTop(true)
+                    .build();
+                Navigation.findNavController(v).navigate(R.id.action_score_to_home, null, options);
+            } catch (IllegalArgumentException e) {
+                requireActivity().finish();
+            }
         });
     }
 

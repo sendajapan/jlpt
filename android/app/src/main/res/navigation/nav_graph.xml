@@ -7,28 +7,12 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.scholarlyapps.pathlingo.ui.fragments.HomeFragment"
-        android:label="Home">
-        <action
-            android:id="@+id/action_home_to_subcategory"
-            app:destination="@id/subcategoryFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
-    </fragment>
+        android:label="Home" />
 
     <fragment
         android:id="@+id/vocabularyFragment"
         android:name="com.scholarlyapps.pathlingo.ui.fragments.VocabularyFragment"
-        android:label="Vocabulary">
-        <action
-            android:id="@+id/action_vocabulary_to_subcategory"
-            app:destination="@id/subcategoryFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
-    </fragment>
+        android:label="Vocabulary" />
 
     <fragment
         android:id="@+id/progressFragment"
@@ -46,30 +30,15 @@
         android:label="Profile" />
 
     <fragment
-        android:id="@+id/subcategoryFragment"
-        android:name="com.scholarlyapps.pathlingo.ui.fragments.SubcategoryFragment"
-        android:label="Subcategory">
-        <argument
-            android:name="categoryId"
-            app:argType="string" />
-        <action
-            android:id="@+id/action_subcategory_to_word_detail"
-            app:destination="@id/wordDetailFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
-    </fragment>
-
-    <fragment
         android:id="@+id/wordDetailFragment"
         android:name="com.scholarlyapps.pathlingo.ui.fragments.WordDetailFragment"
         android:label="Word">
         <argument
-            android:name="categoryId"
+            android:name="subcategoryId"
             app:argType="string" />
         <argument
-            android:name="subcategoryId"
+            android:name="iconUrl"
+            android:defaultValue=""
             app:argType="string" />
         <argument
             android:name="wordIndex"
@@ -78,8 +47,6 @@
         <action
             android:id="@+id/action_word_to_score"
             app:destination="@id/scoreFragment"
-            app:popUpTo="@id/scoreFragment"
-            app:popUpToInclusive="true"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"

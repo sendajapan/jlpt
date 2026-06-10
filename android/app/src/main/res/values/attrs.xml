@@ -2,5 +2,6 @@
 <resources>
     <declare-styleable name="HeaderToolbar">
         <attr name="showBackButton" format="boolean" />
+        <attr name="showAvatar" format="boolean" />
     </declare-styleable>
 </resources>

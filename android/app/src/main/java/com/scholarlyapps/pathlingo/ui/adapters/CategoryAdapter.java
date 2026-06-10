@@ -25,13 +25,20 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public interface OnCategoryClick {
         void onClick(Category category);
         void onUnlockClick(Category category);
+        void onViewAllClick();
     }
 
     private List<Category> categories;
+    private final boolean showAll;
     private final OnCategoryClick listener;
 
     public CategoryAdapter(List<Category> categories, OnCategoryClick listener) {
+        this(categories, false, listener);
+    }
+
+    public CategoryAdapter(List<Category> categories, boolean showAll, OnCategoryClick listener) {
         this.categories = categories;
+        this.showAll = showAll;
         this.listener = listener;
     }
 
@@ -42,11 +49,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemViewType(int position) {
-        return position < Math.min(categories.size(), MAX_CATEGORIES) ? TYPE_CATEGORY : TYPE_VIEW_ALL;
+        if (showAll || position < Math.min(categories.size(), MAX_CATEGORIES)) return TYPE_CATEGORY;
+        return TYPE_VIEW_ALL;
     }
 
     @Override
     public int getItemCount() {
+        if (showAll) return categories.size();
         return Math.min(categories.size(), MAX_CATEGORIES) + 1;
     }
 
@@ -64,6 +73,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof CategoryHolder) {
             ((CategoryHolder) holder).bind(categories.get(position), listener);
+        } else if (holder instanceof ViewAllHolder) {
+            ((ViewAllHolder) holder).bind(listener);
         }
     }
 
@@ -80,11 +91,21 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             binding.txtJp.setText(cat.jp);
             binding.txtEn.setText(cat.en);
 
-            if (!cat.bg.isEmpty()) {
+            if (cat.bg != null && !cat.bg.isEmpty()) {
                 Coil.imageLoader(binding.imgCategory.getContext()).enqueue(
                     new ImageRequest.Builder(binding.imgCategory.getContext())
                         .data(cat.bg)
+                        .crossfade(true)
                         .target(binding.imgCategory)
+                        .build()
+                );
+            }
+            if (cat.iconUrl != null && !cat.iconUrl.isEmpty()) {
+                Coil.imageLoader(binding.imgIcon.getContext()).enqueue(
+                    new ImageRequest.Builder(binding.imgIcon.getContext())
+                        .data(cat.iconUrl)
+                        .crossfade(true)
+                        .target(binding.imgIcon)
                         .build()
                 );
             }
@@ -101,6 +122,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         ViewAllHolder(ItemCategoryViewAllBinding binding) {
             super(binding.getRoot());
+        }
+
+        void bind(OnCategoryClick listener) {
+            itemView.setOnClickListener(v -> listener.onViewAllClick());
         }
     }
 }

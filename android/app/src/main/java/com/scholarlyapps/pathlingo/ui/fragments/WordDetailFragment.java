@@ -55,7 +55,11 @@ public class WordDetailFragment extends Fragment {
 
         WordDetailViewModel viewModel = new ViewModelProvider(this, new AppViewModelFactory()).get(WordDetailViewModel.class);
 
-        binding.btnBack.setOnClickListener(v -> Navigation.findNavController(v).popBackStack());
+        binding.btnBack.setOnClickListener(v -> {
+            if (!Navigation.findNavController(v).popBackStack()) {
+                requireActivity().onBackPressed();
+            }
+        });
 
         if (!iconUrl.isEmpty()) {
             Coil.imageLoader(requireContext()).enqueue(

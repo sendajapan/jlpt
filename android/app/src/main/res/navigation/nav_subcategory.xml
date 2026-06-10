@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_subcategory"
+    app:startDestination="@id/wordDetailFragment">
+
+    <fragment
+        android:id="@+id/wordDetailFragment"
+        android:name="com.scholarlyapps.pathlingo.ui.fragments.WordDetailFragment"
+        android:label="Word">
+        <argument
+            android:name="subcategoryId"
+            app:argType="string" />
+        <argument
+            android:name="iconUrl"
+            android:defaultValue=""
+            app:argType="string" />
+        <argument
+            android:name="wordIndex"
+            android:defaultValue="0"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_word_to_score"
+            app:destination="@id/scoreFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/scoreFragment"
+        android:name="com.scholarlyapps.pathlingo.ui.fragments.ScoreFragment"
+        android:label="Score" />
+
+</navigation>

@@ -62,13 +62,17 @@ public class HeaderToolbar extends MaterialToolbar {
         if (attrs != null) {
             TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.HeaderToolbar);
             setBackButtonVisible(a.getBoolean(R.styleable.HeaderToolbar_showBackButton, false));
+            setAvatarVisible(a.getBoolean(R.styleable.HeaderToolbar_showAvatar, true));
             a.recycle();
         }
     }
 
     public void setBackButtonVisible(boolean visible) {
         btnBack.setVisibility(visible ? View.VISIBLE : View.GONE);
-        imgAvatar.setVisibility(visible ? View.GONE : View.VISIBLE);
+    }
+
+    public void setAvatarVisible(boolean visible) {
+        imgAvatar.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 
     public void setOnBackClickListener(View.OnClickListener listener) {
