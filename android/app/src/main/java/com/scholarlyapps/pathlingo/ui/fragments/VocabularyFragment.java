@@ -46,7 +46,7 @@ public class VocabularyFragment extends Fragment {
             public void onUnlockClick(com.scholarlyapps.pathlingo.models.Category category) {
             }
         });
-        binding.rvCategories.setLayoutManager(new androidx.recyclerview.widget.GridLayoutManager(requireContext(), 2));
+        binding.rvCategories.setLayoutManager(new androidx.recyclerview.widget.GridLayoutManager(requireContext(), 3));
         binding.rvCategories.setAdapter(adapter);
 
         viewModel.getCategories().observe(getViewLifecycleOwner(), categories ->

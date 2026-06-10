@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/_3sdp"
+    app:cardBackgroundColor="@color/color_theme_extra_light"
+    app:cardCornerRadius="@dimen/_10sdp"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/color_theme_light"
+    app:strokeWidth="1dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_106sdp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="@dimen/_10sdp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_bold"
+            android:includeFontPadding="false"
+            android:text="View All"
+            android:textColor="@color/color_theme_dark"
+            android:textSize="@dimen/_12ssp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="Explore 20+&#10;Categories"
+            android:textColor="@color/color_theme_black_light"
+            android:textSize="@dimen/_9ssp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:fontFamily="@font/poppins_semibold"
+            android:letterSpacing="0"
+            android:paddingHorizontal="@dimen/_10sdp"
+            android:text="VIEW ALL"
+            android:textAllCaps="false"
+            android:textColor="@color/color_theme_navy"
+            android:textSize="@dimen/_9ssp"
+            app:backgroundTint="@color/color_theme_light"
+            app:cornerRadius="@dimen/_6sdp"
+            app:icon="@drawable/ic_chevron_right"
+            app:iconGravity="end"
+            app:iconSize="@dimen/_12sdp"
+            app:iconTint="@color/color_theme_navy" />
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

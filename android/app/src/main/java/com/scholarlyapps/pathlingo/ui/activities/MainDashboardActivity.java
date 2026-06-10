@@ -78,10 +78,18 @@ public class MainDashboardActivity extends AppCompatActivity {
         NavOptions tabOptions = new NavOptions.Builder()
             .setLaunchSingleTop(true)
             .setPopUpTo(R.id.homeFragment, false)
-            .setEnterAnim(R.anim.fade_in)
-            .setExitAnim(R.anim.fade_out)
-            .setPopEnterAnim(R.anim.fade_in)
-            .setPopExitAnim(R.anim.fade_out)
+            .setEnterAnim(R.anim.slide_in_right)
+            .setExitAnim(R.anim.slide_out_left)
+            .setPopEnterAnim(R.anim.slide_in_right)
+            .setPopExitAnim(R.anim.slide_out_left)
+            .build();
+
+        NavOptions homeTabOptions = new NavOptions.Builder()
+            .setLaunchSingleTop(true)
+            .setEnterAnim(R.anim.slide_in_left)
+            .setExitAnim(R.anim.slide_out_right)
+            .setPopEnterAnim(R.anim.slide_in_left)
+            .setPopExitAnim(R.anim.slide_out_right)
             .build();
 
         binding.bottomNav.setOnItemSelectedListener(item -> {
@@ -92,7 +100,11 @@ public class MainDashboardActivity extends AppCompatActivity {
             }
             binding.bottomNav.post(() -> {
                 try {
-                    navController.navigate(destId, null, tabOptions);
+                    if (destId == R.id.homeFragment) {
+                        navController.navigate(destId, null, homeTabOptions);
+                    } else {
+                        navController.navigate(destId, null, tabOptions);
+                    }
                 } catch (IllegalArgumentException ignored) {}
             });
             return true;

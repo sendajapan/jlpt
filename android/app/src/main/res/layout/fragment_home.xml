@@ -301,7 +301,8 @@
                                             style="?android:attr/progressBarStyle"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
-                                            android:indeterminate="true" />
+                                            android:indeterminate="true"
+                                            android:visibility="gone" />
 
                                         <ImageView
                                             android:id="@+id/day0Check"
@@ -310,6 +311,24 @@
                                             android:background="@drawable/bg_streak_day_done"
                                             android:padding="@dimen/_4sdp"
                                             android:src="@drawable/ic_check"
+                                            app:tint="@color/white"
+                                            android:visibility="visible" />
+
+                                        <ImageView
+                                            android:id="@+id/day0Missed"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:background="@drawable/bg_streak_day_missed"
+                                            android:padding="@dimen/_4sdp"
+                                            android:src="@drawable/ic_exclamation"
+                                            app:tint="@color/white"
+                                            android:visibility="gone" />
+
+                                        <ImageView
+                                            android:id="@+id/day0Pending"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:background="@drawable/bg_streak_day_pending"
                                             android:visibility="gone" />
 
                                     </FrameLayout>
@@ -356,7 +375,8 @@
                                             style="?android:attr/progressBarStyle"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
-                                            android:indeterminate="true" />
+                                            android:indeterminate="true"
+                                            android:visibility="gone" />
 
                                         <ImageView
                                             android:id="@+id/day1Check"
@@ -365,6 +385,24 @@
                                             android:background="@drawable/bg_streak_day_done"
                                             android:padding="@dimen/_4sdp"
                                             android:src="@drawable/ic_check"
+                                            app:tint="@color/white"
+                                            android:visibility="visible" />
+
+                                        <ImageView
+                                            android:id="@+id/day1Missed"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:background="@drawable/bg_streak_day_missed"
+                                            android:padding="@dimen/_4sdp"
+                                            android:src="@drawable/ic_exclamation"
+                                            app:tint="@color/white"
+                                            android:visibility="gone" />
+
+                                        <ImageView
+                                            android:id="@+id/day1Pending"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:background="@drawable/bg_streak_day_pending"
                                             android:visibility="gone" />
 
                                     </FrameLayout>
@@ -389,9 +427,9 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/_3sdp"
                                 android:layout_weight="1"
-                                app:cardBackgroundColor="@color/color_card_mint"
+                                app:cardBackgroundColor="@color/color_streak_missed"
                                 app:cardElevation="0dp"
-                                app:strokeColor="@color/color_card_mint_border"
+                                app:strokeColor="@color/color_streak_missed_border"
                                 app:strokeWidth="1dp">
 
                                 <LinearLayout
@@ -411,7 +449,8 @@
                                             style="?android:attr/progressBarStyle"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
-                                            android:indeterminate="true" />
+                                            android:indeterminate="true"
+                                            android:visibility="gone" />
 
                                         <ImageView
                                             android:id="@+id/day2Check"
@@ -420,6 +459,24 @@
                                             android:background="@drawable/bg_streak_day_done"
                                             android:padding="@dimen/_4sdp"
                                             android:src="@drawable/ic_check"
+                                            app:tint="@color/white"
+                                            android:visibility="gone" />
+
+                                        <ImageView
+                                            android:id="@+id/day2Missed"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:background="@drawable/bg_streak_day_missed"
+                                            android:padding="@dimen/_4sdp"
+                                            android:src="@drawable/ic_exclamation"
+                                            app:tint="@color/white"
+                                            android:visibility="visible" />
+
+                                        <ImageView
+                                            android:id="@+id/day2Pending"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:background="@drawable/bg_streak_day_pending"
                                             android:visibility="gone" />
 
                                     </FrameLayout>
@@ -444,9 +501,9 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/_3sdp"
                                 android:layout_weight="1"
-                                app:cardBackgroundColor="@color/color_card_mint"
+                                app:cardBackgroundColor="@color/color_card_amber"
                                 app:cardElevation="0dp"
-                                app:strokeColor="@color/color_card_mint_border"
+                                app:strokeColor="@color/color_card_amber_border"
                                 app:strokeWidth="1dp">
 
                                 <LinearLayout
@@ -461,12 +518,12 @@
                                         android:layout_width="@dimen/_18sdp"
                                         android:layout_height="@dimen/_18sdp">
 
-                                        <ProgressBar
+                                        <ImageView
                                             android:id="@+id/day3Progress"
-                                            style="?android:attr/progressBarStyle"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
-                                            android:indeterminate="true" />
+                                            android:src="@drawable/ic_streak_today"
+                                            android:visibility="visible" />
 
                                         <ImageView
                                             android:id="@+id/day3Check"
@@ -475,6 +532,24 @@
                                             android:background="@drawable/bg_streak_day_done"
                                             android:padding="@dimen/_4sdp"
                                             android:src="@drawable/ic_check"
+                                            app:tint="@color/white"
+                                            android:visibility="gone" />
+
+                                        <ImageView
+                                            android:id="@+id/day3Missed"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:background="@drawable/bg_streak_day_missed"
+                                            android:padding="@dimen/_4sdp"
+                                            android:src="@drawable/ic_exclamation"
+                                            app:tint="@color/white"
+                                            android:visibility="gone" />
+
+                                        <ImageView
+                                            android:id="@+id/day3Pending"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:background="@drawable/bg_streak_day_pending"
                                             android:visibility="gone" />
 
                                     </FrameLayout>
@@ -499,9 +574,9 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/_3sdp"
                                 android:layout_weight="1"
-                                app:cardBackgroundColor="@color/color_card_mint"
+                                app:cardBackgroundColor="@color/white"
                                 app:cardElevation="0dp"
-                                app:strokeColor="@color/color_card_mint_border"
+                                app:strokeColor="@color/color_streak_future_border"
                                 app:strokeWidth="1dp">
 
                                 <LinearLayout
@@ -521,7 +596,8 @@
                                             style="?android:attr/progressBarStyle"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
-                                            android:indeterminate="true" />
+                                            android:indeterminate="true"
+                                            android:visibility="gone" />
 
                                         <ImageView
                                             android:id="@+id/day4Check"
@@ -530,7 +606,25 @@
                                             android:background="@drawable/bg_streak_day_done"
                                             android:padding="@dimen/_4sdp"
                                             android:src="@drawable/ic_check"
+                                            app:tint="@color/white"
                                             android:visibility="gone" />
+
+                                        <ImageView
+                                            android:id="@+id/day4Missed"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:background="@drawable/bg_streak_day_missed"
+                                            android:padding="@dimen/_4sdp"
+                                            android:src="@drawable/ic_exclamation"
+                                            app:tint="@color/white"
+                                            android:visibility="gone" />
+
+                                        <ImageView
+                                            android:id="@+id/day4Pending"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:background="@drawable/bg_streak_day_pending"
+                                            android:visibility="visible" />
 
                                     </FrameLayout>
 
@@ -554,9 +648,9 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/_3sdp"
                                 android:layout_weight="1"
-                                app:cardBackgroundColor="@color/color_card_mint"
+                                app:cardBackgroundColor="@color/white"
                                 app:cardElevation="0dp"
-                                app:strokeColor="@color/color_card_mint_border"
+                                app:strokeColor="@color/color_streak_future_border"
                                 app:strokeWidth="1dp">
 
                                 <LinearLayout
@@ -576,7 +670,8 @@
                                             style="?android:attr/progressBarStyle"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
-                                            android:indeterminate="true" />
+                                            android:indeterminate="true"
+                                            android:visibility="gone" />
 
                                         <ImageView
                                             android:id="@+id/day5Check"
@@ -585,7 +680,25 @@
                                             android:background="@drawable/bg_streak_day_done"
                                             android:padding="@dimen/_4sdp"
                                             android:src="@drawable/ic_check"
+                                            app:tint="@color/white"
                                             android:visibility="gone" />
+
+                                        <ImageView
+                                            android:id="@+id/day5Missed"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:background="@drawable/bg_streak_day_missed"
+                                            android:padding="@dimen/_4sdp"
+                                            android:src="@drawable/ic_exclamation"
+                                            app:tint="@color/white"
+                                            android:visibility="gone" />
+
+                                        <ImageView
+                                            android:id="@+id/day5Pending"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:background="@drawable/bg_streak_day_pending"
+                                            android:visibility="visible" />
 
                                     </FrameLayout>
 
@@ -609,9 +722,9 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/_3sdp"
                                 android:layout_weight="1"
-                                app:cardBackgroundColor="@color/color_card_mint"
+                                app:cardBackgroundColor="@color/white"
                                 app:cardElevation="0dp"
-                                app:strokeColor="@color/color_card_mint_border"
+                                app:strokeColor="@color/color_streak_future_border"
                                 app:strokeWidth="1dp">
 
                                 <LinearLayout
@@ -631,7 +744,8 @@
                                             style="?android:attr/progressBarStyle"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
-                                            android:indeterminate="true" />
+                                            android:indeterminate="true"
+                                            android:visibility="gone" />
 
                                         <ImageView
                                             android:id="@+id/day6Check"
@@ -640,7 +754,25 @@
                                             android:background="@drawable/bg_streak_day_done"
                                             android:padding="@dimen/_4sdp"
                                             android:src="@drawable/ic_check"
+                                            app:tint="@color/white"
                                             android:visibility="gone" />
+
+                                        <ImageView
+                                            android:id="@+id/day6Missed"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:background="@drawable/bg_streak_day_missed"
+                                            android:padding="@dimen/_4sdp"
+                                            android:src="@drawable/ic_exclamation"
+                                            app:tint="@color/white"
+                                            android:visibility="gone" />
+
+                                        <ImageView
+                                            android:id="@+id/day6Pending"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:background="@drawable/bg_streak_day_pending"
+                                            android:visibility="visible" />
 
                                     </FrameLayout>
 
