@@ -2,7 +2,7 @@
 
 $filename = $_GET['audio'];
 $folder = 'https://pathlingo.scholarlyapps.com/storage/vocab/words/audio/';
-$path = '/var/www/html/jlpt-laravel-vue/storage/app/public/vocab/words/audio/';
+$path = '/var/www/html/jlpt/storage/app/public/vocab/words/audio/';
 
 if($filename!=''){}else{
         'No file Found';
