@@ -1,14 +1,13 @@
 package com.scholarlyapps.pathlingo.ui.activities;
 
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.fragment.NavHostFragment;
+import android.content.Intent;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.scholarlyapps.pathlingo.R;
@@ -86,34 +85,12 @@ public class SubcategoryActivity extends AppCompatActivity {
     }
 
     private void openWordDetail(Subcategory subcat) {
-        Bundle args = new Bundle();
-        args.putString("subcategoryId", subcat.id);
-        args.putString("iconUrl", subcat.iconUrl != null ? subcat.iconUrl : "");
-        args.putInt("wordIndex", 0);
-
-        NavHostFragment nhf = NavHostFragment.create(R.navigation.nav_subcategory, args);
-        getSupportFragmentManager()
-            .beginTransaction()
-            .replace(R.id.navHostContainer, nhf)
-            .commitNow();
-        binding.navHostContainer.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (binding.navHostContainer.getVisibility() == View.VISIBLE) {
-            NavHostFragment nhf = (NavHostFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.navHostContainer);
-            if (nhf != null && nhf.getNavController().popBackStack()) {
-                return;
-            }
-            if (nhf != null) {
-                getSupportFragmentManager().beginTransaction().remove(nhf).commitNow();
-            }
-            binding.navHostContainer.setVisibility(View.GONE);
-            return;
-        }
-        super.onBackPressed();
+        Intent intent = new Intent(this, WordDetailActivity.class);
+        intent.putExtra(WordDetailActivity.EXTRA_SUBCATEGORY_ID, subcat.id);
+        intent.putExtra(WordDetailActivity.EXTRA_ICON_URL, subcat.iconUrl != null ? subcat.iconUrl : "");
+        intent.putExtra(WordDetailActivity.EXTRA_WORD_INDEX, 0);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     @Override

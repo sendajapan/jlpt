@@ -1,41 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/paper">
+    android:background="@color/paper"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <com.scholarlyapps.pathlingo.ui.views.HeaderToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/color_theme_light"
+        app:showBackButton="true"
+        app:showAvatar="true" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvSubcategories"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:clipToPadding="false"
+        android:overScrollMode="never"
+        android:paddingHorizontal="@dimen/_16sdp"
+        android:paddingTop="@dimen/_8sdp"
+        android:paddingBottom="@dimen/_24sdp" />
 
-        <com.scholarlyapps.pathlingo.ui.views.HeaderToolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/color_theme_light"
-            app:showBackButton="true"
-            app:showAvatar="true" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvSubcategories"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:overScrollMode="never"
-            android:paddingHorizontal="@dimen/_16sdp"
-            android:paddingTop="@dimen/_8sdp"
-            android:paddingBottom="@dimen/_24sdp" />
-
-    </LinearLayout>
-
-    <FrameLayout
-        android:id="@+id/navHostContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone" />
-
-</FrameLayout>
+</LinearLayout>

@@ -4,53 +4,63 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cardRoot"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/_3sdp"
+    android:layout_height="@dimen/_120sdp"
     app:cardCornerRadius="@dimen/_10sdp"
-    app:cardElevation="0dp"
-    app:strokeColor="@color/color_streak_future_border"
-    app:strokeWidth="1dp">
+    app:cardUseCompatPadding="true"
+    app:cardElevation="@dimen/_1sdp"
+    app:strokeWidth="0dp">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_80sdp">
+        <ImageView
+            android:id="@+id/imgCategory"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/imgCategory"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/imgIcon"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="@dimen/_8sdp"
-                android:scaleType="centerInside" />
-
-        </FrameLayout>
-
-        <LinearLayout
+        <ImageView
+            android:id="@+id/imgIcon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:layout_marginHorizontal="@dimen/_8sdp"
+            android:scaleType="centerInside"
+            app:layout_constraintBottom_toTopOf="@id/labelGroup"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/labelGroup"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_6sdp"
+            android:layout_marginBottom="@dimen/_6sdp"
             android:orientation="vertical"
-            android:paddingHorizontal="@dimen/_6sdp"
-            android:paddingVertical="@dimen/_4sdp">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
             <TextView
                 android:id="@+id/txtJp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins"
+                android:fontFamily="@font/poppins_semibold"
                 android:includeFontPadding="false"
-                android:textColor="@color/color_theme_black_light"
-                android:textSize="@dimen/_9ssp" />
+                android:textSize="@dimen/_8ssp" />
 
             <TextView
                 android:id="@+id/txtEn"
@@ -58,11 +68,10 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_bold"
                 android:includeFontPadding="false"
-                android:textColor="@color/ink"
-                android:textSize="@dimen/_10ssp" />
+                android:textSize="@dimen/_9ssp" />
 
         </LinearLayout>
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.google.android.material.card.MaterialCardView>

@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/_3sdp"
+    android:layout_height="@dimen/_120sdp"
     app:cardBackgroundColor="@color/color_theme_extra_light"
     app:cardCornerRadius="@dimen/_10sdp"
-    app:cardElevation="0dp"
+    app:cardElevation="@dimen/_1sdp"
     app:strokeColor="@color/color_theme_light"
-    app:strokeWidth="1dp">
+    app:strokeWidth="1dp"
+    app:cardUseCompatPadding="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,15 +20,6 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_bold"
-            android:includeFontPadding="false"
-            android:text="View All"
-            android:textColor="@color/color_theme_dark"
-            android:textSize="@dimen/_12ssp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:fontFamily="@font/poppins"
             android:gravity="center"
             android:includeFontPadding="false"
@@ -37,23 +27,14 @@
             android:textColor="@color/color_theme_black_light"
             android:textSize="@dimen/_9ssp" />
 
-        <com.google.android.material.button.MaterialButton
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_6sdp"
-            android:fontFamily="@font/poppins_semibold"
-            android:letterSpacing="0"
-            android:paddingHorizontal="@dimen/_10sdp"
-            android:text="VIEW ALL"
-            android:textAllCaps="false"
-            android:textColor="@color/color_theme_navy"
-            android:textSize="@dimen/_9ssp"
-            app:backgroundTint="@color/color_theme_light"
-            app:cornerRadius="@dimen/_6sdp"
-            app:icon="@drawable/ic_chevron_right"
-            app:iconGravity="end"
-            app:iconSize="@dimen/_12sdp"
-            app:iconTint="@color/color_theme_navy" />
+            android:fontFamily="@font/poppins_bold"
+            android:includeFontPadding="false"
+            android:text="View All"
+            android:textColor="@color/color_theme_dark"
+            android:textSize="@dimen/_12ssp" />
 
     </LinearLayout>
 

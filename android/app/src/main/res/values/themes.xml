@@ -2,7 +2,7 @@
 <resources>
     <style name="BottomNavShapeOverlay" parent="">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">24dp</item>
+        <item name="cornerSize">12dp</item>
     </style>
 
     <style name="BottomNavActiveIndicatorStyle">
@@ -11,16 +11,14 @@
     </style>
 
     <style name="BottomNavLabelActive" parent="TextAppearance.MaterialComponents.Caption">
-        <item name="android:textColor">#FFFFFF</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textSize">10sp</item>
+        <item name="android:textSize">@dimen/_7sdp</item>
         <item name="android:fontFamily">@font/poppins_bold</item>
     </style>
 
     <style name="BottomNavLabelInactive" parent="TextAppearance.MaterialComponents.Caption">
-        <item name="android:textColor">@color/color_theme_dark</item>
-        <item name="android:textSize">10sp</item>
-        <item name="android:fontFamily">@font/poppins_bold</item>
+        <item name="android:textSize">@dimen/_7sdp</item>
+        <item name="android:fontFamily">@font/poppins_semibold</item>
     </style>
 
     <style name="Theme.PathLingo" parent="Theme.MaterialComponents.Light.NoActionBar">

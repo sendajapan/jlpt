@@ -66,6 +66,12 @@
             android:theme="@style/Theme.PathLingo" />
 
         <activity
+            android:name=".ui.activities.WordDetailActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.PathLingo" />
+
+        <activity
             android:name=".ui.activities.SubcategoryActivity"
             android:exported="false"
             android:screenOrientation="portrait"

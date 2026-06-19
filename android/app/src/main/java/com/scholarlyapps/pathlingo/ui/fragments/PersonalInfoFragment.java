@@ -2,13 +2,8 @@ package com.scholarlyapps.pathlingo.ui.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,10 +14,11 @@ import com.scholarlyapps.pathlingo.R;
 import com.scholarlyapps.pathlingo.databinding.FragmentPersonalInfoBinding;
 import com.scholarlyapps.pathlingo.viewmodels.OnboardingViewModel;
 
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 public class PersonalInfoFragment extends Fragment {
 
@@ -40,6 +36,19 @@ public class PersonalInfoFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         OnboardingViewModel vm = new ViewModelProvider(requireActivity()).get(OnboardingViewModel.class);
+
+        updateDateLabel(vm.dobYear, vm.dobMonth, vm.dobDay);
+
+        binding.btnPickDate.setOnClickListener(v -> {
+            DobPickerBottomSheet sheet = DobPickerBottomSheet.newInstance(vm.dobYear, vm.dobMonth, vm.dobDay);
+            sheet.setOnDateSelectedListener((year, month, day) -> {
+                vm.dobYear  = year;
+                vm.dobMonth = month;
+                vm.dobDay   = day;
+                updateDateLabel(year, month, day);
+            });
+            sheet.show(getParentFragmentManager(), "dob_picker");
+        });
 
         List<View> genderCards = Arrays.asList(
                 binding.cardMale,
@@ -62,77 +71,18 @@ public class PersonalInfoFragment extends Fragment {
             int idx = genderValues.indexOf(vm.gender);
             if (idx >= 0) genderCards.get(idx).setBackgroundResource(R.drawable.bg_onboarding_selected);
         }
-
-        int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-        List<String> years = new ArrayList<>();
-        for (int y = currentYear - 10; y >= currentYear - 80; y--) years.add(String.valueOf(y));
-
-        List<String> months = Arrays.asList("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
-
-        List<String> days = new ArrayList<>();
-        for (int d = 1; d <= 31; d++) days.add(String.valueOf(d));
-
-        setupSpinner(binding.spinnerYear, years);
-        setupSpinner(binding.spinnerMonth, months);
-        setupSpinner(binding.spinnerDay, days);
-
-        int yearIdx = years.indexOf(String.valueOf(vm.dobYear));
-        if (yearIdx >= 0) binding.spinnerYear.setSelection(yearIdx);
-        binding.spinnerMonth.setSelection(vm.dobMonth);
-        binding.spinnerDay.setSelection(vm.dobDay - 1);
-
-        binding.spinnerYear.setOnItemSelectedListener(new SimpleItemSelectedListener() {
-            @Override public void onItemSelected(AdapterView<?> parent, View v, int pos, long id) {
-                vm.dobYear = Integer.parseInt(years.get(pos));
-            }
-        });
-        binding.spinnerMonth.setOnItemSelectedListener(new SimpleItemSelectedListener() {
-            @Override public void onItemSelected(AdapterView<?> parent, View v, int pos, long id) {
-                vm.dobMonth = pos;
-            }
-        });
-        binding.spinnerDay.setOnItemSelectedListener(new SimpleItemSelectedListener() {
-            @Override public void onItemSelected(AdapterView<?> parent, View v, int pos, long id) {
-                vm.dobDay = pos + 1;
-            }
-        });
     }
 
-    private void setupSpinner(Spinner spinner, List<String> items) {
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(requireContext(), R.layout.item_spinner_dob, items) {
-            @Override
-            public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
-                if (convertView == null) {
-                    convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_spinner_dob_dropdown, parent, false);
-                }
-                ((TextView) convertView.findViewById(android.R.id.text1)).setText(getItem(position));
-                return convertView;
-            }
-        };
-        spinner.setAdapter(adapter);
-        spinner.setPopupBackgroundResource(R.drawable.bg_spinner_popup);
-        spinner.setOnTouchListener((v, event) -> {
-            if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                View sample = LayoutInflater.from(requireContext())
-                        .inflate(R.layout.item_spinner_dob_dropdown, spinner, false);
-                sample.measure(
-                        View.MeasureSpec.makeMeasureSpec(spinner.getWidth(), View.MeasureSpec.AT_MOST),
-                        View.MeasureSpec.UNSPECIFIED
-                );
-                int itemHeight = sample.getMeasuredHeight();
-                spinner.setDropDownVerticalOffset(spinner.getHeight() + spinner.getSelectedItemPosition() * itemHeight);
-            }
-            return false;
-        });
+    private void updateDateLabel(int year, int month, int day) {
+        Calendar cal = Calendar.getInstance();
+        cal.set(year, month, day);
+        String formatted = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH).format(cal.getTime());
+        binding.txtSelectedDate.setText(formatted);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
-    }
-
-    private static abstract class SimpleItemSelectedListener implements AdapterView.OnItemSelectedListener {
-        @Override public void onNothingSelected(AdapterView<?> parent) {}
     }
 }

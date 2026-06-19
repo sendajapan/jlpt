@@ -167,7 +167,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="@dimen/_16sdp"
+            app:cardCornerRadius="@dimen/_12sdp"
             app:cardElevation="0dp"
             android:layout_marginHorizontal="@dimen/_16sdp"
             android:layout_marginTop="@dimen/_12sdp">
@@ -176,7 +176,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_margin="@dimen/_8sdp">
+                android:layout_margin="@dimen/_12sdp">
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardLearningStreak"
@@ -186,7 +186,7 @@
                     app:cardCornerRadius="@dimen/_8sdp"
                     app:cardUseCompatPadding="true"
                     app:cardElevation="@dimen/_2sdp"
-                    app:strokeWidth="@dimen/_4sdp">
+                    app:strokeWidth="0dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -293,8 +293,8 @@
 
                                     <FrameLayout
                                         android:id="@+id/day0Circle"
-                                        android:layout_width="@dimen/_18sdp"
-                                        android:layout_height="@dimen/_18sdp">
+                                        android:layout_width="@dimen/_16sdp"
+                                        android:layout_height="@dimen/_16sdp">
 
                                         <ProgressBar
                                             android:id="@+id/day0Progress"
@@ -336,7 +336,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginTop="@dimen/_4sdp"
+                                        android:layout_marginTop="@dimen/_2sdp"
                                         android:fontFamily="@font/poppins"
                                         android:includeFontPadding="false"
                                         android:text="Sun"
@@ -367,8 +367,8 @@
 
                                     <FrameLayout
                                         android:id="@+id/day1Circle"
-                                        android:layout_width="@dimen/_18sdp"
-                                        android:layout_height="@dimen/_18sdp">
+                                        android:layout_width="@dimen/_16sdp"
+                                        android:layout_height="@dimen/_16sdp">
 
                                         <ProgressBar
                                             android:id="@+id/day1Progress"
@@ -410,7 +410,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginTop="@dimen/_4sdp"
+                                        android:layout_marginTop="@dimen/_2sdp"
                                         android:fontFamily="@font/poppins"
                                         android:includeFontPadding="false"
                                         android:text="Mon"
@@ -441,8 +441,8 @@
 
                                     <FrameLayout
                                         android:id="@+id/day2Circle"
-                                        android:layout_width="@dimen/_18sdp"
-                                        android:layout_height="@dimen/_18sdp">
+                                        android:layout_width="@dimen/_16sdp"
+                                        android:layout_height="@dimen/_16sdp">
 
                                         <ProgressBar
                                             android:id="@+id/day2Progress"
@@ -484,7 +484,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginTop="@dimen/_4sdp"
+                                        android:layout_marginTop="@dimen/_2sdp"
                                         android:fontFamily="@font/poppins"
                                         android:includeFontPadding="false"
                                         android:text="Tue"
@@ -515,8 +515,8 @@
 
                                     <FrameLayout
                                         android:id="@+id/day3Circle"
-                                        android:layout_width="@dimen/_18sdp"
-                                        android:layout_height="@dimen/_18sdp">
+                                        android:layout_width="@dimen/_16sdp"
+                                        android:layout_height="@dimen/_16sdp">
 
                                         <ImageView
                                             android:id="@+id/day3Progress"
@@ -557,7 +557,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginTop="@dimen/_4sdp"
+                                        android:layout_marginTop="@dimen/_2sdp"
                                         android:fontFamily="@font/poppins"
                                         android:includeFontPadding="false"
                                         android:text="Wed"
@@ -588,8 +588,8 @@
 
                                     <FrameLayout
                                         android:id="@+id/day4Circle"
-                                        android:layout_width="@dimen/_18sdp"
-                                        android:layout_height="@dimen/_18sdp">
+                                        android:layout_width="@dimen/_16sdp"
+                                        android:layout_height="@dimen/_16sdp">
 
                                         <ProgressBar
                                             android:id="@+id/day4Progress"
@@ -631,7 +631,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginTop="@dimen/_4sdp"
+                                        android:layout_marginTop="@dimen/_2sdp"
                                         android:fontFamily="@font/poppins"
                                         android:includeFontPadding="false"
                                         android:text="Thu"
@@ -662,8 +662,8 @@
 
                                     <FrameLayout
                                         android:id="@+id/day5Circle"
-                                        android:layout_width="@dimen/_18sdp"
-                                        android:layout_height="@dimen/_18sdp">
+                                        android:layout_width="@dimen/_16sdp"
+                                        android:layout_height="@dimen/_16sdp">
 
                                         <ProgressBar
                                             android:id="@+id/day5Progress"
@@ -705,7 +705,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginTop="@dimen/_4sdp"
+                                        android:layout_marginTop="@dimen/_2sdp"
                                         android:fontFamily="@font/poppins"
                                         android:includeFontPadding="false"
                                         android:text="Fri"
@@ -736,8 +736,8 @@
 
                                     <FrameLayout
                                         android:id="@+id/day6Circle"
-                                        android:layout_width="@dimen/_18sdp"
-                                        android:layout_height="@dimen/_18sdp">
+                                        android:layout_width="@dimen/_16sdp"
+                                        android:layout_height="@dimen/_16sdp">
 
                                         <ProgressBar
                                             android:id="@+id/day6Progress"
@@ -779,7 +779,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginTop="@dimen/_4sdp"
+                                        android:layout_marginTop="@dimen/_2sdp"
                                         android:fontFamily="@font/poppins"
                                         android:includeFontPadding="false"
                                         android:text="Sat"
@@ -800,7 +800,7 @@
                     android:id="@+id/btnStartQuiz"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_46sdp"
-                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_4sdp"
                     android:layout_marginHorizontal="@dimen/_4sdp"
                     android:text="Start Quiz"
                     android:fontFamily="@font/poppins_semibold"
@@ -836,7 +836,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="@dimen/_8sdp">
+                    android:padding="@dimen/_12sdp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -883,7 +883,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="@dimen/_8sdp">
+                    android:padding="@dimen/_12sdp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -927,7 +927,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="@dimen/_8sdp">
+                    android:padding="@dimen/_12sdp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -971,7 +971,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="@dimen/_8sdp">
+                    android:padding="@dimen/_12sdp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -1018,7 +1018,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="@dimen/_8sdp">
+                    android:padding="@dimen/_12sdp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -1065,7 +1065,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="@dimen/_8sdp">
+                    android:padding="@dimen/_12sdp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"

@@ -41,91 +41,38 @@
             android:textSize="@dimen/_12ssp" />
 
         <LinearLayout
+            android:id="@+id/btnPickDate"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_height="@dimen/_48sdp"
             android:layout_marginTop="@dimen/_8sdp"
-            android:padding="@dimen/_8sdp"
-            android:background="@drawable/bg_onboarding_unselected">
+            android:background="@drawable/bg_onboarding_unselected"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/_12sdp">
 
-            <LinearLayout
+            <ImageView
+                android:layout_width="@dimen/_18sdp"
+                android:layout_height="@dimen/_18sdp"
+                android:src="@drawable/ic_clock"
+                app:tint="@color/color_theme_dark" />
+
+            <TextView
+                android:id="@+id/txtSelectedDate"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/_32sdp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
                 android:layout_weight="1"
-                android:background="@drawable/bg_onboarding_unselected"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingStart="@dimen/_8sdp"
-                android:paddingEnd="@dimen/_6sdp">
+                android:fontFamily="@font/poppins"
+                android:textColor="@color/color_theme_black"
+                android:textSize="@dimen/_12ssp" />
 
-                <Spinner
-                    android:id="@+id/spinnerYear"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@null" />
-
-                <ImageView
-                    android:layout_width="@dimen/_8sdp"
-                    android:layout_height="@dimen/_8sdp"
-                    android:src="@drawable/arrow_navigate"
-                    app:tint="@color/color_theme_dark" />
-
-            </LinearLayout>
-
-            <Space android:layout_width="@dimen/_8sdp" android:layout_height="match_parent" />
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="@dimen/_32sdp"
-                android:layout_weight="1"
-                android:background="@drawable/bg_onboarding_unselected"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingStart="@dimen/_8sdp"
-                android:paddingEnd="@dimen/_6sdp">
-
-                <Spinner
-                    android:id="@+id/spinnerMonth"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@null" />
-
-                <ImageView
-                    android:layout_width="@dimen/_8sdp"
-                    android:layout_height="@dimen/_8sdp"
-                    android:src="@drawable/arrow_navigate"
-                    app:tint="@color/color_theme_dark" />
-
-            </LinearLayout>
-
-            <Space android:layout_width="@dimen/_8sdp" android:layout_height="match_parent" />
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="@dimen/_32sdp"
-                android:layout_weight="1"
-                android:background="@drawable/bg_onboarding_unselected"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingStart="@dimen/_8sdp"
-                android:paddingEnd="@dimen/_6sdp">
-
-                <Spinner
-                    android:id="@+id/spinnerDay"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@null" />
-
-                <ImageView
-                    android:layout_width="@dimen/_8sdp"
-                    android:layout_height="@dimen/_8sdp"
-                    android:src="@drawable/arrow_navigate"
-                    app:tint="@color/color_theme_dark" />
-
-            </LinearLayout>
+            <ImageView
+                android:layout_width="@dimen/_10sdp"
+                android:layout_height="@dimen/_10sdp"
+                android:src="@drawable/ic_chevron_down"
+                app:tint="@color/color_theme_dark" />
 
         </LinearLayout>
 

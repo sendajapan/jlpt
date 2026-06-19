@@ -1,16 +1,18 @@
 package com.scholarlyapps.pathlingo.ui.adapters;
 
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.scholarlyapps.pathlingo.databinding.ItemCategoryCardBinding;
+import com.scholarlyapps.pathlingo.R;
 import com.scholarlyapps.pathlingo.databinding.ItemCategoryViewAllBinding;
 import com.scholarlyapps.pathlingo.models.Category;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import coil.Coil;
@@ -66,7 +68,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         if (viewType == TYPE_VIEW_ALL) {
             return new ViewAllHolder(ItemCategoryViewAllBinding.inflate(inflater, parent, false));
         }
-        return new CategoryHolder(ItemCategoryCardBinding.inflate(inflater, parent, false));
+        int layoutRes = showAll ? R.layout.item_category_card_large : R.layout.item_category_card;
+        return new CategoryHolder(inflater.inflate(layoutRes, parent, false));
     }
 
     @Override
@@ -80,40 +83,48 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     static class CategoryHolder extends RecyclerView.ViewHolder {
 
-        final ItemCategoryCardBinding binding;
+        final ImageView imgCategory;
+        final ImageView imgIcon;
+        final TextView txtJp;
+        final TextView txtEn;
+        final View cardRoot;
 
-        CategoryHolder(ItemCategoryCardBinding binding) {
-            super(binding.getRoot());
-            this.binding = binding;
+        CategoryHolder(View view) {
+            super(view);
+            imgCategory = view.findViewById(R.id.imgCategory);
+            imgIcon = view.findViewById(R.id.imgIcon);
+            txtJp = view.findViewById(R.id.txtJp);
+            txtEn = view.findViewById(R.id.txtEn);
+            cardRoot = view.findViewById(R.id.cardRoot);
         }
 
         void bind(Category cat, OnCategoryClick listener) {
-            binding.txtJp.setText(cat.jp);
-            binding.txtEn.setText(cat.en);
+            txtJp.setText(cat.jp);
+            txtEn.setText(cat.en);
 
             if (cat.bg != null && !cat.bg.isEmpty()) {
-                Coil.imageLoader(binding.imgCategory.getContext()).enqueue(
-                    new ImageRequest.Builder(binding.imgCategory.getContext())
+                Coil.imageLoader(imgCategory.getContext()).enqueue(
+                    new ImageRequest.Builder(imgCategory.getContext())
                         .data(cat.bg)
                         .crossfade(true)
-                        .target(binding.imgCategory)
+                        .target(imgCategory)
                         .build()
                 );
             }
             if (cat.iconUrl != null && !cat.iconUrl.isEmpty()) {
-                Coil.imageLoader(binding.imgIcon.getContext()).enqueue(
-                    new ImageRequest.Builder(binding.imgIcon.getContext())
+                Coil.imageLoader(imgIcon.getContext()).enqueue(
+                    new ImageRequest.Builder(imgIcon.getContext())
                         .data(cat.iconUrl)
                         .crossfade(true)
-                        .target(binding.imgIcon)
+                        .target(imgIcon)
                         .build()
                 );
             }
 
             if (cat.isLocked) {
-                binding.cardRoot.setOnClickListener(v -> listener.onUnlockClick(cat));
+                cardRoot.setOnClickListener(v -> listener.onUnlockClick(cat));
             } else {
-                binding.cardRoot.setOnClickListener(v -> listener.onClick(cat));
+                cardRoot.setOnClickListener(v -> listener.onClick(cat));
             }
         }
     }

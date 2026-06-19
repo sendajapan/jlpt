@@ -40,7 +40,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textColor="@color/ink"
+                    android:textColor="@android:color/black"
                     android:textSize="@dimen/_15ssp"
                     android:textStyle="bold" />
 
@@ -59,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_1sdp"
                 android:layout_marginBottom="@dimen/_8sdp"
-                android:textColor="@color/ink_soft"
+                android:textColor="@android:color/black"
                 android:textSize="@dimen/_12ssp" />
 
             <ProgressBar

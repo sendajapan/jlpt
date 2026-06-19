@@ -92,6 +92,8 @@ public class MainDashboardActivity extends AppCompatActivity {
             .setPopExitAnim(R.anim.slide_out_right)
             .build();
 
+        binding.bottomNav.setItemIconTintList(null);
+
         binding.bottomNav.setOnItemSelectedListener(item -> {
             int destId = item.getItemId();
             if (navController.getCurrentDestination() != null
