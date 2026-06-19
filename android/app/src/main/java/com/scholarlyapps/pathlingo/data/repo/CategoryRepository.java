@@ -184,8 +184,9 @@ public class CategoryRepository {
         subcategory.id = String.valueOf(row.subcategory.id);
         subcategory.jp = orEmpty(row.subcategory.nameJp);
         subcategory.en = orEmpty(row.subcategory.nameEn);
+        subcategory.romaji = orEmpty(row.subcategory.nameRomaji);
         subcategory.bg = orEmpty(row.subcategory.iconThumbnailBg);
-        subcategory.img = orEmpty(row.subcategory.iconThumbnailUrl);
+        subcategory.img = orEmpty(row.subcategory.bgUrl);
         subcategory.iconUrl = orEmpty(row.subcategory.iconUrl);
         subcategory.locked = row.subcategory.isPremium;
         subcategory.coinPrice = row.subcategory.coinPrice;
@@ -218,6 +219,10 @@ public class CategoryRepository {
             word.favorite = entity.isFavorite;
             word.coinPrice = entity.coinPrice;
             word.isLocked = entity.isLocked;
+            word.audioUrl = orEmpty(entity.audioJpUrl);
+            word.audioEnUrl = orEmpty(entity.audioEnUrl);
+            word.sentenceAudioJpUrl = orEmpty(entity.sentenceAudioJpUrl);
+            word.sentenceAudioEnUrl = orEmpty(entity.sentenceAudioEnUrl);
 
             words.add(word);
         }
@@ -260,6 +265,7 @@ public class CategoryRepository {
             entity.iconUrl = dto.iconUrl;
             entity.iconThumbnailUrl = dto.iconThumbnailUrl;
             entity.iconThumbnailBg = dto.iconThumbnailBg;
+            entity.bgUrl = dto.bgUrl;
             entity.isPremium = dto.isPremium;
             entity.coinPrice = dto.coinPrice;
             entity.isLocked = dto.isLocked;
@@ -284,6 +290,9 @@ public class CategoryRepository {
             entity.sentenceRomaji = dto.sentenceRomaji;
             entity.sentenceEn = dto.sentenceEn;
             entity.audioJpUrl = dto.audioJpUrl;
+            entity.audioEnUrl = dto.audioEnUrl;
+            entity.sentenceAudioJpUrl = dto.sentenceAudioJpUrl;
+            entity.sentenceAudioEnUrl = dto.sentenceAudioEnUrl;
             entity.imageUrl = dto.imageUrl;
             entity.isPremium = dto.isPremium;
             entity.coinPrice = dto.coinPrice;

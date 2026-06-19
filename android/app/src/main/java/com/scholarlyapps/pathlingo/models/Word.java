@@ -20,6 +20,10 @@ public class Word {
     public boolean favorite;
     public int coinPrice;
     public boolean isLocked;
+    public String audioUrl;
+    public String audioEnUrl;
+    public String sentenceAudioJpUrl;
+    public String sentenceAudioEnUrl;
 
     public Word() {
     }

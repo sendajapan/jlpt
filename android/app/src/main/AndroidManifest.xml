@@ -78,6 +78,18 @@
             android:theme="@style/Theme.PathLingo" />
 
         <activity
+            android:name=".ui.activities.WordListActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.PathLingo" />
+
+        <activity
+            android:name=".ui.activities.WordActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.PathLingo" />
+
+        <activity
             android:name=".ui.activities.profile.EditProfileActivity"
             android:exported="false"
             android:screenOrientation="portrait"

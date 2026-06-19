@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        layout="@layout/layout_auth_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <com.scholarlyapps.pathlingo.ui.views.HeaderToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/color_theme_light"
+        app:showBackButton="true"
+        app:showAvatar="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/color_theme_light"
+        app:tabMode="scrollable"
+        app:tabGravity="start"
+        app:tabIndicatorColor="@color/color_theme_navy"
+        app:tabTextColor="@color/ink_soft"
+        app:tabSelectedTextColor="@color/color_theme_navy"
+        app:tabTextAppearance="@android:style/TextAppearance.Small"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvWords"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:overScrollMode="never"
+        android:paddingHorizontal="@dimen/_16sdp"
+        android:paddingTop="@dimen/_16sdp"
+        android:paddingBottom="@dimen/_24sdp"
+        tools:listitem="@layout/item_word_list_card"
+        tools:itemCount="4"
+        app:layout_constraintTop_toBottomOf="@id/tabLayout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

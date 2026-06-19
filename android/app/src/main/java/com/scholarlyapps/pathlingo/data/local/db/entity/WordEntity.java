@@ -15,6 +15,9 @@ public class WordEntity {
     public String sentenceRomaji;
     public String sentenceEn;
     public String audioJpUrl;
+    public String audioEnUrl;
+    public String sentenceAudioJpUrl;
+    public String sentenceAudioEnUrl;
     public String imageUrl;
     public boolean isPremium;
     public int coinPrice;

@@ -20,8 +20,6 @@ import com.scholarlyapps.pathlingo.ui.adapters.SubcategoryAdapter;
 import com.scholarlyapps.pathlingo.viewmodels.AppViewModelFactory;
 import com.scholarlyapps.pathlingo.viewmodels.SubcategoryViewModel;
 
-import coil.Coil;
-import coil.request.ImageRequest;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -31,6 +29,7 @@ public class SubcategoryActivity extends AppCompatActivity {
     public static final String EXTRA_CATEGORY_ID = "categoryId";
 
     private ActivitySubcategoryBinding binding;
+    private String categoryId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +50,7 @@ public class SubcategoryActivity extends AppCompatActivity {
             return insets;
         });
 
-        String categoryId = getIntent().getStringExtra(EXTRA_CATEGORY_ID);
+        categoryId = getIntent().getStringExtra(EXTRA_CATEGORY_ID);
         if (categoryId == null) {
             finish();
             return;
@@ -71,7 +70,7 @@ public class SubcategoryActivity extends AppCompatActivity {
             binding.rvSubcategories.setAdapter(new SubcategoryAdapter(category.subcategories, new SubcategoryAdapter.OnSubcategoryClick() {
                 @Override
                 public void onClick(Subcategory subcat) {
-                    openWordDetail(subcat);
+                    openWordList(subcat);
                 }
 
                 @Override
@@ -84,11 +83,10 @@ public class SubcategoryActivity extends AppCompatActivity {
         viewModel.load(Long.parseLong(categoryId));
     }
 
-    private void openWordDetail(Subcategory subcat) {
-        Intent intent = new Intent(this, WordDetailActivity.class);
-        intent.putExtra(WordDetailActivity.EXTRA_SUBCATEGORY_ID, subcat.id);
-        intent.putExtra(WordDetailActivity.EXTRA_ICON_URL, subcat.iconUrl != null ? subcat.iconUrl : "");
-        intent.putExtra(WordDetailActivity.EXTRA_WORD_INDEX, 0);
+    private void openWordList(Subcategory subcat) {
+        Intent intent = new Intent(this, WordListActivity.class);
+        intent.putExtra(WordListActivity.EXTRA_CATEGORY_ID, categoryId);
+        intent.putExtra(WordListActivity.EXTRA_SELECTED_SUBCATEGORY_ID, subcat.id);
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
