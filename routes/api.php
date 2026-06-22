@@ -26,6 +26,7 @@ Route::get('avatars', [AvatarController::class, 'index']);
 Route::get('categories', [CategoryController::class, 'index']);
 Route::get('subcategories', [SubcategoryController::class, 'index']);
 Route::get('vocabularies', [VocabularyController::class, 'index']);
+Route::get('quiz', [QuizController::class, 'generate']);
 
 Route::prefix('auth')->group(function () {
     Route::post('guest', GuestLoginController::class);
@@ -63,7 +64,6 @@ Route::middleware('auth:app_users')->group(function () {
     Route::post('avatars/{avatar}/purchase', [AvatarController::class, 'purchase']);
     Route::patch('me/avatar', [AvatarController::class, 'setActive']);
 
-    Route::get('quiz', [QuizController::class, 'generate']);
     Route::post('quiz/complete', [QuizController::class, 'complete']);
 
     Route::post('words/{vocabulary}/unlock', [WordUnlockController::class, 'store']);
