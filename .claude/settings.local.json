@@ -120,7 +120,8 @@
       "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\sulai\\\\Herd\\\\jlpt_laravel\\\\app\\\\Http\\\\Controllers\" -Filter \"*.php\")",
       "Bash(Select-Object Name)",
       "Bash(xargs cat)",
-      "Bash(xargs ls -la)"
+      "Bash(xargs ls -la)",
+      "Bash(grep *)"
     ]
   },
   "enableAllProjectMcpServers": true,
