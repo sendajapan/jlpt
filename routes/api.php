@@ -14,6 +14,7 @@ use App\Http\Controllers\Api\V1\CategoryUnlockController;
 use App\Http\Controllers\Api\V1\CoinController;
 use App\Http\Controllers\Api\V1\FavoriteController;
 use App\Http\Controllers\Api\V1\ProfileController;
+use App\Http\Controllers\Api\V1\QuizController;
 use App\Http\Controllers\Api\V1\SubcategoryController;
 use App\Http\Controllers\Api\V1\VocabularyController;
 use App\Http\Controllers\Api\V1\WordReadController;
@@ -61,6 +62,9 @@ Route::middleware('auth:app_users')->group(function () {
 
     Route::post('avatars/{avatar}/purchase', [AvatarController::class, 'purchase']);
     Route::patch('me/avatar', [AvatarController::class, 'setActive']);
+
+    Route::get('quiz', [QuizController::class, 'generate']);
+    Route::post('quiz/complete', [QuizController::class, 'complete']);
 
     Route::post('words/{vocabulary}/unlock', [WordUnlockController::class, 'store']);
     Route::post('categories/{category}/unlock', [CategoryUnlockController::class, 'unlockCategory']);

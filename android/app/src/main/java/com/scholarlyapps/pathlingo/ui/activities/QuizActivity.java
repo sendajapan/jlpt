@@ -8,6 +8,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -67,9 +68,15 @@ public class QuizActivity extends AppCompatActivity {
 
         viewModel = new ViewModelProvider(this, new AppViewModelFactory()).get(QuizViewModel.class);
 
-        viewModel.getWordsLoaded().observe(this, loaded -> {
+        viewModel.getQuizLoaded().observe(this, loaded -> {
             if (Boolean.TRUE.equals(loaded)) {
                 viewModel.advance();
+            }
+        });
+
+        viewModel.getError().observe(this, msg -> {
+            if (msg != null) {
+                Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -83,9 +90,15 @@ public class QuizActivity extends AppCompatActivity {
             showQuestion(question);
         });
 
+        viewModel.getQuizResult().observe(this, result -> {
+            if (result != null) {
+                showScoreDialog(result.coinsEarned, result.xpEarned);
+            }
+        });
+
         binding.btnContinue.setOnClickListener(v -> onContinueClicked());
 
-        viewModel.loadWords();
+        viewModel.loadQuiz();
     }
 
     private void updateProgress() {
@@ -103,14 +116,14 @@ public class QuizActivity extends AppCompatActivity {
         questionBinding.txtWordJp.setVisibility(View.GONE);
         questionBinding.txtWordRomaji.setVisibility(View.GONE);
         questionBinding.cardImage.setVisibility(View.GONE);
-        questionBinding.btnPlayAudio.setVisibility(View.GONE);
+        questionBinding.audioPlayerCard.setVisibility(View.GONE);
 
         switch (question.type) {
             case TEXT:
                 questionBinding.txtQuestionLabel.setText("What does this mean?");
-                questionBinding.txtWordJp.setText(
-                    question.correct.kanji.isEmpty() ? question.correct.romaji : question.correct.kanji);
-                questionBinding.txtWordRomaji.setText(question.correct.romaji);
+                String jpText = question.wordJp.isEmpty() ? question.wordRomaji : question.wordJp;
+                questionBinding.txtWordJp.setText(jpText);
+                questionBinding.txtWordRomaji.setText(question.wordRomaji);
                 questionBinding.txtWordJp.setVisibility(View.VISIBLE);
                 questionBinding.txtWordRomaji.setVisibility(View.VISIBLE);
                 break;
@@ -120,7 +133,7 @@ public class QuizActivity extends AppCompatActivity {
                 questionBinding.cardImage.setVisibility(View.VISIBLE);
                 Coil.imageLoader(this).enqueue(
                     new ImageRequest.Builder(this)
-                        .data(question.correct.img)
+                        .data(question.imageUrl)
                         .crossfade(true)
                         .target(questionBinding.imgQuestion)
                         .build()
@@ -129,9 +142,9 @@ public class QuizActivity extends AppCompatActivity {
 
             case AUDIO:
                 questionBinding.txtQuestionLabel.setText("Listen and choose");
-                questionBinding.btnPlayAudio.setVisibility(View.VISIBLE);
-                questionBinding.btnPlayAudio.setOnClickListener(v -> playAudio(question.correct.audioUrl));
-                playAudio(question.correct.audioUrl);
+                questionBinding.audioPlayerCard.setVisibility(View.VISIBLE);
+                questionBinding.audioPlayerCard.setOnClickListener(v -> playAudio(question.audioJpUrl));
+                playAudio(question.audioJpUrl);
                 break;
         }
 
@@ -142,9 +155,7 @@ public class QuizActivity extends AppCompatActivity {
             questionBinding.btnOpt3
         );
 
-        correctAnswer = question.type == QuizViewModel.QuestionType.TEXT
-            ? question.correct.en
-            : (question.correct.kanji.isEmpty() ? question.correct.romaji : question.correct.kanji);
+        correctAnswer = question.correctAnswer;
 
         List<String> options = question.options;
         for (int i = 0; i < optionBtns.size(); i++) {
@@ -189,7 +200,7 @@ public class QuizActivity extends AppCompatActivity {
         if (selectedAnswer == null) return;
         hideToast();
         if (viewModel.isFinished()) {
-            showScoreDialog();
+            viewModel.submitResult();
         } else {
             viewModel.advance();
         }
@@ -208,10 +219,6 @@ public class QuizActivity extends AppCompatActivity {
             binding.toastSubtitle.setText("Right answer");
             binding.toastSubtitle.setTextColor(ContextCompat.getColor(this, R.color.color_level_n5));
         } else {
-            String hint = currentQuestion.type == QuizViewModel.QuestionType.TEXT
-                ? currentQuestion.correct.en
-                : (currentQuestion.correct.kanji.isEmpty()
-                    ? currentQuestion.correct.romaji : currentQuestion.correct.kanji);
             binding.motionToast.setCardBackgroundColor(
                 ContextCompat.getColor(this, R.color.color_level_n1_bg));
             binding.toastLine.setBackgroundColor(
@@ -220,7 +227,7 @@ public class QuizActivity extends AppCompatActivity {
             binding.toastIcon.setTextColor(ContextCompat.getColor(this, R.color.color_error));
             binding.toastTitle.setText("Incorrect");
             binding.toastTitle.setTextColor(ContextCompat.getColor(this, R.color.color_error));
-            binding.toastSubtitle.setText("Answer: " + hint);
+            binding.toastSubtitle.setText("Answer: " + correctAnswer);
             binding.toastSubtitle.setTextColor(ContextCompat.getColor(this, R.color.color_error));
         }
 
@@ -254,14 +261,14 @@ public class QuizActivity extends AppCompatActivity {
             ContextCompat.getColorStateList(this, R.color.color_theme_extra_light));
     }
 
-    private void showScoreDialog() {
+    private void showScoreDialog(int coinsEarned, int xpEarned) {
         DialogQuizResultBinding dialogBinding = DialogQuizResultBinding.inflate(LayoutInflater.from(this));
         int score = viewModel.getScore();
         int total = viewModel.getTotal();
-        int coins = score * 10;
 
         dialogBinding.txtResultScore.setText(score + " / " + total);
-        dialogBinding.txtResultCoins.setText("+" + coins + " coins earned");
+        dialogBinding.txtResultCoins.setText("+" + coinsEarned + " coins earned");
+        dialogBinding.txtResultXp.setText("+" + xpEarned + " XP earned");
 
         AlertDialog dialog = new AlertDialog.Builder(this)
             .setView(dialogBinding.getRoot())
@@ -283,7 +290,7 @@ public class QuizActivity extends AppCompatActivity {
 
         dialogBinding.btnTryAgain.setOnClickListener(v -> {
             dialog.dismiss();
-            viewModel.loadWords();
+            viewModel.loadQuiz();
         });
 
         dialog.show();
@@ -295,13 +302,28 @@ public class QuizActivity extends AppCompatActivity {
             mediaPlayer.release();
             mediaPlayer = null;
         }
+        if (questionBinding != null) {
+            questionBinding.audioPlayerCard.setAlpha(0.6f);
+        }
         mediaPlayer = new MediaPlayer();
         try {
             mediaPlayer.setDataSource(url);
             mediaPlayer.prepareAsync();
-            mediaPlayer.setOnPreparedListener(MediaPlayer::start);
+            mediaPlayer.setOnPreparedListener(mp -> {
+                mp.start();
+                if (questionBinding != null) {
+                    questionBinding.audioPlayerCard.setAlpha(1f);
+                }
+            });
+            mediaPlayer.setOnCompletionListener(mp -> {
+                if (questionBinding != null) {
+                    questionBinding.audioPlayerCard.setAlpha(1f);
+                }
+            });
         } catch (IOException e) {
-            // audio not available — silent fail
+            if (questionBinding != null) {
+                questionBinding.audioPlayerCard.setAlpha(1f);
+            }
         }
     }
 

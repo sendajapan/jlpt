@@ -1,6 +1,9 @@
 package com.scholarlyapps.pathlingo.data.networking;
 
 import com.scholarlyapps.pathlingo.data.remote.dto.AppUserDto;
+import com.scholarlyapps.pathlingo.data.remote.dto.QuizCompleteRequest;
+import com.scholarlyapps.pathlingo.data.remote.dto.QuizCompleteResponse;
+import com.scholarlyapps.pathlingo.data.remote.dto.QuizResponse;
 import com.scholarlyapps.pathlingo.data.remote.dto.AvatarDto;
 import com.scholarlyapps.pathlingo.data.remote.dto.AuthResponse;
 import com.scholarlyapps.pathlingo.data.remote.dto.CategoryDto;
@@ -116,4 +119,10 @@ public interface ApiService {
 
     @POST("subcategories/{id}/unlock")
     Call<MessageResponse> unlockSubcategory(@Path("id") long subcategoryId);
+
+    @GET("quiz")
+    Call<QuizResponse> generateQuiz();
+
+    @POST("quiz/complete")
+    Call<QuizCompleteResponse> completeQuiz(@Body QuizCompleteRequest body);
 }

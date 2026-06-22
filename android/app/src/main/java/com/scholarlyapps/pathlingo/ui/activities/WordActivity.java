@@ -115,12 +115,12 @@ public class WordActivity extends AppCompatActivity {
 
         updateFavoriteButton(word.favorite);
 
-        binding.btnPlayWord.setOnClickListener(v -> playAudio(word.audioUrl));
-        binding.btnPlayRomaji.setOnClickListener(v -> playAudio(word.audioUrl));
-        binding.btnPlayEn.setOnClickListener(v -> playAudio(word.audioEnUrl));
-        binding.btnPlaySentenceJp.setOnClickListener(v -> playAudio(word.sentenceAudioJpUrl));
-        binding.btnPlaySentenceRomaji.setOnClickListener(v -> playAudio(word.sentenceAudioJpUrl));
-        binding.btnPlaySentenceEn.setOnClickListener(v -> playAudio(word.sentenceAudioEnUrl));
+        bindAudioButton(binding.btnPlayWord, word.audioUrl);
+        bindAudioButton(binding.btnPlayRomaji, word.audioUrl);
+        bindAudioButton(binding.btnPlayEn, word.audioEnUrl);
+        bindAudioButton(binding.btnPlaySentenceJp, word.sentenceAudioJpUrl);
+        bindAudioButton(binding.btnPlaySentenceRomaji, word.sentenceAudioJpUrl);
+        bindAudioButton(binding.btnPlaySentenceEn, word.sentenceAudioEnUrl);
 
         binding.btnFavorite.setOnClickListener(v -> toggleFavorite(word));
         binding.btnBookmark.setOnClickListener(v ->
@@ -130,6 +130,15 @@ public class WordActivity extends AppCompatActivity {
         binding.btnLearn.setOnClickListener(v ->
             Toast.makeText(this, "+100 coins earned!", Toast.LENGTH_SHORT).show()
         );
+    }
+
+    private void bindAudioButton(android.view.View btn, String url) {
+        if (url == null || url.isEmpty()) {
+            btn.setVisibility(android.view.View.GONE);
+        } else {
+            btn.setVisibility(android.view.View.VISIBLE);
+            btn.setOnClickListener(v -> playAudio(url));
+        }
     }
 
     private void updateFavoriteButton(boolean isFavorite) {
