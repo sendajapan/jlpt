@@ -1,4 +1,4 @@
-package com.scholarlyapps.pathlingo.ui.auth;
+package com.scholarlyapps.pathlingo.ui.activities.auth;
 
 import android.content.Intent;
 import android.os.Build;
@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.scholarlyapps.pathlingo.BuildConfig;
 import com.scholarlyapps.pathlingo.databinding.ActivityLoginBinding;
+import com.scholarlyapps.pathlingo.ui.utils.GoogleAuthClient;
 import com.scholarlyapps.pathlingo.ui.utils.NavAnim;
 import com.scholarlyapps.pathlingo.ui.utils.ToastHelper;
 import com.scholarlyapps.pathlingo.ui.welcome.OnboardingActivity;

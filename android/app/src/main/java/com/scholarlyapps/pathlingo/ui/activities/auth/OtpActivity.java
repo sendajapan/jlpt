@@ -1,4 +1,4 @@
-package com.scholarlyapps.pathlingo.ui.auth;
+package com.scholarlyapps.pathlingo.ui.activities.auth;
 
 import android.content.Intent;
 import android.os.Bundle;

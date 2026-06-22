@@ -1,4 +1,4 @@
-package com.scholarlyapps.pathlingo.ui.auth;
+package com.scholarlyapps.pathlingo.ui.utils;
 
 import com.scholarlyapps.pathlingo.data.remote.dto.AppUserDto;
 

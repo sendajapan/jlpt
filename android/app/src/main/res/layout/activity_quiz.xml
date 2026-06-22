@@ -146,7 +146,7 @@
         android:textSize="@dimen/_12ssp"
         android:textAllCaps="false"
         android:enabled="false"
-        app:backgroundTint="@color/color_theme_extra_light"
+        app:backgroundTint="@color/color_theme_light"
         app:cornerRadius="@dimen/_12sdp"
         app:rippleColor="@color/color_theme_light"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -36,19 +36,19 @@
             android:theme="@style/Theme.PathLingo" />
 
         <activity
-            android:name=".ui.auth.LoginActivity"
+            android:name=".ui.activities.auth.LoginActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.PathLingo" />
 
         <activity
-            android:name=".ui.auth.RegisterActivity"
+            android:name=".ui.activities.auth.RegisterActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.PathLingo" />
 
         <activity
-            android:name=".ui.auth.OtpActivity"
+            android:name=".ui.activities.auth.OtpActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.PathLingo" />

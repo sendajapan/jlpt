@@ -182,11 +182,11 @@ public class QuizActivity extends AppCompatActivity {
             btn.setEnabled(false);
             String label = btn.getText().toString();
             if (label.equals(correctAnswer)) {
-                btn.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.color_level_n5));
-                btn.setTextColor(ContextCompat.getColor(this, R.color.white));
-                btn.setStrokeColorResource(R.color.color_level_n5);
+                btn.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.color_theme_light));
+                btn.setTextColor(ContextCompat.getColor(this, R.color.ink));
+                btn.setStrokeColorResource(R.color.color_theme_navy);
             } else if (label.equals(text) && !isCorrect) {
-                btn.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.color_error));
+                btn.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.color_streak_missed_border));
                 btn.setTextColor(ContextCompat.getColor(this, R.color.white));
                 btn.setStrokeColorResource(R.color.color_error);
             }

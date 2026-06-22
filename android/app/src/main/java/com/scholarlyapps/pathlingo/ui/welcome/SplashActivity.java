@@ -17,7 +17,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.scholarlyapps.pathlingo.data.remote.ServiceLocator;
 import com.scholarlyapps.pathlingo.databinding.ActivitySplashBinding;
 import com.scholarlyapps.pathlingo.ui.activities.MainDashboardActivity;
-import com.scholarlyapps.pathlingo.ui.auth.LoginActivity;
+import com.scholarlyapps.pathlingo.ui.activities.auth.LoginActivity;
 import com.scholarlyapps.pathlingo.viewmodels.SplashViewModel;
 import com.scholarlyapps.pathlingo.ui.utils.NavAnim;
 

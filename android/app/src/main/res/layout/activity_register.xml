@@ -63,11 +63,12 @@
                     android:id="@+id/editName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingStart="@dimen/_32sdp"
+                    android:paddingStart="@dimen/_28sdp"
                     android:inputType="textPersonName"
                     android:textColor="@color/color_theme_black"
                     android:textColorHint="@color/color_theme_dark"
-                    android:textSize="@dimen/_12ssp" />
+                    android:textSize="@dimen/_11ssp"
+                    android:includeFontPadding="false"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -92,11 +93,12 @@
                     android:id="@+id/editEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingStart="@dimen/_32sdp"
+                    android:paddingStart="@dimen/_28sdp"
                     android:inputType="textEmailAddress"
                     android:textColor="@color/color_theme_black"
                     android:textColorHint="@color/color_theme_dark"
-                    android:textSize="@dimen/_12ssp" />
+                    android:textSize="@dimen/_11ssp"
+                    android:includeFontPadding="false" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -124,11 +126,12 @@
                     android:id="@+id/editPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingStart="@dimen/_32sdp"
+                    android:paddingStart="@dimen/_28sdp"
                     android:inputType="textPassword"
                     android:textColor="@color/color_theme_black"
                     android:textColorHint="@color/color_theme_dark"
-                    android:textSize="@dimen/_12ssp" />
+                    android:textSize="@dimen/_11ssp"
+                    android:includeFontPadding="false"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -156,11 +159,12 @@
                     android:id="@+id/editConfirm"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingStart="@dimen/_32sdp"
+                    android:paddingStart="@dimen/_28sdp"
                     android:inputType="textPassword"
                     android:textColor="@color/color_theme_black"
                     android:textColorHint="@color/color_theme_dark"
-                    android:textSize="@dimen/_12ssp" />
+                    android:textSize="@dimen/_11ssp"
+                    android:includeFontPadding="false" />
 
             </com.google.android.material.textfield.TextInputLayout>
 

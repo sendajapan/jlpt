@@ -19,7 +19,7 @@ import retrofit2.Response;
 
 public class QuizViewModel extends ViewModel {
 
-    public enum QuestionType { TEXT, IMAGE, AUDIO }
+    public enum QuestionType {TEXT, IMAGE, AUDIO}
 
     public static class QuizQuestion {
         public QuestionType type;
@@ -47,15 +47,37 @@ public class QuizViewModel extends ViewModel {
         this.api = api;
     }
 
-    public LiveData<QuizQuestion> getCurrentQuestion() { return currentQuestion; }
-    public LiveData<Boolean> getQuizLoaded() { return quizLoaded; }
-    public LiveData<String> getError() { return error; }
-    public LiveData<QuizCompleteResponse> getQuizResult() { return quizResult; }
+    public LiveData<QuizQuestion> getCurrentQuestion() {
+        return currentQuestion;
+    }
 
-    public int getCurrentIndex() { return currentIndex; }
-    public int getScore() { return score; }
-    public int getTotal() { return questions.size(); }
-    public boolean isFinished() { return currentIndex >= questions.size(); }
+    public LiveData<Boolean> getQuizLoaded() {
+        return quizLoaded;
+    }
+
+    public LiveData<String> getError() {
+        return error;
+    }
+
+    public LiveData<QuizCompleteResponse> getQuizResult() {
+        return quizResult;
+    }
+
+    public int getCurrentIndex() {
+        return currentIndex;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public int getTotal() {
+        return questions.size();
+    }
+
+    public boolean isFinished() {
+        return currentIndex >= questions.size();
+    }
 
     public void loadQuiz() {
         currentIndex = 0;

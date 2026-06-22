@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.scholarlyapps.pathlingo.data.remote.ServiceLocator;
-import com.scholarlyapps.pathlingo.ui.auth.LoginActivity;
+import com.scholarlyapps.pathlingo.ui.activities.auth.LoginActivity;
 
 import java.util.concurrent.Executors;
 

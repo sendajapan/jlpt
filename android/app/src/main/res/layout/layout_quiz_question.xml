@@ -125,12 +125,12 @@
             android:layout_height="@dimen/_46sdp"
             android:fontFamily="@font/poppins_semibold"
             android:textColor="@color/color_theme_navy"
-            android:textSize="@dimen/_13ssp"
+            android:textSize="@dimen/_11ssp"
             android:textAllCaps="false"
             app:backgroundTint="@color/white"
             app:strokeColor="#DCDCDC"
-            app:strokeWidth="1.5dp"
-            app:cornerRadius="@dimen/_10sdp"
+            app:strokeWidth="1dp"
+            app:cornerRadius="@dimen/_8sdp"
             app:rippleColor="@color/color_theme_extra_light" />
 
         <com.google.android.material.button.MaterialButton
@@ -140,12 +140,12 @@
             android:layout_height="@dimen/_46sdp"
             android:fontFamily="@font/poppins_semibold"
             android:textColor="@color/color_theme_navy"
-            android:textSize="@dimen/_13ssp"
+            android:textSize="@dimen/_11ssp"
             android:textAllCaps="false"
             app:backgroundTint="@color/white"
             app:strokeColor="#DCDCDC"
-            app:strokeWidth="1.5dp"
-            app:cornerRadius="@dimen/_10sdp"
+            app:strokeWidth="1dp"
+            app:cornerRadius="@dimen/_8sdp"
             app:rippleColor="@color/color_theme_extra_light" />
 
         <com.google.android.material.button.MaterialButton
@@ -155,12 +155,12 @@
             android:layout_height="@dimen/_46sdp"
             android:fontFamily="@font/poppins_semibold"
             android:textColor="@color/color_theme_navy"
-            android:textSize="@dimen/_13ssp"
+            android:textSize="@dimen/_11ssp"
             android:textAllCaps="false"
             app:backgroundTint="@color/white"
             app:strokeColor="#DCDCDC"
-            app:strokeWidth="1.5dp"
-            app:cornerRadius="@dimen/_10sdp"
+            app:strokeWidth="1dp"
+            app:cornerRadius="@dimen/_8sdp"
             app:rippleColor="@color/color_theme_extra_light" />
 
         <com.google.android.material.button.MaterialButton
@@ -168,15 +168,14 @@
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_46sdp"
-            android:layout_marginBottom="@dimen/_10sdp"
             android:fontFamily="@font/poppins_semibold"
             android:textColor="@color/color_theme_navy"
-            android:textSize="@dimen/_13ssp"
+            android:textSize="@dimen/_11ssp"
             android:textAllCaps="false"
             app:backgroundTint="@color/white"
             app:strokeColor="#DCDCDC"
-            app:strokeWidth="1.5dp"
-            app:cornerRadius="@dimen/_10sdp"
+            app:strokeWidth="1dp"
+            app:cornerRadius="@dimen/_8sdp"
             app:rippleColor="@color/color_theme_extra_light" />
 
     </LinearLayout>

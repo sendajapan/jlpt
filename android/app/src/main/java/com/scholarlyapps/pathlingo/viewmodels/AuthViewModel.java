@@ -11,7 +11,7 @@ import com.scholarlyapps.pathlingo.data.ApiResult;
 import com.scholarlyapps.pathlingo.data.remote.ServiceLocator;
 import com.scholarlyapps.pathlingo.data.remote.dto.AppUserDto;
 import com.scholarlyapps.pathlingo.data.repo.AuthRepository;
-import com.scholarlyapps.pathlingo.ui.auth.AuthUiState;
+import com.scholarlyapps.pathlingo.ui.utils.AuthUiState;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
