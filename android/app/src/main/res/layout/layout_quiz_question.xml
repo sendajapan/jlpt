@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:overScrollMode="never"
+    android:clipToPadding="false">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_4sdp"
+            app:cardCornerRadius="@dimen/_12sdp"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="@color/white"
+            app:strokeWidth="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:padding="@dimen/_14sdp">
+
+                <TextView
+                    android:id="@+id/txtQuestionLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textColor="@color/ink_soft"
+                    android:textSize="@dimen/_11ssp" />
+
+                <TextView
+                    android:id="@+id/txtWordJp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_2sdp"
+                    android:fontFamily="@font/noto_sans_jp_bold"
+                    android:textColor="@color/ink"
+                    android:textSize="@dimen/_26ssp"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/txtWordRomaji"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textColor="@color/ink_soft"
+                    android:textSize="@dimen/_11ssp"
+                    android:textStyle="italic"
+                    android:visibility="gone" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardImage"
+                    android:layout_width="@dimen/_110sdp"
+                    android:layout_height="@dimen/_110sdp"
+                    app:cardCornerRadius="@dimen/_10sdp"
+                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="@color/color_theme_extra_light"
+                    app:strokeWidth="0dp"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:id="@+id/imgQuestion"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop" />
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <ImageView
+                    android:id="@+id/btnPlayAudio"
+                    android:layout_width="@dimen/_48sdp"
+                    android:layout_height="@dimen/_48sdp"
+                    android:src="@drawable/ic_speaker"
+                    android:padding="@dimen/_12sdp"
+                    android:background="@drawable/bg_round_white"
+                    android:backgroundTint="@color/color_theme_extra_light"
+                    app:tint="@color/color_theme_navy"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnOpt0"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_46sdp"
+            android:fontFamily="@font/poppins_semibold"
+            android:textColor="@color/color_theme_navy"
+            android:textSize="@dimen/_13ssp"
+            android:textAllCaps="false"
+            app:backgroundTint="@color/white"
+            app:strokeColor="#DCDCDC"
+            app:strokeWidth="1.5dp"
+            app:cornerRadius="@dimen/_10sdp"
+            app:rippleColor="@color/color_theme_extra_light" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnOpt1"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_46sdp"
+            android:fontFamily="@font/poppins_semibold"
+            android:textColor="@color/color_theme_navy"
+            android:textSize="@dimen/_13ssp"
+            android:textAllCaps="false"
+            app:backgroundTint="@color/white"
+            app:strokeColor="#DCDCDC"
+            app:strokeWidth="1.5dp"
+            app:cornerRadius="@dimen/_10sdp"
+            app:rippleColor="@color/color_theme_extra_light" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnOpt2"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_46sdp"
+            android:fontFamily="@font/poppins_semibold"
+            android:textColor="@color/color_theme_navy"
+            android:textSize="@dimen/_13ssp"
+            android:textAllCaps="false"
+            app:backgroundTint="@color/white"
+            app:strokeColor="#DCDCDC"
+            app:strokeWidth="1.5dp"
+            app:cornerRadius="@dimen/_10sdp"
+            app:rippleColor="@color/color_theme_extra_light" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnOpt3"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_46sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:fontFamily="@font/poppins_semibold"
+            android:textColor="@color/color_theme_navy"
+            android:textSize="@dimen/_13ssp"
+            android:textAllCaps="false"
+            app:backgroundTint="@color/white"
+            app:strokeColor="#DCDCDC"
+            app:strokeWidth="1.5dp"
+            app:cornerRadius="@dimen/_10sdp"
+            app:rippleColor="@color/color_theme_extra_light" />
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

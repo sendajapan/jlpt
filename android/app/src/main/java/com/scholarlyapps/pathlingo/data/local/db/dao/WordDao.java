@@ -27,4 +27,7 @@ public interface WordDao {
 
     @Query("UPDATE words SET isFavorite = :isFavorite WHERE id = :wordId")
     void setFavorite(long wordId, boolean isFavorite);
+
+    @Query("SELECT * FROM words ORDER BY RANDOM() LIMIT :limit")
+    List<WordEntity> getRandomWordsSync(int limit);
 }

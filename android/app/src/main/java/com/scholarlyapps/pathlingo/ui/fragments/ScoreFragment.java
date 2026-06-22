@@ -32,16 +32,15 @@ public class ScoreFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         ProgressViewModel viewModel = new ViewModelProvider(this, new AppViewModelFactory()).get(ProgressViewModel.class);
 
-        int score = 86;
-        int maxScore = 100;
-        int stars = 3;
-        int xpEarned = 85;
-        int correctCount = 4;
-        int totalCount = 5;
-        String time = "2:14";
+        Bundle args = getArguments();
+        int correctCount = args != null ? args.getInt("score", 0) : 0;
+        int totalCount = args != null ? args.getInt("total", 10) : 10;
+        int scorePercent = totalCount > 0 ? (correctCount * 100 / totalCount) : 0;
+        int xpEarned = correctCount * 10;
+        int stars = scorePercent >= 90 ? 3 : scorePercent >= 60 ? 2 : scorePercent >= 30 ? 1 : 0;
 
-        binding.txtScore.setText(score + "/" + maxScore);
-        binding.progressScore.setProgress(score * 100 / maxScore);
+        binding.txtScore.setText(scorePercent + "/100");
+        binding.progressScore.setProgress(scorePercent);
 
         StringBuilder starText = new StringBuilder();
         for (int i = 0; i < 3; i++) {
@@ -50,7 +49,7 @@ public class ScoreFragment extends Fragment {
         binding.txtStars.setText(starText.toString());
         binding.txtXpEarned.setText("+" + xpEarned + " XP");
         binding.txtCorrect.setText(correctCount + "/" + totalCount);
-        binding.txtTime.setText(time);
+        binding.txtTime.setText("--");
 
         viewModel.getUser().observe(getViewLifecycleOwner(), user -> {
             if (user == null) return;

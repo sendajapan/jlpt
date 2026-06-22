@@ -1,19 +1,24 @@
 package com.scholarlyapps.pathlingo.ui.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import com.scholarlyapps.pathlingo.R;
 import com.scholarlyapps.pathlingo.databinding.FragmentHomeBinding;
+import com.scholarlyapps.pathlingo.ui.activities.QuizActivity;
 import com.scholarlyapps.pathlingo.viewmodels.AppViewModelFactory;
 import com.scholarlyapps.pathlingo.viewmodels.HomeViewModel;
 
@@ -22,6 +27,20 @@ import java.util.Calendar;
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
+
+    private final ActivityResultLauncher<Intent> quizLauncher = registerForActivityResult(
+        new ActivityResultContracts.StartActivityForResult(),
+        result -> {
+            if (result.getResultCode() == android.app.Activity.RESULT_OK && result.getData() != null) {
+                int score = result.getData().getIntExtra(QuizActivity.EXTRA_SCORE, 0);
+                int total = result.getData().getIntExtra(QuizActivity.EXTRA_TOTAL, 10);
+                android.os.Bundle args = new android.os.Bundle();
+                args.putInt("score", score);
+                args.putInt("total", total);
+                NavHostFragment.findNavController(this).navigate(R.id.scoreFragment, args);
+            }
+        }
+    );
 
     @Nullable
     @Override
@@ -35,6 +54,10 @@ public class HomeFragment extends Fragment {
         HomeViewModel viewModel = new ViewModelProvider(this, new AppViewModelFactory()).get(HomeViewModel.class);
 
         BottomNavigationView bottomNav = requireActivity().findViewById(R.id.bottomNav);
+        binding.btnStartQuiz.setOnClickListener(v ->
+            quizLauncher.launch(new Intent(requireActivity(), QuizActivity.class))
+        );
+
         binding.menuVocabulary.setOnClickListener(v -> bottomNav.setSelectedItemId(R.id.vocabularyFragment));
         binding.menuGrammar.setOnClickListener(v -> bottomNav.setSelectedItemId(R.id.vocabularyFragment));
         binding.menuKatakana.setOnClickListener(v -> bottomNav.setSelectedItemId(R.id.vocabularyFragment));

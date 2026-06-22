@@ -36,6 +36,9 @@ public class AppViewModelFactory implements ViewModelProvider.Factory {
         if (modelClass == ChangePasswordViewModel.class) {
             return (T) new ChangePasswordViewModel(ServiceLocator.authRepository, ServiceLocator.userRepository);
         }
+        if (modelClass == QuizViewModel.class) {
+            return (T) new QuizViewModel(ServiceLocator.categoryRepository);
+        }
         throw new IllegalArgumentException("Unknown ViewModel: " + modelClass.getName());
     }
 }

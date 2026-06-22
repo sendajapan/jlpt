@@ -108,6 +108,10 @@ public class CategoryRepository {
         });
     }
 
+    public List<Word> getRandomWords(int count) {
+        return mapWords(wordDao.getRandomWordsSync(count));
+    }
+
     public void addFavorite(long wordId) {
         try {
             apiService.addFavorite(wordId).execute();
