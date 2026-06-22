@@ -10,15 +10,23 @@
         android:layout_marginHorizontal="@dimen/_8sdp"
         android:orientation="horizontal">
 
-        <ImageView
+        <FrameLayout
             android:id="@+id/btnBack"
             android:layout_width="@dimen/_32sdp"
             android:layout_height="@dimen/_32sdp"
-            android:layout_marginEnd="@dimen/_8sdp"
-            android:padding="@dimen/_5sdp"
-            android:src="@drawable/ic_arrow_back"
+            android:layout_marginEnd="@dimen/_6sdp"
             android:visibility="gone"
-            app:tint="@color/ink" />
+            android:background="@drawable/bg_round_white">
+
+            <ImageView
+                android:layout_width="@dimen/_18sdp"
+                android:layout_height="@dimen/_18sdp"
+                android:layout_gravity="center"
+                android:padding="@dimen/_2sdp"
+                android:src="@drawable/arrow_back"
+                app:tint="@color/color_theme_navy" />
+
+        </FrameLayout>
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/imgAvatar"

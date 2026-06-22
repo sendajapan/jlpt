@@ -91,7 +91,7 @@
                         android:id="@+id/imgWord"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:scaleType="center" />
+                        android:scaleType="fitCenter" />
 
                 </com.google.android.material.card.MaterialCardView>
 
@@ -318,8 +318,8 @@
                     android:text="I have learned this  (+100 coins)"
                     android:textSize="@dimen/_10ssp"
                     android:fontFamily="@font/poppins_bold"
-                    android:textColor="@color/white"
-                    app:backgroundTint="@color/color_theme_navy"
+                    android:textColor="@color/color_theme_navy"
+                    app:backgroundTint="@color/color_theme_light"
                     app:cornerRadius="@dimen/_12sdp"
                     app:rippleColor="@color/color_theme_dark" />
 
@@ -356,42 +356,90 @@
                             android:textSize="@dimen/_9ssp"
                             android:layout_marginBottom="@dimen/_12sdp" />
 
-                        <TextView
-                            android:id="@+id/txtExampleJp"
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/noto_sans_jp_bold"
-                            android:textColor="@color/ink"
-                            android:textSize="@dimen/_16ssp"
-                            android:layout_marginBottom="@dimen/_8sdp" />
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
 
-                        <TextView
-                            android:id="@+id/txtExampleRomaji"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_semibold"
-                            android:textColor="@color/ink_soft"
-                            android:textSize="@dimen/_12ssp"
-                            android:textStyle="italic"
-                            android:layout_marginBottom="@dimen/_8sdp" />
+                            <TextView
+                                android:id="@+id/txtExampleJp"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/noto_sans_jp_bold"
+                                android:textColor="@color/ink"
+                                android:textSize="@dimen/_16ssp" />
 
-                        <TextView
-                            android:id="@+id/txtExampleEn"
+                            <ImageView
+                                android:id="@+id/btnPlaySentenceJp"
+                                android:layout_width="@dimen/_40sdp"
+                                android:layout_height="@dimen/_40sdp"
+                                android:src="@drawable/ic_speaker"
+                                android:padding="@dimen/_10sdp"
+                                android:background="@drawable/bg_round_white"
+                                android:backgroundTint="@color/color_theme_extra_light"
+                                app:tint="@color/color_theme_navy" />
+
+                        </LinearLayout>
+
+                        <View
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_semibold"
-                            android:textColor="@color/color_theme_navy"
-                            android:textSize="@dimen/_13ssp"
-                            android:layout_marginBottom="@dimen/_12sdp" />
+                            android:layout_height="1dp"
+                            android:layout_marginVertical="@dimen/_12sdp"
+                            android:background="@color/color_theme_extra_light" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
-                            android:gravity="end">
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:id="@+id/txtExampleRomaji"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:textColor="@color/ink_soft"
+                                android:textSize="@dimen/_12ssp"
+                                android:textStyle="italic" />
 
                             <ImageView
-                                android:id="@+id/btnPlaySentence"
+                                android:id="@+id/btnPlaySentenceRomaji"
+                                android:layout_width="@dimen/_40sdp"
+                                android:layout_height="@dimen/_40sdp"
+                                android:src="@drawable/ic_speaker"
+                                android:padding="@dimen/_10sdp"
+                                android:background="@drawable/bg_round_white"
+                                android:backgroundTint="@color/color_theme_extra_light"
+                                app:tint="@color/color_theme_navy" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginVertical="@dimen/_12sdp"
+                            android:background="@color/color_theme_extra_light" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:id="@+id/txtExampleEn"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:textColor="@color/color_theme_navy"
+                                android:textSize="@dimen/_13ssp" />
+
+                            <ImageView
+                                android:id="@+id/btnPlaySentenceEn"
                                 android:layout_width="@dimen/_40sdp"
                                 android:layout_height="@dimen/_40sdp"
                                 android:src="@drawable/ic_speaker"

@@ -8,6 +8,7 @@ public class Subcategory {
     public String id;
     public String jp;
     public String en;
+    public String romaji;
     public String bg;
     public String img;
     public String iconUrl;

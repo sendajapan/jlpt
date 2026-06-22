@@ -118,7 +118,9 @@ public class WordActivity extends AppCompatActivity {
         binding.btnPlayWord.setOnClickListener(v -> playAudio(word.audioUrl));
         binding.btnPlayRomaji.setOnClickListener(v -> playAudio(word.audioUrl));
         binding.btnPlayEn.setOnClickListener(v -> playAudio(word.audioEnUrl));
-        binding.btnPlaySentence.setOnClickListener(v -> playAudio(word.sentenceAudioJpUrl));
+        binding.btnPlaySentenceJp.setOnClickListener(v -> playAudio(word.sentenceAudioJpUrl));
+        binding.btnPlaySentenceRomaji.setOnClickListener(v -> playAudio(word.sentenceAudioJpUrl));
+        binding.btnPlaySentenceEn.setOnClickListener(v -> playAudio(word.sentenceAudioEnUrl));
 
         binding.btnFavorite.setOnClickListener(v -> toggleFavorite(word));
         binding.btnBookmark.setOnClickListener(v ->

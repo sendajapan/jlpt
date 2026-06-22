@@ -1,7 +1,8 @@
 package com.scholarlyapps.pathlingo.ui.adapters;
 
+import android.content.Context;
 import android.content.res.ColorStateList;
-import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,60 +63,57 @@ public class SubcategoryAdapter extends RecyclerView.Adapter<SubcategoryAdapter.
         }
 
         void bind(Subcategory sub, OnSubcategoryClick listener) {
-            binding.txtJp.setText(sub.jp);
             binding.txtEn.setText(sub.en);
+            binding.txtJp.setText(sub.jp);
+            binding.txtRomaji.setText(sub.romaji);
 
-            if (sub.isLocked) {
-                binding.txtLock.setVisibility(View.VISIBLE);
-                binding.txtLock.setText("🔒 " + sub.coinPrice + " coins");
-            } else {
-                binding.txtLock.setVisibility(View.GONE);
-            }
+            binding.imgLock.setVisibility(sub.isLocked ? View.VISIBLE : View.GONE);
 
-            int accentColor = accentColor(sub.bg, binding.accentBar);
-            GradientDrawable barBg = new GradientDrawable();
-            barBg.setShape(GradientDrawable.RECTANGLE);
-            barBg.setCornerRadius(8f);
-            barBg.setColor(accentColor);
-            binding.accentBar.setBackground(barBg);
+            int accentColor = accentColor(sub.bg, itemView.getContext());
             binding.progressBar.setProgressTintList(ColorStateList.valueOf(accentColor));
 
             int progress = sub.total > 0 ? (sub.mastered * 100 / sub.total) : 0;
             binding.progressBar.setProgress(progress);
-            binding.txtWordProgress.setText(sub.mastered + " / " + sub.total + " words");
+            binding.txtCount.setText(sub.mastered + "/" + sub.total);
 
-            if (!sub.iconUrl.isEmpty()) {
-                binding.imgIcon.setVisibility(View.VISIBLE);
-                Coil.imageLoader(binding.imgIcon.getContext()).enqueue(
-                        new ImageRequest.Builder(binding.imgIcon.getContext())
-                                .data(sub.iconUrl)
-                                .target(binding.imgIcon)
+            if (sub.img != null && !sub.img.isEmpty()) {
+                Coil.imageLoader(binding.imgBg.getContext()).enqueue(
+                        new ImageRequest.Builder(binding.imgBg.getContext())
+                                .data(sub.img)
+                                .crossfade(true)
+                                .target(binding.imgBg)
                                 .build()
                 );
             } else {
-                binding.imgIcon.setVisibility(View.GONE);
+                binding.imgBg.setImageDrawable(new ColorDrawable(accentColor));
+            }
+
+            if (sub.iconUrl != null && !sub.iconUrl.isEmpty()) {
+                Coil.imageLoader(binding.imgIcon.getContext()).enqueue(
+                        new ImageRequest.Builder(binding.imgIcon.getContext())
+                                .data(sub.iconUrl)
+                                .crossfade(true)
+                                .target(binding.imgIcon)
+                                .build()
+                );
             }
 
             if (sub.isLocked) {
-                itemView.setAlpha(0.7f);
                 itemView.setOnClickListener(v -> listener.onUnlockClick(sub));
-            } else if (sub.words.isEmpty()) {
-                itemView.setAlpha(0.5f);
-                itemView.setOnClickListener(null);
             } else {
-                itemView.setAlpha(1f);
                 itemView.setOnClickListener(v -> listener.onClick(sub));
             }
+            itemView.setAlpha(1f);
         }
 
-        private int accentColor(String bg, View view) {
+        private int accentColor(String bg, Context context) {
             switch (bg) {
-                case "butter": return ContextCompat.getColor(view.getContext(), R.color.butter);
-                case "lav": return ContextCompat.getColor(view.getContext(), R.color.lav);
-                case "sky": return ContextCompat.getColor(view.getContext(), R.color.sky);
-                case "rose": return ContextCompat.getColor(view.getContext(), R.color.rose);
-                case "terra": return ContextCompat.getColor(view.getContext(), R.color.terra);
-                default: return ContextCompat.getColor(view.getContext(), R.color.sage_deep);
+                case "butter": return ContextCompat.getColor(context, R.color.butter);
+                case "lav":    return ContextCompat.getColor(context, R.color.lav);
+                case "sky":    return ContextCompat.getColor(context, R.color.sky);
+                case "rose":   return ContextCompat.getColor(context, R.color.rose);
+                case "terra":  return ContextCompat.getColor(context, R.color.terra);
+                default:       return ContextCompat.getColor(context, R.color.sage_deep);
             }
         }
     }

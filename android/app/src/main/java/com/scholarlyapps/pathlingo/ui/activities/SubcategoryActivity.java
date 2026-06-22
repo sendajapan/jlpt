@@ -84,6 +84,7 @@ public class SubcategoryActivity extends AppCompatActivity {
     }
 
     private void openWordList(Subcategory subcat) {
+        if (subcat.total == 0) return;
         Intent intent = new Intent(this, WordListActivity.class);
         intent.putExtra(WordListActivity.EXTRA_CATEGORY_ID, categoryId);
         intent.putExtra(WordListActivity.EXTRA_SELECTED_SUBCATEGORY_ID, subcat.id);

@@ -27,7 +27,7 @@ import com.scholarlyapps.pathlingo.viewmodels.ProgressViewModel;
 
 public class HeaderToolbar extends MaterialToolbar {
 
-    private ImageView btnBack;
+    private View btnBack;
     private View btnBell;
     private ImageView imgAvatar;
     private TextView txtName;

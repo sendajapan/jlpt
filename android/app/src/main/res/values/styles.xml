@@ -96,6 +96,11 @@
         <item name="cornerSize">25%</item>
     </style>
 
+    <style name="ShapeOverlay.SubcategoryIcon" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/_10sdp</item>
+    </style>
+
     <style name="PathLingo.Button.Secondary" parent="Widget.MaterialComponents.Button">
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textSize">16sp</item>

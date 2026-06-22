@@ -26,6 +26,9 @@ public class SubcategoryDto {
     @SerializedName("icon_thumbnail_bg")
     public String iconThumbnailBg;
 
+    @SerializedName("bg_url")
+    public String bgUrl;
+
     @SerializedName("audio_url")
     public String audioUrl;
 

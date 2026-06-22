@@ -341,7 +341,7 @@
                                         android:includeFontPadding="false"
                                         android:text="Sun"
                                         android:textColor="@color/color_theme_black"
-                                        android:textSize="@dimen/_9ssp" />
+                                        android:textSize="@dimen/_8ssp" />
 
                                 </LinearLayout>
 
@@ -415,7 +415,7 @@
                                         android:includeFontPadding="false"
                                         android:text="Mon"
                                         android:textColor="@color/color_theme_black"
-                                        android:textSize="@dimen/_9ssp" />
+                                        android:textSize="@dimen/_8ssp" />
 
                                 </LinearLayout>
 
@@ -489,7 +489,7 @@
                                         android:includeFontPadding="false"
                                         android:text="Tue"
                                         android:textColor="@color/color_theme_black"
-                                        android:textSize="@dimen/_9ssp" />
+                                        android:textSize="@dimen/_8ssp" />
 
                                 </LinearLayout>
 
@@ -562,7 +562,7 @@
                                         android:includeFontPadding="false"
                                         android:text="Wed"
                                         android:textColor="@color/color_theme_black"
-                                        android:textSize="@dimen/_9ssp" />
+                                        android:textSize="@dimen/_8ssp" />
 
                                 </LinearLayout>
 
@@ -636,7 +636,7 @@
                                         android:includeFontPadding="false"
                                         android:text="Thu"
                                         android:textColor="@color/color_theme_black"
-                                        android:textSize="@dimen/_9ssp" />
+                                        android:textSize="@dimen/_8ssp" />
 
                                 </LinearLayout>
 
@@ -710,7 +710,7 @@
                                         android:includeFontPadding="false"
                                         android:text="Fri"
                                         android:textColor="@color/color_theme_black"
-                                        android:textSize="@dimen/_9ssp" />
+                                        android:textSize="@dimen/_8ssp" />
 
                                 </LinearLayout>
 
@@ -784,7 +784,7 @@
                                         android:includeFontPadding="false"
                                         android:text="Sat"
                                         android:textColor="@color/color_theme_black"
-                                        android:textSize="@dimen/_9ssp" />
+                                        android:textSize="@dimen/_8ssp" />
 
                                 </LinearLayout>
 
