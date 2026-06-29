@@ -19,7 +19,6 @@ class KanjiController extends Controller
             ))
             ->when($request->filled('jlpt'), fn ($q) => $q->where('jlpt', $request->string('jlpt')))
             ->when($request->filled('level'), fn ($q) => $q->where('level', $request->integer('level')))
-            ->orderBy('freq')
             ->orderBy('id')
             ->get()
             ->map(fn (Kanji $k) => [
