@@ -4,22 +4,19 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Models\Kanji;
+use App\Services\KanjiService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class KanjiController extends Controller
 {
+    public function __construct(private KanjiService $service) {}
+
     public function index(Request $request): JsonResponse
     {
-        $kanjis = Kanji::query()
-            ->when($request->filled('search'), fn ($q) => $q->where(fn ($w) => $w
-                ->where('kanji', 'like', '%'.$request->string('search').'%')
-                ->orWhere('translate', 'like', '%'.$request->string('search').'%')
-                ->orWhere('meanings', 'like', '%'.$request->string('search').'%')
-            ))
-            ->when($request->filled('jlpt'), fn ($q) => $q->where('jlpt', $request->string('jlpt')))
-            ->when($request->filled('level'), fn ($q) => $q->where('level', $request->integer('level')))
-            ->orderBy('id')
+        $filters = $request->only(['search', 'jlpt', 'level', 'is_premium']);
+
+        $kanjis = $this->service->getAll($filters)
             ->get()
             ->map(fn (Kanji $k) => [
                 'id' => $k->id,

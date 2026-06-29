@@ -3,11 +3,11 @@
 namespace App\Services;
 
 use App\Models\Kanji;
-use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Builder;
 
 class KanjiService
 {
-    public function getAll(array $filters = [], int $perPage = 50): LengthAwarePaginator
+    public function getAll(array $filters = []): Builder
     {
         return Kanji::query()
             ->when($filters['search'] ?? null, fn ($q, $s) => $q->where(fn ($w) => $w
@@ -16,11 +16,9 @@ class KanjiService
                 ->orWhere('meanings', 'like', "%{$s}%")
             ))
             ->when($filters['jlpt'] ?? null, fn ($q, $v) => $q->where('jlpt', $v))
+            ->when($filters['level'] ?? null, fn ($q, $v) => $q->where('level', $v))
             ->when(isset($filters['is_premium']) && $filters['is_premium'] !== '', fn ($q) => $q->where('is_premium', $filters['is_premium']))
-            ->orderBy('freq')
-            ->orderBy('id')
-            ->paginate($perPage)
-            ->withQueryString();
+            ->orderBy('id');
     }
 
     public function create(array $data): Kanji

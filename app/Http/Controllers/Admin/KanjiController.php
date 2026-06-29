@@ -16,7 +16,7 @@ class KanjiController extends Controller
     public function index(Request $request): View
     {
         $filters = $request->only(['search', 'jlpt', 'is_premium']);
-        $kanjis = $this->service->getAll($filters);
+        $kanjis = $this->service->getAll($filters)->paginate(50)->withQueryString();
 
         return view('admin.kanji.index', compact('kanjis'));
     }
