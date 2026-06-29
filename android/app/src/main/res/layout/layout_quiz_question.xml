@@ -54,7 +54,6 @@
                     android:fontFamily="@font/poppins_semibold"
                     android:textColor="@color/ink_soft"
                     android:textSize="@dimen/_11ssp"
-                    android:textStyle="italic"
                     android:visibility="gone" />
 
                 <com.google.android.material.card.MaterialCardView

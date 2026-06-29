@@ -92,6 +92,7 @@ public class QuizActivity extends AppCompatActivity {
 
         viewModel.getQuizResult().observe(this, result -> {
             if (result != null) {
+                viewModel.clearQuizResult();
                 showScoreDialog(result.coinsEarned, result.xpEarned);
             }
         });
@@ -294,6 +295,12 @@ public class QuizActivity extends AppCompatActivity {
         });
 
         dialog.show();
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setLayout(
+                android.view.ViewGroup.LayoutParams.MATCH_PARENT,
+                android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+        }
     }
 
     private void playAudio(String url) {

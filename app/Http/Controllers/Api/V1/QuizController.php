@@ -109,6 +109,7 @@ class QuizController extends Controller
         if ($word->audio_jp) {
             $types[] = 'audio';
         }
+
         shuffle($types);
 
         return $types[0];

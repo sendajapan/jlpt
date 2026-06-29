@@ -63,6 +63,10 @@ public class QuizViewModel extends ViewModel {
         return quizResult;
     }
 
+    public void clearQuizResult() {
+        quizResult.setValue(null);
+    }
+
     public int getCurrentIndex() {
         return currentIndex;
     }
