@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\V1\CategoryController;
 use App\Http\Controllers\Api\V1\CategoryUnlockController;
 use App\Http\Controllers\Api\V1\CoinController;
 use App\Http\Controllers\Api\V1\FavoriteController;
+use App\Http\Controllers\Api\V1\KanjiController;
 use App\Http\Controllers\Api\V1\ProfileController;
 use App\Http\Controllers\Api\V1\QuizController;
 use App\Http\Controllers\Api\V1\SubcategoryController;
@@ -22,6 +23,7 @@ use App\Http\Controllers\Api\V1\WordUnlockController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('avatars', [AvatarController::class, 'index']);
+Route::get('kanjis', [KanjiController::class, 'index']);
 
 Route::get('categories', [CategoryController::class, 'index']);
 Route::get('subcategories', [SubcategoryController::class, 'index']);

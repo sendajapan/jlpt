@@ -1,0 +1,42 @@
+<?php
+
+namespace App\Services;
+
+use App\Models\Kanji;
+use Illuminate\Pagination\LengthAwarePaginator;
+
+class KanjiService
+{
+    public function getAll(array $filters = [], int $perPage = 50): LengthAwarePaginator
+    {
+        return Kanji::query()
+            ->when($filters['search'] ?? null, fn ($q, $s) => $q->where(fn ($w) => $w
+                ->where('kanji', 'like', "%{$s}%")
+                ->orWhere('translate', 'like', "%{$s}%")
+                ->orWhere('meanings', 'like', "%{$s}%")
+            ))
+            ->when($filters['jlpt'] ?? null, fn ($q, $v) => $q->where('jlpt', $v))
+            ->when(isset($filters['is_premium']) && $filters['is_premium'] !== '', fn ($q) => $q->where('is_premium', $filters['is_premium']))
+            ->orderBy('freq')
+            ->orderBy('id')
+            ->paginate($perPage)
+            ->withQueryString();
+    }
+
+    public function create(array $data): Kanji
+    {
+        return Kanji::create($data);
+    }
+
+    public function update(Kanji $kanji, array $data): Kanji
+    {
+        $kanji->update($data);
+
+        return $kanji;
+    }
+
+    public function delete(Kanji $kanji): void
+    {
+        $kanji->delete();
+    }
+}
