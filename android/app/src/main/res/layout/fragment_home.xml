@@ -186,8 +186,8 @@
                         android:orientation="horizontal">
 
                         <ImageView
-                            android:layout_width="@dimen/_34sdp"
-                            android:layout_height="@dimen/_34sdp"
+                            android:layout_width="@dimen/_40sdp"
+                            android:layout_height="@dimen/_40sdp"
                             android:src="@drawable/icon_flame"
                             android:padding="@dimen/_1sdp"/>
 
@@ -203,7 +203,7 @@
                                 android:fontFamily="@font/poppins_bold"
                                 android:includeFontPadding="false"
                                 android:text="Learning Japanese Daily"
-                                android:textSize="@dimen/_10ssp" />
+                                android:textSize="@dimen/_12ssp" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -212,7 +212,7 @@
                                 android:includeFontPadding="false"
                                 android:text="Keep it up!"
                                 android:textColor="@color/color_theme_black_light"
-                                android:textSize="@dimen/_9ssp" />
+                                android:textSize="@dimen/_10ssp" />
 
                         </LinearLayout>
 
@@ -230,7 +230,7 @@
                                 android:textColor="@color/color_theme_navy"
                                 android:includeFontPadding="false"
                                 android:text="3"
-                                android:textSize="@dimen/_20ssp" />
+                                android:textSize="@dimen/_26ssp" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -278,8 +278,8 @@
 
                                 <FrameLayout
                                     android:id="@+id/day0Circle"
-                                    android:layout_width="@dimen/_16sdp"
-                                    android:layout_height="@dimen/_16sdp">
+                                    android:layout_width="@dimen/_18sdp"
+                                    android:layout_height="@dimen/_18sdp">
 
                                     <ProgressBar
                                         android:id="@+id/day0Progress"
@@ -291,8 +291,8 @@
 
                                     <ImageView
                                         android:id="@+id/day0Check"
-                                        android:layout_width="@dimen/_18sdp"
-                                        android:layout_height="@dimen/_18sdp"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
                                         android:src="@drawable/ic_outline_tick"
                                         android:visibility="visible" />
 
@@ -349,8 +349,8 @@
 
                                 <FrameLayout
                                     android:id="@+id/day1Circle"
-                                    android:layout_width="@dimen/_16sdp"
-                                    android:layout_height="@dimen/_16sdp">
+                                    android:layout_width="@dimen/_18sdp"
+                                    android:layout_height="@dimen/_18sdp">
 
                                     <ProgressBar
                                         android:id="@+id/day1Progress"
@@ -362,8 +362,8 @@
 
                                     <ImageView
                                         android:id="@+id/day1Check"
-                                        android:layout_width="@dimen/_18sdp"
-                                        android:layout_height="@dimen/_18sdp"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
                                         android:src="@drawable/ic_outline_tick"
                                         android:visibility="visible"/>
 
@@ -420,8 +420,8 @@
 
                                 <FrameLayout
                                     android:id="@+id/day2Circle"
-                                    android:layout_width="@dimen/_16sdp"
-                                    android:layout_height="@dimen/_16sdp">
+                                    android:layout_width="@dimen/_18sdp"
+                                    android:layout_height="@dimen/_18sdp">
 
                                     <ProgressBar
                                         android:id="@+id/day2Progress"
@@ -494,8 +494,8 @@
 
                                 <FrameLayout
                                     android:id="@+id/day3Circle"
-                                    android:layout_width="@dimen/_16sdp"
-                                    android:layout_height="@dimen/_16sdp">
+                                    android:layout_width="@dimen/_18sdp"
+                                    android:layout_height="@dimen/_18sdp">
 
                                     <ImageView
                                         android:id="@+id/day3Progress"
@@ -567,8 +567,8 @@
 
                                 <FrameLayout
                                     android:id="@+id/day4Circle"
-                                    android:layout_width="@dimen/_16sdp"
-                                    android:layout_height="@dimen/_16sdp">
+                                    android:layout_width="@dimen/_18sdp"
+                                    android:layout_height="@dimen/_18sdp">
 
                                     <ProgressBar
                                         android:id="@+id/day4Progress"
@@ -641,8 +641,8 @@
 
                                 <FrameLayout
                                     android:id="@+id/day5Circle"
-                                    android:layout_width="@dimen/_16sdp"
-                                    android:layout_height="@dimen/_16sdp">
+                                    android:layout_width="@dimen/_18sdp"
+                                    android:layout_height="@dimen/_18sdp">
 
                                     <ProgressBar
                                         android:id="@+id/day5Progress"
@@ -715,8 +715,8 @@
 
                                 <FrameLayout
                                     android:id="@+id/day6Circle"
-                                    android:layout_width="@dimen/_16sdp"
-                                    android:layout_height="@dimen/_16sdp">
+                                    android:layout_width="@dimen/_18sdp"
+                                    android:layout_height="@dimen/_18sdp">
 
                                     <ProgressBar
                                         android:id="@+id/day6Progress"
@@ -780,7 +780,7 @@
         <GridLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_12sdp"
+            android:layout_marginHorizontal="@dimen/_16sdp"
             android:layout_marginTop="@dimen/_8sdp"
             android:columnCount="2">
 
