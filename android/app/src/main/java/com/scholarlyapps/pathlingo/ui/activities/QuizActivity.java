@@ -6,8 +6,11 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +22,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.google.android.material.button.MaterialButton;
 import com.scholarlyapps.pathlingo.R;
 import com.scholarlyapps.pathlingo.databinding.ActivityQuizBinding;
+import com.scholarlyapps.pathlingo.databinding.DialogQuizDetailResultBinding;
 import com.scholarlyapps.pathlingo.databinding.DialogQuizResultBinding;
 import com.scholarlyapps.pathlingo.databinding.LayoutQuizQuestionBinding;
 import com.scholarlyapps.pathlingo.viewmodels.AppViewModelFactory;
@@ -26,6 +30,7 @@ import com.scholarlyapps.pathlingo.viewmodels.QuizViewModel;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 
 import coil.Coil;
 import coil.request.ImageRequest;
@@ -282,11 +287,7 @@ public class QuizActivity extends AppCompatActivity {
 
         dialogBinding.btnViewResult.setOnClickListener(v -> {
             dialog.dismiss();
-            Intent result = new Intent();
-            result.putExtra(EXTRA_SCORE, score);
-            result.putExtra(EXTRA_TOTAL, total);
-            setResult(RESULT_OK, result);
-            finish();
+            showDetailResultDialog(coinsEarned, xpEarned);
         });
 
         dialogBinding.btnTryAgain.setOnClickListener(v -> {
@@ -301,6 +302,101 @@ public class QuizActivity extends AppCompatActivity {
                 android.view.ViewGroup.LayoutParams.WRAP_CONTENT
             );
         }
+    }
+
+    private void showDetailResultDialog(int coinsEarned, int xpEarned) {
+        DialogQuizDetailResultBinding b = DialogQuizDetailResultBinding.inflate(LayoutInflater.from(this));
+
+        int score = viewModel.getScore();
+        int total = viewModel.getTotal();
+        int accuracy = total > 0 ? (score * 100) / total : 0;
+        boolean passed = accuracy >= 60;
+        List<Boolean> answerResults = viewModel.getAnswerResults();
+        long timeTakenMillis = viewModel.getTimeTakenMillis();
+
+        b.txtDetailBadge.setVisibility(View.VISIBLE);
+        if (passed) {
+            b.txtDetailTitle.setText("Well Done!");
+            b.txtDetailSubtitle.setText("You have passed the quiz");
+            b.txtDetailBadge.setText("PASSED");
+            b.txtDetailBadge.setTextColor(ContextCompat.getColor(this, R.color.color_level_n5));
+            b.txtDetailBadge.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_quiz_pass_badge));
+        } else {
+            b.txtDetailTitle.setText("Keep Going!");
+            b.txtDetailSubtitle.setText("Better luck next time");
+            b.txtDetailBadge.setText("FAILED");
+            b.txtDetailBadge.setTextColor(ContextCompat.getColor(this, R.color.color_error));
+            b.txtDetailBadge.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_quiz_fail_badge));
+        }
+
+        b.txtDetailScore.setText(score + " / " + total);
+        b.txtDetailXpAmount.setText("+" + xpEarned);
+        b.txtDetailCoinsAmount.setText("+" + coinsEarned);
+        b.txtCorrectCount.setText(String.valueOf(score));
+        b.txtWrongCount.setText(String.valueOf(total - score));
+        b.txtScorePercent.setText(accuracy + "%");
+        b.progressScore.setProgress(accuracy);
+        b.txtDetailTime.setText(formatTimeTaken(timeTakenMillis));
+        b.txtDetailAccuracy.setText(accuracy + "%");
+
+        for (int i = 0; i < answerResults.size(); i++) {
+            b.questionBallsContainer.addView(createQuestionBall(i + 1, answerResults.get(i)));
+        }
+
+        AlertDialog dialog = new AlertDialog.Builder(this)
+            .setView(b.getRoot())
+            .setCancelable(false)
+            .create();
+
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        }
+
+        b.btnDetailClose.setOnClickListener(v -> {
+            dialog.dismiss();
+            Intent result = new Intent();
+            result.putExtra(EXTRA_SCORE, score);
+            result.putExtra(EXTRA_TOTAL, total);
+            setResult(RESULT_OK, result);
+            finish();
+        });
+
+        dialog.show();
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setLayout(
+                android.view.ViewGroup.LayoutParams.MATCH_PARENT,
+                android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+        }
+    }
+
+    private View createQuestionBall(int number, boolean isCorrect) {
+        int size = dpToPx(24);
+        int margin = dpToPx(2);
+
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(size, size);
+        params.setMargins(margin, 0, margin, 0);
+
+        TextView tv = new TextView(this);
+        tv.setLayoutParams(params);
+        tv.setText(String.valueOf(number));
+        tv.setGravity(Gravity.CENTER);
+        tv.setTextColor(ContextCompat.getColor(this, R.color.white));
+        tv.setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, 10);
+        tv.setBackground(ContextCompat.getDrawable(this,
+            isCorrect ? R.drawable.bg_circle_correct : R.drawable.bg_circle_wrong));
+        return tv;
+    }
+
+    private String formatTimeTaken(long millis) {
+        long seconds = millis / 1000;
+        long minutes = seconds / 60;
+        seconds = seconds % 60;
+        return String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
+    }
+
+    private int dpToPx(int dp) {
+        return Math.round(dp * getResources().getDisplayMetrics().density);
     }
 
     private void playAudio(String url) {

@@ -54,9 +54,9 @@ public class HomeFragment extends Fragment {
         HomeViewModel viewModel = new ViewModelProvider(this, new AppViewModelFactory()).get(HomeViewModel.class);
 
         BottomNavigationView bottomNav = requireActivity().findViewById(R.id.bottomNav);
-        binding.btnStartQuiz.setOnClickListener(v ->
-            quizLauncher.launch(new Intent(requireActivity(), QuizActivity.class))
-        );
+//        binding.btnStartQuiz.setOnClickListener(v ->
+//            quizLauncher.launch(new Intent(requireActivity(), QuizActivity.class))
+//        );
 
         binding.menuVocabulary.setOnClickListener(v -> bottomNav.setSelectedItemId(R.id.vocabularyFragment));
         binding.menuGrammar.setOnClickListener(v -> bottomNav.setSelectedItemId(R.id.vocabularyFragment));

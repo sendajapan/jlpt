@@ -35,8 +35,11 @@ public class QuizViewModel extends ViewModel {
 
     private final ApiService api;
     private List<QuizQuestion> questions = new ArrayList<>();
+    private List<Boolean> answerResults = new ArrayList<>();
     private int currentIndex = 0;
     private int score = 0;
+    private long quizStartTime = 0;
+    private long quizEndTime = 0;
 
     private final MutableLiveData<QuizQuestion> currentQuestion = new MutableLiveData<>();
     private final MutableLiveData<Boolean> quizLoaded = new MutableLiveData<>();
@@ -86,7 +89,10 @@ public class QuizViewModel extends ViewModel {
     public void loadQuiz() {
         currentIndex = 0;
         score = 0;
+        quizStartTime = 0;
+        quizEndTime = 0;
         questions.clear();
+        answerResults.clear();
         api.generateQuiz().enqueue(new Callback<QuizResponse>() {
             @Override
             public void onResponse(Call<QuizResponse> call, Response<QuizResponse> response) {
@@ -107,15 +113,26 @@ public class QuizViewModel extends ViewModel {
 
     public void advance() {
         if (currentIndex >= questions.size()) return;
+        if (currentIndex == 0) quizStartTime = System.currentTimeMillis();
         currentQuestion.setValue(questions.get(currentIndex));
     }
 
     public void recordAnswer(boolean isCorrect) {
         if (isCorrect) score++;
+        answerResults.add(isCorrect);
         currentIndex++;
     }
 
+    public List<Boolean> getAnswerResults() {
+        return new ArrayList<>(answerResults);
+    }
+
+    public long getTimeTakenMillis() {
+        return quizEndTime > quizStartTime ? quizEndTime - quizStartTime : 0;
+    }
+
     public void submitResult() {
+        quizEndTime = System.currentTimeMillis();
         api.completeQuiz(new QuizCompleteRequest(score, questions.size())).enqueue(new Callback<QuizCompleteResponse>() {
             @Override
             public void onResponse(Call<QuizCompleteResponse> call, Response<QuizCompleteResponse> response) {

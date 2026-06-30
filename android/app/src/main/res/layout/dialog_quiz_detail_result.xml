@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:scrollbars="none"
+    android:background="@drawable/bg_round_white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Row 1: Thumbs up + score info -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_margin="@dimen/_16sdp">
+
+            <LinearLayout
+                android:layout_width="@dimen/_72sdp"
+                android:layout_height="@dimen/_72sdp"
+                android:gravity="center"
+                android:background="@drawable/bg_circle_white"
+                android:backgroundTint="@color/color_success_light">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/subway_like"
+                    android:textSize="@dimen/_28ssp"
+                    android:includeFontPadding="false"
+                    android:layout_margin="@dimen/_16sdp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginStart="@dimen/_12sdp">
+
+                <TextView
+                    android:id="@+id/txtDetailTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Well Done!"
+                    android:fontFamily="@font/poppins_bold"
+                    android:textColor="@color/color_theme_navy"
+                    android:textSize="@dimen/_16ssp"
+                    android:includeFontPadding="false" />
+
+                <TextView
+                    android:id="@+id/txtDetailSubtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="You have passed the quiz"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="@dimen/_10ssp"
+                    android:includeFontPadding="false"/>
+
+                <TextView
+                    android:id="@+id/txtDetailScore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_bold"
+                    android:textColor="@color/color_theme_navy"
+                    android:text="10/10"
+                    android:textSize="@dimen/_16ssp"
+                    android:includeFontPadding="false" />
+
+                <TextView
+                    android:id="@+id/txtDetailBadge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="passed"
+                    android:textSize="@dimen/_10ssp"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_2sdp"
+                    android:paddingBottom="@dimen/_2sdp"
+                    android:includeFontPadding="false" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_theme_extra_light"
+            android:layout_marginHorizontal="@dimen/_16sdp"/>
+
+        <!-- Row 2: XP + Coins -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginHorizontal="@dimen/_16sdp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="@dimen/_12sdp"
+                android:background="@drawable/bg_quiz_stat_card"
+                android:layout_marginEnd="@dimen/_4sdp">
+
+                <ImageView
+                    android:layout_width="@dimen/_18sdp"
+                    android:layout_height="@dimen/_18sdp"
+                    android:src="@drawable/xp"
+                    android:textSize="@dimen/_18ssp"
+                    android:includeFontPadding="false" />
+
+                <TextView
+                    android:id="@+id/txtDetailXpAmount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_bold"
+                    android:textColor="@color/color_theme_navy"
+                    android:text="25"
+                    android:textSize="@dimen/_18ssp"
+                    android:includeFontPadding="false"
+                    android:layout_marginTop="@dimen/_4sdp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Experience"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="@dimen/_10ssp"
+                    android:includeFontPadding="false" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="@dimen/_12sdp"
+                android:background="@drawable/bg_quiz_stat_card"
+                android:layout_marginStart="@dimen/_4sdp">
+
+                <ImageView
+                    android:layout_width="@dimen/_18sdp"
+                    android:layout_height="@dimen/_18sdp"
+                    android:src="@drawable/japanese_yen_coin"
+                    android:textSize="@dimen/_18ssp"
+                    android:includeFontPadding="false" />
+
+                <TextView
+                    android:id="@+id/txtDetailCoinsAmount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_bold"
+                    android:textColor="@color/color_theme_navy"
+                    android:text="500"
+                    android:textSize="@dimen/_18ssp"
+                    android:includeFontPadding="false"
+                    android:layout_marginTop="@dimen/_4sdp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Coins Earned"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="@dimen/_10ssp"
+                    android:includeFontPadding="false" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Row 3: Correct + Wrong answers -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginHorizontal="@dimen/_16sdp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="@dimen/_12sdp"
+                android:background="@drawable/bg_quiz_stat_card"
+                android:layout_marginEnd="@dimen/_4sdp">
+
+                <ImageView
+                    android:layout_width="@dimen/_18sdp"
+                    android:layout_height="@dimen/_18sdp"
+                    android:src="@drawable/tic"
+                    android:textSize="@dimen/_18ssp"
+                    android:includeFontPadding="false" />
+
+                <TextView
+                    android:id="@+id/txtCorrectCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_bold"
+                    android:textColor="@color/color_level_n5"
+                    android:textSize="@dimen/_18ssp"
+                    android:text="10"
+                    android:includeFontPadding="false"
+                    android:layout_marginTop="@dimen/_4sdp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Correct"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="@dimen/_10ssp"
+                    android:includeFontPadding="false" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="@dimen/_12sdp"
+                android:background="@drawable/bg_quiz_stat_card"
+                android:layout_marginStart="@dimen/_4sdp">
+
+                <ImageView
+                    android:layout_width="@dimen/_18sdp"
+                    android:layout_height="@dimen/_18sdp"
+                    android:src="@drawable/cross"
+                    android:textSize="@dimen/_18ssp"
+                    android:includeFontPadding="false" />
+
+                <TextView
+                    android:id="@+id/txtWrongCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_bold"
+                    android:textColor="@color/color_error"
+                    android:textSize="@dimen/_18ssp"
+                    android:text="0"
+                    android:includeFontPadding="false"
+                    android:layout_marginTop="@dimen/_4sdp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Wrong"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="@dimen/_10ssp"
+                    android:includeFontPadding="false" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Row 4: Score progress -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/_12sdp"
+            android:background="@drawable/bg_quiz_stat_card"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginHorizontal="@dimen/_16sdp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="@dimen/_6sdp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Score"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textColor="@color/color_theme_navy"
+                    android:textSize="@dimen/_11ssp" />
+
+                <TextView
+                    android:id="@+id/txtScorePercent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_bold"
+                    android:textColor="@color/color_theme_navy"
+                    android:textSize="@dimen/_11ssp" />
+
+            </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/progressScore"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_8sdp"
+                android:max="100"
+                android:progressDrawable="@drawable/bg_progress_score" />
+
+        </LinearLayout>
+
+        <!-- Row 5: Time taken + Accuracy -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginHorizontal="@dimen/_16sdp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="@dimen/_12sdp"
+                android:background="@drawable/bg_quiz_stat_card"
+                android:layout_marginEnd="@dimen/_4sdp">
+
+                <ImageView
+                    android:layout_width="@dimen/_18sdp"
+                    android:layout_height="@dimen/_18sdp"
+                    android:src="@drawable/clock"
+                    android:textSize="@dimen/_18ssp"
+                    android:includeFontPadding="false" />
+
+                <TextView
+                    android:id="@+id/txtDetailTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_bold"
+                    android:textColor="@color/color_theme_navy"
+                    android:textSize="@dimen/_18ssp"
+                    android:includeFontPadding="false"
+                    android:layout_marginTop="@dimen/_4sdp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Time Taken"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="@dimen/_10ssp"
+                    android:includeFontPadding="false" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="@dimen/_12sdp"
+                android:background="@drawable/bg_quiz_stat_card"
+                android:layout_marginStart="@dimen/_4sdp">
+
+                <ImageView
+                    android:layout_width="@dimen/_18sdp"
+                    android:layout_height="@dimen/_18sdp"
+                    android:src="@drawable/target"
+                    android:textSize="@dimen/_18ssp"
+                    android:includeFontPadding="false" />
+
+                <TextView
+                    android:id="@+id/txtDetailAccuracy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_bold"
+                    android:textColor="@color/color_theme_navy"
+                    android:textSize="@dimen/_18ssp"
+                    android:includeFontPadding="false" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Accuracy"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="@dimen/_10ssp"
+                    android:includeFontPadding="false"
+                    android:layout_marginTop="@dimen/_4sdp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Row 6: Question result balls -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/_12sdp"
+            android:background="@drawable/bg_quiz_stat_card"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginHorizontal="@dimen/_16sdp">
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:id="@+id/questionBallsContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical" />
+
+            </HorizontalScrollView>
+
+        </LinearLayout>
+
+        <!-- Close button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnDetailClose"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_46sdp"
+            android:text="Close"
+            android:fontFamily="@font/poppins_bold"
+            android:textColor="@color/color_theme_navy"
+            android:textSize="@dimen/_12ssp"
+            android:textAllCaps="false"
+            app:backgroundTint="@color/color_theme_light"
+            app:cornerRadius="@dimen/_8sdp"
+            app:rippleColor="@color/color_theme_extra_light"
+            android:layout_margin="@dimen/_16sdp"/>
+
+    </LinearLayout>
+
+</ScrollView>

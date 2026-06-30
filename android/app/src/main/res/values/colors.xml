@@ -56,4 +56,7 @@
     <color name="color_level_n1">#E91E63</color>
     <color name="color_level_n1_bg">#FCE4EC</color>
 
+
+    <color name="color_success_light">#E6F6EE</color>
+
 </resources>

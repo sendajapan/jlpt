@@ -24,11 +24,11 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center_horizontal"
-        android:padding="@dimen/_24sdp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        android:padding="@dimen/_20sdp">
 
         <com.airbnb.lottie.LottieAnimationView
             android:layout_width="@dimen/_160sdp"
@@ -89,7 +89,6 @@
             android:id="@+id/btnViewResult"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_46sdp"
-            android:layout_marginBottom="@dimen/_10sdp"
             android:text="View Result"
             android:fontFamily="@font/poppins_bold"
             android:textColor="@color/color_theme_navy"
@@ -97,7 +96,8 @@
             android:textAllCaps="false"
             app:backgroundTint="@color/color_theme_light"
             app:cornerRadius="@dimen/_8sdp"
-            app:rippleColor="@color/color_theme_extra_light" />
+            app:rippleColor="@color/color_theme_extra_light"
+            android:layout_marginHorizontal="@dimen/_16sdp"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnTryAgain"
@@ -112,7 +112,8 @@
             app:strokeColor="@color/color_theme_navy"
             app:strokeWidth="1.5dp"
             app:cornerRadius="@dimen/_8sdp"
-            app:rippleColor="@color/color_theme_extra_light" />
+            app:rippleColor="@color/color_theme_extra_light"
+            android:layout_marginHorizontal="@dimen/_16sdp"/>
 
     </LinearLayout>
 
