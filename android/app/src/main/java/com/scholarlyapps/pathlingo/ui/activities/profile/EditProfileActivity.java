@@ -9,6 +9,9 @@ import androidx.core.widget.ImageViewCompat;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.scholarlyapps.pathlingo.data.remote.ServiceLocator;
@@ -23,12 +26,10 @@ import com.scholarlyapps.pathlingo.data.remote.dto.AppUserDto;
 import com.scholarlyapps.pathlingo.databinding.ActivityEditProfileBinding;
 import com.scholarlyapps.pathlingo.ui.AvatarPickerBottomSheet;
 import com.scholarlyapps.pathlingo.ui.utils.NavAnim;
+import com.scholarlyapps.pathlingo.ui.utils.ShimmerImage;
 import com.scholarlyapps.pathlingo.ui.utils.ToastHelper;
 import com.scholarlyapps.pathlingo.viewmodels.AppViewModelFactory;
 import com.scholarlyapps.pathlingo.viewmodels.EditProfileViewModel;
-
-import coil.Coil;
-import coil.request.ImageRequest;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -64,18 +65,37 @@ public class EditProfileActivity extends AppCompatActivity {
         binding = ActivityEditProfileBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        ViewCompat.setOnApplyWindowInsetsListener(binding.rootLayout, (v, insets) -> {
+            Insets bars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            binding.toolbar.setPadding(0, bars.top, 0, 0);
+            binding.scrollView.setPadding(
+                binding.scrollView.getPaddingLeft(),
+                binding.scrollView.getPaddingTop(),
+                binding.scrollView.getPaddingRight(),
+                bars.bottom
+            );
+            return insets;
+        });
+
         viewModel = new ViewModelProvider(this, new AppViewModelFactory()).get(EditProfileViewModel.class);
 
         setupDropdowns();
         setupBirthDatePicker();
 
-        binding.toolbar.setNavigationOnClickListener(v -> {
+        binding.toolbar.setOnBackClickListener(v -> {
             finish();
             NavAnim.slideBack(this);
         });
 
         binding.btnSave.setOnClickListener(v -> submitSave());
         binding.imgAvatar.setOnClickListener(v -> openAvatarPicker());
+        binding.btnEditAvatar.setOnClickListener(v -> openAvatarPicker());
+
+        ServiceLocator.userRepository.getUser().observe(this, user -> {
+            if (user != null && user.avatarUrl != null && !user.avatarUrl.isEmpty()) {
+                loadAvatarImage(user.avatarUrl);
+            }
+        });
 
         viewModel.getState().observe(this, state -> {
             boolean loading = state.getLoading();
@@ -139,10 +159,12 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private void openAvatarPicker() {
         binding.imgAvatar.setEnabled(false);
+        binding.btnEditAvatar.setEnabled(false);
         ServiceLocator.api.getAvatars().enqueue(new Callback<ListResponse<AvatarDto>>() {
             @Override
             public void onResponse(@NonNull Call<ListResponse<AvatarDto>> call, @NonNull Response<ListResponse<AvatarDto>> response) {
                 binding.imgAvatar.setEnabled(true);
+                binding.btnEditAvatar.setEnabled(true);
                 if (!isFinishing()) {
                     showAvatarSheet(response.isSuccessful() && response.body() != null
                             ? response.body().getData()
@@ -153,6 +175,7 @@ public class EditProfileActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<ListResponse<AvatarDto>> call, @NonNull Throwable t) {
                 binding.imgAvatar.setEnabled(true);
+                binding.btnEditAvatar.setEnabled(true);
                 if (!isFinishing()) {
                     showAvatarSheet(java.util.Collections.emptyList());
                 }
@@ -174,14 +197,10 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     private void loadAvatarImage(String url) {
-        if (url == null || url.isEmpty()) return;
-        ImageViewCompat.setImageTintList(binding.imgAvatar, null);
-        Coil.imageLoader(this).enqueue(
-                new ImageRequest.Builder(this)
-                        .data(url)
-                        .target(binding.imgAvatar)
-                        .build()
-        );
+        if (url != null && !url.isEmpty()) {
+            ImageViewCompat.setImageTintList(binding.imgAvatar, null);
+        }
+        ShimmerImage.load(binding.avatarShimmer, binding.imgAvatar, url);
     }
 
     private void prefillForm(AppUserDto profile) {

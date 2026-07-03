@@ -1,5 +1,6 @@
 package com.scholarlyapps.pathlingo.data.local.db.entity;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -15,5 +16,6 @@ public class UserEntity {
     public int xpPoints;
     public int currentStreak;
     public int learnedWords;
+    @ColumnInfo(defaultValue = "0")
     public int coins;
 }

@@ -28,13 +28,44 @@
 
         </FrameLayout>
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/imgAvatar"
-            android:layout_width="@dimen/_36sdp"
-            android:layout_height="@dimen/_36sdp"
-            android:scaleType="centerCrop"
-            android:background="@drawable/bg_step_bar_inactive"
-            app:shapeAppearanceOverlay="@style/ShapeOverlay.Avatar" />
+        <FrameLayout
+            android:id="@+id/avatarContainer"
+            android:layout_width="@dimen/_32sdp"
+            android:layout_height="@dimen/_32sdp">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/imgAvatar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:background="@drawable/bg_step_bar_inactive"
+                app:shapeAppearanceOverlay="@style/ShapeOverlay.Avatar" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clickable="false"
+                android:focusable="false"
+                app:cardBackgroundColor="@android:color/transparent"
+                app:cardCornerRadius="@dimen/_5sdp"
+                app:cardElevation="0dp"
+                app:strokeWidth="0dp">
+
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/avatarShimmer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/color_theme_extra_light" />
+
+                </com.facebook.shimmer.ShimmerFrameLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="0dp"
@@ -47,7 +78,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="こんにちは！"
-                android:fontFamily="@font/noto_sans_jp"
+                android:fontFamily="@font/noto_sans_jp_medium"
                 android:textColor="@color/ink"
                 android:textSize="@dimen/_9ssp"
                 android:includeFontPadding="false" />
@@ -58,7 +89,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_semibold"
                 android:textColor="@color/ink"
-                android:text="Solaiman"
+                android:text="Name"
                 android:textSize="@dimen/_11ssp"
                 android:includeFontPadding="false" />
 

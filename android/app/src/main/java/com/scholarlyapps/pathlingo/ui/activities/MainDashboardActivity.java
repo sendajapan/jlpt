@@ -10,14 +10,12 @@ import androidx.navigation.NavController;
 import androidx.navigation.NavOptions;
 import androidx.navigation.fragment.NavHostFragment;
 
-import coil.Coil;
-import coil.request.ImageRequest;
-
 import com.google.android.material.snackbar.Snackbar;
 import com.scholarlyapps.pathlingo.R;
 import com.scholarlyapps.pathlingo.data.remote.ServiceLocator;
 import com.scholarlyapps.pathlingo.data.sync.SyncScheduler;
 import com.scholarlyapps.pathlingo.databinding.ActivityMainDashboardBinding;
+import com.scholarlyapps.pathlingo.ui.utils.ShimmerImage;
 import com.scholarlyapps.pathlingo.viewmodels.AppViewModelFactory;
 import com.scholarlyapps.pathlingo.viewmodels.ProgressViewModel;
 
@@ -89,14 +87,10 @@ public class MainDashboardActivity extends AppCompatActivity {
             }
         });
         viewModel.getAvatarUrl().observe(this, url -> {
-            if (url == null || url.isEmpty()) return;
-            ImageViewCompat.setImageTintList(binding.imgExpandedAvatar, null);
-            Coil.imageLoader(this).enqueue(
-                new ImageRequest.Builder(this)
-                    .data(url)
-                    .target(binding.imgExpandedAvatar)
-                    .build()
-            );
+            if (url != null && !url.isEmpty()) {
+                ImageViewCompat.setImageTintList(binding.imgExpandedAvatar, null);
+            }
+            ShimmerImage.load(binding.expandedAvatarShimmer, binding.imgExpandedAvatar, url);
         });
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
@@ -149,9 +143,8 @@ public class MainDashboardActivity extends AppCompatActivity {
                 || id == R.id.profileFragment;
             binding.bottomNav.setVisibility(isTab ? View.VISIBLE : View.GONE);
 
-            boolean showHeader = id != R.id.profileFragment;
-            binding.appBar.setVisibility(showHeader ? View.VISIBLE : View.GONE);
-            if (showHeader) {
+            binding.appBar.setVisibility(isTab ? View.VISIBLE : View.GONE);
+            if (isTab) {
                 binding.appBar.setExpanded(id == R.id.homeFragment, false);
             }
         });

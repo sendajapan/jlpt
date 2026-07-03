@@ -26,10 +26,11 @@ public class PathlingoApp extends Application {
                 )
                 .diskCache(
                     new DiskCache.Builder()
-                        .directory(new File(getCacheDir(), "image_cache"))
-                        .maxSizeBytes(50L * 1024 * 1024)
+                        .directory(new File(getFilesDir(), "image_cache"))
+                        .maxSizeBytes(200L * 1024 * 1024)
                         .build()
                 )
+                .respectCacheHeaders(false)
                 .crossfade(true)
                 .build()
         );

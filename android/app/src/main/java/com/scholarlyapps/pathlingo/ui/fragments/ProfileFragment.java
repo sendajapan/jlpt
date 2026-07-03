@@ -12,15 +12,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-import androidx.core.widget.ImageViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-
-import coil.Coil;
-import coil.request.ImageRequest;
 
 import com.scholarlyapps.pathlingo.databinding.DialogConfirmLogoutBinding;
 import com.scholarlyapps.pathlingo.databinding.FragmentProfileBinding;
@@ -45,38 +38,7 @@ public class ProfileFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        ViewCompat.setOnApplyWindowInsetsListener(binding.getRoot(), (v, insets) -> {
-            Insets bars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(v.getPaddingLeft(), bars.top, v.getPaddingRight(), v.getPaddingBottom());
-            return insets;
-        });
-
         viewModel = new ViewModelProvider(this, new AppViewModelFactory()).get(ProgressViewModel.class);
-
-        viewModel.getUser().observe(getViewLifecycleOwner(), user -> {
-            if (user == null) return;
-            binding.userCard.setVisibility(View.VISIBLE);
-            binding.txtUserName.setText(user.name);
-            binding.txtEmail.setText(user.email);
-            binding.txtXp.setText("XP: " + user.xp);
-        });
-
-        viewModel.getEmail().observe(getViewLifecycleOwner(), emailValue -> {
-            if (emailValue != null && !emailValue.isEmpty()) {
-                binding.txtEmail.setText(emailValue);
-            }
-        });
-
-        viewModel.getAvatarUrl().observe(getViewLifecycleOwner(), url -> {
-            if (url == null || url.isEmpty()) return;
-            ImageViewCompat.setImageTintList(binding.imgAvatar, null);
-            Coil.imageLoader(requireContext()).enqueue(
-                    new ImageRequest.Builder(requireContext())
-                            .data(url)
-                            .target(binding.imgAvatar)
-                            .build()
-            );
-        });
 
         binding.btnLogout.setOnClickListener(v -> showLogoutDialog());
 

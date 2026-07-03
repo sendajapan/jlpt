@@ -22,6 +22,18 @@
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop" />
 
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/heroShimmer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/color_theme_extra_light" />
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
             <ImageButton
                 android:id="@+id/btnBack"
                 android:layout_width="@dimen/_48sdp"

@@ -16,9 +16,6 @@ import com.scholarlyapps.pathlingo.ui.utils.ShimmerImage;
 
 import java.util.List;
 
-import coil.Coil;
-import coil.request.ImageRequest;
-
 public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.ViewHolder> {
 
     public interface OnWordClick {
@@ -72,15 +69,7 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.ViewHo
                         ContextCompat.getColor(binding.imgBg.getContext(), R.color.color_theme_extra_light)));
             }
 
-            if (word.img != null && !word.img.isEmpty()) {
-                Coil.imageLoader(binding.imgIcon.getContext()).enqueue(
-                        new ImageRequest.Builder(binding.imgIcon.getContext())
-                                .data(word.img)
-                                .crossfade(true)
-                                .target(binding.imgIcon)
-                                .build()
-                );
-            }
+            ShimmerImage.load(binding.iconShimmer, binding.imgIcon, word.img);
 
             itemView.setOnClickListener(v -> listener.onClick(word));
         }

@@ -1,5 +1,6 @@
 package com.scholarlyapps.pathlingo.data.local.db.entity;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -16,6 +17,8 @@ public class SubcategoryEntity {
     public String iconThumbnailBg;
     public String bgUrl;
     public boolean isPremium;
+    @ColumnInfo(defaultValue = "0")
     public int coinPrice;
+    @ColumnInfo(defaultValue = "0")
     public boolean isLocked;
 }

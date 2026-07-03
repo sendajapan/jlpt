@@ -26,9 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
 
-import coil.Coil;
-import coil.request.ImageRequest;
-
 public class WordActivity extends AppCompatActivity {
 
     public static final String EXTRA_SUBCATEGORY_ID = "subcategoryId";
@@ -113,14 +110,9 @@ public class WordActivity extends AppCompatActivity {
         binding.txtExampleEn.setText(word.example_en);
 
         if (word.bgUrl != null && !word.bgUrl.isEmpty()) {
-            Coil.imageLoader(this).enqueue(
-                new ImageRequest.Builder(this)
-                    .data(word.bgUrl)
-                    .crossfade(true)
-                    .target(binding.imgWordBg)
-                    .build()
-            );
+            ShimmerImage.load(binding.bgShimmer, binding.imgWordBg, word.bgUrl);
         } else {
+            ShimmerImage.load(binding.bgShimmer, binding.imgWordBg, null);
             binding.imgWordBg.setImageDrawable(new ColorDrawable(
                 ContextCompat.getColor(this, R.color.color_theme_extra_light)));
         }

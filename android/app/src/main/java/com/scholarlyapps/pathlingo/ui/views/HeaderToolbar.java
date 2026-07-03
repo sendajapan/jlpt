@@ -16,12 +16,11 @@ import androidx.lifecycle.ViewTreeViewModelStoreOwner;
 
 import java.util.Locale;
 
-import coil.Coil;
-import coil.request.ImageRequest;
-
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.scholarlyapps.pathlingo.R;
 import com.scholarlyapps.pathlingo.models.User;
+import com.scholarlyapps.pathlingo.ui.utils.ShimmerImage;
 import com.scholarlyapps.pathlingo.viewmodels.AppViewModelFactory;
 import com.scholarlyapps.pathlingo.viewmodels.ProgressViewModel;
 
@@ -29,7 +28,9 @@ public class HeaderToolbar extends MaterialToolbar {
 
     private View btnBack;
     private View btnBell;
+    private View avatarContainer;
     private ImageView imgAvatar;
+    private ShimmerFrameLayout avatarShimmer;
     private TextView txtName;
     private TextView txtCoins;
 
@@ -55,7 +56,9 @@ public class HeaderToolbar extends MaterialToolbar {
 
         btnBack = findViewById(R.id.btnBack);
         btnBell = findViewById(R.id.btnBell);
+        avatarContainer = findViewById(R.id.avatarContainer);
         imgAvatar = findViewById(R.id.imgAvatar);
+        avatarShimmer = findViewById(R.id.avatarShimmer);
         txtName = findViewById(R.id.txtName);
         txtCoins = findViewById(R.id.txtCoins);
 
@@ -72,7 +75,7 @@ public class HeaderToolbar extends MaterialToolbar {
     }
 
     public void setAvatarVisible(boolean visible) {
-        imgAvatar.setVisibility(visible ? View.VISIBLE : View.GONE);
+        avatarContainer.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 
     public void setOnBackClickListener(View.OnClickListener listener) {
@@ -115,16 +118,10 @@ public class HeaderToolbar extends MaterialToolbar {
     }
 
     private void loadAvatar(String url) {
-        if (url == null || url.isEmpty()) return;
-        ImageViewCompat.setImageTintList(imgAvatar, null);
-        Coil.imageLoader(getContext()).enqueue(
-                new ImageRequest.Builder(getContext())
-                        .data(url)
-                        .placeholder(imgAvatar.getDrawable())
-                        .error(R.drawable.bg_step_bar_inactive)
-                        .target(imgAvatar)
-                        .build()
-        );
+        if (url != null && !url.isEmpty()) {
+            ImageViewCompat.setImageTintList(imgAvatar, null);
+        }
+        ShimmerImage.load(avatarShimmer, imgAvatar, url);
     }
 
     private static String formatCoins(int coins) {

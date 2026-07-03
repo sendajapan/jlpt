@@ -57,6 +57,18 @@
 
             </com.facebook.shimmer.ShimmerFrameLayout>
 
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/iconShimmer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/color_theme_extra_light" />
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
         </com.google.android.material.card.MaterialCardView>
 
         <ImageView

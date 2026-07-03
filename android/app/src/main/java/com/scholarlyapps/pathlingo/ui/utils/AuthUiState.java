@@ -22,9 +22,23 @@ public class AuthUiState {
         this.otpVerified = otpVerified;
     }
 
-    public boolean getLoading() { return loading; }
-    public String getError() { return error; }
-    public AppUserDto getUser() { return user; }
-    public boolean getSuccess() { return success; }
-    public boolean getOtpVerified() { return otpVerified; }
+    public boolean getLoading() {
+        return loading;
+    }
+
+    public String getError() {
+        return error;
+    }
+
+    public AppUserDto getUser() {
+        return user;
+    }
+
+    public boolean getSuccess() {
+        return success;
+    }
+
+    public boolean getOtpVerified() {
+        return otpVerified;
+    }
 }

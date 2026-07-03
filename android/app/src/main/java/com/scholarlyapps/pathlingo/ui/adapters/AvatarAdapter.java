@@ -10,11 +10,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.scholarlyapps.pathlingo.data.remote.dto.AvatarDto;
 import com.scholarlyapps.pathlingo.databinding.ItemAvatarGridBinding;
+import com.scholarlyapps.pathlingo.ui.utils.ShimmerImage;
 
 import java.util.List;
-
-import coil.Coil;
-import coil.request.ImageRequest;
 
 public class AvatarAdapter extends RecyclerView.Adapter<AvatarAdapter.ViewHolder> {
 
@@ -88,13 +86,8 @@ public class AvatarAdapter extends RecyclerView.Adapter<AvatarAdapter.ViewHolder
 
             if (avatar.imageUrl != null && !avatar.imageUrl.isEmpty()) {
                 ImageViewCompat.setImageTintList(binding.imgAvatar, null);
-                Coil.imageLoader(binding.imgAvatar.getContext()).enqueue(
-                        new ImageRequest.Builder(binding.imgAvatar.getContext())
-                                .data(avatar.imageUrl)
-                                .target(binding.imgAvatar)
-                                .build()
-                );
             }
+            ShimmerImage.load(binding.avatarShimmer, binding.imgAvatar, avatar.imageUrl);
 
             binding.getRoot().setOnClickListener(v -> listener.onClick(avatar));
         }

@@ -51,8 +51,8 @@ public class AuthViewModel extends ViewModel {
             try {
                 ApiResult<String> result = repo.sendOtp(email);
                 next = result.isSuccess()
-                        ? new AuthUiState(false, null, null, false, false)
-                        : new AuthUiState(false, result.getError(), null, false, false);
+                    ? new AuthUiState(false, null, null, false, false)
+                    : new AuthUiState(false, result.getError(), null, false, false);
             } catch (Exception e) {
                 next = new AuthUiState(false, e.getMessage() != null ? e.getMessage() : "Something went wrong.", null, false, false);
             }
@@ -68,8 +68,8 @@ public class AuthViewModel extends ViewModel {
             try {
                 ApiResult<String> result = repo.verifyOtp(email, code);
                 next = result.isSuccess()
-                        ? new AuthUiState(false, null, null, false, true)
-                        : new AuthUiState(false, result.getError(), null, false, false);
+                    ? new AuthUiState(false, null, null, false, true)
+                    : new AuthUiState(false, result.getError(), null, false, false);
             } catch (Exception e) {
                 next = new AuthUiState(false, e.getMessage() != null ? e.getMessage() : "Something went wrong.", null, false, false);
             }
@@ -85,8 +85,8 @@ public class AuthViewModel extends ViewModel {
             try {
                 ApiResult<AppUserDto> result = block.call();
                 next = result.isSuccess()
-                        ? new AuthUiState(false, null, result.getData(), true, false)
-                        : new AuthUiState(false, result.getError(), null, false, false);
+                    ? new AuthUiState(false, null, result.getData(), true, false)
+                    : new AuthUiState(false, result.getError(), null, false, false);
             } catch (Exception e) {
                 next = new AuthUiState(false, e.getMessage() != null ? e.getMessage() : "Something went wrong.", null, false, false);
             }

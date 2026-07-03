@@ -16,13 +16,12 @@ import com.scholarlyapps.pathlingo.data.remote.dto.CoinsBalanceResponse;
 import com.scholarlyapps.pathlingo.databinding.ActivityWordDetailBinding;
 import com.scholarlyapps.pathlingo.models.Word;
 import com.scholarlyapps.pathlingo.ui.UnlockBottomSheet;
+import com.scholarlyapps.pathlingo.ui.utils.ShimmerImage;
 import com.scholarlyapps.pathlingo.viewmodels.AppViewModelFactory;
 import com.scholarlyapps.pathlingo.viewmodels.WordDetailViewModel;
 
 import java.util.List;
 
-import coil.Coil;
-import coil.request.ImageRequest;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -72,10 +71,7 @@ public class WordDetailActivity extends AppCompatActivity {
 
         binding.btnBack.setOnClickListener(v -> finish());
 
-        if (iconUrl != null && !iconUrl.isEmpty()) {
-            Coil.imageLoader(this).enqueue(
-                new ImageRequest.Builder(this).data(iconUrl).crossfade(true).target(binding.imgHero).build());
-        }
+        ShimmerImage.load(binding.heroShimmer, binding.imgHero, iconUrl);
 
         WordDetailViewModel viewModel = new ViewModelProvider(this, new AppViewModelFactory()).get(WordDetailViewModel.class);
         viewModel.getWords().observe(this, wordList -> {

@@ -15,11 +15,9 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.scholarlyapps.pathlingo.R;
 import com.scholarlyapps.pathlingo.databinding.ItemSubcategoryCardBinding;
 import com.scholarlyapps.pathlingo.models.Subcategory;
+import com.scholarlyapps.pathlingo.ui.utils.ShimmerImage;
 
 import java.util.List;
-
-import coil.Coil;
-import coil.request.ImageRequest;
 
 public class SubcategoryAdapter extends RecyclerView.Adapter<SubcategoryAdapter.ViewHolder> {
 
@@ -82,26 +80,13 @@ public class SubcategoryAdapter extends RecyclerView.Adapter<SubcategoryAdapter.
             binding.txtCount.setText(sub.mastered + "/" + sub.total);
 
             if (sub.img != null && !sub.img.isEmpty()) {
-                Coil.imageLoader(binding.imgBg.getContext()).enqueue(
-                        new ImageRequest.Builder(binding.imgBg.getContext())
-                                .data(sub.img)
-                                .crossfade(true)
-                                .target(binding.imgBg)
-                                .build()
-                );
+                ShimmerImage.load(binding.bgShimmer, binding.imgBg, sub.img);
             } else {
+                ShimmerImage.load(binding.bgShimmer, binding.imgBg, null);
                 binding.imgBg.setImageDrawable(new ColorDrawable(accentColor));
             }
 
-            if (sub.iconUrl != null && !sub.iconUrl.isEmpty()) {
-                Coil.imageLoader(binding.imgIcon.getContext()).enqueue(
-                        new ImageRequest.Builder(binding.imgIcon.getContext())
-                                .data(sub.iconUrl)
-                                .crossfade(true)
-                                .target(binding.imgIcon)
-                                .build()
-                );
-            }
+            ShimmerImage.load(binding.iconShimmer, binding.imgIcon, sub.iconUrl);
 
             if (sub.isLocked) {
                 itemView.setOnClickListener(v -> listener.onUnlockClick(sub));

@@ -1,5 +1,6 @@
 package com.scholarlyapps.pathlingo.data.local.db.entity;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -16,8 +17,12 @@ public class PendingActionEntity {
     @PrimaryKey(autoGenerate = true)
     public long id;
     public String type;
+    @ColumnInfo(defaultValue = "0")
     public long wordId;
+    @ColumnInfo(defaultValue = "0")
     public int score;
+    @ColumnInfo(defaultValue = "0")
     public int total;
+    @ColumnInfo(defaultValue = "0")
     public long createdAt;
 }

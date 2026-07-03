@@ -9,14 +9,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.scholarlyapps.pathlingo.R;
 import com.scholarlyapps.pathlingo.databinding.ItemCategoryViewAllBinding;
 import com.scholarlyapps.pathlingo.models.Category;
+import com.scholarlyapps.pathlingo.ui.utils.ShimmerImage;
 
 import java.util.List;
-
-import coil.Coil;
-import coil.request.ImageRequest;
 
 public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -85,6 +84,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         final ImageView imgCategory;
         final ImageView imgIcon;
+        final ShimmerFrameLayout bgShimmer;
+        final ShimmerFrameLayout iconShimmer;
         final TextView txtJp;
         final TextView txtEn;
         final View cardRoot;
@@ -93,6 +94,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             super(view);
             imgCategory = view.findViewById(R.id.imgCategory);
             imgIcon = view.findViewById(R.id.imgIcon);
+            bgShimmer = view.findViewById(R.id.bgShimmer);
+            iconShimmer = view.findViewById(R.id.iconShimmer);
             txtJp = view.findViewById(R.id.txtJp);
             txtEn = view.findViewById(R.id.txtEn);
             cardRoot = view.findViewById(R.id.cardRoot);
@@ -102,24 +105,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             txtJp.setText(cat.jp);
             txtEn.setText(cat.en);
 
-            if (cat.bg != null && !cat.bg.isEmpty()) {
-                Coil.imageLoader(imgCategory.getContext()).enqueue(
-                    new ImageRequest.Builder(imgCategory.getContext())
-                        .data(cat.bg)
-                        .crossfade(true)
-                        .target(imgCategory)
-                        .build()
-                );
-            }
-            if (cat.iconUrl != null && !cat.iconUrl.isEmpty()) {
-                Coil.imageLoader(imgIcon.getContext()).enqueue(
-                    new ImageRequest.Builder(imgIcon.getContext())
-                        .data(cat.iconUrl)
-                        .crossfade(true)
-                        .target(imgIcon)
-                        .build()
-                );
-            }
+            ShimmerImage.load(bgShimmer, imgCategory, cat.bg);
+            ShimmerImage.load(iconShimmer, imgIcon, cat.iconUrl);
 
             if (cat.isLocked) {
                 cardRoot.setOnClickListener(v -> listener.onUnlockClick(cat));
