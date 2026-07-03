@@ -27,13 +27,14 @@
         android:id="@+id/tabLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/color_theme_light"
+        android:background="@drawable/bg_tab_container"
         app:tabMode="scrollable"
         app:tabGravity="start"
-        app:tabIndicatorColor="@color/color_theme_navy"
-        app:tabTextColor="@color/ink_soft"
+        app:tabBackground="@drawable/selector_tab_item"
+        app:tabIndicatorHeight="0dp"
+        app:tabTextColor="@color/color_theme_black"
         app:tabSelectedTextColor="@color/color_theme_navy"
-        app:tabTextAppearance="@android:style/TextAppearance.Small"
+        app:tabTextAppearance="@style/PathLingo.Tab.Bold"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -51,6 +52,15 @@
         tools:itemCount="4"
         app:layout_constraintTop_toBottomOf="@id/tabLayout"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <View
+        android:id="@+id/tabShadow"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_6sdp"
+        android:background="@drawable/bg_tab_shadow"
+        app:layout_constraintTop_toBottomOf="@id/tabLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

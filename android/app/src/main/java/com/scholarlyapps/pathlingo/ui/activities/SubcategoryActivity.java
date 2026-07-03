@@ -41,12 +41,7 @@ public class SubcategoryActivity extends AppCompatActivity {
             int top = insets.getInsets(WindowInsetsCompat.Type.systemBars()).top;
             int bottom = insets.getInsets(WindowInsetsCompat.Type.systemBars()).bottom;
             binding.toolbar.setPadding(0, top, 0, 0);
-            binding.rvSubcategories.setPadding(
-                binding.rvSubcategories.getPaddingLeft(),
-                binding.rvSubcategories.getPaddingTop(),
-                binding.rvSubcategories.getPaddingRight(),
-                bottom
-            );
+            binding.scrollView.setPadding(0, 0, 0, bottom);
             return insets;
         });
 
@@ -66,6 +61,8 @@ public class SubcategoryActivity extends AppCompatActivity {
                 finish();
                 return;
             }
+
+            binding.txtCategoryName.setText(category.en);
 
             binding.rvSubcategories.setAdapter(new SubcategoryAdapter(category.subcategories, new SubcategoryAdapter.OnSubcategoryClick() {
                 @Override

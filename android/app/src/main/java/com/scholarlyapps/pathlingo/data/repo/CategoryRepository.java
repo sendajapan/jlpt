@@ -213,6 +213,7 @@ public class CategoryRepository {
             word.romaji = orEmpty(entity.wordRomaji);
             word.en = orEmpty(entity.wordEn);
             word.img = orEmpty(entity.imageUrl);
+            word.bgUrl = orEmpty(entity.bgUrl);
             word.example_jp = orEmpty(entity.sentenceJp);
             word.example_romaji = orEmpty(entity.sentenceRomaji);
             word.example_en = orEmpty(entity.sentenceEn);
@@ -298,6 +299,7 @@ public class CategoryRepository {
             entity.sentenceAudioJpUrl = dto.sentenceAudioJpUrl;
             entity.sentenceAudioEnUrl = dto.sentenceAudioEnUrl;
             entity.imageUrl = dto.imageUrl;
+            entity.bgUrl = dto.bgUrl;
             entity.isPremium = dto.isPremium;
             entity.coinPrice = dto.coinPrice;
             entity.isLocked = dto.isLocked;

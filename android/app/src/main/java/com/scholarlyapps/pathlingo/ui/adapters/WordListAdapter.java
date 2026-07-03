@@ -64,10 +64,10 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.ViewHo
             binding.txtJp.setText(word.kanji);
             binding.txtRomaji.setText(word.romaji);
 
-            if (word.img != null && !word.img.isEmpty()) {
+            if (word.bgUrl != null && !word.bgUrl.isEmpty()) {
                 Coil.imageLoader(binding.imgBg.getContext()).enqueue(
                         new ImageRequest.Builder(binding.imgBg.getContext())
-                                .data(word.img)
+                                .data(word.bgUrl)
                                 .crossfade(true)
                                 .target(binding.imgBg)
                                 .build()
@@ -75,6 +75,16 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.ViewHo
             } else {
                 binding.imgBg.setImageDrawable(new ColorDrawable(
                         ContextCompat.getColor(binding.imgBg.getContext(), R.color.color_theme_extra_light)));
+            }
+
+            if (word.img != null && !word.img.isEmpty()) {
+                Coil.imageLoader(binding.imgIcon.getContext()).enqueue(
+                        new ImageRequest.Builder(binding.imgIcon.getContext())
+                                .data(word.img)
+                                .crossfade(true)
+                                .target(binding.imgIcon)
+                                .build()
+                );
             }
 
             itemView.setOnClickListener(v -> listener.onClick(word));

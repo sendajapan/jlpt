@@ -47,6 +47,9 @@ public class VocabularyDto {
     @SerializedName("image_thumbnail_bg")
     public String imageThumbnailBg;
 
+    @SerializedName("bg_url")
+    public String bgUrl;
+
     @SerializedName("sort_order")
     public Integer sortOrder;
 

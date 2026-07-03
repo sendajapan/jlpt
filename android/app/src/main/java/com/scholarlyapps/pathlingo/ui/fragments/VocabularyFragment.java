@@ -17,6 +17,7 @@ import com.scholarlyapps.pathlingo.models.Category;
 import com.scholarlyapps.pathlingo.ui.activities.CategoryListActivity;
 import com.scholarlyapps.pathlingo.ui.activities.SubcategoryActivity;
 import com.scholarlyapps.pathlingo.ui.adapters.CategoryAdapter;
+import com.scholarlyapps.pathlingo.ui.decorations.GridSpacingItemDecoration;
 import com.scholarlyapps.pathlingo.viewmodels.AppViewModelFactory;
 import com.scholarlyapps.pathlingo.viewmodels.CategoryListViewModel;
 
@@ -52,7 +53,9 @@ public class VocabularyFragment extends Fragment {
                 openCategoryList();
             }
         });
+        int spacing = (int) (8 * getResources().getDisplayMetrics().density);
         binding.rvCategories.setLayoutManager(new androidx.recyclerview.widget.GridLayoutManager(requireContext(), 3));
+        binding.rvCategories.addItemDecoration(new GridSpacingItemDecoration(3, spacing));
         binding.rvCategories.setAdapter(adapter);
 
         binding.btnViewAllCategories.setOnClickListener(v -> openCategoryList());

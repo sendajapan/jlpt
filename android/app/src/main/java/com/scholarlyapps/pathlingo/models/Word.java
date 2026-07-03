@@ -8,6 +8,7 @@ public class Word {
     public String romaji;
     public String en;
     public String img;
+    public String bgUrl;
     public String jlpt;
     public String type;
     public int xp;

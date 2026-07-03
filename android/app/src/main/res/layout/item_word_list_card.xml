@@ -26,67 +26,81 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent">
 
-            <ImageView
-                android:id="@+id/imgBg"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop" />
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/imgBg"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop" />
+
+                <ImageView
+                    android:id="@+id/imgIcon"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:scaleType="centerInside" />
+
+            </FrameLayout>
 
         </com.google.android.material.card.MaterialCardView>
 
         <ImageView
             android:id="@+id/icChevron"
-            android:layout_width="@dimen/_16sdp"
-            android:layout_height="@dimen/_16sdp"
+            android:layout_width="@dimen/_18sdp"
+            android:layout_height="@dimen/_18sdp"
             android:src="@drawable/ic_chevron_right"
-            app:tint="@color/ink_mute"
+            app:tint="@color/color_theme_navy"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
-
-        <TextView
-            android:id="@+id/txtEn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_12sdp"
-            android:fontFamily="@font/poppins_bold"
-            android:includeFontPadding="false"
-            android:textColor="@color/ink"
-            android:textSize="@dimen/_12ssp"
-            app:layout_constraintStart_toEndOf="@id/imgContainer"
-            app:layout_constraintEnd_toStartOf="@id/icChevron"
-            app:layout_constraintTop_toTopOf="@id/imgContainer"
-            app:layout_constraintBottom_toTopOf="@id/txtJp"
-            app:layout_constraintVertical_chainStyle="packed" />
 
         <TextView
             android:id="@+id/txtJp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_12sdp"
-            android:layout_marginTop="@dimen/_2sdp"
             android:fontFamily="@font/noto_sans_jp_bold"
             android:includeFontPadding="false"
             android:textColor="@color/ink"
-            android:textSize="@dimen/_10ssp"
+            android:textSize="@dimen/_12ssp"
             app:layout_constraintStart_toEndOf="@id/imgContainer"
             app:layout_constraintEnd_toStartOf="@id/icChevron"
-            app:layout_constraintTop_toBottomOf="@id/txtEn"
-            app:layout_constraintBottom_toTopOf="@id/txtRomaji" />
+            app:layout_constraintTop_toTopOf="@id/imgContainer"
+            app:layout_constraintBottom_toTopOf="@id/txtRomaji"
+            app:layout_constraintVertical_chainStyle="packed" />
 
         <TextView
             android:id="@+id/txtRomaji"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_12sdp"
-            android:layout_marginTop="@dimen/_1sdp"
+            android:layout_marginTop="@dimen/_2sdp"
             android:fontFamily="@font/poppins_bold"
             android:includeFontPadding="false"
-            android:textColor="@color/ink_soft"
+            android:textColor="@color/ink"
             android:textSize="@dimen/_10ssp"
+            android:textStyle="italic"
             app:layout_constraintStart_toEndOf="@id/imgContainer"
             app:layout_constraintEnd_toStartOf="@id/icChevron"
             app:layout_constraintTop_toBottomOf="@id/txtJp"
+            app:layout_constraintBottom_toTopOf="@id/txtEn" />
+
+        <TextView
+            android:id="@+id/txtEn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_1sdp"
+            android:fontFamily="@font/poppins_bold"
+            android:includeFontPadding="false"
+            android:textColor="@color/ink"
+            android:textSize="@dimen/_10ssp"
+            app:layout_constraintStart_toEndOf="@id/imgContainer"
+            app:layout_constraintEnd_toStartOf="@id/icChevron"
+            app:layout_constraintTop_toBottomOf="@id/txtRomaji"
             app:layout_constraintBottom_toBottomOf="@id/imgContainer" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

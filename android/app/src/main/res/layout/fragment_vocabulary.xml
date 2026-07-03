@@ -319,10 +319,13 @@
             android:id="@+id/rvCategories"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_12sdp"
+            android:layout_marginHorizontal="@dimen/_16sdp"
             android:layout_marginTop="@dimen/_8sdp"
             android:nestedScrollingEnabled="false"
             android:overScrollMode="never"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="3"
+            tools:itemCount="6"
             tools:listitem="@layout/item_category_card"/>
 
         <!-- ── BOOKMARKS ──────────────────────────────────────────── -->

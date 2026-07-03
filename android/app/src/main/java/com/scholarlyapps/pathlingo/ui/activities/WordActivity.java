@@ -1,11 +1,13 @@
 package com.scholarlyapps.pathlingo.ui.activities;
 
+import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
@@ -102,6 +104,19 @@ public class WordActivity extends AppCompatActivity {
         binding.txtExampleJp.setText(word.example_jp);
         binding.txtExampleRomaji.setText(word.example_romaji);
         binding.txtExampleEn.setText(word.example_en);
+
+        if (word.bgUrl != null && !word.bgUrl.isEmpty()) {
+            Coil.imageLoader(this).enqueue(
+                new ImageRequest.Builder(this)
+                    .data(word.bgUrl)
+                    .crossfade(true)
+                    .target(binding.imgWordBg)
+                    .build()
+            );
+        } else {
+            binding.imgWordBg.setImageDrawable(new ColorDrawable(
+                ContextCompat.getColor(this, R.color.color_theme_extra_light)));
+        }
 
         if (word.img != null && !word.img.isEmpty()) {
             Coil.imageLoader(this).enqueue(

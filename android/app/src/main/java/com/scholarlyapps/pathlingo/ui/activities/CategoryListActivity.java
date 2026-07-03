@@ -16,6 +16,7 @@ import com.scholarlyapps.pathlingo.databinding.ActivityCategoryListBinding;
 import com.scholarlyapps.pathlingo.models.Category;
 import com.scholarlyapps.pathlingo.ui.UnlockBottomSheet;
 import com.scholarlyapps.pathlingo.ui.adapters.CategoryAdapter;
+import com.scholarlyapps.pathlingo.ui.decorations.GridSpacingItemDecoration;
 import com.scholarlyapps.pathlingo.ui.utils.NavAnim;
 import com.scholarlyapps.pathlingo.viewmodels.AppViewModelFactory;
 import com.scholarlyapps.pathlingo.viewmodels.CategoryListViewModel;
@@ -40,12 +41,7 @@ public class CategoryListActivity extends AppCompatActivity {
             int top = insets.getInsets(WindowInsetsCompat.Type.systemBars()).top;
             int bottom = insets.getInsets(WindowInsetsCompat.Type.systemBars()).bottom;
             binding.toolbar.setPadding(0, top, 0, 0);
-            binding.rvCategories.setPadding(
-                binding.rvCategories.getPaddingLeft(),
-                binding.rvCategories.getPaddingTop(),
-                binding.rvCategories.getPaddingRight(),
-                bottom
-            );
+            binding.scrollView.setPadding(0, 0, 0, bottom);
             return insets;
         });
 
@@ -75,7 +71,9 @@ public class CategoryListActivity extends AppCompatActivity {
             }
         });
 
-        binding.rvCategories.setLayoutManager(new androidx.recyclerview.widget.GridLayoutManager(this, 2));
+        int spacing = (int) (8 * getResources().getDisplayMetrics().density);
+        binding.rvCategories.setLayoutManager(new androidx.recyclerview.widget.GridLayoutManager(this, 3));
+        binding.rvCategories.addItemDecoration(new GridSpacingItemDecoration(3, spacing));
         binding.rvCategories.setAdapter(adapter);
 
         viewModel.getCategories().observe(this, categories ->

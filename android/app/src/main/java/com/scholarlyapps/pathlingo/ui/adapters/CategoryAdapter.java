@@ -68,7 +68,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         if (viewType == TYPE_VIEW_ALL) {
             return new ViewAllHolder(ItemCategoryViewAllBinding.inflate(inflater, parent, false));
         }
-        int layoutRes = showAll ? R.layout.item_category_card_large : R.layout.item_category_card;
+        int layoutRes = R.layout.item_category_card;
         return new CategoryHolder(inflater.inflate(layoutRes, parent, false));
     }
 

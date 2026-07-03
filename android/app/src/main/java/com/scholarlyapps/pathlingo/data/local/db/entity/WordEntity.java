@@ -19,6 +19,7 @@ public class WordEntity {
     public String sentenceAudioJpUrl;
     public String sentenceAudioEnUrl;
     public String imageUrl;
+    public String bgUrl;
     public boolean isPremium;
     public int coinPrice;
     public boolean isLocked;

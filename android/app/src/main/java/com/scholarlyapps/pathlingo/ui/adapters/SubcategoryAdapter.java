@@ -1,8 +1,8 @@
 package com.scholarlyapps.pathlingo.ui.adapters;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.graphics.drawable.ColorDrawable;
+import android.widget.ImageView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.scholarlyapps.pathlingo.R;
 import com.scholarlyapps.pathlingo.databinding.ItemSubcategoryCardBinding;
 import com.scholarlyapps.pathlingo.models.Subcategory;
@@ -60,6 +61,9 @@ public class SubcategoryAdapter extends RecyclerView.Adapter<SubcategoryAdapter.
         ViewHolder(ItemSubcategoryCardBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
+            binding.imgLock.setMinFrame(33);
+            binding.imgLock.setMaxFrame(59);
+            binding.progressBar.setScaleType(ImageView.ScaleType.FIT_XY);
         }
 
         void bind(Subcategory sub, OnSubcategoryClick listener) {
@@ -70,10 +74,11 @@ public class SubcategoryAdapter extends RecyclerView.Adapter<SubcategoryAdapter.
             binding.imgLock.setVisibility(sub.isLocked ? View.VISIBLE : View.GONE);
 
             int accentColor = accentColor(sub.bg, itemView.getContext());
-            binding.progressBar.setProgressTintList(ColorStateList.valueOf(accentColor));
 
-            int progress = sub.total > 0 ? (sub.mastered * 100 / sub.total) : 0;
-            binding.progressBar.setProgress(progress);
+            binding.progressBar.cancelAnimation();
+            binding.progressBar.setMinProgress(0f);
+            binding.progressBar.setMaxProgress(0.75f);
+            binding.progressBar.playAnimation();
             binding.txtCount.setText(sub.mastered + "/" + sub.total);
 
             if (sub.img != null && !sub.img.isEmpty()) {

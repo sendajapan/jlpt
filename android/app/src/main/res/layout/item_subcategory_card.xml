@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/_12sdp"
-    app:cardBackgroundColor="@color/white"
+    app:cardBackgroundColor="#FAFAFA"
     app:cardCornerRadius="@dimen/_8sdp"
     app:cardElevation="0dp"
     app:strokeWidth="0dp">
@@ -13,7 +13,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/_12sdp">
+        android:paddingHorizontal="@dimen/_12sdp"
+        android:paddingTop="@dimen/_12sdp">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/imgContainer"
@@ -24,7 +25,8 @@
             app:strokeWidth="0dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="@dimen/_12sdp">
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -47,13 +49,13 @@
 
         </com.google.android.material.card.MaterialCardView>
 
-        <ImageView
+        <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/imgLock"
-            android:layout_width="@dimen/_18sdp"
-            android:layout_height="@dimen/_18sdp"
-            android:src="@drawable/ic_lock_outline"
-            android:visibility="gone"
-            app:tint="@color/ink_mute"
+            android:layout_width="@dimen/_24sdp"
+            android:layout_height="@dimen/_24sdp"
+            app:lottie_rawRes="@raw/lock"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
@@ -63,44 +65,43 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_semibold"
             android:includeFontPadding="false"
-            android:textColor="@color/ink_mute"
-            android:textSize="@dimen/_9ssp"
+            android:textColor="@color/ink"
+            android:textSize="@dimen/_10ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />
-
-        <TextView
-            android:id="@+id/txtEn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_12sdp"
-            android:fontFamily="@font/poppins_bold"
-            android:includeFontPadding="false"
-            android:textColor="@color/ink"
-            android:textSize="@dimen/_12ssp"
-            app:layout_constraintStart_toEndOf="@id/imgContainer"
-            app:layout_constraintEnd_toStartOf="@id/txtCount"
-            app:layout_constraintTop_toTopOf="@id/imgContainer"
-            app:layout_constraintBottom_toTopOf="@id/txtJp"
-            app:layout_constraintVertical_chainStyle="packed" />
 
         <TextView
             android:id="@+id/txtJp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_12sdp"
-            android:layout_marginTop="@dimen/_2sdp"
             android:fontFamily="@font/noto_sans_jp_bold"
             android:includeFontPadding="false"
             android:textColor="@color/ink"
-            android:textSize="@dimen/_10ssp"
-            app:layout_constraintStart_toEndOf="@id/imgContainer"
+            android:textSize="@dimen/_12ssp"
             app:layout_constraintEnd_toStartOf="@id/txtCount"
-            app:layout_constraintTop_toBottomOf="@id/txtEn"
-            app:layout_constraintBottom_toTopOf="@id/txtRomaji" />
+            app:layout_constraintStart_toEndOf="@id/imgContainer"
+            app:layout_constraintTop_toTopOf="@id/imgContainer"
+            app:layout_constraintVertical_chainStyle="packed" />
 
         <TextView
             android:id="@+id/txtRomaji"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:fontFamily="@font/poppins_bold"
+            android:includeFontPadding="false"
+            android:textColor="@color/ink"
+            android:textSize="@dimen/_10ssp"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toStartOf="@id/txtCount"
+            app:layout_constraintStart_toEndOf="@id/imgContainer"
+            app:layout_constraintTop_toBottomOf="@id/txtJp" />
+
+        <TextView
+            android:id="@+id/txtEn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_12sdp"
@@ -109,26 +110,21 @@
             android:includeFontPadding="false"
             android:textColor="@color/ink"
             android:textSize="@dimen/_10ssp"
-            app:layout_constraintStart_toEndOf="@id/imgContainer"
             app:layout_constraintEnd_toStartOf="@id/txtCount"
-            app:layout_constraintTop_toBottomOf="@id/txtJp"
-            app:layout_constraintBottom_toTopOf="@id/progressBar" />
+            app:layout_constraintStart_toEndOf="@id/imgContainer"
+            app:layout_constraintTop_toBottomOf="@id/txtRomaji" />
 
-        <ProgressBar
+        <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/progressBar"
-            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
             android:layout_width="0dp"
-            android:layout_height="@dimen/_6sdp"
-            android:layout_marginStart="@dimen/_12sdp"
-            android:layout_marginTop="@dimen/_6sdp"
-            android:max="100"
-            android:progress="0"
-            android:progressBackgroundTint="@color/ink_mute"
-            android:progressTint="@color/sage_deep"
-            app:layout_constraintStart_toEndOf="@id/imgContainer"
-            app:layout_constraintEnd_toStartOf="@id/txtCount"
-            app:layout_constraintTop_toBottomOf="@id/txtRomaji"
-            app:layout_constraintBottom_toBottomOf="@id/imgContainer" />
+            android:layout_height="@dimen/_48sdp"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imgContainer"
+            app:lottie_autoPlay="false"
+            app:lottie_loop="false"
+            app:lottie_rawRes="@raw/progress" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
