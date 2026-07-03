@@ -28,12 +28,13 @@ import com.scholarlyapps.pathlingo.databinding.LayoutQuizQuestionBinding;
 import com.scholarlyapps.pathlingo.viewmodels.AppViewModelFactory;
 import com.scholarlyapps.pathlingo.viewmodels.QuizViewModel;
 
+import com.scholarlyapps.pathlingo.data.remote.ServiceLocator;
+import com.scholarlyapps.pathlingo.ui.utils.ShimmerImage;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
-
-import coil.Coil;
-import coil.request.ImageRequest;
+import java.util.concurrent.Executors;
 
 public class QuizActivity extends AppCompatActivity {
 
@@ -79,10 +80,22 @@ public class QuizActivity extends AppCompatActivity {
             }
         });
 
+        viewModel.getLoading().observe(this, isLoading -> {
+            boolean loading = Boolean.TRUE.equals(isLoading);
+            binding.loadingIndicator.setVisibility(loading ? View.VISIBLE : View.GONE);
+            binding.questionContainer.setVisibility(loading ? View.GONE : View.VISIBLE);
+        });
+
+        viewModel.getSubmitting().observe(this, isSubmitting -> {
+            boolean submitting = Boolean.TRUE.equals(isSubmitting);
+            binding.btnContinue.setEnabled(!submitting && selectedAnswer != null);
+            binding.btnContinue.setText(submitting ? "Submitting…" : "Continue");
+        });
+
         viewModel.getError().observe(this, msg -> {
-            if (msg != null) {
-                Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-            }
+            if (msg == null) return;
+            viewModel.clearError();
+            showErrorDialog(msg);
         });
 
         viewModel.getCurrentQuestion().observe(this, question -> {
@@ -98,7 +111,10 @@ public class QuizActivity extends AppCompatActivity {
         viewModel.getQuizResult().observe(this, result -> {
             if (result != null) {
                 viewModel.clearQuizResult();
-                showScoreDialog(result.coinsEarned, result.xpEarned);
+                if (!result.pendingSync) {
+                    Executors.newSingleThreadExecutor().execute(ServiceLocator.userRepository::refresh);
+                }
+                showScoreDialog(result);
             }
         });
 
@@ -137,13 +153,7 @@ public class QuizActivity extends AppCompatActivity {
             case IMAGE:
                 questionBinding.txtQuestionLabel.setText("What do you see in the picture?");
                 questionBinding.cardImage.setVisibility(View.VISIBLE);
-                Coil.imageLoader(this).enqueue(
-                    new ImageRequest.Builder(this)
-                        .data(question.imageUrl)
-                        .crossfade(true)
-                        .target(questionBinding.imgQuestion)
-                        .build()
-                );
+                ShimmerImage.load(questionBinding.imageShimmer, questionBinding.imgQuestion, question.imageUrl);
                 break;
 
             case AUDIO:
@@ -267,14 +277,28 @@ public class QuizActivity extends AppCompatActivity {
             ContextCompat.getColorStateList(this, R.color.color_theme_extra_light));
     }
 
-    private void showScoreDialog(int coinsEarned, int xpEarned) {
+    private void showErrorDialog(String message) {
+        new AlertDialog.Builder(this)
+            .setTitle("Quiz")
+            .setMessage(message)
+            .setCancelable(false)
+            .setPositiveButton("Retry", (d, w) -> viewModel.loadQuiz())
+            .setNegativeButton("Close", (d, w) -> finish())
+            .show();
+    }
+
+    private void showScoreDialog(QuizViewModel.QuizResult result) {
         DialogQuizResultBinding dialogBinding = DialogQuizResultBinding.inflate(LayoutInflater.from(this));
         int score = viewModel.getScore();
         int total = viewModel.getTotal();
 
         dialogBinding.txtResultScore.setText(score + " / " + total);
-        dialogBinding.txtResultCoins.setText("+" + coinsEarned + " coins earned");
-        dialogBinding.txtResultXp.setText("+" + xpEarned + " XP earned");
+        dialogBinding.txtResultCoins.setText("+" + result.coinsEarned + " coins earned");
+        dialogBinding.txtResultXp.setText("+" + result.xpEarned + " XP earned");
+
+        if (result.pendingSync) {
+            Toast.makeText(this, "You're offline — rewards will sync automatically.", Toast.LENGTH_LONG).show();
+        }
 
         AlertDialog dialog = new AlertDialog.Builder(this)
             .setView(dialogBinding.getRoot())
@@ -287,7 +311,7 @@ public class QuizActivity extends AppCompatActivity {
 
         dialogBinding.btnViewResult.setOnClickListener(v -> {
             dialog.dismiss();
-            showDetailResultDialog(coinsEarned, xpEarned);
+            showDetailResultDialog(result.coinsEarned, result.xpEarned);
         });
 
         dialogBinding.btnTryAgain.setOnClickListener(v -> {

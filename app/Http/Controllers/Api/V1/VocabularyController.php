@@ -79,10 +79,24 @@ class VocabularyController extends Controller
             ->get();
 
         [$unlockedWordIds, $categoryUnlocks] = $this->loadUserUnlocks($user);
+        [$favoriteIds, $bookmarkIds, $readIds] = $this->loadUserFlags($user);
 
-        $data = $vocabularies->map(fn (Vocabulary $v) => $this->formatVocab($v, $user, $unlockedWordIds, $categoryUnlocks));
+        $data = $vocabularies->map(fn (Vocabulary $v) => $this->formatVocab($v, $user, $unlockedWordIds, $categoryUnlocks, $favoriteIds, $bookmarkIds, $readIds));
 
         return response()->json(['data' => $data]);
+    }
+
+    private function loadUserFlags(?AppUser $user): array
+    {
+        if (! $user) {
+            return [collect(), collect(), collect()];
+        }
+
+        return [
+            $user->favorites()->pluck('vocab_words.id')->flip(),
+            $user->bookmarks()->pluck('vocab_words.id')->flip(),
+            $user->reads()->pluck('vocab_id')->flip(),
+        ];
     }
 
     private function loadUserUnlocks(?AppUser $user): array
@@ -122,7 +136,7 @@ class VocabularyController extends Controller
         });
     }
 
-    private function formatVocab(Vocabulary $v, ?AppUser $user, Collection $unlockedWordIds, Collection $categoryUnlocks): array
+    private function formatVocab(Vocabulary $v, ?AppUser $user, Collection $unlockedWordIds, Collection $categoryUnlocks, Collection $favoriteIds, Collection $bookmarkIds, Collection $readIds): array
     {
         $locked = $this->isLocked($v, $user, $unlockedWordIds, $categoryUnlocks);
 
@@ -147,6 +161,9 @@ class VocabularyController extends Controller
             'is_premium' => $v->is_premium,
             'coin_price' => $v->coin_price,
             'is_locked' => $locked,
+            'is_favorite' => $favoriteIds->has($v->id),
+            'is_bookmarked' => $bookmarkIds->has($v->id),
+            'is_learned' => $readIds->has($v->id),
         ];
     }
 

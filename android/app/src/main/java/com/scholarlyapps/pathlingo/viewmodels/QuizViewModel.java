@@ -1,14 +1,17 @@
 package com.scholarlyapps.pathlingo.viewmodels;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.scholarlyapps.pathlingo.data.networking.ApiErrors;
 import com.scholarlyapps.pathlingo.data.networking.ApiService;
 import com.scholarlyapps.pathlingo.data.remote.dto.QuizCompleteRequest;
 import com.scholarlyapps.pathlingo.data.remote.dto.QuizCompleteResponse;
 import com.scholarlyapps.pathlingo.data.remote.dto.QuizQuestionDto;
 import com.scholarlyapps.pathlingo.data.remote.dto.QuizResponse;
+import com.scholarlyapps.pathlingo.data.repo.WordActionRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +36,14 @@ public class QuizViewModel extends ViewModel {
         public List<String> options;
     }
 
+    public static class QuizResult {
+        public int coinsEarned;
+        public int xpEarned;
+        public boolean pendingSync;
+    }
+
     private final ApiService api;
+    private final WordActionRepository wordActionRepository;
     private List<QuizQuestion> questions = new ArrayList<>();
     private List<Boolean> answerResults = new ArrayList<>();
     private int currentIndex = 0;
@@ -43,11 +53,14 @@ public class QuizViewModel extends ViewModel {
 
     private final MutableLiveData<QuizQuestion> currentQuestion = new MutableLiveData<>();
     private final MutableLiveData<Boolean> quizLoaded = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> loading = new MutableLiveData<>(false);
+    private final MutableLiveData<Boolean> submitting = new MutableLiveData<>(false);
     private final MutableLiveData<String> error = new MutableLiveData<>();
-    private final MutableLiveData<QuizCompleteResponse> quizResult = new MutableLiveData<>();
+    private final MutableLiveData<QuizResult> quizResult = new MutableLiveData<>();
 
-    public QuizViewModel(ApiService api) {
+    public QuizViewModel(ApiService api, WordActionRepository wordActionRepository) {
         this.api = api;
+        this.wordActionRepository = wordActionRepository;
     }
 
     public LiveData<QuizQuestion> getCurrentQuestion() {
@@ -58,16 +71,28 @@ public class QuizViewModel extends ViewModel {
         return quizLoaded;
     }
 
+    public LiveData<Boolean> getLoading() {
+        return loading;
+    }
+
+    public LiveData<Boolean> getSubmitting() {
+        return submitting;
+    }
+
     public LiveData<String> getError() {
         return error;
     }
 
-    public LiveData<QuizCompleteResponse> getQuizResult() {
+    public LiveData<QuizResult> getQuizResult() {
         return quizResult;
     }
 
     public void clearQuizResult() {
         quizResult.setValue(null);
+    }
+
+    public void clearError() {
+        error.setValue(null);
     }
 
     public int getCurrentIndex() {
@@ -93,20 +118,27 @@ public class QuizViewModel extends ViewModel {
         quizEndTime = 0;
         questions.clear();
         answerResults.clear();
-        api.generateQuiz().enqueue(new Callback<QuizResponse>() {
+        loading.setValue(true);
+        api.generateQuiz().enqueue(new Callback<>() {
             @Override
-            public void onResponse(Call<QuizResponse> call, Response<QuizResponse> response) {
+            public void onResponse(@NonNull Call<QuizResponse> call, @NonNull Response<QuizResponse> response) {
+                loading.postValue(false);
                 if (response.isSuccessful() && response.body() != null) {
                     questions = mapQuestions(response.body().data);
-                    quizLoaded.postValue(true);
+                    if (questions.isEmpty()) {
+                        error.postValue("Not enough words available for a quiz yet.");
+                    } else {
+                        quizLoaded.postValue(true);
+                    }
                 } else {
-                    error.postValue("Failed to load quiz");
+                    error.postValue(ApiErrors.message(response, "Failed to load quiz."));
                 }
             }
 
             @Override
-            public void onFailure(Call<QuizResponse> call, Throwable t) {
-                error.postValue("Network error: " + t.getMessage());
+            public void onFailure(@NonNull Call<QuizResponse> call, @NonNull Throwable t) {
+                loading.postValue(false);
+                error.postValue(ApiErrors.message(t));
             }
         });
     }
@@ -133,28 +165,36 @@ public class QuizViewModel extends ViewModel {
 
     public void submitResult() {
         quizEndTime = System.currentTimeMillis();
-        api.completeQuiz(new QuizCompleteRequest(score, questions.size())).enqueue(new Callback<QuizCompleteResponse>() {
+        submitting.setValue(true);
+        api.completeQuiz(new QuizCompleteRequest(score, questions.size())).enqueue(new Callback<>() {
             @Override
-            public void onResponse(Call<QuizCompleteResponse> call, Response<QuizCompleteResponse> response) {
+            public void onResponse(@NonNull Call<QuizCompleteResponse> call, @NonNull Response<QuizCompleteResponse> response) {
+                submitting.postValue(false);
                 if (response.isSuccessful() && response.body() != null) {
-                    quizResult.postValue(response.body());
+                    QuizResult result = new QuizResult();
+                    result.coinsEarned = response.body().coinsEarned;
+                    result.xpEarned = response.body().xpEarned;
+                    quizResult.postValue(result);
                 } else {
-                    quizResult.postValue(fallbackResult());
+                    quizResult.postValue(queueAndBuildLocalResult());
                 }
             }
 
             @Override
-            public void onFailure(Call<QuizCompleteResponse> call, Throwable t) {
-                quizResult.postValue(fallbackResult());
+            public void onFailure(@NonNull Call<QuizCompleteResponse> call, @NonNull Throwable t) {
+                submitting.postValue(false);
+                quizResult.postValue(queueAndBuildLocalResult());
             }
         });
     }
 
-    private QuizCompleteResponse fallbackResult() {
-        QuizCompleteResponse r = new QuizCompleteResponse();
-        r.coinsEarned = score * 10;
-        r.xpEarned = score * 5;
-        return r;
+    private QuizResult queueAndBuildLocalResult() {
+        wordActionRepository.queueQuizCompletion(score, questions.size());
+        QuizResult result = new QuizResult();
+        result.coinsEarned = score * 10;
+        result.xpEarned = score * 5;
+        result.pendingSync = true;
+        return result;
     }
 
     private List<QuizQuestion> mapQuestions(List<QuizQuestionDto> dtos) {

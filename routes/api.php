@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\V1\Auth\PasswordResetController;
 use App\Http\Controllers\Api\V1\Auth\RegisterController;
 use App\Http\Controllers\Api\V1\Auth\SocialLoginController;
 use App\Http\Controllers\Api\V1\AvatarController;
+use App\Http\Controllers\Api\V1\BookmarkController;
 use App\Http\Controllers\Api\V1\CategoryController;
 use App\Http\Controllers\Api\V1\CategoryUnlockController;
 use App\Http\Controllers\Api\V1\CoinController;
@@ -56,6 +57,10 @@ Route::middleware('auth:app_users')->group(function () {
     Route::get('favorites', [FavoriteController::class, 'index']);
     Route::post('favorites/{vocabulary}', [FavoriteController::class, 'store']);
     Route::delete('favorites/{vocabulary}', [FavoriteController::class, 'destroy']);
+
+    Route::get('bookmarks', [BookmarkController::class, 'index']);
+    Route::post('bookmarks/{vocabulary}', [BookmarkController::class, 'store']);
+    Route::delete('bookmarks/{vocabulary}', [BookmarkController::class, 'destroy']);
 
     Route::get('me/reads', [WordReadController::class, 'index']);
     Route::post('words/{vocabulary}/read', [WordReadController::class, 'store']);

@@ -73,6 +73,8 @@ dependencies {
     implementation(libs.googleid)
 
     implementation("com.airbnb.android:lottie:6.4.0")
+    implementation("com.facebook.shimmer:shimmer:0.5.0")
+    implementation("androidx.work:work-runtime:2.9.1")
     implementation("androidx.room:room-runtime:2.6.1")
     annotationProcessor("androidx.room:room-compiler:2.6.1")
     implementation("androidx.lifecycle:lifecycle-livedata:2.8.7")

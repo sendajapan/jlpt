@@ -79,6 +79,12 @@ class AppUser extends Authenticatable implements MustVerifyEmail
             ->withTimestamps();
     }
 
+    public function bookmarks(): BelongsToMany
+    {
+        return $this->belongsToMany(Vocabulary::class, 'app_user_bookmarks', 'app_user_id', 'vocab_id')
+            ->withTimestamps();
+    }
+
     public function reads(): HasMany
     {
         return $this->hasMany(AppUserWordRead::class);

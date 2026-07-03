@@ -2,6 +2,8 @@ package com.scholarlyapps.pathlingo;
 
 import android.app.Application;
 
+import com.scholarlyapps.pathlingo.data.remote.ServiceLocator;
+
 import java.io.File;
 
 import coil.Coil;
@@ -14,6 +16,7 @@ public class PathlingoApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        ServiceLocator.init(this);
         Coil.setImageLoader(
             new ImageLoader.Builder(this)
                 .memoryCache(

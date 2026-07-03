@@ -6,19 +6,17 @@ import androidx.lifecycle.Transformations;
 import com.scholarlyapps.pathlingo.data.ApiResult;
 import com.scholarlyapps.pathlingo.data.local.db.dao.UserDao;
 import com.scholarlyapps.pathlingo.data.local.db.entity.UserEntity;
+import com.scholarlyapps.pathlingo.data.networking.ApiErrors;
 import com.scholarlyapps.pathlingo.data.networking.ApiService;
 import com.scholarlyapps.pathlingo.data.remote.dto.AppUserDto;
 import com.scholarlyapps.pathlingo.data.remote.dto.WrappedResponse;
 import com.scholarlyapps.pathlingo.models.User;
-
-import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Response;
 
 public class UserRepository {
@@ -119,11 +117,11 @@ public class UserRepository {
         try {
             Response<WrappedResponse<AppUserDto>> response = apiService.me().execute();
             if (!response.isSuccessful() || response.body() == null || response.body().getData() == null) {
-                return ApiResult.failure("Failed to load profile.");
+                return ApiResult.failure(ApiErrors.message(response, "Failed to load profile."));
             }
             return ApiResult.success(response.body().getData());
         } catch (Exception e) {
-            return ApiResult.failure(e.getMessage());
+            return ApiResult.failure(ApiErrors.message(e));
         }
     }
 
@@ -155,7 +153,7 @@ public class UserRepository {
             }
             Response<WrappedResponse<AppUserDto>> response = apiService.updateProfile(fields).execute();
             if (!response.isSuccessful() || response.body() == null || response.body().getData() == null) {
-                return ApiResult.failure(parseErrorMessage(response, "Failed to update profile."));
+                return ApiResult.failure(ApiErrors.message(response, "Failed to update profile."));
             }
             AppUserDto dto = response.body().getData();
             UserEntity entity = new UserEntity();
@@ -172,19 +170,8 @@ public class UserRepository {
             userDao.insert(entity);
             return ApiResult.success(dto);
         } catch (Exception e) {
-            return ApiResult.failure(e.getMessage());
+            return ApiResult.failure(ApiErrors.message(e));
         }
-    }
-
-    private String parseErrorMessage(Response<?> response, String fallback) {
-        try {
-            ResponseBody errorBody = response.errorBody();
-            if (errorBody == null) return fallback;
-            JSONObject json = new JSONObject(errorBody.string());
-            if (json.has("message")) return json.getString("message");
-        } catch (Exception ignored) {
-        }
-        return fallback;
     }
 
     private RequestBody toBody(String value) {

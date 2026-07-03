@@ -38,7 +38,8 @@ class AppUserResource extends JsonResource
             'notifications_enabled' => (bool) $this->notifications_enabled,
 
             'coins' => (int) $this->coins,
-            'xp_points' => (int) $this->xp_points,
+            'xp' => (int) $this->xp,
+            'xp_points' => (int) $this->xp,
             'current_level' => (int) $this->current_level,
             'current_streak' => (int) $this->current_streak,
             'longest_streak' => (int) $this->longest_streak,

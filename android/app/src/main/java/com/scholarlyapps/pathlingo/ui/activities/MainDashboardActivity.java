@@ -13,7 +13,10 @@ import androidx.navigation.fragment.NavHostFragment;
 import coil.Coil;
 import coil.request.ImageRequest;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.scholarlyapps.pathlingo.R;
+import com.scholarlyapps.pathlingo.data.remote.ServiceLocator;
+import com.scholarlyapps.pathlingo.data.sync.SyncScheduler;
 import com.scholarlyapps.pathlingo.databinding.ActivityMainDashboardBinding;
 import com.scholarlyapps.pathlingo.viewmodels.AppViewModelFactory;
 import com.scholarlyapps.pathlingo.viewmodels.ProgressViewModel;
@@ -22,16 +25,41 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.concurrent.Executors;
 
 public class MainDashboardActivity extends AppCompatActivity {
 
     private ActivityMainDashboardBinding binding;
+    private Snackbar offlineSnackbar;
+    private boolean wasOffline;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainDashboardBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        ServiceLocator.networkMonitor.getOnline().observe(this, isOnline -> {
+            if (Boolean.FALSE.equals(isOnline)) {
+                wasOffline = true;
+                offlineSnackbar = Snackbar.make(binding.getRoot(),
+                    "You're offline. Changes will sync when you reconnect.", Snackbar.LENGTH_INDEFINITE);
+                offlineSnackbar.show();
+            } else {
+                if (offlineSnackbar != null) {
+                    offlineSnackbar.dismiss();
+                    offlineSnackbar = null;
+                }
+                if (wasOffline) {
+                    wasOffline = false;
+                    SyncScheduler.schedule(this);
+                    Executors.newSingleThreadExecutor().execute(() -> {
+                        ServiceLocator.categoryRepository.refresh();
+                        ServiceLocator.userRepository.refresh();
+                    });
+                }
+            }
+        });
 
         float density = getResources().getDisplayMetrics().density;
         float maxElevationPx = 8f * density;

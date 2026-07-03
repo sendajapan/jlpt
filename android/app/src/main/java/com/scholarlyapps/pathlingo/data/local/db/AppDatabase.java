@@ -10,16 +10,18 @@ import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.scholarlyapps.pathlingo.data.local.db.dao.CategoryDao;
+import com.scholarlyapps.pathlingo.data.local.db.dao.PendingActionDao;
 import com.scholarlyapps.pathlingo.data.local.db.dao.SubcategoryDao;
 import com.scholarlyapps.pathlingo.data.local.db.dao.UserDao;
 import com.scholarlyapps.pathlingo.data.local.db.dao.WordDao;
 import com.scholarlyapps.pathlingo.data.local.db.entity.CategoryEntity;
+import com.scholarlyapps.pathlingo.data.local.db.entity.PendingActionEntity;
 import com.scholarlyapps.pathlingo.data.local.db.entity.SubcategoryEntity;
 import com.scholarlyapps.pathlingo.data.local.db.entity.UserEntity;
 import com.scholarlyapps.pathlingo.data.local.db.entity.WordEntity;
 
 @Database(
-    entities = {CategoryEntity.class, SubcategoryEntity.class, WordEntity.class, UserEntity.class},
+    entities = {CategoryEntity.class, SubcategoryEntity.class, WordEntity.class, UserEntity.class, PendingActionEntity.class},
     version = 8,
     exportSchema = false
 )
@@ -29,6 +31,7 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract SubcategoryDao subcategoryDao();
     public abstract WordDao wordDao();
     public abstract UserDao userDao();
+    public abstract PendingActionDao pendingActionDao();
 
     private static final Migration MIGRATION_1_2 = new Migration(1, 2) {
         @Override
@@ -79,6 +82,21 @@ public abstract class AppDatabase extends RoomDatabase {
         }
     };
 
+    private static final Migration MIGRATION_7_8 = new Migration(7, 8) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase db) {
+            db.execSQL("ALTER TABLE words ADD COLUMN isBookmarked INTEGER NOT NULL DEFAULT 0");
+            db.execSQL("ALTER TABLE words ADD COLUMN isLearned INTEGER NOT NULL DEFAULT 0");
+            db.execSQL("CREATE TABLE IF NOT EXISTS pending_actions (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                "type TEXT, " +
+                "wordId INTEGER NOT NULL DEFAULT 0, " +
+                "score INTEGER NOT NULL DEFAULT 0, " +
+                "total INTEGER NOT NULL DEFAULT 0, " +
+                "createdAt INTEGER NOT NULL DEFAULT 0)");
+        }
+    };
+
     private static volatile AppDatabase instance;
 
     public static AppDatabase getInstance(Context context) {
@@ -89,7 +107,7 @@ public abstract class AppDatabase extends RoomDatabase {
                         context.getApplicationContext(),
                         AppDatabase.class,
                         "pathlingo.db"
-                    ).addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7)
+                    ).addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7, MIGRATION_7_8)
                     .fallbackToDestructiveMigration()
                     .build();
                 }

@@ -24,4 +24,6 @@ public class WordEntity {
     public int coinPrice;
     public boolean isLocked;
     public boolean isFavorite;
+    public boolean isBookmarked;
+    public boolean isLearned;
 }

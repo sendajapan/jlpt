@@ -114,6 +114,18 @@
                                 android:layout_gravity="center"
                                 android:scaleType="centerInside" />
 
+                            <com.facebook.shimmer.ShimmerFrameLayout
+                                android:id="@+id/imageShimmer"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/color_theme_extra_light" />
+
+                            </com.facebook.shimmer.ShimmerFrameLayout>
+
                         </FrameLayout>
 
                     </com.google.android.material.card.MaterialCardView>
@@ -285,6 +297,25 @@
 
                 </com.google.android.material.card.MaterialCardView>
 
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnPlayAll"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_44sdp"
+                    android:layout_marginBottom="@dimen/_12sdp"
+                    android:text="Play All (JP + EN)"
+                    android:textSize="@dimen/_11ssp"
+                    android:fontFamily="@font/poppins_semibold"
+                    app:icon="@drawable/ic_speaker"
+                    app:iconSize="@dimen/_16sdp"
+                    app:iconGravity="textStart"
+                    app:iconTint="@color/color_theme_navy"
+                    app:strokeColor="@color/color_theme_navy"
+                    app:strokeWidth="1.5dp"
+                    android:textColor="@color/color_theme_navy"
+                    app:cornerRadius="@dimen/_8sdp"
+                    app:rippleColor="@color/color_theme_extra_light" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -337,7 +368,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_52sdp"
                     android:layout_marginBottom="@dimen/_8sdp"
-                    android:text="I have learned this  (+100 coins)"
+                    android:text="I have learned this"
                     android:textSize="@dimen/_10ssp"
                     android:fontFamily="@font/poppins_bold"
                     android:textColor="@color/color_theme_navy"

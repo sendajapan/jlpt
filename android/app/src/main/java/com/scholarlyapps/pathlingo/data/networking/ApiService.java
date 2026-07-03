@@ -19,6 +19,7 @@ import com.scholarlyapps.pathlingo.data.remote.dto.OtpVerifyRequest;
 import com.scholarlyapps.pathlingo.data.remote.dto.RegisterRequest;
 import com.scholarlyapps.pathlingo.data.remote.dto.SubcategoryDto;
 import com.scholarlyapps.pathlingo.data.remote.dto.VocabularyDto;
+import com.scholarlyapps.pathlingo.data.remote.dto.WordReadResponse;
 import com.scholarlyapps.pathlingo.data.remote.dto.WrappedResponse;
 
 import java.util.Map;
@@ -90,11 +91,20 @@ public interface ApiService {
     @DELETE("favorites/{vocabulary}")
     Call<MessageResponse> removeFavorite(@Path("vocabulary") long vocabularyId);
 
+    @GET("bookmarks")
+    Call<Map<String, Object>> bookmarks();
+
+    @POST("bookmarks/{vocabulary}")
+    Call<MessageResponse> addBookmark(@Path("vocabulary") long vocabularyId);
+
+    @DELETE("bookmarks/{vocabulary}")
+    Call<MessageResponse> removeBookmark(@Path("vocabulary") long vocabularyId);
+
     @GET("me/reads")
     Call<Map<String, Object>> myReads();
 
     @POST("words/{vocabulary}/read")
-    Call<Map<String, Object>> markRead(@Path("vocabulary") long vocabularyId);
+    Call<WordReadResponse> markRead(@Path("vocabulary") long vocabularyId);
 
     @GET("me/coins")
     Call<CoinsBalanceResponse> coinsBalance();

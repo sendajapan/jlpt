@@ -12,6 +12,7 @@ import com.scholarlyapps.pathlingo.data.local.db.entity.SubcategoryEntity;
 import com.scholarlyapps.pathlingo.data.local.db.entity.WordEntity;
 import com.scholarlyapps.pathlingo.data.local.db.relation.CategoryWithChildren;
 import com.scholarlyapps.pathlingo.data.local.db.relation.SubcategoryWithWords;
+import com.scholarlyapps.pathlingo.data.networking.ApiErrors;
 import com.scholarlyapps.pathlingo.data.networking.ApiService;
 import com.scholarlyapps.pathlingo.data.remote.dto.CategoryDto;
 import com.scholarlyapps.pathlingo.data.remote.dto.ListResponse;
@@ -32,17 +33,23 @@ import retrofit2.Response;
 
 public class CategoryRepository {
 
+    public interface RefreshListener {
+        void onError(String message);
+    }
+
     private final ApiService apiService;
     private final CategoryDao categoryDao;
     private final SubcategoryDao subcategoryDao;
     private final WordDao wordDao;
+    private final WordActionRepository wordActionRepository;
     private final ExecutorService dbExecutor = Executors.newSingleThreadExecutor();
 
-    public CategoryRepository(ApiService apiService, CategoryDao categoryDao, SubcategoryDao subcategoryDao, WordDao wordDao) {
+    public CategoryRepository(ApiService apiService, CategoryDao categoryDao, SubcategoryDao subcategoryDao, WordDao wordDao, WordActionRepository wordActionRepository) {
         this.apiService = apiService;
         this.categoryDao = categoryDao;
         this.subcategoryDao = subcategoryDao;
         this.wordDao = wordDao;
+        this.wordActionRepository = wordActionRepository;
     }
 
     public LiveData<List<Category>> getAllCategories() {
@@ -61,7 +68,15 @@ public class CategoryRepository {
         return Transformations.map(wordDao.getFavorites(), this::mapWords);
     }
 
+    public LiveData<List<Word>> getBookmarkedWords() {
+        return Transformations.map(wordDao.getBookmarks(), this::mapWords);
+    }
+
     public void refresh() {
+        refresh(null);
+    }
+
+    public void refresh(RefreshListener listener) {
         apiService.getCategories().enqueue(new Callback<>() {
             @Override
             public void onResponse(@NonNull Call<ListResponse<CategoryDto>> call, @NonNull Response<ListResponse<CategoryDto>> response) {
@@ -95,35 +110,27 @@ public class CategoryRepository {
         apiService.getVocabularies(null, null, null).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NonNull Call<ListResponse<VocabularyDto>> call, @NonNull Response<ListResponse<VocabularyDto>> response) {
-                if (!response.isSuccessful() || response.body() == null) return;
+                if (!response.isSuccessful() || response.body() == null) {
+                    if (listener != null) listener.onError(ApiErrors.message(response, "Failed to refresh words."));
+                    return;
+                }
                 List<VocabularyDto> dtos = response.body().getData();
                 dbExecutor.execute(() -> {
                     wordDao.deleteAll();
                     wordDao.insertAll(toWordEntities(dtos));
+                    wordActionRepository.applyPendingActions();
                 });
             }
 
             @Override
-            public void onFailure(@NonNull Call<ListResponse<VocabularyDto>> call, @NonNull Throwable throwable) {}
+            public void onFailure(@NonNull Call<ListResponse<VocabularyDto>> call, @NonNull Throwable throwable) {
+                if (listener != null) listener.onError(ApiErrors.message(throwable));
+            }
         });
     }
 
     public List<Word> getRandomWords(int count) {
         return mapWords(wordDao.getRandomWordsSync(count));
-    }
-
-    public void addFavorite(long wordId) {
-        try {
-            apiService.addFavorite(wordId).execute();
-            wordDao.setFavorite(wordId, true);
-        } catch (Exception ignored) {}
-    }
-
-    public void removeFavorite(long wordId) {
-        try {
-            apiService.removeFavorite(wordId).execute();
-            wordDao.setFavorite(wordId, false);
-        } catch (Exception ignored) {}
     }
 
     private List<Category> mapCategoryEntities(List<CategoryEntity> entities) {
@@ -222,6 +229,8 @@ public class CategoryRepository {
             word.xp = 0;
             word.maxMastery = 5;
             word.favorite = entity.isFavorite;
+            word.bookmarked = entity.isBookmarked;
+            word.learned = entity.isLearned;
             word.coinPrice = entity.coinPrice;
             word.isLocked = entity.isLocked;
             word.audioUrl = orEmpty(entity.audioJpUrl);
@@ -303,6 +312,9 @@ public class CategoryRepository {
             entity.isPremium = dto.isPremium;
             entity.coinPrice = dto.coinPrice;
             entity.isLocked = dto.isLocked;
+            entity.isFavorite = dto.isFavorite;
+            entity.isBookmarked = dto.isBookmarked;
+            entity.isLearned = dto.isLearned;
 
             entities.add(entity);
         }

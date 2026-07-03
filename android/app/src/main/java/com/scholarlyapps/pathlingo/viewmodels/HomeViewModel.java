@@ -24,6 +24,7 @@ public class HomeViewModel extends ViewModel {
     private final MediatorLiveData<List<Category>> categories = new MediatorLiveData<>();
     private final MediatorLiveData<User> user = new MediatorLiveData<>();
     private final MutableLiveData<Boolean> loading = new MutableLiveData<>(false);
+    private final MutableLiveData<String> refreshError = new MutableLiveData<>();
 
     private boolean loaded = false;
 
@@ -44,6 +45,14 @@ public class HomeViewModel extends ViewModel {
         return loading;
     }
 
+    public LiveData<String> getRefreshError() {
+        return refreshError;
+    }
+
+    public void clearRefreshError() {
+        refreshError.setValue(null);
+    }
+
     public void loadData() {
         if (loaded) return;
         loaded = true;
@@ -59,7 +68,7 @@ public class HomeViewModel extends ViewModel {
         user.addSource(userRepo.getUser(), user::setValue);
 
         executor.execute(() -> {
-            categoryRepo.refresh();
+            categoryRepo.refresh(refreshError::postValue);
             userRepo.refresh();
             loading.postValue(false);
         });

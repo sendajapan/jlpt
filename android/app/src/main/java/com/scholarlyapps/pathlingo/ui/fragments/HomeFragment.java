@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
 import com.scholarlyapps.pathlingo.R;
 import com.scholarlyapps.pathlingo.databinding.FragmentHomeBinding;
@@ -71,6 +72,12 @@ public class HomeFragment extends Fragment {
             binding.txtWordsKnown.setText(String.valueOf(user.wordsKnown));
             binding.txtXpDisplay.setText(String.valueOf(user.xp));
             updateStreakCard(user.streak);
+        });
+
+        viewModel.getRefreshError().observe(getViewLifecycleOwner(), message -> {
+            if (message == null) return;
+            viewModel.clearRefreshError();
+            Snackbar.make(binding.getRoot(), message, Snackbar.LENGTH_LONG).show();
         });
 
         viewModel.loadData();

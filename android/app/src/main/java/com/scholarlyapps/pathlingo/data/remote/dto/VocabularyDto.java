@@ -61,4 +61,13 @@ public class VocabularyDto {
 
     @SerializedName("is_locked")
     public boolean isLocked;
+
+    @SerializedName("is_favorite")
+    public boolean isFavorite;
+
+    @SerializedName("is_bookmarked")
+    public boolean isBookmarked;
+
+    @SerializedName("is_learned")
+    public boolean isLearned;
 }

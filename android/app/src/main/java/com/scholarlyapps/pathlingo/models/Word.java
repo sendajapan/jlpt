@@ -19,6 +19,8 @@ public class Word {
     public int maxMastery;
     public boolean correct;
     public boolean favorite;
+    public boolean bookmarked;
+    public boolean learned;
     public int coinPrice;
     public boolean isLocked;
     public String audioUrl;

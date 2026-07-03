@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.scholarlyapps.pathlingo.R;
 import com.scholarlyapps.pathlingo.databinding.ItemWordListCardBinding;
 import com.scholarlyapps.pathlingo.models.Word;
+import com.scholarlyapps.pathlingo.ui.utils.ShimmerImage;
 
 import java.util.List;
 
@@ -65,13 +66,7 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.ViewHo
             binding.txtRomaji.setText(word.romaji);
 
             if (word.bgUrl != null && !word.bgUrl.isEmpty()) {
-                Coil.imageLoader(binding.imgBg.getContext()).enqueue(
-                        new ImageRequest.Builder(binding.imgBg.getContext())
-                                .data(word.bgUrl)
-                                .crossfade(true)
-                                .target(binding.imgBg)
-                                .build()
-                );
+                ShimmerImage.load(binding.imageShimmer, binding.imgBg, word.bgUrl);
             } else {
                 binding.imgBg.setImageDrawable(new ColorDrawable(
                         ContextCompat.getColor(binding.imgBg.getContext(), R.color.color_theme_extra_light)));

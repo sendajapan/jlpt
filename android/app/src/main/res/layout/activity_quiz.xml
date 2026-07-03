@@ -60,6 +60,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <ProgressBar
+        android:id="@+id/loadingIndicator"
+        android:layout_width="@dimen/_36sdp"
+        android:layout_height="@dimen/_36sdp"
+        android:indeterminateTint="@color/color_theme_navy"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/txtProgress"
+        app:layout_constraintBottom_toTopOf="@id/motionToast"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/motionToast"
         android:layout_width="0dp"
