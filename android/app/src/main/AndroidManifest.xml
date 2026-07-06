@@ -90,6 +90,18 @@
             android:theme="@style/Theme.PathLingo" />
 
         <activity
+            android:name=".ui.activities.KanaChartActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.PathLingo" />
+
+        <activity
+            android:name=".ui.activities.KanaDetailActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.PathLingo" />
+
+        <activity
             android:name=".ui.activities.QuizActivity"
             android:exported="false"
             android:screenOrientation="portrait"

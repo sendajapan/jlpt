@@ -11,6 +11,8 @@ import com.scholarlyapps.pathlingo.data.remote.dto.CoinsBalanceResponse;
 import com.scholarlyapps.pathlingo.data.remote.dto.ForgotPasswordRequest;
 import com.scholarlyapps.pathlingo.data.remote.dto.GoogleLoginRequest;
 import com.scholarlyapps.pathlingo.data.remote.dto.GuestLoginRequest;
+import com.scholarlyapps.pathlingo.data.remote.dto.KanaDto;
+import com.scholarlyapps.pathlingo.data.remote.dto.KanaLearnedResponse;
 import com.scholarlyapps.pathlingo.data.remote.dto.ListResponse;
 import com.scholarlyapps.pathlingo.data.remote.dto.LoginRequest;
 import com.scholarlyapps.pathlingo.data.remote.dto.MessageResponse;
@@ -129,6 +131,15 @@ public interface ApiService {
 
     @POST("subcategories/{id}/unlock")
     Call<MessageResponse> unlockSubcategory(@Path("id") long subcategoryId);
+
+    @GET("kanas")
+    Call<ListResponse<KanaDto>> getKanas(@Query("script") String script);
+
+    @GET("kanas/{id}")
+    Call<WrappedResponse<KanaDto>> getKana(@Path("id") long kanaId);
+
+    @POST("kanas/{id}/learned")
+    Call<KanaLearnedResponse> markKanaLearned(@Path("id") long kanaId);
 
     @GET("quiz")
     Call<QuizResponse> generateQuiz();

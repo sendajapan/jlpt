@@ -90,6 +90,12 @@ class AppUser extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(AppUserWordRead::class);
     }
 
+    public function learnedKanas(): BelongsToMany
+    {
+        return $this->belongsToMany(Kana::class, 'app_user_kana_learned', 'app_user_id', 'kana_id')
+            ->withTimestamps();
+    }
+
     public function coinTransactions(): HasMany
     {
         return $this->hasMany(CoinTransaction::class);

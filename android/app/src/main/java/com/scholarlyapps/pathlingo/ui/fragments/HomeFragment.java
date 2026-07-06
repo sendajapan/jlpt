@@ -19,6 +19,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import com.scholarlyapps.pathlingo.R;
 import com.scholarlyapps.pathlingo.databinding.FragmentHomeBinding;
+import com.scholarlyapps.pathlingo.ui.activities.KanaChartActivity;
 import com.scholarlyapps.pathlingo.ui.activities.QuizActivity;
 import com.scholarlyapps.pathlingo.viewmodels.AppViewModelFactory;
 import com.scholarlyapps.pathlingo.viewmodels.HomeViewModel;
@@ -61,8 +62,10 @@ public class HomeFragment extends Fragment {
 
         binding.menuVocabulary.setOnClickListener(v -> bottomNav.setSelectedItemId(R.id.vocabularyFragment));
         binding.menuGrammar.setOnClickListener(v -> bottomNav.setSelectedItemId(R.id.vocabularyFragment));
-        binding.menuKatakana.setOnClickListener(v -> bottomNav.setSelectedItemId(R.id.vocabularyFragment));
-        binding.menuHiragana.setOnClickListener(v -> bottomNav.setSelectedItemId(R.id.vocabularyFragment));
+        binding.menuKatakana.setOnClickListener(v ->
+            startActivity(KanaChartActivity.intent(requireContext(), "katakana")));
+        binding.menuHiragana.setOnClickListener(v ->
+            startActivity(KanaChartActivity.intent(requireContext(), "hiragana")));
         binding.menuReading.setOnClickListener(v -> bottomNav.setSelectedItemId(R.id.vocabularyFragment));
         binding.menuKanji.setOnClickListener(v -> bottomNav.setSelectedItemId(R.id.vocabularyFragment));
 

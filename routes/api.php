@@ -14,6 +14,8 @@ use App\Http\Controllers\Api\V1\CategoryController;
 use App\Http\Controllers\Api\V1\CategoryUnlockController;
 use App\Http\Controllers\Api\V1\CoinController;
 use App\Http\Controllers\Api\V1\FavoriteController;
+use App\Http\Controllers\Api\V1\KanaController;
+use App\Http\Controllers\Api\V1\KanaLearnedController;
 use App\Http\Controllers\Api\V1\KanjiController;
 use App\Http\Controllers\Api\V1\ProfileController;
 use App\Http\Controllers\Api\V1\QuizController;
@@ -25,6 +27,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('avatars', [AvatarController::class, 'index']);
 Route::get('kanjis', [KanjiController::class, 'index']);
+Route::get('kanas', [KanaController::class, 'index']);
+Route::get('kanas/{kana}', [KanaController::class, 'show']);
 
 Route::get('categories', [CategoryController::class, 'index']);
 Route::get('subcategories', [SubcategoryController::class, 'index']);
@@ -61,6 +65,9 @@ Route::middleware('auth:app_users')->group(function () {
     Route::get('bookmarks', [BookmarkController::class, 'index']);
     Route::post('bookmarks/{vocabulary}', [BookmarkController::class, 'store']);
     Route::delete('bookmarks/{vocabulary}', [BookmarkController::class, 'destroy']);
+
+    Route::get('me/kana-learned', [KanaLearnedController::class, 'index']);
+    Route::post('kanas/{kana}/learned', [KanaLearnedController::class, 'store']);
 
     Route::get('me/reads', [WordReadController::class, 'index']);
     Route::post('words/{vocabulary}/read', [WordReadController::class, 'store']);

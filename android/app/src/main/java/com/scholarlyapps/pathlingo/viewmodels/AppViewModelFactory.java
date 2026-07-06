@@ -36,6 +36,12 @@ public class AppViewModelFactory implements ViewModelProvider.Factory {
         if (modelClass == ChangePasswordViewModel.class) {
             return (T) new ChangePasswordViewModel(ServiceLocator.authRepository, ServiceLocator.userRepository);
         }
+        if (modelClass == KanaChartViewModel.class) {
+            return (T) new KanaChartViewModel(ServiceLocator.kanaRepository);
+        }
+        if (modelClass == KanaDetailViewModel.class) {
+            return (T) new KanaDetailViewModel(ServiceLocator.kanaRepository);
+        }
         if (modelClass == QuizViewModel.class) {
             return (T) new QuizViewModel(ServiceLocator.api, ServiceLocator.wordActionRepository);
         }
