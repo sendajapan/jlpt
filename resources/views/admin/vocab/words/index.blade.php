@@ -183,6 +183,11 @@
                             if(isset($_GET['showlinks'])){
                                 echo 'https://pathlingo.scholarlyapps.com/admin/vocab/words/'.$vocab->id.'/edit<br>';
                             }
+                            if(isset($_GET['showcut'])){
+                                print "<pre>";
+                                print_r($vocab);
+                                print "</pre>";
+                            }
                     }
                     @endphp
 
