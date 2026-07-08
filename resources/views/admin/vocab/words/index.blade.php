@@ -183,7 +183,7 @@
                             if(isset($_GET['showlinks'])){
                                 echo 'https://pathlingo.scholarlyapps.com/admin/vocab/words/'.$vocab->id.'/edit<br>';
                             }
-                            if(isset($_GET['showcut'])){
+                            //if(isset($_GET['showcut'])){
                                 echo $vocab->audio_jp;
                                 echo '--';
                                 echo $vocab->audio_jp_reviewed;
@@ -204,7 +204,7 @@
                                 echo $vocab->sentence_audio_en_reviewed;
                                 echo '<br>';
 
-                            }
+                            //}
                     }
                     @endphp
 
