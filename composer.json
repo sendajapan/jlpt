@@ -19,6 +19,7 @@
         "mckenziearts/laravel-notify": "^3.2"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "*",
         "fakerphp/faker": "^1.23",
         "laravel/boost": "*",
         "laravel/breeze": "*",
