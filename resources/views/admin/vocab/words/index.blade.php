@@ -185,7 +185,7 @@
                             }
                             if(isset($_GET['showcut'])){
                                 print "<pre>";
-                                print_r($vocab);
+                                dd($vocab);
                                 print "</pre>";
                             }
                     }
