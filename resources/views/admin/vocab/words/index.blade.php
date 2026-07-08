@@ -185,16 +185,16 @@
                             }
                             if(isset($_GET['showcut'])){
                                 if($vocab->audio_jp_reviewed == 0){
-                                    echo 'https://pathlingo.scholarlyapps.com/audio_trim.php?audio='.str_replace('vocab/words/audio/', '', $vocab->audio_jp).'><br>';
+                                    echo 'https://pathlingo.scholarlyapps.com/audio_trim.php?audio='.str_replace('vocab/words/audio/', '', $vocab->audio_jp).'<br>';
                                 }
                                 if($vocab->sentence_audio_jp_reviewed == 0){
-                                    echo 'https://pathlingo.scholarlyapps.com/audio_trim.php?audio='.str_replace('vocab/words/audio/', '', $vocab->sentence_audio_jp).'><br>';
+                                    echo 'https://pathlingo.scholarlyapps.com/audio_trim.php?audio='.str_replace('vocab/words/audio/', '', $vocab->sentence_audio_jp).'<br>';
                                 }
                                 if($vocab->audio_en_reviewed == 0){
-                                    echo 'https://pathlingo.scholarlyapps.com/audio_trim.php?audio='.str_replace('vocab/words/audio/', '', $vocab->audio_en).'><br>';
+                                    echo 'https://pathlingo.scholarlyapps.com/audio_trim.php?audio='.str_replace('vocab/words/audio/', '', $vocab->audio_en).'<br>';
                                 }
                                 if($vocab->sentence_audio_en_reviewed == 0){
-                                    echo 'https://pathlingo.scholarlyapps.com/audio_trim.php?audio='.str_replace('vocab/words/audio/', '', $vocab->sentence_audio_en).'><br>';
+                                    echo 'https://pathlingo.scholarlyapps.com/audio_trim.php?audio='.str_replace('vocab/words/audio/', '', $vocab->sentence_audio_en).'<br>';
                                 }
                             }
                     }
