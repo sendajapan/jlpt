@@ -184,9 +184,26 @@
                                 echo 'https://pathlingo.scholarlyapps.com/admin/vocab/words/'.$vocab->id.'/edit<br>';
                             }
                             if(isset($_GET['showcut'])){
-                                print "<pre>";
-                                dd($vocab);
-                                print "</pre>";
+                                echo $vocab->audio_jp;
+                                echo '--';
+                                echo $vocab->audio_jp_reviewed;
+                                echo '<br>';
+
+                                echo $vocab->sentence_audio_jp;
+                                echo '--';
+                                echo $vocab->sentence_audio_jp_reviewed;
+                                echo '<br>';
+
+                                echo $vocab->audio_en;
+                                echo '--';
+                                echo $vocab->audio_en_reviewed;
+                                echo '<br>';
+
+                                echo $vocab->sentence_audio_en;
+                                echo '--';
+                                echo $vocab->sentence_audio_en_reviewed;
+                                echo '<br>';
+
                             }
                     }
                     @endphp
