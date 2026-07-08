@@ -31,3 +31,4 @@ storage/api-docs/
 /public/webhook.log
 /public/webhook.php
 /public/git-askpass.sh
+/storage/debugbar/
