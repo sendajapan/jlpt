@@ -183,28 +183,20 @@
                             if(isset($_GET['showlinks'])){
                                 echo 'https://pathlingo.scholarlyapps.com/admin/vocab/words/'.$vocab->id.'/edit<br>';
                             }
-                            //if(isset($_GET['showcut'])){
-                                echo $vocab->audio_jp;
-                                echo '--';
-                                echo $vocab->audio_jp_reviewed;
-                                echo '<br>';
-
-                                echo $vocab->sentence_audio_jp;
-                                echo '--';
-                                echo $vocab->sentence_audio_jp_reviewed;
-                                echo '<br>';
-
-                                echo $vocab->audio_en;
-                                echo '--';
-                                echo $vocab->audio_en_reviewed;
-                                echo '<br>';
-
-                                echo $vocab->sentence_audio_en;
-                                echo '--';
-                                echo $vocab->sentence_audio_en_reviewed;
-                                echo '<br>';
-
-                            //}
+                            if(isset($_GET['showcut'])){
+                                if($vocab->audio_jp_reviewed == 0){
+                                    echo 'https://pathlingo.scholarlyapps.com/audio_trim.php?audio='.str_replace('vocab/words/audio/', '', $vocab->audio_jp).'><br>';
+                                }
+                                if($vocab->sentence_audio_jp_reviewed == 0){
+                                    echo 'https://pathlingo.scholarlyapps.com/audio_trim.php?audio='.str_replace('vocab/words/audio/', '', $vocab->sentence_audio_jp).'><br>';
+                                }
+                                if($vocab->audio_en_reviewed == 0){
+                                    echo 'https://pathlingo.scholarlyapps.com/audio_trim.php?audio='.str_replace('vocab/words/audio/', '', $vocab->audio_en).'><br>';
+                                }
+                                if($vocab->sentence_audio_en_reviewed == 0){
+                                    echo 'https://pathlingo.scholarlyapps.com/audio_trim.php?audio='.str_replace('vocab/words/audio/', '', $vocab->sentence_audio_en).'><br>';
+                                }
+                            }
                     }
                     @endphp
 
