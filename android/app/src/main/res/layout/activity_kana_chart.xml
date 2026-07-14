@@ -56,12 +56,12 @@
                         android:id="@+id/txtScriptTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins_black"
+                        android:fontFamily="@font/poppins_bold"
                         android:gravity="center"
                         android:includeFontPadding="false"
                         android:letterSpacing="0.15"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/_18ssp" />
+                        android:textSize="@dimen/_16ssp" />
 
                     <com.google.android.material.card.MaterialCardView
                         android:layout_width="match_parent"
@@ -83,7 +83,7 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins_bold"
                                 android:includeFontPadding="false"
-                                android:text="Great job! Keep learning."
+                                android:text="Keep learning."
                                 android:textColor="@color/ink"
                                 android:textSize="@dimen/_10ssp" />
 

@@ -50,7 +50,7 @@
             android:layout_marginTop="@dimen/_6sdp"
             android:fontFamily="@font/poppins_bold"
             android:includeFontPadding="false"
-            android:text="Start Quiz →"
+            android:text="Start Quiz"
             android:textColor="@color/color_level_n5"
             android:textSize="@dimen/_10ssp" />
 

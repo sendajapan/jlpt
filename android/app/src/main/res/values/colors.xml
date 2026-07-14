@@ -45,7 +45,7 @@
     <color name="color_streak_future_border">#DCDCDC</color>
 
     <!-- JLPT level colors — badge + row background -->
-    <color name="color_level_n5">#4CAF50</color>
+    <color name="color_level_n5">#3DA472</color>
     <color name="color_level_n5_bg">#E8F5E9</color>
     <color name="color_level_n4">#FF9800</color>
     <color name="color_level_n4_bg">#FFF3E0</color>
