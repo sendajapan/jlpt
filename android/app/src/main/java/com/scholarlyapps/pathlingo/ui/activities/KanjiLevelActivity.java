@@ -5,12 +5,11 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.scholarlyapps.pathlingo.R;
 import com.scholarlyapps.pathlingo.databinding.ActivityKanjiLevelBinding;
 import com.scholarlyapps.pathlingo.ui.adapters.KanjiLevelAdapter;
-import com.scholarlyapps.pathlingo.ui.decorations.GridSpacingItemDecoration;
 
 import java.util.Arrays;
 import java.util.List;
@@ -18,11 +17,11 @@ import java.util.List;
 public class KanjiLevelActivity extends AppCompatActivity {
 
     private static final List<KanjiLevelAdapter.Level> LEVELS = Arrays.asList(
-            new KanjiLevelAdapter.Level("N5", R.color.color_level_n5, R.color.color_level_n5_bg),
-            new KanjiLevelAdapter.Level("N4", R.color.color_level_n4, R.color.color_level_n4_bg),
-            new KanjiLevelAdapter.Level("N3", R.color.color_level_n3, R.color.color_level_n3_bg),
-            new KanjiLevelAdapter.Level("N2", R.color.color_level_n2, R.color.color_level_n2_bg),
-            new KanjiLevelAdapter.Level("N1", R.color.color_level_n1, R.color.color_level_n1_bg)
+            new KanjiLevelAdapter.Level("N5", "First Steps in Japanese", R.color.color_level_n5, R.color.color_level_n5_bg),
+            new KanjiLevelAdapter.Level("N4", "Building Confidence", R.color.color_level_n4, R.color.color_level_n4_bg),
+            new KanjiLevelAdapter.Level("N3", "Express Yourself Naturally", R.color.color_level_n3, R.color.color_level_n3_bg),
+            new KanjiLevelAdapter.Level("N2", "Understand Complex Japanese", R.color.color_level_n2, R.color.color_level_n2_bg),
+            new KanjiLevelAdapter.Level("N1", "Master Japanese Fluency", R.color.color_level_n1, R.color.color_level_n1_bg)
     );
 
     private ActivityKanjiLevelBinding binding;
@@ -43,9 +42,7 @@ public class KanjiLevelActivity extends AppCompatActivity {
 
         binding.toolbar.setOnBackClickListener(v -> finish());
 
-        int spacing = (int) (8 * getResources().getDisplayMetrics().density);
-        binding.rvLevels.setLayoutManager(new GridLayoutManager(this, 2));
-        binding.rvLevels.addItemDecoration(new GridSpacingItemDecoration(2, spacing));
+        binding.rvLevels.setLayoutManager(new LinearLayoutManager(this));
         binding.rvLevels.setAdapter(new KanjiLevelAdapter(LEVELS, level ->
                 startActivity(KanjiGridActivity.intentForJlpt(this, level))));
     }

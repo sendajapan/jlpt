@@ -51,7 +51,8 @@
       "Bash(which adb *)",
       "Bash(grep -rn \"ImageLoader.Builder\\\\|\\\\.diskCache\\(\\\\|\\\\.memoryCache\\(\\\\|DiskCache.Builder\\\\|okhttp3.Cache\\\\|import okhttp3.Cache\" app/src/main/java)",
       "Bash(grep -rn \"OkHttpClient.Builder\\\\|addInterceptor\\(\\\\|\\\\.cache\\(\" app/src/main/java)",
-      "PowerShell(git *)"
+      "PowerShell(git *)",
+      "PowerShell(.\\\\gradlew.bat :app:compileDebugJavaWithJavac --console=plain -q)"
     ]
   },
   "enableAllProjectMcpServers": true,

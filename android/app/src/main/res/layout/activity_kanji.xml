@@ -57,18 +57,17 @@
                 android:textColor="@color/color_theme_black_light"
                 android:textSize="@dimen/_9ssp" />
 
-            <GridLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_8sdp"
-                android:columnCount="2">
+                android:orientation="vertical">
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardJlpt"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
-                    app:cardBackgroundColor="@color/color_level_n5_bg"
                     app:cardCornerRadius="@dimen/_12sdp"
                     app:cardElevation="0dp"
                     app:cardUseCompatPadding="true"
@@ -83,20 +82,20 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_regular"
+                            android:fontFamily="@font/poppins_bold"
                             android:includeFontPadding="false"
-                            android:text="Learn by"
-                            android:textColor="@color/color_theme_black_light"
-                            android:textSize="@dimen/_8ssp" />
+                            android:text="Learn by JLPT Level"
+                            android:textColor="@color/ink"
+                            android:textSize="@dimen/_12ssp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_bold"
+                            android:fontFamily="@font/poppins_regular"
                             android:includeFontPadding="false"
-                            android:text="JLPT Level"
-                            android:textColor="@color/ink"
-                            android:textSize="@dimen/_12ssp" />
+                            android:text="JLPT steps to kanji learning path"
+                            android:textColor="@color/color_theme_black_light"
+                            android:textSize="@dimen/_8ssp" />
 
                     </LinearLayout>
 
@@ -104,10 +103,9 @@
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardPath"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
-                    app:cardBackgroundColor="@color/color_level_n4_bg"
                     app:cardCornerRadius="@dimen/_12sdp"
                     app:cardElevation="0dp"
                     app:cardUseCompatPadding="true"
@@ -122,20 +120,19 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_regular"
+                            android:fontFamily="@font/poppins_bold"
                             android:includeFontPadding="false"
-                            android:text="Learn by"
-                            android:textColor="@color/color_theme_black_light"
-                            android:textSize="@dimen/_8ssp" />
-
+                            android:text="Learn by Path Levels"
+                            android:textColor="@color/ink"
+                            android:textSize="@dimen/_12ssp" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_bold"
+                            android:fontFamily="@font/poppins_regular"
                             android:includeFontPadding="false"
-                            android:text="Path Levels"
-                            android:textColor="@color/ink"
-                            android:textSize="@dimen/_12ssp" />
+                            android:text="JLPT steps to kanji learning path"
+                            android:textColor="@color/color_theme_black_light"
+                            android:textSize="@dimen/_8ssp" />
 
                     </LinearLayout>
 
@@ -143,10 +140,9 @@
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardCategories"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
-                    app:cardBackgroundColor="@color/color_level_n3_bg"
                     app:cardCornerRadius="@dimen/_12sdp"
                     app:cardElevation="0dp"
                     app:cardUseCompatPadding="true"
@@ -161,20 +157,19 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_regular"
+                            android:fontFamily="@font/poppins_bold"
                             android:includeFontPadding="false"
-                            android:text="Learn by"
-                            android:textColor="@color/color_theme_black_light"
-                            android:textSize="@dimen/_8ssp" />
-
+                            android:text="Learn by Categories"
+                            android:textColor="@color/ink"
+                            android:textSize="@dimen/_12ssp" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_bold"
+                            android:fontFamily="@font/poppins_regular"
                             android:includeFontPadding="false"
-                            android:text="Categories"
-                            android:textColor="@color/ink"
-                            android:textSize="@dimen/_12ssp" />
+                            android:text="JLPT steps to kanji learning path"
+                            android:textColor="@color/color_theme_black_light"
+                            android:textSize="@dimen/_8ssp" />
 
                     </LinearLayout>
 
@@ -182,10 +177,9 @@
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardStrokes"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
-                    app:cardBackgroundColor="@color/color_level_n2_bg"
                     app:cardCornerRadius="@dimen/_12sdp"
                     app:cardElevation="0dp"
                     app:cardUseCompatPadding="true"
@@ -200,20 +194,19 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_regular"
+                            android:fontFamily="@font/poppins_bold"
                             android:includeFontPadding="false"
-                            android:text="Learn by"
-                            android:textColor="@color/color_theme_black_light"
-                            android:textSize="@dimen/_8ssp" />
-
+                            android:text="Learn by Stroke Count"
+                            android:textColor="@color/ink"
+                            android:textSize="@dimen/_12ssp" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_bold"
+                            android:fontFamily="@font/poppins_regular"
                             android:includeFontPadding="false"
-                            android:text="Stroke Count"
-                            android:textColor="@color/ink"
-                            android:textSize="@dimen/_12ssp" />
+                            android:text="JLPT steps to kanji learning path"
+                            android:textColor="@color/color_theme_black_light"
+                            android:textSize="@dimen/_8ssp" />
 
                     </LinearLayout>
 
@@ -258,7 +251,7 @@
 
                 </com.google.android.material.card.MaterialCardView>
 
-            </GridLayout>
+            </LinearLayout>
 
             <include
                 android:id="@+id/quizCard"

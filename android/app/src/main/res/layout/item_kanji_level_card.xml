@@ -5,34 +5,45 @@
     android:id="@+id/cardRoot"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/_6sdp"
     app:cardCornerRadius="@dimen/_10sdp"
-    app:cardElevation="@dimen/_1sdp"
-    app:strokeWidth="0dp">
+    app:cardElevation="0dp"
+    app:strokeWidth="1dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="@dimen/_14sdp">
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/_8sdp">
 
         <TextView
             android:id="@+id/txtLevel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_black"
+            android:layout_width="@dimen/_36sdp"
+            android:layout_height="@dimen/_26sdp"
+            android:background="@drawable/bg_level_badge"
+            android:fontFamily="@font/poppins_bold"
+            android:gravity="center"
             android:includeFontPadding="false"
-            android:textColor="@color/ink"
-            android:textSize="@dimen/_22ssp" />
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12ssp" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/txtSubtitle"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_bold"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_weight="1"
+            android:fontFamily="@font/poppins_semibold"
             android:includeFontPadding="false"
-            android:text="Kanji"
-            android:textColor="@color/color_theme_black_light"
-            android:textSize="@dimen/_9ssp" />
+            android:textColor="@color/ink"
+            android:textSize="@dimen/_10ssp" />
+
+        <ImageView
+            android:id="@+id/imgChevron"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:src="@drawable/ic_chevron_right" />
 
     </LinearLayout>
 

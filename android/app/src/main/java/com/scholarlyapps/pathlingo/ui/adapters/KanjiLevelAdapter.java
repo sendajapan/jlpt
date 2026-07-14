@@ -1,5 +1,6 @@
 package com.scholarlyapps.pathlingo.ui.adapters;
 
+import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -20,16 +21,18 @@ public class KanjiLevelAdapter extends RecyclerView.Adapter<KanjiLevelAdapter.Vi
 
     public static class Level {
         public final String name;
+        public final String subtitle;
 
         @ColorRes
-        public final int textColor;
+        public final int accentColor;
 
         @ColorRes
         public final int backgroundColor;
 
-        public Level(String name, @ColorRes int textColor, @ColorRes int backgroundColor) {
+        public Level(String name, String subtitle, @ColorRes int accentColor, @ColorRes int backgroundColor) {
             this.name = name;
-            this.textColor = textColor;
+            this.subtitle = subtitle;
+            this.accentColor = accentColor;
             this.backgroundColor = backgroundColor;
         }
     }
@@ -70,9 +73,14 @@ public class KanjiLevelAdapter extends RecyclerView.Adapter<KanjiLevelAdapter.Vi
         }
 
         void bind(Level level, OnLevelClick listener) {
+            int accent = ContextCompat.getColor(itemView.getContext(), level.accentColor);
+            int background = ContextCompat.getColor(itemView.getContext(), level.backgroundColor);
             binding.txtLevel.setText(level.name);
-            binding.txtLevel.setTextColor(ContextCompat.getColor(itemView.getContext(), level.textColor));
-            binding.cardRoot.setCardBackgroundColor(ContextCompat.getColor(itemView.getContext(), level.backgroundColor));
+            binding.txtLevel.setBackgroundTintList(ColorStateList.valueOf(accent));
+            binding.txtSubtitle.setText(level.subtitle);
+            binding.imgChevron.setImageTintList(ColorStateList.valueOf(accent));
+            binding.cardRoot.setCardBackgroundColor(background);
+            binding.cardRoot.setStrokeColor(accent);
             itemView.setOnClickListener(v -> listener.onClick(level.name));
         }
     }

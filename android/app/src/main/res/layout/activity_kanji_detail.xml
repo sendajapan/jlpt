@@ -293,6 +293,7 @@
                             android:layout_marginEnd="@dimen/_6sdp"
                             android:layout_weight="1"
                             android:fontFamily="@font/poppins_bold"
+                            android:visibility="gone"
                             android:text="Eraser"
                             android:textColor="@color/color_theme_navy"
                             android:textSize="@dimen/_9ssp"
@@ -337,11 +338,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_16sdp"
-                android:backgroundTint="@color/color_theme_dark"
+                android:backgroundTint="@color/color_theme_light"
                 android:fontFamily="@font/poppins_bold"
                 android:paddingVertical="@dimen/_10sdp"
                 android:text="I've Learned This (+10 Coins)"
-                android:textColor="@color/white"
+                android:textColor="@color/color_theme_navy"
                 android:textSize="@dimen/_11ssp"
                 app:cornerRadius="@dimen/_10sdp" />
 
