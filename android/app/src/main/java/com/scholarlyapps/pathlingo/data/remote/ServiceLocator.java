@@ -10,6 +10,7 @@ import com.scholarlyapps.pathlingo.data.networking.NetworkMonitor;
 import com.scholarlyapps.pathlingo.data.repo.AuthRepository;
 import com.scholarlyapps.pathlingo.data.repo.CategoryRepository;
 import com.scholarlyapps.pathlingo.data.repo.KanaRepository;
+import com.scholarlyapps.pathlingo.data.repo.KanjiRepository;
 import com.scholarlyapps.pathlingo.data.repo.UserRepository;
 import com.scholarlyapps.pathlingo.data.repo.WordActionRepository;
 
@@ -23,6 +24,7 @@ public class ServiceLocator {
     public static AuthRepository authRepository;
     public static CategoryRepository categoryRepository;
     public static KanaRepository kanaRepository;
+    public static KanjiRepository kanjiRepository;
     public static UserRepository userRepository;
     public static WordActionRepository wordActionRepository;
     public static NetworkMonitor networkMonitor;
@@ -41,6 +43,7 @@ public class ServiceLocator {
             wordActionRepository = new WordActionRepository(appContext, api, db.wordDao(), db.pendingActionDao());
             categoryRepository = new CategoryRepository(api, db.categoryDao(), db.subcategoryDao(), db.wordDao(), wordActionRepository);
             kanaRepository = new KanaRepository(api);
+            kanjiRepository = new KanjiRepository(api);
             initialized = true;
         }
     }

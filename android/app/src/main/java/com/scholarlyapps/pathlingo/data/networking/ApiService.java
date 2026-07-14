@@ -13,7 +13,10 @@ import com.scholarlyapps.pathlingo.data.remote.dto.GoogleLoginRequest;
 import com.scholarlyapps.pathlingo.data.remote.dto.GuestLoginRequest;
 import com.scholarlyapps.pathlingo.data.remote.dto.KanaDto;
 import com.scholarlyapps.pathlingo.data.remote.dto.KanaLearnedResponse;
+import com.scholarlyapps.pathlingo.data.remote.dto.KanjiDto;
+import com.scholarlyapps.pathlingo.data.remote.dto.KanjiStrokeGroupDto;
 import com.scholarlyapps.pathlingo.data.remote.dto.ListResponse;
+import com.scholarlyapps.pathlingo.data.remote.dto.PagedResponse;
 import com.scholarlyapps.pathlingo.data.remote.dto.LoginRequest;
 import com.scholarlyapps.pathlingo.data.remote.dto.MessageResponse;
 import com.scholarlyapps.pathlingo.data.remote.dto.OtpSendRequest;
@@ -140,6 +143,26 @@ public interface ApiService {
 
     @POST("kanas/{id}/learned")
     Call<KanaLearnedResponse> markKanaLearned(@Path("id") long kanaId);
+
+    @GET("kanjis")
+    Call<PagedResponse<KanjiDto>> getKanjis(
+        @Query("jlpt") String jlpt,
+        @Query("strokes") Integer strokes,
+        @Query("page") int page,
+        @Query("per_page") int perPage
+    );
+
+    @GET("kanjis/strokes")
+    Call<ListResponse<KanjiStrokeGroupDto>> getKanjiStrokeGroups();
+
+    @GET("kanjis/{id}")
+    Call<WrappedResponse<KanjiDto>> getKanji(@Path("id") long kanjiId);
+
+    @POST("kanjis/{id}/learned")
+    Call<KanaLearnedResponse> markKanjiLearned(@Path("id") long kanjiId);
+
+    @GET("me/kanji-learned")
+    Call<ListResponse<Long>> myKanjiLearned();
 
     @GET("quiz")
     Call<QuizResponse> generateQuiz();

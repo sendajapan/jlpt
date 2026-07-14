@@ -42,6 +42,15 @@ public class AppViewModelFactory implements ViewModelProvider.Factory {
         if (modelClass == KanaDetailViewModel.class) {
             return (T) new KanaDetailViewModel(ServiceLocator.kanaRepository);
         }
+        if (modelClass == KanjiGridViewModel.class) {
+            return (T) new KanjiGridViewModel(ServiceLocator.kanjiRepository);
+        }
+        if (modelClass == KanjiStrokeViewModel.class) {
+            return (T) new KanjiStrokeViewModel(ServiceLocator.kanjiRepository);
+        }
+        if (modelClass == KanjiDetailViewModel.class) {
+            return (T) new KanjiDetailViewModel(ServiceLocator.kanjiRepository);
+        }
         if (modelClass == QuizViewModel.class) {
             return (T) new QuizViewModel(ServiceLocator.api, ServiceLocator.wordActionRepository);
         }

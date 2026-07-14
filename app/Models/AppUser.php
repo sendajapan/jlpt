@@ -96,6 +96,12 @@ class AppUser extends Authenticatable implements MustVerifyEmail
             ->withTimestamps();
     }
 
+    public function learnedKanjis(): BelongsToMany
+    {
+        return $this->belongsToMany(Kanji::class, 'app_user_kanji_learned', 'app_user_id', 'kanji_id')
+            ->withTimestamps();
+    }
+
     public function coinTransactions(): HasMany
     {
         return $this->hasMany(CoinTransaction::class);

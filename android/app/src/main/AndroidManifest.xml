@@ -102,6 +102,36 @@
             android:theme="@style/Theme.PathLingo" />
 
         <activity
+            android:name=".ui.activities.KanjiActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.PathLingo" />
+
+        <activity
+            android:name=".ui.activities.KanjiLevelActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.PathLingo" />
+
+        <activity
+            android:name=".ui.activities.KanjiStrokeActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.PathLingo" />
+
+        <activity
+            android:name=".ui.activities.KanjiGridActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.PathLingo" />
+
+        <activity
+            android:name=".ui.activities.KanjiDetailActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.PathLingo" />
+
+        <activity
             android:name=".ui.activities.QuizActivity"
             android:exported="false"
             android:screenOrientation="portrait"

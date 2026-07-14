@@ -62,7 +62,7 @@ public class KanaChartActivity extends AppCompatActivity {
 
         binding.toolbar.setOnBackClickListener(v -> finish());
         binding.txtScriptTitle.setText(script.toUpperCase(Locale.ROOT));
-        binding.btnStartQuiz.setOnClickListener(v -> startActivity(new Intent(this, QuizActivity.class)));
+        binding.quizCard.btnStartQuiz.setOnClickListener(v -> startActivity(new Intent(this, QuizActivity.class)));
 
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Letters"));
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Tenten & Maru"));

@@ -48,6 +48,7 @@ return [
         'coins_per_first_read' => (int) env('REWARD_COINS_PER_FIRST_READ', 1),
         'coins_per_quiz_win' => (int) env('REWARD_COINS_PER_QUIZ_WIN', 10),
         'coins_per_kana_learned' => (int) env('REWARD_COINS_PER_KANA_LEARNED', 10),
+        'coins_per_kanji_learned' => (int) env('REWARD_COINS_PER_KANJI_LEARNED', 10),
     ],
 
 ];

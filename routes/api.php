@@ -17,6 +17,7 @@ use App\Http\Controllers\Api\V1\FavoriteController;
 use App\Http\Controllers\Api\V1\KanaController;
 use App\Http\Controllers\Api\V1\KanaLearnedController;
 use App\Http\Controllers\Api\V1\KanjiController;
+use App\Http\Controllers\Api\V1\KanjiLearnedController;
 use App\Http\Controllers\Api\V1\ProfileController;
 use App\Http\Controllers\Api\V1\QuizController;
 use App\Http\Controllers\Api\V1\SubcategoryController;
@@ -27,6 +28,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('avatars', [AvatarController::class, 'index']);
 Route::get('kanjis', [KanjiController::class, 'index']);
+Route::get('kanjis/strokes', [KanjiController::class, 'strokes']);
+Route::get('kanjis/{kanji}', [KanjiController::class, 'show']);
 Route::get('kanas', [KanaController::class, 'index']);
 Route::get('kanas/{kana}', [KanaController::class, 'show']);
 
@@ -68,6 +71,9 @@ Route::middleware('auth:app_users')->group(function () {
 
     Route::get('me/kana-learned', [KanaLearnedController::class, 'index']);
     Route::post('kanas/{kana}/learned', [KanaLearnedController::class, 'store']);
+
+    Route::get('me/kanji-learned', [KanjiLearnedController::class, 'index']);
+    Route::post('kanjis/{kanji}/learned', [KanjiLearnedController::class, 'store']);
 
     Route::get('me/reads', [WordReadController::class, 'index']);
     Route::post('words/{vocabulary}/read', [WordReadController::class, 'store']);
