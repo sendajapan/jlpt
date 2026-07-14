@@ -65,7 +65,7 @@ public class KanaChartActivity extends AppCompatActivity {
         binding.btnStartQuiz.setOnClickListener(v -> startActivity(new Intent(this, QuizActivity.class)));
 
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Letters"));
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Tenten & Maru"));
+        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Dakuten"));
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Combo"));
 
         binding.tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

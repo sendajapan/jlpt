@@ -9,7 +9,9 @@ import com.scholarlyapps.pathlingo.data.remote.dto.KanaLearnedResponse;
 import com.scholarlyapps.pathlingo.data.remote.dto.ListResponse;
 import com.scholarlyapps.pathlingo.data.remote.dto.WrappedResponse;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -24,12 +26,19 @@ public class KanaRepository {
     }
 
     private final ApiService apiService;
+    private final Map<String, List<KanaDto>> kanaCache = new HashMap<>();
 
     public KanaRepository(ApiService apiService) {
         this.apiService = apiService;
     }
 
     public void getKanas(String script, Listener<List<KanaDto>> listener) {
+        List<KanaDto> cached = kanaCache.get(script);
+        if (cached != null) {
+            listener.onSuccess(cached);
+            return;
+        }
+
         apiService.getKanas(script).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NonNull Call<ListResponse<KanaDto>> call, @NonNull Response<ListResponse<KanaDto>> response) {
@@ -37,6 +46,7 @@ public class KanaRepository {
                     listener.onError(ApiErrors.message(response, "Failed to load letters."));
                     return;
                 }
+                kanaCache.put(script, response.body().getData());
                 listener.onSuccess(response.body().getData());
             }
 
@@ -73,6 +83,7 @@ public class KanaRepository {
                     listener.onError(ApiErrors.message(response, "Failed to save progress."));
                     return;
                 }
+                markLearnedInCache(kanaId);
                 listener.onSuccess(response.body());
             }
 
@@ -81,5 +92,16 @@ public class KanaRepository {
                 listener.onError(ApiErrors.message(throwable));
             }
         });
+    }
+
+    private void markLearnedInCache(long kanaId) {
+        for (List<KanaDto> kanas : kanaCache.values()) {
+            for (KanaDto kana : kanas) {
+                if (kana.id == kanaId) {
+                    kana.isLearned = true;
+                    return;
+                }
+            }
+        }
     }
 }
